@@ -43,7 +43,34 @@ in
 
   config = lib.mkIf config.tsrk.packages.pkgs.enable {
     environement.systemPackages = with pkgs; [
+      # browser
       tsrk-librewolf
+
+      # communication
+      thunderbird
+      weechat
+
+      # images
+      feh
+      gimp
+      imagemagick
+      scrot
+
+      # video
+      vlc
+      mpv
+      libsForQt5.kdenlive
+
+      # cli
+      kitty
+      dialog
+
+      # X.Org
+      xorg.xeyes
+      xorg.xinit
+      xorg.xkill
+      xsel
+      x11vnc
     ];
   };
 }
