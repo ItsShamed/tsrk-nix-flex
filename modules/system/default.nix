@@ -4,7 +4,7 @@ let
   importModule = file: 
   {
     name = lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
-    value = import newFile;
+    value = import file;
   };
 in
   builtins.listToAttrs (
