@@ -41,7 +41,7 @@ in
     tsrk.packages.pkgs.desktop.enable = lib.mkEnableOption "tsrk's desktop bundle";
   };
 
-  config = lib.mkIf config.tsrk.packages.pkgs.enable {
+  config = lib.mkIf config.tsrk.packages.pkgs.desktop.enable {
     environement.systemPackages = with pkgs; [
       # browser
       tsrk-librewolf
