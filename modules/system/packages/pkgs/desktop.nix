@@ -49,6 +49,7 @@ in
       # communication
       thunderbird
       weechat
+      armcord
 
       # images
       feh
