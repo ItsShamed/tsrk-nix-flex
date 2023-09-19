@@ -32,6 +32,7 @@
         config.tsrk.packages.pkgs.csharp.package
         mono
         msbuild
+        rolsyn
       ];
 
       environment.variables = {
