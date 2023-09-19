@@ -1,5 +1,1 @@
-{
-  imports = [
-    ./pkgs
-  ];
-}
+{ imports = [ ./pkgs ]; }
