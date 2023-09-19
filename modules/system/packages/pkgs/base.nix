@@ -3,8 +3,8 @@
 {
   options = {
     tsrk.packages.pkgs.base = {
-      enable = lib.mkEnableOption "tsrk's base package bundle";
-      additions = lib.mkEnableOption "tsrk's base additions";
+      enable = lib.options.mkEnableOption "tsrk's base package bundle";
+      additions = lib.options.mkEnableOption "tsrk's base additions";
     };
   };
 
@@ -41,17 +41,26 @@
         # Multiplexing
         screen
         tmux
+
+        # Basic editor
+        vim
+
+        zsh
       ];
+
+      users.defaultUserShell = pkgs.zsh;
     })
 
     (lib.mkIf config.tsrk.packages.pkgs.base.additions {
       config.tsrk.packages.pkgs.base.enable = lib.mkDefault true;
 
-      environment.systemPackages = with pkgs; [
-        btop
-        lazygit
-        delta
-      ];
+      environment.systemPackages = with pkgs; [ btop lazygit delta bat lsd ];
+
+      environment.shellAliases = {
+        l = "lsd -lah";
+        lg = "lazygit";
+        ls = "lsd";
+      };
     })
   ];
 }
