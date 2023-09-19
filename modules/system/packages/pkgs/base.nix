@@ -44,11 +44,7 @@
 
         # Basic editor
         vim
-
-        zsh
       ];
-
-      users.defaultUserShell = pkgs.zsh;
     })
 
     (lib.mkIf config.tsrk.packages.pkgs.base.additions {
