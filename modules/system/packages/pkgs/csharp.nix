@@ -20,7 +20,7 @@
           type = lib.types.package;
           default =
             pkgs.jetbrains.rider; # Sorry not sorry, school free license is yummy
-          description = ".NET IDE package to use";
+          description = "The .NET IDE to use";
         };
       };
     };
