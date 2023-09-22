@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   option = {
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
@@ -12,9 +15,11 @@
       };
 
       ide = {
-        enable = (lib.option.mkEnableOption "the .NET IDE") // {
-          default = true;
-        };
+        enable =
+          (lib.option.mkEnableOption "the .NET IDE")
+          // {
+            default = true;
+          };
 
         package = lib.options.mkOption {
           type = lib.types.package;
@@ -41,8 +46,7 @@
     })
 
     (lib.mkIf config.tsrk.packages.csharp.ide.enable {
-      environment.systemPackages = with pkgs;
-        [ config.tsrk.packages.pkgs.csharp.ide.package ];
+      environment.systemPackages = with pkgs; [config.tsrk.packages.pkgs.csharp.ide.package];
     })
   ];
 }

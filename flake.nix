@@ -34,36 +34,41 @@
     };
   };
 
-  outputs = { self,
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgsUnstable,
+    nixpkgsMaster,
+    forge-nixpie,
+    nix-gaming,
+    futils,
+    flake-compat,
+    nixos-generators,
+    ...
+  } @ inputs: let
+    inherit (nixpkgs) lib;
+    inherit (futils.lib) eachDefaultSystem;
 
-    nixpkgs, nixpkgsUnstable, nixpkgsMaster,
-
-    forge-nixpie, nix-gaming,
-
-    futils, flake-compat,
-
-    nixos-generators, ... }@inputs:
-    let
-      inherit (nixpkgs) lib;
-      inherit (futils.lib) eachDefaultSystem;
-
-      importPkgs = pkgs: system: useOverrides:
-        import pkgs {
-          inherit system;
-          config = { allowUnfree = true; };
-          overlays = (lib.attrValues self.overlays)
-            ++ (lib.optional useOverrides self.overrides.${system});
-        };
-
-      pkgSet = system: {
-        pkgs = importPkgs nixpkgs system true;
-        pkgsUnstable = importPkgs nixpkgsUnstable system false;
-        pkgsMaster = importPkgs nixpkgsMaster system false;
+    importPkgs = pkgs: system: useOverrides:
+      import pkgs {
+        inherit system;
+        config = {allowUnfree = true;};
+        overlays =
+          (lib.attrValues self.overlays)
+          ++ (lib.optional useOverrides self.overrides.${system});
       };
 
-      linuxOutputs = let system = "x86_64-linux";
-      in { nixosModules = import ./modules/system { inherit lib; }; };
+    pkgSet = system: {
+      pkgs = importPkgs nixpkgs system true;
+      pkgsUnstable = importPkgs nixpkgsUnstable system false;
+      pkgsMaster = importPkgs nixpkgsMaster system false;
+    };
 
-      allOutputs = eachDefaultSystem (system: { });
-    in lib.recursiveUpdate linuxOutputs allOutputs;
+    linuxOutputs = let
+      system = "x86_64-linux";
+    in {nixosModules = import ./modules/system {inherit lib;};};
+
+    allOutputs = eachDefaultSystem (system: {});
+  in
+    lib.recursiveUpdate linuxOutputs allOutputs;
 }

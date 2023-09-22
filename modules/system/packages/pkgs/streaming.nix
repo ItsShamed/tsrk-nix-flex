@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   option = {
     tsrk.packages.pkgs.streaming.enable =
       lib.options.mkEnableOption "tsrk's streaming bundle";
@@ -10,7 +13,7 @@
 
   config = lib.mkMerge [
     (lib.mkIf config.tsrk.packages.pkgs.streaming.enable {
-      environment.systemPackages = with pkgs; [ obs-studio ];
+      environment.systemPackages = with pkgs; [obs-studio];
     })
 
     (lib.mkIf config.tsrk.packages.pkgs.streaming.obsPluginAdditions {
