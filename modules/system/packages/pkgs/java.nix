@@ -24,7 +24,7 @@ in {
         type = lib.types.package;
         description = "Java JDK package to use.";
         default = pkgs.jdk;
-        example = pkgs.jdk11;
+        example = pkgs.jdk11; # Other JDKs like Azul Zulu also works.
       };
 
       maven.enable = (lib.options.mkEnableOption "Maven") // {default = true;};
@@ -48,10 +48,9 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      (lib.mkIf cfg.ide.enable cfg.ide.package)
-      (lib.mkIf cfg.maven.enable maven)
-      (lib.mkIf cfg.gradle.enable cfg.gradle.package)
       cfg.jdk.package
-    ];
+    ] ++ (lib.optional cfg.ide.enable cfg.ide.package)
+      ++ (lib.optional cfg.maven.enable maven)
+      ++ (lib.optional cfg.gradle.enable cfg.gradle.package);
   };
 }
