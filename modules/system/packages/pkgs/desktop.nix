@@ -74,6 +74,9 @@ in {
       xorg.xkill
       xsel
       x11vnc
+
+      # PDF
+      zathura
     ];
   };
 }
