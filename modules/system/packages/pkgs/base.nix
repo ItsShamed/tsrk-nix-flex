@@ -7,7 +7,6 @@
   options = {
     tsrk.packages.pkgs.base = {
       enable = lib.options.mkEnableOption "tsrk's base package bundle";
-      additions = lib.options.mkEnableOption "tsrk's base additions";
     };
   };
 
@@ -30,6 +29,7 @@
 
         inetutils
         utillinux
+        coreutils-full
 
         jq
 
@@ -48,18 +48,6 @@
         # Basic editor
         vim
       ];
-    })
-
-    (lib.mkIf config.tsrk.packages.pkgs.base.additions {
-      config.tsrk.packages.pkgs.base.enable = lib.mkDefault true;
-
-      environment.systemPackages = with pkgs; [btop lazygit delta bat lsd];
-
-      environment.shellAliases = {
-        l = "lsd -lah";
-        lg = "lazygit";
-        ls = "lsd";
-      };
     })
   ];
 }
