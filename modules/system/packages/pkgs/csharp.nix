@@ -3,7 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  cfg = config.tsrk.packages.csharp;
+in {
   option = {
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
@@ -31,22 +33,18 @@
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf config.tsrk.packages.pkgs.csharp.enable {
-      environment.systemPackages = with pkgs; [
-        config.tsrk.packages.pkgs.csharp.package
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = with pkgs;
+      [
+        cfg.package
         mono
         msbuild
         rolsyn
-      ];
+      ]
+      ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
-      environment.variables = {
-        DOTNET_ROOT = "${config.tsrk.packages.pkgs.csharp.package}";
-      };
-    })
-
-    (lib.mkIf config.tsrk.packages.csharp.ide.enable {
-      environment.systemPackages = with pkgs; [config.tsrk.packages.pkgs.csharp.ide.package];
-    })
-  ];
+    environment.variables = {
+      DOTNET_ROOT = "${cfg.package}";
+    };
+  };
 }
