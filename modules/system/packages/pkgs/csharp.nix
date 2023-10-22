@@ -45,6 +45,7 @@ in {
 
     environment.variables = {
       DOTNET_ROOT = "${cfg.package}";
+      DOTNET_CLI_TELEMETRY_OPTOUT = "true";
     };
   };
 }
