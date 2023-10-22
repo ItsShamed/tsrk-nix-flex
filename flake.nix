@@ -14,7 +14,7 @@
       flake = false;
     };
 
-    forge-nixpie = {
+    epita-forge = {
       url = "git+https://gitlab.cri.epita.fr/cri/infrastructure/nixpie.git";
       inputs = {
         nixpkgs.follows = "nixpkgs";
@@ -34,41 +34,44 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgsUnstable,
-    nixpkgsMaster,
-    forge-nixpie,
-    nix-gaming,
-    futils,
-    flake-compat,
-    nixos-generators,
-    ...
-  } @ inputs: let
-    inherit (nixpkgs) lib;
-    inherit (futils.lib) eachDefaultSystem;
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgsUnstable
+    , nixpkgsMaster
+    , epita-forge
+    , nix-gaming
+    , futils
+    , flake-compat
+    , nixos-generators
+    , ...
+    } @ inputs:
+    let
+      inherit (nixpkgs) lib;
+      inherit (futils.lib) eachDefaultSystem;
 
-    importPkgs = pkgs: system: useOverrides:
-      import pkgs {
-        inherit system;
-        config = {allowUnfree = true;};
-        overlays =
-          (lib.attrValues self.overlays)
-          ++ (lib.optional useOverrides self.overrides.${system});
+      importPkgs = pkgs: system: useOverrides:
+        import pkgs {
+          inherit system;
+          config = { allowUnfree = true; };
+          overlays =
+            (lib.attrValues self.overlays)
+            ++ (lib.optional useOverrides self.overrides.${system});
+        };
+
+      pkgSet = system: {
+        pkgs = importPkgs nixpkgs system true;
+        pkgsUnstable = importPkgs nixpkgsUnstable system false;
+        pkgsMaster = importPkgs nixpkgsMaster system false;
       };
 
-    pkgSet = system: {
-      pkgs = importPkgs nixpkgs system true;
-      pkgsUnstable = importPkgs nixpkgsUnstable system false;
-      pkgsMaster = importPkgs nixpkgsMaster system false;
-    };
+      linuxOutputs =
+        let
+          system = "x86_64-linux";
+        in
+        { nixosModules = import ./modules/system { inherit lib; }; };
 
-    linuxOutputs = let
-      system = "x86_64-linux";
-    in {nixosModules = import ./modules/system {inherit lib;};};
-
-    allOutputs = eachDefaultSystem (system: {});
-  in
+      allOutputs = eachDefaultSystem (system: { });
+    in
     lib.recursiveUpdate linuxOutputs allOutputs;
 }
