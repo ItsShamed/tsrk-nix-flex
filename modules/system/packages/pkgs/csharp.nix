@@ -1,11 +1,12 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   cfg = config.tsrk.packages.csharp;
-in {
+in
+{
   option = {
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";

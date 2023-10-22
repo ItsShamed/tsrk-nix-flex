@@ -1,17 +1,18 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   cfg = config.tsrk.packages.pkgs.java;
-in {
+in
+{
   options = {
     tsrk.packages.pkgs.java = {
       enable = lib.options.mkEnableOption "tsrk's Java development bundle";
 
       ide = {
-        enable = (lib.options.mkEnableOption "the Java IDE.") // {default = true;};
+        enable = (lib.options.mkEnableOption "the Java IDE.") // { default = true; };
         package = lib.options.mkOption {
           type = lib.types.package;
           description = "The Java IDE to use.";
@@ -27,7 +28,7 @@ in {
         example = pkgs.jdk11; # Other JDKs like Azul Zulu also works.
       };
 
-      maven.enable = (lib.options.mkEnableOption "Maven") // {default = true;};
+      maven.enable = (lib.options.mkEnableOption "Maven") // { default = true; };
 
       gradle = {
         enable = lib.options.mkEnableOption "Gradle";
@@ -48,7 +49,7 @@ in {
     };
 
     environment.systemPackages =
-      []
+      [ ]
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package)
       ++ (lib.lists.optional cfg.maven.enable pkgs.maven)
       ++ (lib.lists.optional cfg.gradle.enable cfg.gradle.package);
