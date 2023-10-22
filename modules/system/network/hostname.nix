@@ -1,7 +1,14 @@
 { config
 , lib
+, self
+, host
 , ...
-}: {
+}:
+
+let
+  cfg = config.tsrk.networking;
+in
+{
   options = {
     tsrk.networking.hostname = {
       useDHCPHostname = lib.options.mkOption {
@@ -16,13 +23,16 @@
       };
       removeImageSuffix = lib.option.mkOption {
         type = lib.types.bool;
-        description = "Whether to remove the suffix identifying the image you are using.";
+        description = "Whether to remove the suffix identifying the host you are using.";
         default = false;
       };
     };
   };
 
-  config = lib.mkIf tsrk.networking.hostname.useDHCPHostname {
-    networking.hostName = lib.mkForce "";
+  config = {
+    networking.hostName = (self.mkIfElse cfg.useDHCPHostname
+      ""
+      cfg.base + (lib.strings.optionalString (!cfg.removeImageSuffix) ("-" + host))
+    );
   };
 }

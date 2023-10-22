@@ -69,7 +69,10 @@
         let
           system = "x86_64-linux";
         in
-        { nixosModules = import ./modules/system { inherit lib; }; };
+        {
+          nixosModules = import ./modules/system { inherit lib; };
+          lib = import ./lib { inherit lib; };
+        };
 
       allOutputs = eachDefaultSystem (system: { });
     in
