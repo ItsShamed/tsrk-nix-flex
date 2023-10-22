@@ -47,10 +47,9 @@ in {
       package = cfg.jdk.package;
     };
 
-    environment.systemPackages = with pkgs; [
-      cfg.jdk.package
-    ] ++ (lib.lists.optional cfg.ide.enable cfg.ide.package)
-      ++ (lib.lists.optional cfg.maven.enable maven)
+    environment.systemPackages = []
+      ++ (lib.lists.optional cfg.ide.enable cfg.ide.package)
+      ++ (lib.lists.optional cfg.maven.enable pkgs.maven)
       ++ (lib.lists.optional cfg.gradle.enable cfg.gradle.package);
   };
 }
