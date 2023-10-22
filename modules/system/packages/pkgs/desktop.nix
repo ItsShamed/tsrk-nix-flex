@@ -28,9 +28,7 @@
       dialog
 
       # X.Org
-      xorg.xeyes
-      xorg.xinit
-      xorg.xkill
+      xclip
       xsel
       x11vnc
     ];
