@@ -9,7 +9,6 @@
   config = lib.mkIf config.tsrk.packages.pkgs.desktop.enable {
     environement.systemPackages = with pkgs; [
       # communication
-      thunderbird
       weechat
 
       # images
