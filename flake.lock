@@ -16,6 +16,36 @@
         "type": "github"
       }
     },
+    "epita-forge": {
+      "inputs": {
+        "docker-nixpkgs": "docker-nixpkgs",
+        "flake-compat": "flake-compat",
+        "futils": "futils",
+        "machine-state": "machine-state",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgsMaster": [
+          "nixpkgsMaster"
+        ],
+        "nixpkgsUnstable": [
+          "nixpkgsUnstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1698080165,
+        "narHash": "sha256-JjMmn4uuXX+2rcw8ehW3w20HK/Rt60c7tAG2CYdmvSI=",
+        "ref": "refs/heads/master",
+        "rev": "8b3276e037bba61578addab0a48ff249c86baeb7",
+        "revCount": 571,
+        "type": "git",
+        "url": "https://gitlab.cri.epita.fr/cri/infrastructure/nixpie.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.cri.epita.fr/cri/infrastructure/nixpie.git"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -81,36 +111,6 @@
         "type": "github"
       }
     },
-    "forge-nixpie": {
-      "inputs": {
-        "docker-nixpkgs": "docker-nixpkgs",
-        "flake-compat": "flake-compat_2",
-        "futils": "futils",
-        "machine-state": "machine-state",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgsMaster": [
-          "nixpkgsMaster"
-        ],
-        "nixpkgsUnstable": [
-          "nixpkgsUnstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1694292971,
-        "narHash": "sha256-DF6SaOHUk69DsvVNK3pKwX4zqllVK13nQNdElhXhRhw=",
-        "ref": "refs/heads/master",
-        "rev": "ad79e4f3d4874fea9258c11b2146c3c98cae16f0",
-        "revCount": 544,
-        "type": "git",
-        "url": "https://gitlab.cri.epita.fr/cri/infrastructure/nixpie.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://gitlab.cri.epita.fr/cri/infrastructure/nixpie.git"
-      }
-    },
     "futils": {
       "inputs": {
         "systems": "systems"
@@ -166,7 +166,7 @@
       "inputs": {
         "futils": "futils_2",
         "nixpkgs": [
-          "forge-nixpie",
+          "epita-forge",
           "nixpkgs"
         ],
         "poetry2nix": "poetry2nix"
@@ -312,7 +312,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "forge-nixpie",
+          "epita-forge",
           "machine-state",
           "nixpkgs"
         ]
@@ -333,8 +333,8 @@
     },
     "root": {
       "inputs": {
-        "flake-compat": "flake-compat",
-        "forge-nixpie": "forge-nixpie",
+        "epita-forge": "epita-forge",
+        "flake-compat": "flake-compat_2",
         "futils": "futils_3",
         "nix-gaming": "nix-gaming",
         "nixos-generators": "nixos-generators",
