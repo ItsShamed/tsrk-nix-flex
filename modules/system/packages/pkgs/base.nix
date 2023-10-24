@@ -1,8 +1,6 @@
-{ config
-, lib
-, pkgs
-, ...
-}: {
+{ config, lib, pkgs, ... }:
+
+{
   options = {
     tsrk.packages.pkgs.base = {
       enable = lib.options.mkEnableOption "tsrk's base package bundle";

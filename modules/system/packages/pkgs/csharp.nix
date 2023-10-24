@@ -1,8 +1,5 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
+{ config, lib, pkgs, ... }:
+
 let
   cfg = config.tsrk.packages.csharp;
 in
