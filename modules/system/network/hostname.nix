@@ -1,9 +1,4 @@
-{ config
-, lib
-, self
-, host
-, ...
-}:
+{ config, lib, self, host, ... }:
 
 let
   cfg = config.tsrk.networking;

@@ -1,8 +1,6 @@
-{ config
-, lib
-, pkgs
-, ...
-}: {
+{ config, lib, pkgs, ... }:
+
+{
   options = {
     tsrk.packages.pkgs.desktop.enable =
       lib.options.mkEnableOption "tsrk's desktop bundle";
