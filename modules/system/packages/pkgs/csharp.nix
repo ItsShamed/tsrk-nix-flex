@@ -8,24 +8,20 @@ in
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
 
-      package = lib.options.mkOption {
-        type = lib.types.package;
+      package = lib.options.mkPackageOption pkgs ".NET" {
         default = pkgs.dotnet-sdk_7;
-        description = ".NET package to use";
       };
 
       ide = {
         enable =
-          (lib.option.mkEnableOption "the .NET IDE")
+          (lib.options.mkEnableOption "the .NET IDE")
           // {
             default = true;
           };
 
-        package = lib.options.mkOption {
-          type = lib.types.package;
+        package = lib.options.mkPackageOption pkgs ".NET IDE" {
           default =
             pkgs.jetbrains.rider; # Sorry not sorry, school free license is yummy
-          description = "The .NET IDE to use";
         };
       };
     };
