@@ -6,5 +6,6 @@
     ./fs.nix
     ./go.nix
     ./java.nix
+    ./rust.nix
   ];
 }
