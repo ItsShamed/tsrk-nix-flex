@@ -1,8 +1,9 @@
 {
   imports = [
     ./base.nix
-    ./desktop.nix
     ./csharp.nix
+    ./desktop.nix
+    ./fs.nix
     ./java.nix
   ];
 }
