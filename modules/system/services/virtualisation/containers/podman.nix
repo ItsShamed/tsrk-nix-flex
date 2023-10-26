@@ -6,6 +6,7 @@
   };
 
   config = {
+    tsrk.containers.enable = lib.mkDefault true;
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
