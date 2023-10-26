@@ -1,3 +1,8 @@
+{ inputs, ... }:
+
 {
-  imports = [ ./pkgs ];
+  imports = [
+    ./pkgs
+    inputs.epita-forge.nixosModules.packages
+  ];
 }
