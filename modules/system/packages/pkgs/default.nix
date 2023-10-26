@@ -1,5 +1,6 @@
 {
   imports = [
+    ./android.nix
     ./base.nix
     ./csharp.nix
     ./desktop.nix
