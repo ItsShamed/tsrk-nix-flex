@@ -6,7 +6,7 @@
   };
 
   config = lib.mkIf config.tsrk.containers.docker.enable {
-    tsrk.containers.enable = lib.mkForce true;
+    tsrk.containers.enable = lib.mkDefault true;
 
     virtualisation.docker.enable = true;
 
