@@ -50,19 +50,16 @@
       inherit (nixpkgs) lib;
       inherit (futils.lib) eachDefaultSystem;
 
-      importPkgs = pkgs: system: useOverrides:
+      importPkgs = pkgs: system:
         import pkgs {
           inherit system;
           config = { allowUnfree = true; };
-          overlays =
-            (lib.attrValues self.overlays)
-            ++ (lib.optional useOverrides self.overrides.${system});
         };
 
       pkgSet = system: {
-        pkgs = importPkgs nixpkgs system true;
-        pkgsUnstable = importPkgs nixpkgsUnstable system false;
-        pkgsMaster = importPkgs nixpkgsMaster system false;
+        pkgs = importPkgs nixpkgs system;
+        pkgsUnstable = importPkgs nixpkgsUnstable system;
+        pkgsMaster = importPkgs nixpkgsMaster system;
       };
 
       linuxOutputs =
@@ -74,7 +71,13 @@
           lib = import ./lib { inherit lib; };
         };
 
-      allOutputs = eachDefaultSystem (system: { });
+      allOutputs = eachDefaultSystem (system:
+        let
+          inherit (pkgSet system) pkgs;
+        in
+        {
+          formatter = pkgs.nixpkgs-fmt;
+        });
     in
     lib.recursiveUpdate linuxOutputs allOutputs;
 }
