@@ -25,7 +25,7 @@ in
   };
 
   config = {
-    networking.hostName = (self.mkIfElse cfg.useDHCPHostname
+    networking.hostName = (self.lib.mkIfElse cfg.useDHCPHostname
       ""
       cfg.base + (lib.strings.optionalString (!cfg.removeImageSuffix) ("-" + host))
     );
