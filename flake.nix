@@ -68,7 +68,11 @@
         in
         {
           nixosModules = import ./modules/system { inherit lib; };
-          lib = import ./lib { inherit lib; };
+          lib = import ./lib {
+            inherit lib self;
+            inherit (pkgSet) pkgsUnstable;
+            inherit inputs;
+          };
         };
 
       allOutputs = eachDefaultSystem (system:
