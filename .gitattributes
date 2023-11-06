@@ -8,3 +8,5 @@
 
 *.so binary
 *.dll binary
+
+secrets.nix filter=git-crypt
