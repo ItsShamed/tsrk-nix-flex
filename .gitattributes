@@ -9,4 +9,4 @@
 *.so binary
 *.dll binary
 
-secrets.nix filter=git-crypt
+secrets.nix filter=git-crypt diff=git-crypt
