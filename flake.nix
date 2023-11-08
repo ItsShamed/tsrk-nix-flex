@@ -49,11 +49,16 @@
     , nixpkgs
     , nixpkgsUnstable
     , nixpkgsMaster
+
     , epita-forge
+
     , nix-gaming
     , futils
     , flake-compat
     , nixos-generators
+
+    , home-manager
+    , nixvim
     , ...
     } @ inputs:
     let
