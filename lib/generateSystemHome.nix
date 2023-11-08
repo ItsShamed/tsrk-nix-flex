@@ -20,15 +20,19 @@ let
     programs.home-manager.enable = true;
   };
 
-  configuration = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = pkgsUnstable;
+  configuration = inputs.home-manager.nixosModules.home-manager
+  {
+    home-manager.useGlobalPkgs = false;
 
-    modules = modules ++ [
-      self.homeModules
-      pkgsOverride
-      homeManagerBase
-      inputs.nixvim.homeManagerModules.nixvim
-    ];
+    home-manager.${name} = {
+      imports = modules ++ [
+        self.homeModules
+        pkgsOverride
+        homeManagerBase
+        inputs.nixvim.homeManagerModules.nixvim
+      ];
+      nixpkgs = pkgsUnstable;
+    };
 
     extraSpecialArgs = {
       inherit self;
