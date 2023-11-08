@@ -1,4 +1,4 @@
-{ home-manager, pkgsUnstable, self, inputs, ... }:
+{ pkgsUnstable, self, inputs, ... }:
 
 name:
 
@@ -20,10 +20,15 @@ let
     programs.home-manager.enable = true;
   };
 
-  configuration = home-manager.lib.homeManagerConfiguration {
+  configuration = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = pkgsUnstable;
 
-    modules = modules ++ [ self.homeModules pkgsOverride homeManagerBase ];
+    modules = modules ++ [
+      self.homeModules
+      pkgsOverride
+      homeManagerBase
+      inputs.nixvim.homeManagerModules.nixvim
+    ];
 
     extraSpecialArgs = {
       inherit self;
