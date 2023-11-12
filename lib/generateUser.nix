@@ -10,7 +10,7 @@ name:
 { lib, ... }:
 
 {
-  users.users.${name} = {
+  users.users."${name}" = {
     inherit name;
     inherit passwordFile password initialPassword;
     isNormalUser = true;
