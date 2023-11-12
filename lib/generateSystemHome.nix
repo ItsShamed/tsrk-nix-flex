@@ -24,7 +24,7 @@ let
   {
     home-manager.useGlobalPkgs = false;
 
-    home-manager.${name} = {
+    home-manager."${name}" = {
       imports = modules ++ [
         self.homeModules
         pkgsOverride
