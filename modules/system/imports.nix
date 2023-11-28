@@ -8,4 +8,5 @@
   ./services/x11/dipslay-manager/sddm.nix
   ./services/x11/keyboard/qwerty-fr.nix
   ./services/x11/sessions/i3.nix
+  ./services/x11/sessions/hyprland.nix
 ]
