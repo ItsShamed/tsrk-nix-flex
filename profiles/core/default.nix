@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   i18n.defaultLocale = "en.UTF-8";
@@ -32,6 +32,8 @@
       experimental-features = nix-command flakes
     '';
   };
+
+  networking.useDHCP = lib.mkDefault true;
 
   hardware.enableRedistributableFirmware = true;
 
