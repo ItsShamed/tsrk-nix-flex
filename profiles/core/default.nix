@@ -37,5 +37,7 @@
 
   hardware.enableRedistributableFirmware = true;
 
+  tsrk.disk-management.enable = lib.mkDefault true;
+
   system.stateVersion = "23.11";
 }
