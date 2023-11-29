@@ -46,5 +46,10 @@
     };
   };
 
+  programs.gnupg.agent = {
+    enable = true;
+    enableBrowserSocket = true;
+  };
+
   system.stateVersion = "23.11";
 }
