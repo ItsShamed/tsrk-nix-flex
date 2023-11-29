@@ -17,6 +17,7 @@
 
     settings = {
       trusted-users = [ "root" "@wheel" ];
+      system-features = [ "kvm" "big-parrallel" ];
       substituters = [
         "https://s3.cri.epita.fr/cri-nix-cache.s3.cri.epita.fr" # We never know, I use their flake so we might as well reduce the network overhead
         "https://nix-gaming.cachix.org"
