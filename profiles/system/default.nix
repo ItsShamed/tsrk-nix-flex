@@ -1,7 +1,7 @@
 { lib, ... }:
 let
   importModule = file: {
-    name = lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
+    name = "profile-" + lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
     value = import file;
   };
 in
