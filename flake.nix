@@ -82,7 +82,9 @@
           system = "x86_64-linux";
         in
         {
-          nixosModules = (import ./modules/system { inherit lib; }) // {
+          nixosModules = (import ./modules/system { inherit lib; })
+            // (import ./profiles/system { inherit lib; })
+            // {
             all = import ./modules/system/all.nix;
             default = self.nixosModules.all;
           };
