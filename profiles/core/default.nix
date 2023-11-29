@@ -39,5 +39,12 @@
 
   tsrk.disk-management.enable = lib.mkDefault true;
 
+  tsrk.packages = {
+    pkgs = {
+      base.enable = true;
+      fs.enable = true;
+    };
+  };
+
   system.stateVersion = "23.11";
 }
