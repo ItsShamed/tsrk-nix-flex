@@ -46,6 +46,23 @@
     };
   };
 
+  # HACK: see https://gitlab.cri.epita.fr/cri/infrastructure/nixpie/-/blob/master/profiles/core/default.nix#L108-123
+  # I need this for school dev
+  environment.pathsToLink = [ "/include" "/lib" ];
+  environment.extraOutputsToInstall = [ "out" "lib" "bin" "dev" ];
+  environment.variables = {
+    NIXPKGS_ALLOW_UNFREE = "1";
+
+    NIX_CFLAGS_COMPILE_x86_64_unknown_linux_gnu = "-I/run/current-system/sw/include";
+    NIX_CFLAGS_LINK_x86_64_unknown_linux_gnu = "-L/run/current-system/sw/lib";
+
+    CMAKE_INCLUDE_PATH = "/run/current-system/sw/include";
+    CMAKE_LIBRARY_PATH = "/run/current-system/sw/lib";
+
+    IDEA_JDK = "/run/current-system/sw/lib/openjdk/";
+    PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
+  };
+
   programs.gnupg.agent = {
     enable = true;
     enableBrowserSocket = true;
