@@ -14,7 +14,7 @@ name:
     inherit name;
     inherit passwordFile password initialPassword;
     isNormalUser = true;
-    extraGroups = [ "video" "audio" ]
+    extraGroups = [ "video" "audio" "input" ]
       ++ (lib.lists.optional canSudo "wheel");
   };
 }
