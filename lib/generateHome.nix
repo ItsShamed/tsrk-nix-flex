@@ -2,18 +2,17 @@
 
 name:
 
-{
-  modules ? [],
-  system ? "x86_64-linux",
-  homeDir ? "/home/${name}"
+{ modules ? [ ]
+, system ? "x86_64-linux"
+, homeDir ? "/home/${name}"
 }:
 
 let
-  pkgsOverride =  {...}: {
+  pkgsOverride = { ... }: {
     _module.args.pkgs = pkgsUnstable;
   };
 
-  homeManagerBase = {...}: {
+  homeManagerBase = { ... }: {
     home.username = name;
     home.homeDirectory = homeDir;
     home.stateVersion = "23.05";

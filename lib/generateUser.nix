@@ -1,11 +1,11 @@
 name:
 
-{
-  password ? null,
-  passwordFile ? null,
-  initialPassword ? "",
-  canSudo ? false,
-  moreGroups ? [],
+{ password ? null
+, passwordFile ? null
+, initialPassword ? ""
+, canSudo ? false
+, moreGroups ? [ ]
+,
 }:
 
 { lib, ... }:
