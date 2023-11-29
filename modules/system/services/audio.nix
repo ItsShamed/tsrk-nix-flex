@@ -35,6 +35,8 @@
       };
     };
 
+    sound.mediaKeys.enable = lib.mkDefault true;
+
     security.rtkit.enable = true;
 
     environment.systemPackages = with pkgs; [
