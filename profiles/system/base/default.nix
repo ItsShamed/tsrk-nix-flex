@@ -37,7 +37,10 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  tsrk.disk-management.enable = lib.mkDefault true;
+  tsrk = {
+    disk-management.enable = lib.mkDefault true;
+    sshd.enable = lib.mkDefault true;
+  };
 
   tsrk.packages = {
     pkgs = {
