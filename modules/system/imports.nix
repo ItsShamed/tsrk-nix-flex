@@ -5,6 +5,7 @@
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
   ./services/networking/sshd
+  ./services/redshift.nix
   ./services/virtualisation/containers
   ./services/x11/dipslay-manager/sddm.nix
   ./services/x11/keyboard/qwerty-fr.nix
