@@ -1,4 +1,4 @@
-{ pkgsUnstable, self, inputs, ... }:
+{ self, inputs, pkgSet, ... }:
 
 name:
 
@@ -8,10 +8,6 @@ name:
 }:
 
 let
-  pkgsOverride = { ... }: {
-    _module.args.pkgs = pkgsUnstable;
-  };
-
   homeManagerBase = { ... }: {
     home.username = name;
     home.homeDirectory = homeDir;
@@ -20,11 +16,10 @@ let
   };
 
   configuration = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = pkgsUnstable;
+    pkgs = pkgSet.pkgs;
 
     modules = modules ++ [
       self.homeModules
-      pkgsOverride
       homeManagerBase
       inputs.nixvim.homeManagerModules.nixvim
     ];
