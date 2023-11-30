@@ -8,4 +8,5 @@
 
   generateUser = import ./generateUser.nix;
   generateHome = import ./generateHome.nix args;
+  generateSystemHome = import ./generateSystemHome.nix args;
 }

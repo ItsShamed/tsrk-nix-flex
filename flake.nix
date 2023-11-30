@@ -34,13 +34,13 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      url = "github:nix-community/home-manager/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      url = "github:nix-community/nixvim/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -90,7 +90,7 @@
           };
           lib = import ./lib {
             inherit lib self;
-            inherit (pkgSet) pkgsUnstable;
+            pkgSet = pkgSet system;
             inherit inputs;
           };
         };
