@@ -46,6 +46,21 @@
     };
   };
 
+  documentation = {
+    enable = true;
+    dev.enable = true;
+    doc.enable = true;
+    info.enable = true;
+    man = {
+      enable = true;
+      generateCaches = true;
+    };
+    nixos = {
+      enable = true;
+      includeAllModules = true;
+    };
+  };
+
   # HACK: see https://gitlab.cri.epita.fr/cri/infrastructure/nixpie/-/blob/master/profiles/core/default.nix#L108-123
   # I need this for school dev
   environment.pathsToLink = [ "/include" "/lib" ];
