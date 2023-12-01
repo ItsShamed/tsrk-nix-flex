@@ -1,4 +1,4 @@
 [
   ./base
-  ./graphical-base
+  ./graphical/graphical-base.nix
 ]
