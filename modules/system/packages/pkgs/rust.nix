@@ -7,7 +7,7 @@
     };
   };
 
-  config = config.tsrk.packages.pkgs.rust.enable {
+  config = lib.mkIf config.tsrk.packages.pkgs.rust.enable {
     environment.systemPackages = with pkgs; [
       cargo
       rustc
