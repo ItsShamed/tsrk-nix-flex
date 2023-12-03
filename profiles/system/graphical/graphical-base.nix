@@ -11,6 +11,8 @@
     TERMINAL = "${pkgs.kitty}/bin/kitty";
   };
 
+  programs.dconf.enable = lib.mkDefault true; # To allow GTK customisation in home-manager
+
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
