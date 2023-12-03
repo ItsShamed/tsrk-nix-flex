@@ -7,7 +7,7 @@
   };
 
   config = lib.mkIf config.tsrk.packages.pkgs.desktop.enable {
-    environement.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       # communication
       weechat
 
