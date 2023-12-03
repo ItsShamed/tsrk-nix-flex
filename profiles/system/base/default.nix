@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, self, ... }:
 
 {
+
+  imports = [
+    self.nixosModules.packages
+    self.nixosModules.disks
+    self.nixosModules.sshd
+  ];
+
   i18n.defaultLocale = "en.UTF-8";
   i18n.extraLocaleSettings = {
     LANGUAGE = "en:en_US:C:fr_FR";
