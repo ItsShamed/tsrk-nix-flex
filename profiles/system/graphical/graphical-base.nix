@@ -1,6 +1,13 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, self, ... }:
 
 {
+
+  imports = [
+    self.nixosModules.bluetooth
+    self.nixosModules.sddm
+    self.nixosModules.audio
+  ];
+
   tsrk = {
     bluetooth.enable = lib.mkDefault true;
     sddm.enable = lib.mkDefault true;

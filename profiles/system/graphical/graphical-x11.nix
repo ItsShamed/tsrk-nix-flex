@@ -1,7 +1,11 @@
-{ lib, ... }:
+{ lib, self, ... }:
 
 {
-  imports = [ ./graphical-base.nix ];
+  imports = [
+    ./graphical-base.nix
+    self.nixosModules.i3
+    self.nixosModules.qwerty-fr
+  ];
 
   services.xserver = {
     enable = lib.mkForce true;
