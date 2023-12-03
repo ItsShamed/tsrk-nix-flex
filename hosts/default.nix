@@ -15,9 +15,8 @@ let
       modules =
         let
           base = self.nixosModules.profile-base;
-          global = { config, ... }: {
-            imports = [ self.nixosModules.hostname ];
-            system.name = config.tsrk.networking.hostname.base + "-" + imageName;
+          global = {
+            system.name = imageName;
             nix.nixPath = [
               "nixpkgs=${nixpkgs}"
               "nixpkgs-unstable=${nixpkgsUnstable}"
