@@ -93,6 +93,11 @@
             pkgSet = pkgSet system;
             inherit inputs;
           };
+
+          nixosConfigurations = import ./hosts (lib.recursiveUpdate inputs {
+            inherit lib system;
+            pkgSet = pkgSet system;
+          });
         };
 
       allOutputs = eachDefaultSystem (system:
