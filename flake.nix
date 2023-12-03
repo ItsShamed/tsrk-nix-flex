@@ -42,6 +42,8 @@
       url = "github:nix-community/nixvim/nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs =
@@ -59,6 +61,8 @@
 
     , home-manager
     , nixvim
+
+    , agenix
     , ...
     } @ inputs:
     let
