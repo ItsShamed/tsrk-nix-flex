@@ -4,7 +4,7 @@ let
   cfg = config.tsrk.packages.csharp;
 in
 {
-  option = {
+  options = {
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
 
