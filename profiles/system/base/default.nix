@@ -2,7 +2,7 @@
 
 {
   i18n.defaultLocale = "en.UTF-8";
-  i18.extraLocaleSettings = {
+  i18n.extraLocaleSettings = {
     LANGUAGE = "en:en_US:C:fr_FR";
     LC_TIME = "en_DK.UTF-8";
     LC_MEASUREMENT = "fr_FR.UTF-8";
