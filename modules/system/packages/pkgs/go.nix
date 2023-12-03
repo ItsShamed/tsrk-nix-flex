@@ -11,7 +11,7 @@ in
     };
   };
 
-  config = lib.mkIg cfg.enable {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       go
       gox
