@@ -6,7 +6,6 @@
     self.nixosModules.packages
     self.nixosModules.disks
     self.nixosModules.sshd
-    inputs.agenix.nixosModules.default
   ];
 
   i18n.defaultLocale = "en.UTF-8";
