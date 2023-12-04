@@ -3,7 +3,7 @@
 {
   options = {
     tsrk.sddm = {
-      enable = lib.options.mkEnableOptions "sddm as a display manager";
+      enable = lib.options.mkEnableOption "sddm as a display manager";
     };
   };
 
