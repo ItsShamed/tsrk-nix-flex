@@ -1,6 +1,7 @@
 { config, lib, inputs, pkgs, ... }:
 
 {
+  imports = [ inputs.nix-gaming.nixosModules.pipewireLowLatency ];
   options = {
     tsrk.sound = {
       enable = lib.options.mkEnableOption "hearing things (yes it's a feature you have the choice to not enable)";
@@ -21,7 +22,6 @@
   };
 
   config = lib.mkIf config.tsrk.sound {
-    imports = [ inputs.nix-gaming.nixosModules.pipewireLowLatency ];
     services.pipewire = {
       enable = true;
       alsa.enable = true;
