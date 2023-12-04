@@ -14,7 +14,6 @@ let
       imageName = lib.strings.removeSuffix ".nix" (builtins.baseNameOf module);
       modules =
         let
-          base = self.nixosModules.profile-base;
           global = {
             system.name = imageName;
             nix.nixPath = [
@@ -35,7 +34,7 @@ let
           };
           imported = import module;
         in
-        [ base global imported ];
+        [ global imported ];
     in
     {
       name = imageName;
