@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, options, ... }:
 let
   keypair = {
     options = {
@@ -12,6 +12,13 @@ let
       };
     };
   };
+
+  checkKey = algo: keyType:
+    let
+      cfg = config.tsrk.sshd.customKeyPair."${algo}"."${keyType}";
+      opt = options.tsrk.sshd.customKeyPair."${algo}"."${keyType}".default;
+    in
+    lib.trivial.warnIf (cfg == opt) "using default ${algo} SSH host keys. DO NOT USE THIS IN PRODUCTION!!!!" opt;
 in
 {
   options = {
@@ -22,10 +29,18 @@ in
         rsa = lib.options.mkOption {
           description = "The RSA keypair";
           type = lib.types.submodule keypair;
+          default = {
+            private = ./ssh_host_rsa_key;
+            public = ./ssh_host_rsa_key.pub;
+          };
         };
         ed25519 = lib.options.mkOption {
           description = "The ED25519 keypair";
           type = lib.types.submodule keypair;
+          default = {
+            private = ./ssh_host_ed25519_key;
+            public = ./ssh_host_ed25519_key.pub;
+          };
         };
       };
     };
@@ -44,35 +59,25 @@ in
         };
       }
     ] ++ (lib.lists.optional config.tsrk.sshd.customKeyPair {
-    age.secrets = {
-      ssh_host_ed25519_key = {
-        file = ./ssh_host_ed25519_key.age;
-        mode = "600";
-      };
-      ssh_host_rsa_key = {
-        file = ./ssh_host_rsa_key.age;
-        mode = "600";
-      };
-    };
 
     environment.etc = {
       # Private keys
       "ssh/ssh_host_rsa_key" = {
-        source = config.tsrk.sshd.customKeyPair.rsa.private;
+        source = checkKey "rsa" "private";
         mode = "0600";
       };
       "ssh/ssh_host_ed25519_key" = {
-        source = config.tsrk.sshd.customKeyPair.ed25519.private;
+        source = checkKey "ed25519" "private";
         mode = "0600";
       };
 
       # Public keys
       "ssh/ssh_host_rsa_key.pub" = {
-        source = config.tsrk.sshd.customKeyPair.rsa.public;
+        source = checkKey "rsa" "public";
         mode = "0600";
       };
       "ssh/ssh_host_ed25519_key.pub" = {
-        source = config.tsrk.sshd.customKeyPair.ed25519.public;
+        source = checkKey "ed25519" "public";
         mode = "0600";
       };
     };
