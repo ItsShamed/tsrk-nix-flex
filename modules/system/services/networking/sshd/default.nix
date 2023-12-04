@@ -13,12 +13,11 @@ let
     };
   };
 
-  checkKey = algo: keyType:
+  checkKey = algo: keyType: against:
     let
       cfg = config.tsrk.sshd.customKeyPair."${algo}"."${keyType}";
-      opt = options.tsrk.sshd.customKeyPair."${algo}"."${keyType}".default;
     in
-    lib.trivial.warnIf (cfg == opt) "using default ${algo} SSH host keys. DO NOT USE THIS IN PRODUCTION!!!!" opt;
+    lib.trivial.warnIf (cfg == against) "using default ${algo} SSH host keys. DO NOT USE THIS IN PRODUCTION!!!!" cfg;
 in
 {
   options = {
@@ -63,21 +62,21 @@ in
     environment.etc = {
       # Private keys
       "ssh/ssh_host_rsa_key" = {
-        source = checkKey "rsa" "private";
+        source = checkKey "rsa" "private" ./ssh_host_rsa_key;
         mode = "0600";
       };
       "ssh/ssh_host_ed25519_key" = {
-        source = checkKey "ed25519" "private";
+        source = checkKey "ed25519" "private" ./ssh_host_ed25519_key;
         mode = "0600";
       };
 
       # Public keys
       "ssh/ssh_host_rsa_key.pub" = {
-        source = checkKey "rsa" "public";
+        source = checkKey "rsa" "public" ./ssh_host_rsa_key.pub;
         mode = "0600";
       };
       "ssh/ssh_host_ed25519_key.pub" = {
-        source = checkKey "ed25519" "public";
+        source = checkKey "ed25519" "public" ./ssh_host_ed25519_key.pub;
         mode = "0600";
       };
     };
