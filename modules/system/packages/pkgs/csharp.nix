@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.tsrk.packages.csharp;
+  cfg = config.tsrk.packages.pkgs.csharp;
 in
 {
   options = {
