@@ -19,7 +19,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    tsrk.packages.pkgs.android.java = lib.mkDefault true;
+    tsrk.packages.pkgs.java.enable = lib.mkDefault true;
     programs.adb.enable = true;
 
     environment.systemPackages =
