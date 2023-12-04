@@ -1,7 +1,7 @@
 { config, lib, self, host, ... }:
 
 let
-  cfg = config.tsrk.networking;
+  cfg = config.tsrk.networking.hostname;
 in
 {
   options = {
