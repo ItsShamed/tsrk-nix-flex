@@ -57,7 +57,7 @@ in
           };
         };
       }
-    ] ++ (lib.lists.optional config.tsrk.sshd.customKeyPair {
+    ] ++ (lib.lists.optional config.tsrk.sshd.customKeyPair.enable {
 
     environment.etc = {
       # Private keys
