@@ -3,6 +3,7 @@
 {
 
   imports = [
+    self.nixosModules.profile-base
     self.nixosModules.bluetooth
     self.nixosModules.sddm
     self.nixosModules.audio
