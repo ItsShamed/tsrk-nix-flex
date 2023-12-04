@@ -1,10 +1,33 @@
 { config, lib, ... }:
-
+let
+  keypair = {
+    options = {
+      private = lib.options.mkOption {
+        type = lib.types.path;
+        description = "Private key";
+      };
+      public = lib.options.mkOption {
+        type = lib.types.path;
+        description = "Public key";
+      };
+    };
+  };
+in
 {
   options = {
     tsrk.sshd = {
       enable = lib.options.mkEnableOption "OpenSSH daemon";
-      customKeyPair = lib.options.mkEnableOption "custom SSH Host keypairs";
+      customKeyPair = {
+        enable = lib.options.mkEnableOption "custom SSH Host keypairs";
+        rsa = lib.options.mkOption {
+          description = "The RSA keypair";
+          type = lib.types.submodule keypair;
+        };
+        ed25519 = lib.options.mkOption {
+          description = "The ED25519 keypair";
+          type = lib.types.submodule keypair;
+        };
+      };
     };
   };
 
@@ -35,21 +58,21 @@
     environment.etc = {
       # Private keys
       "ssh/ssh_host_rsa_key" = {
-        source = config.age.secrets.ssh_host_rsa_key.path;
+        source = config.tsrk.sshd.customKeyPair.rsa.private;
         mode = "0600";
       };
       "ssh/ssh_host_ed25519_key" = {
-        source = config.age.secrets.ssh_host_ed25519_key.path;
+        source = config.tsrk.sshd.customKeyPair.ed25519.private;
         mode = "0600";
       };
 
       # Public keys
       "ssh/ssh_host_rsa_key.pub" = {
-        source = ./ssh_host_rsa_key.pub;
+        source = config.tsrk.sshd.customKeyPair.rsa.public;
         mode = "0600";
       };
       "ssh/ssh_host_ed25519_key.pub" = {
-        source = ./ssh_host_ed25519_key.pub;
+        source = config.tsrk.sshd.customKeyPair.ed25519.public;
         mode = "0600";
       };
     };
