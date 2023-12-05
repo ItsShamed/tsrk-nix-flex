@@ -26,11 +26,9 @@
       trusted-users = [ "root" "@wheel" ];
       system-features = [ "kvm" "big-parrallel" ];
       substituters = [
-        "https://s3.cri.epita.fr/cri-nix-cache.s3.cri.epita.fr" # We never know, I use their flake so we might as well reduce the network overhead
         "https://nix-gaming.cachix.org"
       ];
       trusted-public-keys = [
-        "cache.nix.cri.epita.fr:qDIfJpZWGBWaGXKO3wZL1zmC+DikhMwFRO4RVE6VVeo="
         "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       ];
     };
