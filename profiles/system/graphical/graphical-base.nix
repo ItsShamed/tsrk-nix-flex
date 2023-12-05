@@ -9,6 +9,8 @@
     self.nixosModules.audio
   ];
 
+  services.xserver.enable = lib.mkForce true;
+
   tsrk = {
     bluetooth.enable = lib.mkDefault true;
     sddm.enable = lib.mkDefault true;
