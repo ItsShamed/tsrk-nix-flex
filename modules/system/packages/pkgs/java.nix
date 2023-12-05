@@ -10,15 +10,15 @@ in
 
       ide = {
         enable = (lib.options.mkEnableOption "the Java IDE.") // { default = true; };
-        package = lib.options.mkPackageOption pkgs "Java IDE" {
-          default = pkgs.jetbrains.idea-ultimate;
-          example = pkgs.jetbrains.idea-community; # hint: you also have pkgs.eclipses.eclipse-java for those insane enough to use that
+        package = lib.options.mkPackageOption pkgs.jetbrains "Java IDE" {
+          default = [ "idea-ultimate" ];
+          example = "pkgs.jetbrains.idea-community"; # hint: you also have pkgs.eclipses.eclipse-java for those insane enough to use that
         };
       };
 
       jdk.package = lib.options.mkPackageOption pkgs "Java JDK" {
-        default = pkgs.jdk;
-        example = pkgs.jdk11; # Other JDKs like Azul Zulu also works.
+        default = [ "jdk" ];
+        example = "pkgs.jdk11"; # Other JDKs like Azul Zulu also works.
         extraDescription = "Other JDKs like Azul Zulu might also work.";
       };
 
@@ -27,8 +27,8 @@ in
       gradle = {
         enable = lib.options.mkEnableOption "Gradle";
         package = lib.options.mkPackageOption pkgs "Gradle" {
-          default = pkgs.gradle;
-          example = pkgs.gradle_7;
+          default = [ "gradle" ];
+          example = "pkgs.gradle_7";
         };
       };
     };

@@ -9,7 +9,7 @@ in
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
 
       package = lib.options.mkPackageOption pkgs ".NET" {
-        default = pkgs.dotnet-sdk_7;
+        default = [ "dotnet-sdk_7" ];
       };
 
       ide = {
@@ -19,9 +19,9 @@ in
             default = true;
           };
 
-        package = lib.options.mkPackageOption pkgs ".NET IDE" {
+        package = lib.options.mkPackageOption pkgs.jetbrains ".NET IDE" {
           default =
-            pkgs.jetbrains.rider; # Sorry not sorry, school free license is yummy
+            [ "rider" ]; # Sorry not sorry, school free license is yummy
         };
       };
     };
