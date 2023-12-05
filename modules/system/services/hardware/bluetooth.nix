@@ -8,7 +8,6 @@
   config = lib.mkIf config.tsrk.bluetooth.enable {
     hardware.bluetooth = {
       enable = true;
-      package = pkgs.bluezFull;
     };
 
     services.blueman.enable = true;
