@@ -9,7 +9,7 @@
     environment.systemPackages = with pkgs; [
       fuse
       fuse3
-      fuseio
+      fuseiso
       sshfs
 
       ntfs3g # To transfer Windows backups
