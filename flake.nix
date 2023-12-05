@@ -14,15 +14,6 @@
       flake = false;
     };
 
-    epita-forge = {
-      url = "git+https://gitlab.cri.epita.fr/cri/infrastructure/nixpie.git";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgsUnstable.follows = "nixpkgsUnstable";
-        nixpkgsMaster.follows = "nixpkgsMaster";
-      };
-    };
-
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,8 +42,6 @@
     , nixpkgs
     , nixpkgsUnstable
     , nixpkgsMaster
-
-    , epita-forge
 
     , nix-gaming
     , futils
