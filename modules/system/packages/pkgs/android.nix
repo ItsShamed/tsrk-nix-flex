@@ -11,8 +11,8 @@ in
         enable = (lib.options.mkEnableOption "Android Studio (IDE)")
           // { default = true; };
         package = lib.options.mkPackageOption pkgs "Android Studio" {
-          default = pkgs.android-studio;
-          example = pkgs.androidStudioPackages.beta;
+          default = [ "android-studio" ];
+          example = "pkgs.androidStudioPackages.beta";
         };
       };
     };
