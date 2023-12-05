@@ -21,7 +21,7 @@
     };
   };
 
-  config = lib.mkIf config.tsrk.sound {
+  config = lib.mkIf config.tsrk.sound.enable {
     services.pipewire = {
       enable = true;
       alsa.enable = true;
