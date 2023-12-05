@@ -17,7 +17,7 @@ in
   config = lib.mkIf config.tsrk.qwerty-fr.enable {
     services.xserver.extraLayouts.us_qwerty-fr = {
       description =
-        "QWERTY-based layout. Type EU languages, greek, math, currencies, & more!";
+        "QWERTY-based layout. Type EU languages, greek, math, currencies, and more!";
       languages = [ "eng" "fra" "deu" "spa" "grc" ];
       symbolsFile = "${qwerty-fr}/linux/us_qwerty-fr";
     };
