@@ -20,6 +20,7 @@ let
               "nixpkgs=${nixpkgs}"
               "nixpkgs-unstable=${nixpkgsUnstable}"
               "nixpkgs-master=${nixpkgsMaster}"
+              "nixos-config=${self}"
             ];
 
             nix.registry = {
