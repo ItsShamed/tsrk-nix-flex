@@ -10,7 +10,7 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
-    LANGUAGE = "en_US:C:fr_FR";
+    LANGUAGE = "en_US";
     LC_TIME = "en_DK.UTF-8";
     LC_MEASUREMENT = "fr_FR.UTF-8";
   };
