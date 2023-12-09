@@ -59,27 +59,27 @@ in
       }
       (lib.mkIf config.tsrk.sshd.customKeyPair.enable {
 
-          environment.etc = {
-            # Private keys
-            "ssh/ssh_host_rsa_key" = {
-              source = checkKey "rsa" "private" ./ssh_host_rsa_key;
-              mode = "0600";
-            };
-            "ssh/ssh_host_ed25519_key" = {
-              source = checkKey "ed25519" "private" ./ssh_host_ed25519_key;
-              mode = "0600";
-            };
-
-            # Public keys
-            "ssh/ssh_host_rsa_key.pub" = {
-              source = checkKey "rsa" "public" ./ssh_host_rsa_key.pub;
-              mode = "0600";
-            };
-            "ssh/ssh_host_ed25519_key.pub" = {
-              source = checkKey "ed25519" "public" ./ssh_host_ed25519_key.pub;
-              mode = "0600";
-            };
+        environment.etc = {
+          # Private keys
+          "ssh/ssh_host_rsa_key" = {
+            source = checkKey "rsa" "private" ./ssh_host_rsa_key;
+            mode = "0600";
           };
-        })
+          "ssh/ssh_host_ed25519_key" = {
+            source = checkKey "ed25519" "private" ./ssh_host_ed25519_key;
+            mode = "0600";
+          };
+
+          # Public keys
+          "ssh/ssh_host_rsa_key.pub" = {
+            source = checkKey "rsa" "public" ./ssh_host_rsa_key.pub;
+            mode = "0600";
+          };
+          "ssh/ssh_host_ed25519_key.pub" = {
+            source = checkKey "ed25519" "public" ./ssh_host_ed25519_key.pub;
+            mode = "0600";
+          };
+        };
+      })
     ]);
 }
