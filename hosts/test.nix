@@ -3,7 +3,7 @@
 {
   imports = [
     self.nixosModules.profile-graphical-x11
-    (self.lib.generateUser "test" { password = "quoicoubeh"; })
+    (self.lib.generateUser "test" { password = "quoicoubeh"; canSudo = true; })
   ];
 
 }
