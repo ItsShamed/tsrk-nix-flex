@@ -12,7 +12,7 @@ in
         default = false;
       };
       base = lib.options.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
         description = "The base hostname to use.";
         default = "tsrk";
       };
