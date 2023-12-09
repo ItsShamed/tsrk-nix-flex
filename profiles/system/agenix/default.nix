@@ -3,7 +3,6 @@
 {
   imports = [
     ./files.nix
-    self.nixosModules.sshd
   ];
 
   tsrk.sshd.customKeyPair = {
