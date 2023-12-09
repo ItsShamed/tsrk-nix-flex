@@ -16,7 +16,7 @@ in
         description = "The base hostname to use.";
         default = "tsrk";
       };
-      removeImageSuffix = lib.option.mkOption {
+      removeImageSuffix = lib.options.mkOption {
         type = lib.types.bool;
         description = "Whether to remove the suffix identifying the host you are using.";
         default = false;
@@ -24,10 +24,10 @@ in
     };
   };
 
-  config = {
-    networking.hostName = (self.lib.mkIfElse cfg.useDHCPHostname
-      ""
-      cfg.base + (lib.strings.optionalString (!cfg.removeImageSuffix) ("-" + host))
-    );
-  };
+  config = (self.lib.mkIfElse cfg.useDHCPHostname {
+      networking.hostName = "";
+    }
+    {
+      networking.hostName = cfg.base + (lib.strings.optionalString (!cfg.removeImageSuffix) ("-" + host));
+    });
 }
