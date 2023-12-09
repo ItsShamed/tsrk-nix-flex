@@ -1,0 +1,14 @@
+[
+  ./desktop/dunst.nix
+  ./desktop/i3.nix
+  ./desktop/kitty.nix
+  ./desktop/picom.nix
+  ./desktop/polybar.nix
+  ./epita/cunix.nix
+  ./epita/cunix.nix
+  ./nvim
+  ./packages
+  ./shell/bat.nix
+  ./shell/starship.nix
+  ./shell/zsh.nix
+]
