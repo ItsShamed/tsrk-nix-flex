@@ -19,7 +19,6 @@ let
     pkgs = pkgSet.pkgs;
 
     modules = modules ++ [
-      self.homeModules
       homeManagerBase
       inputs.nixvim.homeManagerModules.nixvim
     ];
