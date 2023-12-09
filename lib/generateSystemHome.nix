@@ -21,7 +21,6 @@ let
 
       home-manager."${name}" = {
         imports = modules ++ [
-          self.homeModules
           homeManagerBase
           inputs.nixvim.homeManagerModules.nixvim
         ];
