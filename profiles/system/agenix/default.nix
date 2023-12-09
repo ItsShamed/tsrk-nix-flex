@@ -6,7 +6,7 @@
     self.nixosModules.sshd
   ];
 
-  tsrk.sshd.customKeypair = {
+  tsrk.sshd.customKeyPair = {
     enable = true;
     rsa = {
       private = config.age.secrets.ssh_host_rsa_key.path;
