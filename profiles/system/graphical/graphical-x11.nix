@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./graphical-base.nix
     self.nixosModules.i3
     self.nixosModules.qwerty-fr
   ];
