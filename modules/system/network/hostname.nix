@@ -24,7 +24,8 @@ in
     };
   };
 
-  config = (self.lib.mkIfElse cfg.useDHCPHostname {
+  config = (self.lib.mkIfElse cfg.useDHCPHostname
+    {
       networking.hostName = "";
     }
     {
