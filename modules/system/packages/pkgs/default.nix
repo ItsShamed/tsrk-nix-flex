@@ -2,6 +2,7 @@
   imports = [
     ./android.nix
     ./base.nix
+    ./cDev.nix
     ./csharp.nix
     ./desktop.nix
     ./fs.nix
