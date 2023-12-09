@@ -21,6 +21,7 @@
         usbutils
 
         git
+        git-crypt
         wget
         diffutils
 
