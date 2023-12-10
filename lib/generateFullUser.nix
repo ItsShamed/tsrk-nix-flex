@@ -7,7 +7,7 @@ name:
 , homeDir ? "/home/${name}"
 
 , password ? null
-, passwordFile ? null
+, hashedPasswordFile ? null
 , initialPassword ? ""
 , canSudo ? false
 , moreGroups ? [ ]
@@ -16,6 +16,6 @@ name:
 {
   imports = [
     (generateSystemHome name { inherit modules system homeDir; })
-    (generateUser name { inherit password passwordFile canSudo moreGroups; })
+    (generateUser name { inherit password hashedPasswordFile canSudo moreGroups; })
   ];
 }

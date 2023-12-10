@@ -9,7 +9,7 @@
     self.nixosModules.hostname
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
-      passwordFile = config.age.secrets.passwd.path;
+      hashedPasswordFile = config.age.secrets.zpasswd.path;
     })
   ];
 }

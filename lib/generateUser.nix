@@ -1,7 +1,7 @@
 name:
 
 { password ? null
-, passwordFile ? null
+, hashedPasswordFile ? null
 , initialPassword ? ""
 , canSudo ? false
 , moreGroups ? [ ]
@@ -13,7 +13,7 @@ name:
 {
   users.users."${name}" = {
     inherit name;
-    inherit passwordFile password initialPassword;
+    inherit hashedPasswordFile password initialPassword;
     isNormalUser = true;
     extraGroups = [ "video" "audio" "input" ]
       ++ (lib.lists.optional canSudo "wheel")
