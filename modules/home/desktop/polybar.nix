@@ -13,7 +13,7 @@ let
     osConfig.tsrk.i3.enable else true;
 in
 {
-  services.polybar = lib.mkIf systemReady {
+  services.polybar = lib.mkIf (systemReady && config.tsrk.i3.enable) {
     enable = lib.mkDefault true;
     script = "polybar bar &";
 
