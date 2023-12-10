@@ -9,9 +9,9 @@ let
     pytest
     pyyaml
   ];
-  extraPythonPackages = lib.attrSets.attrValues cfg.extraPackages;
+  extraPythonPackages = lib.attrsets.attrValues cfg.extraPackages;
   resultingPythonPackages = ps:
-    builtins.flatten (builtins.map (pkgList: pkgList ps) ([ tsrkPythonPackages ] ++ extraPythonPackages));
+    lib.lists.flatten (builtins.map (pkgList: pkgList ps) ([ tsrkPythonPackages ] ++ extraPythonPackages));
 in
 {
   options = {
