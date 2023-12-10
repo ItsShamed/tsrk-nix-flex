@@ -10,3 +10,4 @@
 *.dll binary
 
 secrets.nix filter=git-crypt diff=git-crypt
+hosts/.tsrk-files/ssh_host_*_key filter=git-crypt diff=git-crypt
