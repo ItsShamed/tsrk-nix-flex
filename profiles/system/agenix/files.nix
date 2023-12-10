@@ -14,5 +14,9 @@
       file = ./files/ssh_host_rsa_key.age;
       mode = "600";
     };
+    passwd = {
+      file = ./files/passwd.age;
+      mode = "600";
+    };
   };
 }
