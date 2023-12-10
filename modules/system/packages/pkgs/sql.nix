@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.tsrk.pacakges.pkgs.sql;
+  cfg = config.tsrk.packages.pkgs.sql;
 in
 {
   options = {
