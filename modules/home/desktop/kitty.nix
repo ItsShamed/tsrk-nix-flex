@@ -11,7 +11,7 @@ let
     ];
   };
   systemReady = if osConfig ? tsrk.packages.pkgs.desktop.enable then
-    osConfig.tsrk.pacakges.pkgs.desktop.enable else true;
+    osConfig.tsrk.packages.pkgs.desktop.enable else true;
 in
 {
   config = lib.mkIf systemReady {
