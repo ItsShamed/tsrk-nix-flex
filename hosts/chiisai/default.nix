@@ -12,4 +12,16 @@
       hashedPasswordFile = config.age.secrets.zpasswd.path;
     })
   ];
+
+  tsrk.sshd.customKeyPair = {
+    enable = true;
+    rsa = {
+      private = ../.tsrk-files/ssh_host_rsa_key;
+      public = ../.tsrk-files/ssh_host_rsa_key.pub;
+    };
+    ed25519 = {
+      private = ../.tsrk-files/ssh_host_ed25519_key;
+      public = ../.tsrk-files/ssh_host_ed25519_key.pub;
+    };
+  };
 }
