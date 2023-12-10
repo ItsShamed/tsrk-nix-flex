@@ -11,11 +11,11 @@ name:
 , initialPassword ? ""
 , canSudo ? false
 , moreGroups ? [ ]
-} @ setup:
+}:
 
 {
   imports = [
-    generateSystemHome name { inherit (setup) modules system homeDir; }
-    generateUser name { inherit (setup) password passwordFile canSudo moreGroups; }
+    (generateSystemHome name { inherit modules system homeDir; })
+    (generateUser name { inherit password passwordFile canSudo moreGroups; })
   ];
 }
