@@ -1,4 +1,4 @@
-{ self, config, ... }:
+{ self, config, lib, ... }:
 
 {
   imports = [
@@ -35,4 +35,9 @@
       public = ../.tsrk-files/ssh_host_ed25519_key.pub;
     };
   };
+
+  age.identityPaths = lib.mkOptionDefault [
+    ../.tsrk-files/ssh_host_ed25519_key
+    ../.tsrk-files/ssh_host_rsa_key
+  ];
 }
