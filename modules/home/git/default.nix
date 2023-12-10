@@ -7,7 +7,7 @@
 
   programs.git = {
     enable = true;
-    lfs = lib.mkDefault true;
+    lfs.enable = lib.mkDefault true;
     signing = {
       signByDefault = lib.mkDefault true;
       key = lib.mkDefault "D1C2AD054267D54D248A4F43EBD46BB3049B56D6";
