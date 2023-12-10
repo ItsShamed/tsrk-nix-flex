@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.tsrk.pacakges.pkgs.python;
+  cfg = config.tsrk.packages.pkgs.python;
   tsrkPythonPackages = pythonPackages: with pythonPackages; [
     pip
     virtualenv
