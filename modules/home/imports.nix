@@ -6,6 +6,7 @@
   ./desktop/polybar.nix
   ./epita/cunix.nix
   ./epita/cunix.nix
+  ./git
   ./nvim
   ./packages
   ./shell/bat.nix
