@@ -10,6 +10,17 @@
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
+      modules = [
+        ./user.nix
+      ];
+    })
+
+    (self.lib.generateFullUser "test" {
+      canSudo = true;
+      password = "quoicoubeh";
+      modules = [
+        ./user.nix
+      ];
     })
   ];
 
