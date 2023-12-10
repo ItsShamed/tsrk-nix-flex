@@ -43,6 +43,9 @@ let
         inherit system modules;
         specialArgs = {
           inherit inputs self;
+          inherit (inputs) home-manager;
+          vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgsUnstable) lib; };
+          gaming = inputs.nix-gaming.packages.${system};
           host = imageName;
         };
       };

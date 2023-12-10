@@ -1,11 +1,11 @@
-{ config, pkgs, lib, osConfig ? {}, ... }:
+{ config, pkgs, lib, osConfig ? {}, home-manager, ... }:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
   cfg = config.xsession.windowManager.i3.config;
   systemReady = if osConfig ? tsrk.i3.enable then
     osConfig.tsrk.i3.enable else true;
-  lockCommand = if config.tsrk.epitaRestrictions then
+  lockCommand = if config.tsrk.i3.epitaRestrictions then
     "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
     else "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
 in
@@ -21,9 +21,9 @@ in
       background = lib.options.mkOption {
         description = "Path to the main wallpaper background.";
         type = lib.types.path;
-        default = ./files/torekka.png;
+        default = ./files/bg-no-logo.png;
       };
-      epitaRestrictions = lib.options.mkEnable "compliance with EPITA
+      epitaRestrictions = lib.options.mkEnableOption "compliance with EPITA
         regulations by using stock i3lock as the locker"; 
     };
   };
