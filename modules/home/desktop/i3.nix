@@ -184,8 +184,15 @@ in
       };
     };
 
-    home.activation.setup-lockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) (home-manager.lib.hm.dag.entryAfter [ "installPackages" ] ''
-        ${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}
-        '');
+    systemd.user.services.setup-betterlockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
+      };
+    };
   };
 }
