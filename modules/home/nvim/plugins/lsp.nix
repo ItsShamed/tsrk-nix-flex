@@ -2,7 +2,7 @@
 
 {
   programs.nixvim.plugins = {
-    null-ls.enable = true;
+    none-ls.enable = true;
     lsp-format.enable = true;
     lsp = {
       enable = true;
