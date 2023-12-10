@@ -4,9 +4,9 @@
   programs.nixvim = {
     plugins.indent-blankline = {
       enable = true;
-      char = "▏";
-      contextChar = "▏";
-      filetypeExclude = [
+      indent.char = "▏";
+      scope.char = "▏";
+      exclude.filetypes = [
         "help"
         "startify"
         "dashboard"
@@ -21,8 +21,7 @@
         "man"
         ""
       ];
-      useTreesitter = true;
-      showCurrentContext = true;
+      scope.enabled = true;
     };
   };
 }

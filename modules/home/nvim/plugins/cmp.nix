@@ -1,6 +1,6 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, vimHelpers, ... }:
 
-with self.lib.lua;
+with vimHelpers;
 let
   icons = {
     Array = "";

@@ -1,49 +1,63 @@
 { config, lib, pkgs, ... }:
 
 let
-  keymap = action: desc: {
-    inherit action desc;
-    silent = true;
+  keymap = action: desc: mode: {
+    inherit action;
+    inherit mode;
+    options = {
+      inherit desc;
+      silent = true;
+    };
   };
 
-  keymapLua = action: desc: {
-    inherit action desc;
-    silent = true;
+  keymapLua = action: desc: mode: {
+    inherit action;
+    inherit mode;
+    options = {
+      inherit desc;
+      silent = true;
+    };
     lua = true;
   };
 
-  keymapNoD = action: keymap action null;
-  keymapLuaNoD = action: keymapLua action null;
+  keymapNoD = action: mode: keymap action null mode;
+  keymapLuaNoD = action: mode: keymapLua action null mode;
+
+  newSettingsConvert = attr:
+    lib.lists.flatten
+    (builtins.map
+     (val: lib.attrsets.attrValues (lib.attrsets.mapAttrs (key: opts: opts // { inherit key; }) val))
+     (lib.attrsets.attrValues attr));
 in
 {
   programs.nixvim = {
     globals.mapleader = " ";
 
-    maps = {
+    keymaps = newSettingsConvert {
       normalVisualOp = {
-        "<Space>" = keymapNoD "<Nop>";
+        "<Space>" = keymapNoD "<Nop>" "";
       };
 
       normal = {
         # Window nav
-        "<C-h>" = keymapNoD "<C-w>h";
-        "<C-j>" = keymapNoD "<C-w>j";
-        "<C-k>" = keymapNoD "<C-w>k";
-        "<C-l>" = keymapNoD "<C-w>l";
+        "<C-h>" = keymapNoD "<C-w>h" "n";
+        "<C-j>" = keymapNoD "<C-w>j" "n";
+        "<C-k>" = keymapNoD "<C-w>k" "n";
+        "<C-l>" = keymapNoD "<C-w>l" "n";
 
         # Window resize
-        "<C-Up>" = keymapNoD ":resize -2<CR>";
-        "<C-Down>" = keymapNoD ":resize +2<CR>";
-        "<C-Left>" = keymapNoD ":vertical resize -2<CR>";
-        "<C-Right>" = keymapNoD ":vertical resize +2<CR>";
+        "<C-Up>" = keymapNoD ":resize -2<CR>" "n";
+        "<C-Down>" = keymapNoD ":resize +2<CR>" "n";
+        "<C-Left>" = keymapNoD ":vertical resize -2<CR>" "n";
+        "<C-Right>" = keymapNoD ":vertical resize +2<CR>" "n";
 
         # Buffers / tab
-        "<S-l>" = keymapNoD ":bnext<CR>";
-        "<S-h>" = keymapNoD ":bprevious<CR>";
+        "<S-l>" = keymapNoD ":bnext<CR>" "n";
+        "<S-h>" = keymapNoD ":bprevious<CR>" "n";
 
         # Move current line like VSCode
-        "<A-j>" = ":m .+1<CR>==";
-        "<A-k>" = ":m .-2<CR>==";
+        "<A-j>" = keymapNoD ":m .+1<CR>==" "n";
+        "<A-k>" = keymapNoD ":m .-2<CR>==" "n";
 
         # "<leader>h" = keymap "<cmd>nohlsearch<CR>" "Clear highlights";
         # "<leader>w" = keymap "<cmd>w!<CR>" "Save";
@@ -58,23 +72,23 @@ in
       };
 
       insert = {
-        "jk" = keymapNoD "<ESC>";
+        "jk" = keymapNoD "<ESC>" "i";
 
         # Move current line like VSCode
-        "<A-j>" = keymapNoD "<Esc>:m .+1<CR>==gi";
-        "<A-k>" = keymapNoD "<Esc>:m .-2<CR>==gi";
+        "<A-j>" = keymapNoD "<Esc>:m .+1<CR>==gi" "i";
+        "<A-k>" = keymapNoD "<Esc>:m .-2<CR>==gi" "i";
       };
 
       visual = {
-        "<" = keymapNoD "<gv";
-        ">" = keymapNoD ">gv";
+        "<" = keymapNoD "<gv" "v";
+        ">" = keymapNoD ">gv" "v";
       };
 
       visualOnly = {
-        "<A-j>" = keymapNoD ":m '>+1<CR>gv-gv";
-        "<A-k>" = keymapNoD ":m '<-2<CR>gv-gv";
-        "<S-j>" = keymapNoD ":m '>+1<CR>gv-gv";
-        "<S-k>" = keymapNoD ":m '<-2<CR>gv-gv";
+        "<A-j>" = keymapNoD ":m '>+1<CR>gv-gv" "x";
+        "<A-k>" = keymapNoD ":m '<-2<CR>gv-gv" "x";
+        "<S-j>" = keymapNoD ":m '>+1<CR>gv-gv" "x";
+        "<S-k>" = keymapNoD ":m '<-2<CR>gv-gv" "x";
       };
     };
   };
