@@ -40,4 +40,9 @@
     ../.tsrk-files/ssh_host_ed25519_key
     ../.tsrk-files/ssh_host_rsa_key
   ];
+
+  tsrk.packages.pkgs = {
+    cDev.enable = true;
+    java.enable = true;
+  };
 }
