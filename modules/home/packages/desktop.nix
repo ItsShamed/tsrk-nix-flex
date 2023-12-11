@@ -24,7 +24,6 @@ in
         "IosevkaTerm"
         "JetBrainsMono"
         "Meslo"
-        "FiraCode"
       ];
     })
     iosevka
