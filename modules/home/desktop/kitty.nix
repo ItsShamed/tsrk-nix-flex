@@ -7,7 +7,6 @@ let
         "IosevkaTerm"
         "JetBrainsMono"
         "Meslo"
-        "FiraCode"
     ];
   };
   systemReady = if osConfig ? tsrk.packages.pkgs.desktop.enable then
