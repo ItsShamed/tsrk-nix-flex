@@ -16,7 +16,6 @@
       ninja
 
       gcc
-      (lib.setPrio (gcc.meta.priority + 1) gcc-unwrapped)
 
       criterion
       gtest
