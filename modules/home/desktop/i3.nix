@@ -42,7 +42,10 @@ in
           command = "feh --bg-scale ${config.tsrk.i3.background}";
           always = true;
         }
-        ];
+        ] ++ (lib.lists.optional (config.services.polybar.enable) {
+            command = "systemctl --user restart polybar"
+            always = true;
+            });
 
         window.titlebar = false;
         window.commands = [
