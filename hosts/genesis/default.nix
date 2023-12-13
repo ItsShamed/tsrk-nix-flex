@@ -1,9 +1,10 @@
-{ self, config, lib, ... }:
+{ self, config, lib, inputs, ... }:
 
 {
   imports = [
     self.nixosModules.profile-agenix
     self.nixosModules.hostname
+    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
     (self.lib.generateSystemHome "nixos" {
       modules = [
         ./user.nix
