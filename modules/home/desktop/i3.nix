@@ -43,7 +43,7 @@ in
           always = true;
         }
         ] ++ (lib.lists.optional (config.services.polybar.enable) {
-            command = "systemctl --user restart polybar"
+            command = "systemctl --user restart polybar";
             always = true;
             });
 
