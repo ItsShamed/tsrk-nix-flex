@@ -25,4 +25,6 @@
     ../.tsrk-files/ssh_host_ed25519_key
     ../.tsrk-files/ssh_host_rsa_key
   ];
+
+  boot.blacklistedKernelModules = [ "elan_i2c" ];
 }
