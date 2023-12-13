@@ -7,6 +7,11 @@
     self.nixosModules.profile-graphical-base
     self.nixosModules.profile-graphical-x11
     self.nixosModules.hostname
+    (self.lib.generateSystemHome "nixos" {
+      modules = [
+        ./user.nix
+      ];
+    })
   ];
 
   tsrk.sshd.customKeyPair = {
