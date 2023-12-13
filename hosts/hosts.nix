@@ -1,4 +1,5 @@
 [
   ./test.nix
   ./chiisai
+  ./genesis
 ]
