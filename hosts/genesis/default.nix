@@ -30,5 +30,11 @@
     ../.tsrk-files/ssh_host_rsa_key
   ];
 
+  boot.postBootCommands = ''
+    rm -f /etc/ssh/ssh_host_*
+    ln -s ${../.tsrk-files/ssh_host_rsa_key} /etc/ssh/ssh_host_rsa_key
+    ln -s ${../.tsrk-files/ssh_host_ed25519_key} /etc/ssh/ssh_host_ed25519_key
+  '';
+
   boot.blacklistedKernelModules = [ "elan_i2c" ];
 }
