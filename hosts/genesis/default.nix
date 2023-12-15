@@ -37,4 +37,5 @@
   '';
 
   boot.blacklistedKernelModules = [ "elan_i2c" ];
+  boot.plymouth.enable = lib.mkForce false;
 }
