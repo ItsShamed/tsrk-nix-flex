@@ -11,6 +11,7 @@
         ./user.nix
       ];
     })
+    self.nixosModules.profile-iso
   ];
 
   tsrk.sshd.customKeyPair = {
