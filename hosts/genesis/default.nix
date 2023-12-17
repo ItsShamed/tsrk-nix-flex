@@ -37,6 +37,13 @@
   '';
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  boot.kernelPatches = [
+    {
+      name = "enableLogo";
+      patch = null;
+      extraStructuredConfig.LOGO = lib.mkImageMediaOverride lib.kernel.yes;
+    }
+  ];
 
   boot.blacklistedKernelModules = [ "elan_i2c" ];
   boot.plymouth.enable = lib.mkForce false;
