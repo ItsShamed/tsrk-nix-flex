@@ -92,7 +92,7 @@
   };
 
   boot.initrd.postMountCommands = ''
-    echo "\x1b[0;33m    /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               @@@@@@@@@@"
+    printf "\033[0;33m    /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               @@@@@@@@@@\n"
     echo '  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@           @@@@@@@@@@'
     echo ' @@@@@@@@@                  @@@@@@@       @@@@@@@@@@@'
     echo '@@@@@@@                     @@@@@@@   @@@@@@@@@@@'
@@ -105,7 +105,7 @@
     echo '    @@@@@@@@                @@@@@@@       @@@@@@@@@@'
     echo '   @@@@@@@/                 @@@@@@@           @@@@@@@@@@'
     echo '   @@@@@@@                  @@@@@@@               @@@@@@@@@@'
-    echo "\x1b[0;36mYou are currently booting on the \x1b[1;35m${host} \x1b[0;36m image\x1b[0m"
+    printf "\033[0;36mYou are currently booting on the \033[1;35m${host} \033[0;36m image\033[0m\n"
   '';
 
   system.stateVersion = "23.11";
