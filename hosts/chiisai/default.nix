@@ -41,6 +41,14 @@
     ../.tsrk-files/ssh_host_rsa_key
   ];
 
+  boot.kernelPatches = [
+    {
+      name = "enableLogo";
+      patch = null;
+      extraStructuredConfig.LOGO = lib.mkImageMediaOverride lib.kernel.yes;
+    }
+  ];
+
   tsrk.packages.pkgs = {
     cDev.enable = true;
     java.enable = true;
