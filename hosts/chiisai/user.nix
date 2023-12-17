@@ -4,7 +4,6 @@
   imports = [
     self.homeManagerModules.i3
     self.homeManagerModules.polybar
-    self.homeManagerModules.picom
     self.homeManagerModules.kitty
     self.homeManagerModules.dunst
     self.homeManagerModules.git
