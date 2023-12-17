@@ -14,14 +14,6 @@
         ./user.nix
       ];
     })
-
-    (self.lib.generateFullUser "test" {
-      canSudo = true;
-      password = "quoicoubeh";
-      modules = [
-        ./user.nix
-      ];
-    })
   ];
 
   tsrk.sshd.customKeyPair = {
