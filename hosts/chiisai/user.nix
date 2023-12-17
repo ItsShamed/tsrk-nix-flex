@@ -5,6 +5,7 @@
     self.homeManagerModules.i3
     self.homeManagerModules.polybar
     self.homeManagerModules.kitty
+    self.homeManagerModules.packages
     self.homeManagerModules.dunst
     self.homeManagerModules.git
     self.homeManagerModules.zsh
