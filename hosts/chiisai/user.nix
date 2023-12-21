@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, config, ... }:
 
 {
   imports = [
@@ -12,6 +12,9 @@
     self.homeManagerModules.starship
     self.homeManagerModules.bat
     self.homeManagerModules.nvim
+    self.homeManagerModules.thunderbird
+    config.age.secrets.epitaModule.path
   ];
+  age.secrets.epitaModule.file = ./epita.nix.age;
   tsrk.i3.enable = true;
 }
