@@ -108,7 +108,7 @@ in
         interval = 1;
 
         date = "";
-        date-alt = " %Y-%m%d";
+        date-alt = " %Y-%m-%d";
 
         time = "%l:%M:%S %p";
         time-alt = time;
