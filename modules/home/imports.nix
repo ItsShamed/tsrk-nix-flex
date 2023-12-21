@@ -4,8 +4,10 @@
   ./desktop/kitty.nix
   ./desktop/picom.nix
   ./desktop/polybar.nix
+  ./desktop/thunderbird.nix
   ./epita/cunix.nix
-  ./epita/cunix.nix
+  ./epita/remote.nix
+  ./epita/sql.nix
   ./git
   ./nvim
   ./packages
