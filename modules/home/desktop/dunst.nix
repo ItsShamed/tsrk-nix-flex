@@ -7,8 +7,8 @@
       global = {
         follow = "mouse";
 
-        width = 500;
-        height = 100;
+        width = "(50, 500)";
+        height = 500;
 
         origin = "top-right";
         offset = "10x50";
@@ -88,14 +88,20 @@
         foreground = "#FFFF00";
         timeout = 0;
       };
+      spotify = {
+        appname = "Spotify";
+        frame_color = "#1DB954";
+        alignment = "left";
+        ellipsize = "end";
+        min_icon_size = 128;
+        max_icon_size = 128;
+        horizontal_padding = 0;
+        icon_position = "left";
+        timeout = 5;
+      };
       scrot = {
         summary = "scrot";
         format = "<b>  %s</b>\\n%b";
-      };
-      spotify = {
-        appname = "Spotify";
-        corner_radius = 5;
-        frame_color = "#1DB954";
       };
     };
   };
