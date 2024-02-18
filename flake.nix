@@ -65,7 +65,7 @@
         };
 
       pkgSet = system: {
-        pkgs = importPkgs nixpkgs system;
+        pkgs = importPkgs nixpkgs system true;
         # pkgsUnstable = importPkgs nixpkgsUnstable system false;
         # pkgsMaster = importPkgs nixpkgsMaster system false;
       };
