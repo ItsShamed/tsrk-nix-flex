@@ -58,10 +58,15 @@
       inherit (nixpkgs) lib;
       inherit (futils.lib) eachDefaultSystem;
 
-      importPkgs = pkgs: system:
+      importPkgs = pkgs: system: withOverlays:
         import pkgs {
           inherit system;
-          config = { allowUnfree = true; };
+          config = {
+            allowUnfree = true;
+          };
+          overlays = [
+
+          ] ++ (lib.lists.optionals withOverlays import ./overlays)
         };
 
       pkgSet = system: {
