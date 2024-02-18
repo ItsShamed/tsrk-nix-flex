@@ -5,8 +5,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
+    # nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
     futils.url = "github:numtide/flake-utils";
     flake-compat = {
@@ -40,8 +40,8 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgsUnstable
-    , nixpkgsMaster
+    # , nixpkgsUnstable
+    # , nixpkgsMaster
 
     , nix-gaming
     , futils
@@ -66,8 +66,8 @@
 
       pkgSet = system: {
         pkgs = importPkgs nixpkgs system;
-        pkgsUnstable = importPkgs nixpkgsUnstable system;
-        pkgsMaster = importPkgs nixpkgsMaster system;
+        # pkgsUnstable = importPkgs nixpkgsUnstable system false;
+        # pkgsMaster = importPkgs nixpkgsMaster system false;
       };
 
       linuxOutputs =
