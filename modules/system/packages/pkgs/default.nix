@@ -3,6 +3,7 @@
     ./android.nix
     ./base.nix
     ./cDev.nix
+    ./cpp.nix
     ./csharp.nix
     ./desktop.nix
     ./fs.nix
