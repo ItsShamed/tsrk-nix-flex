@@ -1,7 +1,7 @@
 { lib
 , nixpkgs
-, nixpkgsUnstable
-, nixpkgsMaster
+# , nixpkgsUnstable
+# , nixpkgsMaster
 , pkgSet
 , self
 , system
@@ -18,15 +18,15 @@ let
             system.name = imageName;
             nix.nixPath = [
               "nixpkgs=${nixpkgs}"
-              "nixpkgs-unstable=${nixpkgsUnstable}"
-              "nixpkgs-master=${nixpkgsMaster}"
+              # "nixpkgs-unstable=${nixpkgsUnstable}"
+              # "nixpkgs-master=${nixpkgsMaster}"
               "nixos-config=${self}"
             ];
 
             nix.registry = {
               nixpkgs.flake = nixpkgs;
-              nixpkgsUnstable.flake = nixpkgsUnstable;
-              nixpkgsMaster.flake = nixpkgsMaster;
+              # nixpkgsUnstable.flake = nixpkgsUnstable;
+              # nixpkgsMaster.flake = nixpkgsMaster;
             };
 
             nixpkgs = {
@@ -44,7 +44,7 @@ let
         specialArgs = {
           inherit inputs self;
           inherit (inputs) home-manager;
-          vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgsUnstable) lib; };
+          vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
           gaming = inputs.nix-gaming.packages.${system};
           host = imageName;
         };
