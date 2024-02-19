@@ -28,7 +28,7 @@ name:
     inherit inputs;
     inherit (inputs) home-manager;
     hmLib = inputs.home-manager.lib.hm;
-    vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgsUnstable) lib; };
+    vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
     gaming = inputs.nix-gaming.packages.${system};
   };
 }
