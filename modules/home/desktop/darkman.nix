@@ -2,21 +2,21 @@
 
 let
   xsettingsd-light = pkgs.writeShellScriptBin "xsettingsd-light" ''
-        ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-dark/-light/' "${config.home.homeDirectory}/.xsettingsd"
-        ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-Dark/-Light/' "${config.home.homeDirectory}/.xsettingsd"
-        ${pkgs.killall}/bin/killall -HUP xsettingsd || true
-        ${pkgs.lxappearance}/bin/lxappearance &
-        ${pkgs.coreutils}/bin/sleep 1
-        ${pkgs.killall}/bin/killall .lxappearance-wrapped
-      '';
+    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-dark/-light/' "${config.home.homeDirectory}/.xsettingsd"
+    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-Dark/-Light/' "${config.home.homeDirectory}/.xsettingsd"
+    ${pkgs.killall}/bin/killall -HUP xsettingsd || true
+    ${pkgs.lxappearance}/bin/lxappearance &
+    ${pkgs.coreutils}/bin/sleep 1
+    ${pkgs.killall}/bin/killall .lxappearance-wrapped
+  '';
   xsettingsd-dark = pkgs.writeShellScriptBin "xsettingsd-dark" ''
-        ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-light/-dark/' "${config.home.homeDirectory}/.xsettingsd"
-        ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-Light/-Dark/' "${config.home.homeDirectory}/.xsettingsd"
-        ${pkgs.killall}/bin/killall -HUP xsettingsd || true
-        ${pkgs.lxappearance}/bin/lxappearance &
-        ${pkgs.coreutils}/bin/sleep 1
-        ${pkgs.killall}/bin/killall .lxappearance-wrapped
-      '';
+    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-light/-dark/' "${config.home.homeDirectory}/.xsettingsd"
+    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-Light/-Dark/' "${config.home.homeDirectory}/.xsettingsd"
+    ${pkgs.killall}/bin/killall -HUP xsettingsd || true
+    ${pkgs.lxappearance}/bin/lxappearance &
+    ${pkgs.coreutils}/bin/sleep 1
+    ${pkgs.killall}/bin/killall .lxappearance-wrapped
+  '';
 in
 {
   options = {

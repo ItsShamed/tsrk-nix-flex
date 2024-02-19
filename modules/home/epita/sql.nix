@@ -1,8 +1,9 @@
-{ config, pkgs, lib, osConfig ? {}, ... }:
+{ config, pkgs, lib, osConfig ? { }, ... }:
 
 let
-  systemReady = if osConfig ? tsrk.packages.pkgs.sql.enable then
-    osConfig.tsrk.packages.pkgs.sql.enable else true;
+  systemReady =
+    if osConfig ? tsrk.packages.pkgs.sql.enable then
+      osConfig.tsrk.packages.pkgs.sql.enable else true;
 in
 {
   options = {
@@ -52,18 +53,18 @@ in
 
     home.packages = with pkgs; [
       (writeShellScriptBin "restore_roger" ''
-       if [ $# -ne 1 ]; then
-       exit 1
-       fi
+        if [ $# -ne 1 ]; then
+        exit 1
+        fi
 
-       tar -Oxvf "$1" hello_roger_roger/roger_roger.dump > roger_roger.dump
-       shift 1
-       pg_restore -U postgres -O -c --if-exists -d roger_roger roger_roger.dump
-       '')
-        (writeShellScriptBin "setupsql" ''
-         createuser -s postgres
-         createdb -U postgres roger_roger
-         '')
+        tar -Oxvf "$1" hello_roger_roger/roger_roger.dump > roger_roger.dump
+        shift 1
+        pg_restore -U postgres -O -c --if-exists -d roger_roger roger_roger.dump
+      '')
+      (writeShellScriptBin "setupsql" ''
+        createuser -s postgres
+        createdb -U postgres roger_roger
+      '')
     ];
 
     home.sessionVariables = {

@@ -125,16 +125,16 @@ in
       };
       "<S-Tab>" = {
         action = ''
-        function(fallback)
-          local luasnip = require("luasnip")
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
+          function(fallback)
+            local luasnip = require("luasnip")
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
           end
-        end
         '';
         modes = [ "i" "s" ];
       };

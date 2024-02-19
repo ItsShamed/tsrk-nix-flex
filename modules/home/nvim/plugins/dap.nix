@@ -26,37 +26,37 @@
       };
       extensions.dap-ui = {
         enable = true;
-#        layouts = [
-#          {
-#            elements = [
-#              { id = "scopes"; size = 0.33; }
-#              { id = "breakpoints"; size = 0.17; }
-#              { id = "stacks"; size = 0.25; }
-#              { id = "watches"; size = 0.25; }
-#            ];
-#            size = 0.33;
-#            position = "right";
-#          }
-#          {
-#            elements = [
-#              { id = "repl"; size = 0.45; }
-#              { id = "console"; size = 0.55; }
-#            ];
-#            size = 0.27;
-#            position = "bottom";
-#          }
-#        ];
-#        floating = {
-#          border = "rounded";
-#          maxHeight = 0.9;
-#          maxWidth = 0.5;
-#        };
-#        render = {
-#          indent = 1;
-#          maxValueLines = 100;
-#        };
-#      };
-    };
+        #        layouts = [
+        #          {
+        #            elements = [
+        #              { id = "scopes"; size = 0.33; }
+        #              { id = "breakpoints"; size = 0.17; }
+        #              { id = "stacks"; size = 0.25; }
+        #              { id = "watches"; size = 0.25; }
+        #            ];
+        #            size = 0.33;
+        #            position = "right";
+        #          }
+        #          {
+        #            elements = [
+        #              { id = "repl"; size = 0.45; }
+        #              { id = "console"; size = 0.55; }
+        #            ];
+        #            size = 0.27;
+        #            position = "bottom";
+        #          }
+        #        ];
+        #        floating = {
+        #          border = "rounded";
+        #          maxHeight = 0.9;
+        #          maxWidth = 0.5;
+        #        };
+        #        render = {
+        #          indent = 1;
+        #          maxValueLines = 100;
+        #        };
+        #      };
+      };
     };
 
     extraConfigLuaPost = ''

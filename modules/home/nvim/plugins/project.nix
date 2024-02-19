@@ -7,7 +7,7 @@
       detectionMethods = [ "pattern" ];
       manualMode = false;
 
-      ignoreLsp = [];
+      ignoreLsp = [ ];
       showHidden = false;
       silentChdir = true;
       scopeChdir = "global";

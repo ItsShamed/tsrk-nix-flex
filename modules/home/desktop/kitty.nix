@@ -1,16 +1,17 @@
-{ config, pkgs, lib, osConfig ? {}, ... }:
+{ config, pkgs, lib, osConfig ? { }, ... }:
 
 let
   fonts = pkgs.nerdfonts.override {
     fonts = [
       "Iosevka"
-        "IosevkaTerm"
-        "JetBrainsMono"
-        "Meslo"
+      "IosevkaTerm"
+      "JetBrainsMono"
+      "Meslo"
     ];
   };
-  systemReady = if osConfig ? tsrk.packages.pkgs.desktop.enable then
-    osConfig.tsrk.packages.pkgs.desktop.enable else true;
+  systemReady =
+    if osConfig ? tsrk.packages.pkgs.desktop.enable then
+      osConfig.tsrk.packages.pkgs.desktop.enable else true;
 in
 {
   config = lib.mkIf systemReady {

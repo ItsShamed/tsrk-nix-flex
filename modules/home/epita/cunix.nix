@@ -1,8 +1,9 @@
-{ config, lib, osConfig ? {}, ... }:
+{ config, lib, osConfig ? { }, ... }:
 
 let
-  systemReady = if osConfig ? tsrk.pacakges.pkgs.cDev.enable then
-    osConfig.tsrk.pacakges.pkgs.cDev.enable else true;
+  systemReady =
+    if osConfig ? tsrk.pacakges.pkgs.cDev.enable then
+      osConfig.tsrk.pacakges.pkgs.cDev.enable else true;
 in
 {
   options = {
