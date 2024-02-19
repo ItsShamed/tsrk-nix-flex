@@ -25,9 +25,9 @@ let
 
   newSettingsConvert = attr:
     lib.lists.flatten
-    (builtins.map
-     (val: lib.attrsets.attrValues (lib.attrsets.mapAttrs (key: opts: opts // { inherit key; }) val))
-     (lib.attrsets.attrValues attr));
+      (builtins.map
+        (val: lib.attrsets.attrValues (lib.attrsets.mapAttrs (key: opts: opts // { inherit key; }) val))
+        (lib.attrsets.attrValues attr));
 in
 {
   programs.nixvim = {

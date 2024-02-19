@@ -1,12 +1,14 @@
-{ config, pkgs, lib, osConfig ? {}, home-manager, ... }:
+{ config, pkgs, lib, osConfig ? { }, home-manager, ... }:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
   cfg = config.xsession.windowManager.i3.config;
-  systemReady = if osConfig ? tsrk.i3.enable then
-    osConfig.tsrk.i3.enable else true;
-  lockCommand = if config.tsrk.i3.epitaRestrictions then
-    "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
+  systemReady =
+    if osConfig ? tsrk.i3.enable then
+      osConfig.tsrk.i3.enable else true;
+  lockCommand =
+    if config.tsrk.i3.epitaRestrictions then
+      "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
     else "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
 in
 {
@@ -24,7 +26,7 @@ in
         default = ./files/bg-no-logo.png;
       };
       epitaRestrictions = lib.options.mkEnableOption "compliance with EPITA
-        regulations by using stock i3lock as the locker"; 
+        regulations by using stock i3lock as the locker";
     };
   };
 
@@ -35,35 +37,35 @@ in
         modifier = "Mod4";
         terminal = "kitty";
         menu = "${pkgs.rofi}/bin/rofi -show drun";
-        bars = [];
+        bars = [ ];
 
         startup = [
-        {
-          command = "feh --bg-scale ${config.tsrk.i3.background}";
-          always = true;
-        }
-        ] ++ (lib.lists.optional (config.services.polybar.enable) {
-            command = "systemctl --user restart polybar";
+          {
+            command = "feh --bg-scale ${config.tsrk.i3.background}";
             always = true;
-            });
+          }
+        ] ++ (lib.lists.optional (config.services.polybar.enable) {
+          command = "systemctl --user restart polybar";
+          always = true;
+        });
 
         window.titlebar = false;
         window.commands = [
-# Enable border for "normal" windows
-        {
-          command = "border pixel 3";
-          criteria = {
-            class = "^.*";
-          };
-        }
+          # Enable border for "normal" windows
+          {
+            command = "border pixel 3";
+            criteria = {
+              class = "^.*";
+            };
+          }
 
-# Floating only for Pavucontrol
-        {
-          command = "floating enable";
-          criteria = {
-            class = "Pavucontrol";
-          };
-        }
+          # Floating only for Pavucontrol
+          {
+            command = "floating enable";
+            criteria = {
+              class = "Pavucontrol";
+            };
+          }
         ];
 
         gaps = {
@@ -88,13 +90,13 @@ in
         };
 
         keybindings = lib.mkDefault {
-# Basics
+          # Basics
 
           "${mod}+Shift+q" = "kill";
           "${mod}+Return" = "exec ${cfg.terminal}";
           "${mod}+D" = "exec ${cfg.menu}";
 
-# Layouting
+          # Layouting
 
           "${mod}+Ctrl+h" = "split h";
           "${mod}+Ctrl+v" = "split v";
@@ -104,43 +106,43 @@ in
           "${mod}+w" = "layout tabbed";
           "${mod}+e" = "layout toggle split";
 
-# Vim-like keybindings
+          # Vim-like keybindings
 
-# focus change
+          # focus change
           "${mod}+j" = "focus down";
           "${mod}+k" = "focus up";
           "${mod}+l" = "focus right";
           "${mod}+h" = "focus left";
 
-# window movement
+          # window movement
           "${mod}+Shift+j" = "move down";
           "${mod}+Shift+k" = "move up";
           "${mod}+Shift+l" = "move right";
           "${mod}+Shift+h" = "move left";
 
-# Backup arrows
+          # Backup arrows
 
-# focus change
+          # focus change
           "${mod}+Down" = "focus down";
           "${mod}+Up" = "focus up";
           "${mod}+Right" = "focus right";
           "${mod}+Left" = "focus left";
 
-# window movement
+          # window movement
           "${mod}+Shift+Down" = "move down";
           "${mod}+Shift+Up" = "move up";
           "${mod}+Shift+Right" = "move right";
           "${mod}+Shift+Left" = "move left";
 
-# Floating windows
+          # Floating windows
           "${mod}+space" = "focus mode_toggle";
           "${mod}+Shift+space" = "floating toggle";
 
-# Scratch pad
+          # Scratch pad
           "${mod}+minus" = "scratchpad show";
           "${mod}+Shift+minus" = "move scratchpad";
 
-# Workspaces
+          # Workspaces
 
           "${mod}+1" = "workspace number 1";
           "${mod}+2" = "workspace number 2";
@@ -164,13 +166,13 @@ in
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
 
-# lock
+          # lock
           "${mod}+i" = "exec \"${lockCommand}\"";
           "${mod}+Shift+e" = "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'i3-msg exit'\"";
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
-          "${mod}+r" = "mode \"resize\""; 
+          "${mod}+r" = "mode \"resize\"";
           "--release ${mod}+Shift+s" = "exec --no-startup-id \"${pkgs.flameshot}/bin/flameshot gui\"";
           "--release ${mod}+Print" = "exec --no-startup-id \"${pkgs.flameshot}/bin/flameshot full\"";
         };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, osConfig ? {}, ... }:
+{ config, lib, pkgs, osConfig ? { }, ... }:
 let
   colors = {
     background = "#111";
@@ -9,8 +9,9 @@ let
     secondary = "#e60053";
     alert = "#bd2c40";
   };
-  systemReady = if osConfig ? tsrk.i3.enable then
-    osConfig.tsrk.i3.enable else true;
+  systemReady =
+    if osConfig ? tsrk.i3.enable then
+      osConfig.tsrk.i3.enable else true;
 in
 {
   services.polybar = lib.mkIf (systemReady && config.tsrk.i3.enable) {
@@ -95,7 +96,7 @@ in
           visible = "%index%";
           visible-background = focused-background;
           visible-underline = focused-underline;
-          visible-padding= focused-padding;
+          visible-padding = focused-padding;
 
           urgent = "%index%";
           urgent-background = colors.alert;

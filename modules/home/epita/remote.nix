@@ -1,4 +1,4 @@
-{ config, lib, pkgs, osConfig ? {}, ... }:
+{ config, lib, pkgs, osConfig ? { }, ... }:
 
 let
   cfg = config.tsrk.epita.remoteWork;
@@ -80,7 +80,7 @@ in
         address = "${cfg.login}@epita.fr";
         userName = address;
         imap.host = "outlook.office365.com";
-        signature = { 
+        signature = {
           text = ''
             ${cfg.signature.status}
             "${cfg.signature.quote}"

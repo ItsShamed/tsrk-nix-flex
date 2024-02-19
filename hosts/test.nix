@@ -8,7 +8,7 @@
     self.nixosModules.hostname
     # (self.lib.generateUser "test" { password = "quoicoubeh"; canSudo = true; })
     (self.lib.generateFullUser "test" {
-      password = "quoicoubeh"; 
+      password = "quoicoubeh";
       canSudo = true;
       modules = [
         self.homeManagerModules.i3
@@ -16,7 +16,7 @@
           tsrk.i3.enable = true;
         }
       ];
-     })
+    })
   ];
 
 }

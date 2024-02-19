@@ -40,8 +40,8 @@
   outputs =
     { self
     , nixpkgs
-    # , nixpkgsUnstable
-    # , nixpkgsMaster
+      # , nixpkgsUnstable
+      # , nixpkgsMaster
 
     , nix-gaming
     , futils
@@ -66,7 +66,7 @@
           };
           overlays = [
 
-          ] ++ (lib.lists.optionals withOverlays import ./overlays)
+          ] ++ (lib.lists.optionals withOverlays import ./overlays);
         };
 
       pkgSet = system: {
@@ -86,12 +86,12 @@
             all = import ./modules/system/all.nix;
             default = self.nixosModules.all;
           };
-          
+
           homeManagerModules = (import ./modules/home { inherit lib; })
             // {
-              all = import ./modules/home/all.nix;
-              default = self.homeModules.all;
-            };
+            all = import ./modules/home/all.nix;
+            default = self.homeModules.all;
+          };
 
           lib = import ./lib {
             inherit lib self;

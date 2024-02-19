@@ -22,5 +22,5 @@ in
       libyamlcpp
     ]
     ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
-  }
+  };
 }
