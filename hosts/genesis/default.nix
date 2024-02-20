@@ -35,6 +35,7 @@
     rm -f /etc/ssh/ssh_host_*
     ln -s ${../.tsrk-files/ssh_host_rsa_key} /etc/ssh/ssh_host_rsa_key
     ln -s ${../.tsrk-files/ssh_host_ed25519_key} /etc/ssh/ssh_host_ed25519_key
+    chmod 600 /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_ed25519_key
   '';
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
