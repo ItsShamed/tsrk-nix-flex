@@ -73,11 +73,11 @@ in
           # Public keys
           "ssh/ssh_host_rsa_key.pub" = {
             source = checkKey "rsa" "public" ./ssh_host_rsa_key.pub;
-            mode = "0600";
+            mode = "0644";
           };
           "ssh/ssh_host_ed25519_key.pub" = {
             source = checkKey "ed25519" "public" ./ssh_host_ed25519_key.pub;
-            mode = "0600";
+            mode = "0644";
           };
         };
       })
