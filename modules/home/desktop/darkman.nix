@@ -17,19 +17,8 @@ let
     ${pkgs.coreutils}/bin/sleep 1
     ${pkgs.killall}/bin/killall .lxappearance-wrapped
   '';
-in
-{
-  options = {
-    tsrk.darkman.enable = lib.options.mkEnableOption "darkman";
-  };
 
-  config = lib.mkIf config.tsrk.darkman.enable {
-    assertions = [
-      {
-        assertion = config ? tsrk.xsettingsd.enable && config.tsrk.xsettingsd.enable;
-        message = "The XSettings daemon module should be imported and enabled.";
-      }
-    ];
+  baseConfig = {
     services.darkman = {
       enable = lib.mkDefault true;
       settings = {
@@ -41,18 +30,33 @@ in
         dunst-notif = ''
           ${pkgs.dunst}/bin/dunstify -a "Darkman - Theme Switching" "Shine bright like a diamond 🌅💎💅"
         '';
-        xsettingsd = ''
-          ${pkgs.bash}/bin/bash ${xsettingsd-light}/bin/xsettingsd-light
-        '';
       };
       darkModeScripts = {
         dunst-notif = ''
           ${pkgs.dunst}/bin/dunstify -a "Darkman - Theme Switching" "Let tonight's dream begin 🌙✨"
         '';
-        xsettingsd = ''
-          ${pkgs.bash}/bin/bash ${xsettingsd-dark}/bin/xsettingsd-dark
-        '';
       };
     };
   };
+  xsettingsdLoaded = config.tsrk ? xsettingsd.enable && config.tsrk.xsettingsd.enable;
+  xsettingsdConfig = {
+    services.darkman = {
+      lightModeScripts.xsettingsd = ''
+          ${pkgs.bash}/bin/bash ${xsettingsd-light}/bin/xsettingsd-light
+        '';
+      darkModeScripts.xsettingsd = ''
+          ${pkgs.bash}/bin/bash ${xsettingsd-dark}/bin/xsettingsd-dark
+        '';
+    };
+  };
+in
+{
+  options = {
+    tsrk.darkman.enable = lib.options.mkEnableOption "darkman";
+  };
+
+  config = lib.mkIf config.tsrk.darkman.enable (lib.mkMerge [
+      baseConfig
+      (lib.mkIf xsettingsdLoaded xsettingsdConfig)
+  ]);
 }
