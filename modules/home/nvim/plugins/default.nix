@@ -13,6 +13,7 @@
     ./which-key.nix
     ./alpha.nix
     ./dap.nix
+    ./wakatime.nix
   ];
 
   programs.nixvim.plugins = {
