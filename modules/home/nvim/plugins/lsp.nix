@@ -15,7 +15,10 @@
       };
 
       servers = {
-        clangd.enable = true;
+        clangd = {
+          enable = true;
+          package = pkgs.clang-tools_16;
+        };
         cmake.enable = true;
         lua-ls.enable = true;
         nixd.enable = true;
