@@ -5,7 +5,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    # nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
     futils.url = "github:numtide/flake-utils";
@@ -40,7 +40,7 @@
   outputs =
     { self
     , nixpkgs
-      # , nixpkgsUnstable
+    , nixpkgsUnstable
       # , nixpkgsMaster
 
     , nix-gaming
@@ -71,7 +71,7 @@
 
       pkgSet = system: {
         pkgs = importPkgs nixpkgs system true;
-        # pkgsUnstable = importPkgs nixpkgsUnstable system false;
+        pkgsUnstable = importPkgs nixpkgsUnstable system false;
         # pkgsMaster = importPkgs nixpkgsMaster system false;
       };
 
