@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     # Discord replacement
-    armcord
+    vesktop
 
     # Fonts
     (nerdfonts.override {
