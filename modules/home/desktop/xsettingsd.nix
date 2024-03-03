@@ -39,9 +39,7 @@ in
     services.xsettingsd.enable = lib.mkDefault true;
 
     home.activation.xsettingsd-base-configuration = hmLib.dag.entryBefore [ "reloadSystemd" ] ''
-      if [[ -v VERBOSE ]]; then
-        echo Creating xsettingsd base configuration
-      fi
+      _i "Creating xsettingsd base configuration"
       test -f "${config.home.homeDirectory}/.xsettingsd" || cp -f "${xsettingsdConf}" "${config.home.homeDirectory}/.xsettingsd"
     '';
   };

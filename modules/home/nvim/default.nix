@@ -16,6 +16,13 @@
     };
 
     colorschemes.tokyonight.enable = true;
-    colorscheme = "tokyonight";
+    colorscheme = "tokyonight-night";
+
+    extraConfigVim = ''
+      augroup highlight_yank
+          autocmd!
+          au TextYamkPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+      augroup END
+    '';
   };
 }
