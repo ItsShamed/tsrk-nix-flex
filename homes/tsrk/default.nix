@@ -28,4 +28,17 @@
   home.packages = with pkgs; [
     librewolf
   ];
+  accounts.email.accounts.tsrk = rec {
+    address = "tsrk@tsrk.me";
+    userName = address;
+    imap.host = "zimbra002.pulseheberg.com";
+    signature = {
+      text = ''
+        tsrk.
+        https://tsrk.me
+      '';
+    };
+    primary = true;
+    thunderbird.enable = true;
+  };
 }
