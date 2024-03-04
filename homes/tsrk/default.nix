@@ -8,6 +8,7 @@
   tsrk = {
     i3.enable = true;
     xsettingsd.enable = true;
+    kitty.enable = true;
     darkman = {
       enable = true;
       xsettingsd.enable = true;
