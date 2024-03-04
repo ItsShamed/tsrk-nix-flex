@@ -2,7 +2,7 @@
 
 let
   delta-repo = pkgs.fetchFromGitHub {
-    owner = "dandavinson";
+    owner = "dandavison";
     repo = "delta";
     rev = "fdfcc8fce30754a4f05eeb167a15d519888fc909";
   };
