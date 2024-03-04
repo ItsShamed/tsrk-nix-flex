@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
+  literalBool = predicate: if predicate then "true" else "false";
   cfg = config.tsrk.epita.remoteWork;
   emailCfg = config.accounts.email;
   gitCfg = config.programs.git;
@@ -19,7 +20,7 @@ let
     set -x
     git config user.name ${gitCfg.userName}
     git config user.email ${gitCfg.userEmail}
-    git config commit.gpgsign ${gitCfg.signing.signByDefault}
+    git config commit.gpgsign ${literalBool gitCfg.signing.signByDefault}
     git config user.signingKey ${gitCfg.signing.key}
     set +x
   '';
