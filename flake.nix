@@ -8,6 +8,11 @@
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     futils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -42,6 +47,7 @@
     , nixpkgs
     , nixpkgsUnstable
       # , nixpkgsMaster
+    , nixgl
 
     , nix-gaming
     , futils
@@ -65,7 +71,7 @@
             allowUnfree = true;
           };
           overlays = [
-
+            nixgl.overlay
           ] ++ (lib.lists.optionals withOverlays (import ./overlays));
         };
 
