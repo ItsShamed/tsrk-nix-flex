@@ -3,7 +3,7 @@ self: super:
 {
   darkman = super.buildGoModule {
     inherit (super.darkman.drvAttrs)
-      pname nativeBuildINputs buildInputs
+      pname nativeBuildInputs buildInputs
       buildPhase installPhase;
     inherit (super.darkman) meta;
     version = "2.0.0-unrealeased";
