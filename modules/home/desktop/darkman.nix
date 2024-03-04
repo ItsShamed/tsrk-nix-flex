@@ -57,12 +57,12 @@ let
       };
       lightModeScripts = {
         dunst-notif = ''
-          ${pkgs.dunst}/bin/dunstify -a "Darkman - Theme Switching" "Shine bright like a diamond 🌅💎💅"
+          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
         '';
       };
       darkModeScripts = {
         dunst-notif = ''
-          ${pkgs.dunst}/bin/dunstify -a "Darkman - Theme Switching" "Let tonight's dream begin 🌙✨"
+          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
         '';
       };
     };
