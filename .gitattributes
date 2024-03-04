@@ -11,3 +11,4 @@
 
 secrets.nix filter=git-crypt diff=git-crypt
 hosts/.tsrk-files/ssh_host_*_key filter=git-crypt diff=git-crypt
+homes/tsrk/epita.nix filter=git-crypt diff=git-crypt
