@@ -10,7 +10,6 @@
     xsettingsd.enable = true;
     darkman = {
       enable = true;
-      kitty.enable = true;
       xsettingsd.enable = true;
       kitty.enable = true;
       nvim.enable = true;
