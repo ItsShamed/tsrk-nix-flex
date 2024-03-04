@@ -1,4 +1,4 @@
-{ config, lib, osConfig ? { }, ... }:
+{ pkgs, config, lib, osConfig ? { }, ... }:
 
 let
   systemReady =
