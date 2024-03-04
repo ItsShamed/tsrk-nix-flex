@@ -1,4 +1,5 @@
 [
+  ./desktop/darkman.nix
   ./desktop/dunst.nix
   ./desktop/i3.nix
   ./desktop/kitty.nix
