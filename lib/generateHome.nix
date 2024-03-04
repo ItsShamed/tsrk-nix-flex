@@ -27,7 +27,7 @@ let
       inherit self;
       inherit (pkgSet) pkgsUnstable;
       vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
-      hmLib = home-manager.lib.hm;
+      hmLib = inputs.home-manager.lib.hm;
       gaming = inputs.nix-gaming.packages.${system};
     };
   };
