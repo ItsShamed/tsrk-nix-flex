@@ -78,7 +78,7 @@ in
           message = "E-mail signature quote is too long (${cfg.signature.quote} > 78) and would violate the netiquette.";
         }
       ];
-      accounts.emails.accounts.epita = rec {
+      accounts.email.accounts.epita = rec {
         address = "${cfg.login}@epita.fr";
         userName = address;
         imap.host = "outlook.office365.com";
