@@ -3,6 +3,7 @@
 {
   imports = [
     self.homeManagerModules.all
+    ./epita.nix
   ];
 
   tsrk = {
