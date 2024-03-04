@@ -5,7 +5,7 @@ let
     owner = "dandavison";
     repo = "delta";
     rev = "fdfcc8fce30754a4f05eeb167a15d519888fc909";
-    hash = "sha256-lj/HVcO0gDCdGLy0xm+m9SH4NM+BT3Jar6Mv2sKNZpQ="
+    hash = "sha256-lj/HVcO0gDCdGLy0xm+m9SH4NM+BT3Jar6Mv2sKNZpQ=";
   };
 in
 {
