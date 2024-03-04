@@ -126,7 +126,7 @@ let
       lightModeScripts.feh = ''
         ${pkgs.feh}/bin/feh --bg-scale ${cfg.feh.light}
       '';
-      darkModeScripts.nvim = ''
+      darkModeScripts.feh = ''
         ${pkgs.feh}/bin/feh --bg-scale ${cfg.feh.dark}
       '';
     };
@@ -135,10 +135,10 @@ let
   deltaLoaded = cfg.delta.enable && config.programs.git.delta.enable;
   deltaConfig = {
     services.darkman = {
-      lightModeScripts.nvim = ''
+      lightModeScripts.delta= ''
         ${pkgs.bash}/bin/bash ${delta-light}
       '';
-      darkModeScripts.nvim = ''
+      darkModeScripts.delta = ''
         ${pkgs.bash}/bin/bash ${delta-dark}
       '';
     };
