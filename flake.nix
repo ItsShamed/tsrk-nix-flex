@@ -99,6 +99,10 @@
             inherit inputs;
           };
 
+          homeConfigurations = import ./homes {
+            inherit lib self;
+          };
+
           nixosConfigurations = import ./hosts (lib.recursiveUpdate inputs {
             inherit lib system;
             pkgSet = pkgSet system;

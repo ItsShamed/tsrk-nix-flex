@@ -12,6 +12,7 @@ let
       git config commit.gpgsign true
       git config user.signingKey ${cfg.gpgKey}
     ''}
+    set +x
   '';
 
   gitSwitchNormal = pkgs.writeShellScriptBin "git-switch-normal" ''
@@ -20,6 +21,7 @@ let
     git config user.email ${gitCfg.userEmail}
     git config commit.gpgsign ${gitCfg.signing.signByDefault}
     git config user.signingKey ${gitCfg.signing.key}
+    set +x
   '';
 in
 {
