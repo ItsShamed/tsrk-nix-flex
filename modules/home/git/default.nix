@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  delta-repo = lib.fetchFromGitHub {
+  delta-repo = pkgs.fetchFromGitHub {
     owner = "dandavinson";
     repo = "delta";
     rev = "fdfcc8fce30754a4f05eeb167a15d519888fc909";
