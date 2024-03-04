@@ -147,11 +147,11 @@ let
   batLoaded = cfg.bat.enable && config.programs.kitty.enable;
   batConfig = {
     services.darkman = {
-      lightModeScripts.kitty = ''
-        ${pkgs.bash}/bin/bash ${kitty-light}
+      lightModeScripts.bat = ''
+        ${pkgs.bash}/bin/bash ${bat-light}
       '';
-      darkModeScripts.kitty = ''
-        ${pkgs.bash}/bin/bash ${kitty-dark}
+      darkModeScripts.bat = ''
+        ${pkgs.bash}/bin/bash ${bat-dark}
       '';
     };
     xdg.configFile."bat/config".target = "bat/._hm.config";
