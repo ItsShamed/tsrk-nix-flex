@@ -1,11 +1,8 @@
-{ config, pkgs, lib, osConfig ? { }, home-manager, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
   cfg = config.xsession.windowManager.i3.config;
-  systemReady =
-    if osConfig ? tsrk.i3.enable then
-      osConfig.tsrk.i3.enable else true;
   lockCommand =
     if config.tsrk.i3.epitaRestrictions then
       "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
@@ -30,7 +27,7 @@ in
     };
   };
 
-  config = lib.mkIf (systemReady && config.tsrk.i3.enable) {
+  config = lib.mkIf config.tsrk.i3.enable {
     xsession.windowManager.i3 = {
       enable = true;
       config = {

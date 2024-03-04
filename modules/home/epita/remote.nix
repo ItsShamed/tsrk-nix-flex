@@ -1,4 +1,4 @@
-{ config, lib, pkgs, osConfig ? { }, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.tsrk.epita.remoteWork;

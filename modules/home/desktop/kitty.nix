@@ -1,4 +1,4 @@
-{ config, pkgs, lib, osConfig ? { }, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   fonts = pkgs.nerdfonts.override {
@@ -9,12 +9,13 @@ let
       "Meslo"
     ];
   };
-  systemReady =
-    if osConfig ? tsrk.packages.pkgs.desktop.enable then
-      osConfig.tsrk.packages.pkgs.desktop.enable else true;
+  cfg = config.tsrk.kitty;
 in
 {
-  config = lib.mkIf systemReady {
+  options = {
+    tsrk.kitty.enable = lib.options.mkEnableOptions "kitty terminal emulator";
+  };
+  config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
       font = lib.mkDefault {
