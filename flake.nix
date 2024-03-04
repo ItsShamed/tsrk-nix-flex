@@ -66,7 +66,7 @@
           };
           overlays = [
 
-          ] ++ (lib.lists.optionals withOverlays import ./overlays);
+          ] ++ (lib.lists.optionals withOverlays (import ./overlays));
         };
 
       pkgSet = system: {
