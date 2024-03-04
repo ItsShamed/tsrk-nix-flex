@@ -7,7 +7,7 @@
       internal = true;
       readOnly = true;
       default = if config.targets.genericLinux.enable then
-        "${pkgs.nixGL.nixGLDefault}/bin/nixGL"
+        "${pkgs.nixgl.nixGLDefault}/bin/nixGL"
         else "";
     };
   };
