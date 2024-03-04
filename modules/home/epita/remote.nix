@@ -83,8 +83,13 @@ in
         address = "${cfg.login}@epita.fr";
         userName = address;
         realName = cfg.fullName;
-        imap.host = "outlook.office365.com";
+        imap = {
+          host = "outlook.office365.com";
+          port = 993;
+        };
         signature = {
+          showSignature = "append";
+          delimiter = "-- ";
           text = ''
             ${cfg.signature.status}
             "${cfg.signature.quote}"
