@@ -6,8 +6,6 @@
     # vesktop
     armcord
 
-    librewolf
-
     # Fonts
     (nerdfonts.override {
       fonts = [
