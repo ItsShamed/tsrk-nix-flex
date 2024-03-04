@@ -15,6 +15,9 @@
   config = lib.mkIf config.targets.genericLinux.enable {
     home.packages = with pkgs; [
       nixgl.auto.nixGLDefault
+      glibcLocales
     ];
+
+    home.sessionVariables.LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
 }
