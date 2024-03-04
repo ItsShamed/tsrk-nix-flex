@@ -82,6 +82,7 @@ in
       accounts.email.accounts.epita = rec {
         address = "${cfg.login}@epita.fr";
         userName = address;
+        realName = cfg.fullName;
         imap.host = "outlook.office365.com";
         signature = {
           text = ''
