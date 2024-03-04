@@ -89,12 +89,6 @@ in
           '';
         };
         thunderbird.enable = true;
-        primary =
-          let
-            primaries =
-              lib.catAttrs "name" (lib.filter (a: a.primary) (lib.attrValues emailCfg.accounts));
-          in
-          builtins.length primaries < 1;
       };
     })
   ];
