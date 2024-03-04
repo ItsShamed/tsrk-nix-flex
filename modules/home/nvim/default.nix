@@ -21,7 +21,7 @@
     extraConfigVim = ''
       augroup highlight_yank
           autocmd!
-          au TextYamkPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+          au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
       augroup END
     '';
   };
