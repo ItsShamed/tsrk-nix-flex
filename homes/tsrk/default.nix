@@ -7,7 +7,10 @@
   ];
 
   tsrk = {
-    i3.enable = true;
+    i3 = {
+      enable = true;
+      epitaRestrictions = true;
+    };
     xsettingsd.enable = true;
     kitty.enable = true;
     darkman = {
