@@ -31,6 +31,7 @@
   accounts.email.accounts.tsrk = rec {
     address = "tsrk@tsrk.me";
     userName = address;
+    realName = "tsrk.";
     imap.host = "zimbra002.pulseheberg.com";
     signature = {
       text = ''
