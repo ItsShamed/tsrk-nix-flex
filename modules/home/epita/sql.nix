@@ -1,10 +1,5 @@
-{ config, pkgs, lib, osConfig ? { }, ... }:
+{ config, pkgs, lib, ... }:
 
-let
-  systemReady =
-    if osConfig ? tsrk.packages.pkgs.sql.enable then
-      osConfig.tsrk.packages.pkgs.sql.enable else true;
-in
 {
   options = {
     tsrk.epita.sql = {
@@ -22,7 +17,7 @@ in
     };
   };
 
-  config = lib.mkIf (systemReady && config.tsrk.epita.sql.enable) {
+  config = lib.mkIf config.tsrk.epita.sql.enable {
     systemd.user.services.initdb = {
       Unit = {
         Description = "initdb";

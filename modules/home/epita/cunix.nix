@@ -1,10 +1,4 @@
-{ pkgs, config, lib, osConfig ? { }, ... }:
-
-let
-  systemReady =
-    if osConfig ? tsrk.pacakges.pkgs.cDev.enable then
-      osConfig.tsrk.pacakges.pkgs.cDev.enable else true;
-in
+{ pkgs, config, lib, ... }:
 {
   options = {
     tsrk.epita.cunix = {
@@ -12,7 +6,7 @@ in
     };
   };
 
-  config = lib.mkIf (systemReady && config.tsrk.epita.cunix.enable) {
+  config = lib.mkIf config.tsrk.epita.cunix.enable {
     programs.zsh.shellAliases = {
       epicc = "gcc -Wextra -Wall -Werror -Wvla -std=c99 -pedantic";
       epiccnop = "gcc -Wextra -Wall -Werror -Wvla -std=c99";
