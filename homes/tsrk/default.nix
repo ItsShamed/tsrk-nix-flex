@@ -25,9 +25,6 @@
   };
   targets.genericLinux.enable = true;
 
-  home.packages = with pkgs; [
-    librewolf
-  ];
   accounts.email.accounts.tsrk = rec {
     address = "tsrk@tsrk.me";
     userName = address;
