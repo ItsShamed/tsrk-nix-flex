@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hmLib, ... }:
 
 let
   cfg = config.tsrk.darkman;
