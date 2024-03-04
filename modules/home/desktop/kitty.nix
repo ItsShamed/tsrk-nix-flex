@@ -13,7 +13,7 @@ let
 in
 {
   options = {
-    tsrk.kitty.enable = lib.options.mkEnableOptions "kitty terminal emulator";
+    tsrk.kitty.enable = lib.options.mkEnableOption "kitty terminal emulator";
   };
   config = lib.mkIf cfg.enable {
     programs.kitty = {
