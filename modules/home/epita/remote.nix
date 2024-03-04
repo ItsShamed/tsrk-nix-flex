@@ -92,7 +92,7 @@ in
         primary =
           let
             primaries =
-              lib.catAttrs "name" (filter (a: a.primary) (attrValues emailCfg.accounts));
+              lib.catAttrs "name" (lib.filter (a: a.primary) (lib.attrValues emailCfg.accounts));
           in
           builtins.length primaries < 1;
       };
