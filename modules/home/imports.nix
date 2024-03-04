@@ -1,4 +1,5 @@
 [
+  ./compat.nix
   ./desktop/darkman.nix
   ./desktop/dunst.nix
   ./desktop/i3.nix
