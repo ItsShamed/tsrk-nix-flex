@@ -29,8 +29,12 @@
     address = "tsrk@tsrk.me";
     userName = address;
     realName = "tsrk.";
-    imap.host = "zimbra002.pulseheberg.com";
+    imap = {
+      host = "zimbra002.pulseheberg.com";
+      port = 993;
+    };
     signature = {
+      showSignature = "append";
       text = ''
         tsrk.
         https://tsrk.me
