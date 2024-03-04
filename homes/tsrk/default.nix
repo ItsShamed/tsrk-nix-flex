@@ -1,17 +1,5 @@
 { self, pkgs, ... }:
 
-let
-  tsrk-librewolf = with pkgs; (wrapFirefox librewolf-unwrapped {
-    extraPrefs = ''
-      defaultPref("pricacy.resistFingerprinting", false);
-      defaultPref("privacy.resistFingerprinting.letterboxing", true);
-      defaultPref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true);
-      defaultPref("identity.fxaccounts.enabled", true);
-      defaultPref("extensions.update.autoUpdateDefault", true);
-      defaultPref("extensions.update.enabled", true);
-    '';
-  });
-in
 {
   imports = [
     self.homeManagerModules.all
@@ -34,6 +22,6 @@ in
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
-    tsrk-librewolf
+    librewolf
   ];
 }
