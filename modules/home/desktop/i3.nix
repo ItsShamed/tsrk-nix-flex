@@ -32,8 +32,8 @@ in
       enable = true;
       config = {
         modifier = "Mod4";
-        terminal = "kitty";
-        menu = "${pkgs.rofi}/bin/rofi -show drun";
+        terminal = "${config.tsrk.compatWrapper} kitty";
+        menu = "${config.tsrk.compatWrapper} ${pkgs.rofi}/bin/rofi -show drun";
         bars = [ ];
 
         startup = [
