@@ -3,7 +3,7 @@
 {
   options = {
     tsrk.compatWrapper = lib.options.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       internal = true;
       readOnly = true;
       default = if config.targets.genericLinux.enable then
