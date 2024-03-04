@@ -4,7 +4,7 @@ let
   delta-repo = lib.fetchFromGitHub {
     owner = "dandavinson";
     repo = "delta";
-    rev = "fdfcc8fce30754a4f05eeb167a15d519888fc909"
+    rev = "fdfcc8fce30754a4f05eeb167a15d519888fc909";
   };
 in
 {
