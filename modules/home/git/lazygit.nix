@@ -10,6 +10,7 @@
           pager = "${pkgs.delta}/bin/delta --dark --paging=never";
         };
         showIcons = true;
+        commit.signOff = true;
       };
 
       customCommands = [
