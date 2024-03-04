@@ -33,7 +33,7 @@ in
       config = {
         modifier = "Mod4";
         terminal = "${config.tsrk.compatWrapper} kitty";
-        menu = "${config.tsrk.compatWrapper} ${pkgs.rofi}/bin/rofi -show drun";
+        menu = "${pkgs.bash}/bin/bash -c \"${pkgs.rofi}/bin/rofi -show drun\"";
         bars = [ ];
 
         startup = [
