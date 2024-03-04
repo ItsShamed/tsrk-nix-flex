@@ -11,4 +11,10 @@
         else "";
     };
   };
+
+  config = lib.mkIf config.targets.genericLinux.enable {
+    home.packages = with pkgs; [
+      nixgl.auto.nixGLDefault
+    ];
+  };
 }
