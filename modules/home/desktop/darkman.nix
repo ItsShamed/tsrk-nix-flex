@@ -135,7 +135,7 @@ let
   deltaLoaded = cfg.delta.enable && config.programs.git.delta.enable;
   deltaConfig = {
     services.darkman = {
-      lightModeScripts.delta= ''
+      lightModeScripts.delta = ''
         ${pkgs.bash}/bin/bash ${delta-light}
       '';
       darkModeScripts.delta = ''
