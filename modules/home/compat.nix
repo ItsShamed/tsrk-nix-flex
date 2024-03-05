@@ -6,8 +6,9 @@
       type = lib.types.str;
       internal = true;
       readOnly = true;
-      default = if config.targets.genericLinux.enable then
-        "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL"
+      default =
+        if config.targets.genericLinux.enable then
+          "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL"
         else "";
     };
   };
