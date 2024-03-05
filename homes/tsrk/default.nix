@@ -1,9 +1,10 @@
-{ self, pkgs, ... }:
+{ self, pkgs, inputs, ... }:
 
 {
   imports = [
     self.homeManagerModules.all
     ./epita.nix
+    (inputs.spotify-notifyx.homeManagerModules.default inputs.spotify-notifyx)
   ];
 
   tsrk = {
