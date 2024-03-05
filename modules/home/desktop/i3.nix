@@ -81,6 +81,14 @@ in
               class = "Pavucontrol";
             };
           }
+
+          # Floating only for lxappearance
+          {
+            command = "floating enable";
+            criteria = {
+              class = ".xappearance";
+            };
+          }
         ];
 
         gaps = {
