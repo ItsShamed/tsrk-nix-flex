@@ -25,6 +25,7 @@ let
 
     extraSpecialArgs = {
       inherit self;
+      inherit inputs;
       inherit (pkgSet) pkgsUnstable;
       vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
       hmLib = inputs.home-manager.lib.hm;

@@ -39,6 +39,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    spotify-notifyx = {
+      url = "github:ItsShamed/spotify-dbus-enhancer/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix.url = "github:ryantm/agenix";
   };
 
