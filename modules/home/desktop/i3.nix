@@ -7,6 +7,11 @@ let
     if config.tsrk.i3.epitaRestrictions then
       "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
     else "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
+  updateGtk = pkgs.writeShellScript "update-gtk" ''
+    ${pkgs.lxappearance}/bin/lxappearance &
+    ${pkgs.coreutils}/bin/sleep 1
+    ${pkgs.killall}/bin/killall .lxappearance-wrapped
+  '';
 in
 {
   options = {
@@ -44,7 +49,20 @@ in
         ] ++ (lib.lists.optional (config.services.polybar.enable) {
           command = "systemctl --user restart polybar";
           always = true;
-        });
+        }) ++ (lib.lists.optional (config.tsrk.xsettingsd.enable) {
+          command = "systemctl --user enable --now xsettingsd";
+          always = false;
+        })
+        ++ (lib.lists.optionals (config.tsrk.darkman.enable) [
+          {
+            command = "systemctl --user enable --now darkman";
+            always = false;
+          }
+          {
+            command = "sh ${updateGtk}";
+            always = true;
+          }
+        ]);
 
         window.titlebar = false;
         window.commands = [
