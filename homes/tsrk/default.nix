@@ -4,6 +4,7 @@
   imports = [
     self.homeManagerModules.all
     ./epita.nix
+    ./extra-packages.nix
     (inputs.spotify-notifyx.homeManagerModules.default inputs.spotify-notifyx)
   ];
 
