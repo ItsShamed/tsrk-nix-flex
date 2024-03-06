@@ -2,6 +2,7 @@
   ./compat.nix
   ./desktop/darkman.nix
   ./desktop/dunst.nix
+  ./desktop/flameshot.nix
   ./desktop/i3.nix
   ./desktop/kitty.nix
   ./desktop/picom.nix
