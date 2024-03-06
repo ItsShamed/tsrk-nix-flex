@@ -13,6 +13,7 @@
       epitaRestrictions = true;
     };
     xsettingsd.enable = true;
+    flameshot.enable = true;
     kitty.enable = true;
     darkman = {
       enable = true;
