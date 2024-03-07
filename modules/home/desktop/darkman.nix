@@ -19,15 +19,13 @@ let
     ${pkgs.killall}/bin/killall .lxappearance-wrapped
   '';
 
-  kitty-dark = pkgs.writeShellScript "kitty-dark" ''
-    ${pkgs.kitty}/bin/kitty +kitten themes --reload-in=all Tokyo Night
-  '';
-  kitty-light = pkgs.writeShellScript "kitty-light" ''
-    ${pkgs.kitty}/bin/kitty +kitten themes --reload-in=all Tokyo Night Day
-  '';
+# TODO: Changing themes via NeoVim sockets the old-fashioned way is the most
+# reasonnable thing to do for now, until me or someone is brave enough to
+# package this hell https://github.com/4e554c4c/darkman.nvim...
+
   nvim-dark = pkgs.writeShellScript "nvim-dark" ''
     for server in $(${pkgs.neovim-remote}/bin/nvr --serverlist); do
-      ${pkgs.neovim-remote}/bin/nvr --servername "$server" -cc 'colorscheme tokyonight-night'
+      ${pkgs.neovim-remote}/bin/nvr --servername "$server" -cc 'colorscheme tokyonight-storm'
     done
   '';
   nvim-light = pkgs.writeShellScript "nvim-light" ''
@@ -35,20 +33,9 @@ let
       ${pkgs.neovim-remote}/bin/nvr --servername "$server" -cc 'colorscheme tokyonight-day'
     done
   '';
-  delta-dark = pkgs.writeShellScript "delta-dark" ''
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/OneHalfLight/OneHalfDark/' "${config.home.homeDirectory}/.gitconfig"
-  '';
-  delta-light = pkgs.writeShellScript "delta-light" ''
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/OneHalfDark/OneHalfLight/' "${config.home.homeDirectory}/.gitconfig"
-  '';
-  bat-dark = pkgs.writeShellScript "bat-dark" ''
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/OneHalfLight/OneHalfDark/' "${config.xdg.configHome}/bat/config"
-  '';
-  bat-light = pkgs.writeShellScript "bat-light" ''
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/OneHalfDark/OneHalfLight/' "${config.xdg.configHome}/bat/config"
-  '';
 
-  baseConfig = {
+  baseConfig = 
+  {
     services.darkman = {
       enable = lib.mkDefault true;
       settings = {
@@ -59,53 +46,29 @@ let
         dunst-notif = ''
           ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
         '';
+        activate-home-manager = ''
+          export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+          . ${config.xdg.configHome}/home-manager/result/specialisation/light/activate
+        '';
       };
       darkModeScripts = {
         dunst-notif = ''
           ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
         '';
+        activate-home-manager = ''
+          export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+          . ${config.xdg.configHome}/home-manager/result/specialisation/dark/activate
+        '';
       };
     };
-  };
-  xsettingsdLoaded = cfg.xsettingsd.enable && config.tsrk ? xsettingsd.enable && config.tsrk.xsettingsd.enable;
-  xsettingsdConfig = {
-    services.darkman = {
-      lightModeScripts.xsettingsd = ''
-        ${pkgs.bash}/bin/bash ${xsettingsd-light}/bin/xsettingsd-light
-      '';
-      darkModeScripts.xsettingsd = ''
-        ${pkgs.bash}/bin/bash ${xsettingsd-dark}/bin/xsettingsd-dark
-      '';
-    };
-  };
 
-  kittyLoaded = cfg.kitty.enable && config.programs.kitty.enable;
-  kittyConfig = {
-    services.darkman = {
-      lightModeScripts.kitty = ''
-        ${pkgs.bash}/bin/bash ${kitty-light}
-      '';
-      darkModeScripts.kitty = ''
-        ${pkgs.bash}/bin/bash ${kitty-dark}
-      '';
-    };
-    xdg.configFile."kitty/kitty.conf".target = "kitty/.kitty._hm.conf";
-
-    home.activation.make-kitty-editable = hmLib.dag.entryAfter [ "onFilesChange" ] ''
-      _i "Creating editable kitty config"
-
-      function run() {
-        if [[ -v VERBOSE ]]; then
-          echo $@
-        else
-          $@
-        fi
-      }
-
-      run cp -f ${config.xdg.configHome}/kitty/.kitty._hm.conf ${config.xdg.configHome}/kitty/kitty.conf
-
-      unset -f run
-    '';
+    home.packages = with pkgs; [
+      (writeShellScriptBin "hm-switch" ''
+        cd $HOME/.config/home-manager
+        home-manager build $@
+        . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
+      '')
+    ];
   };
 
   nvimLoaded = cfg.nvim.enable;
@@ -131,54 +94,11 @@ let
       '';
     };
   };
-
-  deltaLoaded = cfg.delta.enable && config.programs.git.delta.enable;
-  deltaConfig = {
-    services.darkman = {
-      lightModeScripts.delta = ''
-        ${pkgs.bash}/bin/bash ${delta-light}
-      '';
-      darkModeScripts.delta = ''
-        ${pkgs.bash}/bin/bash ${delta-dark}
-      '';
-    };
-  };
-
-  batLoaded = cfg.bat.enable && config.programs.kitty.enable;
-  batConfig = {
-    services.darkman = {
-      lightModeScripts.bat = ''
-        ${pkgs.bash}/bin/bash ${bat-light}
-      '';
-      darkModeScripts.bat = ''
-        ${pkgs.bash}/bin/bash ${bat-dark}
-      '';
-    };
-    xdg.configFile."bat/config".target = "bat/._hm.config";
-
-    home.activation.make-bat-editable = hmLib.dag.entryAfter [ "onFilesChange" ] ''
-      _i "Creating editable bat config"
-
-      function run() {
-        if [[ -v VERBOSE ]]; then
-          echo $@
-        else
-          $@
-        fi
-      }
-
-      run cp -f ${config.xdg.configHome}/bat/._hm.config ${config.xdg.configHome}/bat/config
-
-      unset -f run
-    '';
-  };
 in
 {
   options = {
     tsrk.darkman = {
       enable = lib.options.mkEnableOption "darkman";
-      xsettingsd.enable = lib.options.mkEnableOption "theme switching for xsettingsd";
-      kitty.enable = lib.options.mkEnableOption "theme switching for kitty";
       nvim.enable = lib.options.mkEnableOption "theme switching for NeoVim";
       feh = {
         enable = lib.options.mkEnableOption "background switching with feh";
@@ -193,18 +113,12 @@ in
           default = ./files/bg-no-logo.png;
         };
       };
-      delta.enable = lib.options.mkEnableOption "theme switching for delta";
-      bat.enable = lib.options.mkEnableOption "theme switching for bat";
     };
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     baseConfig
-    (lib.mkIf xsettingsdLoaded xsettingsdConfig)
-    (lib.mkIf kittyLoaded kittyConfig)
     (lib.mkIf nvimLoaded nvimConfig)
     (lib.mkIf fehLoaded fehConfig)
-    (lib.mkIf deltaLoaded deltaConfig)
-    (lib.mkIf batLoaded batConfig)
   ]);
 }

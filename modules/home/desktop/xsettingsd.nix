@@ -2,45 +2,44 @@
 
 let
   cfg = config.tsrk.xsettingsd;
-  renderSettings = settings:
-    lib.concatStrings (lib.mapAttrsToList renderSetting settings);
-
-  renderSetting = key: value: ''
-    ${key} ${renderValue value}
-  '';
-
-  renderValue = value:
-    {
-      int = toString value;
-      bool = if value then "1" else "0";
-      string = ''"${value}"'';
-    }.${builtins.typeOf value};
-
-  xsettingsdConf = pkgs.writeText "xsettingsd.conf" (renderSettings cfg.settings);
 in
 {
   options = {
     tsrk.xsettingsd = {
       enable = lib.options.mkEnableOption "xsettingsd";
-      settings = lib.options.mkOption {
-        type = with lib.types; attrsOf (oneOf [ bool int str ]);
-        default = {
-          "Net/ThemeName" = "vimix-light-doder";
-          "Xft/Antialias" = 1;
-          "Xft/HintStyle" = "hintfull";
-          "Xft/Hinting" = 1;
-          "Xft/RGBA" = "rgb";
-        };
-      };
     };
   };
 
   config = lib.mkIf cfg.enable {
-    services.xsettingsd.enable = lib.mkDefault true;
+    services.xsettingsd = {
+      enable = true;
+      settings = {
+        "Xft/Antialias" = 1;
+        "Xft/HintStyle" = "hintfull";
+        "Xft/Hinting" = 1;
+        "Xft/RGBA" = "rgb";
+      };
+    };
 
-    home.activation.xsettingsd-base-configuration = hmLib.dag.entryBefore [ "reloadSystemd" ] ''
-      _i "Creating xsettingsd base configuration"
-      test -f "${config.home.homeDirectory}/.xsettingsd" || cp -f "${xsettingsdConf}" "${config.home.homeDirectory}/.xsettingsd"
+    specialisation = {
+      light.configuration = {
+        services.xsettingsd.settings."Net/ThemeName" = "vimix-light-doder";
+      };
+      dark.configuration = {
+        services.xsettingsd.settings."Net/ThemeName" = "vimix-dark-doder";
+      };
+    };
+
+    home.activation.xsettingsd-reload = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
+      _i "Reloading xsettingsd"
+      ${config.systemd.user.systemctlPath} --user restart xsettingsd
+    if ! ${pkgs.killall}/bin/killall -HUP xsettingsd; then
+      _iWarn "Failed to reload xsettingsd, themes will not be updated"
+    else
+      ${pkgs.lxappearance}/bin/lxappearance &
+      ${pkgs.coreutils}/bin/sleep 1
+      ${pkgs.killall}/bin/killall .lxappearance-wrapped
+    fi
     '';
   };
 }
