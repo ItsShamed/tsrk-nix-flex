@@ -71,21 +71,21 @@
         mouse_right_click = "close_all";
       };
       urgency_low = {
-        frame_color = "#1D918B";
-        background = "#18191E";
-        foreground = "#FFEE79";
+        frame_color = lib.mkDefault "#1D918B";
+        background = lib.mkDefault "#18191E";
+        foreground = lib.mkDefault "#FFEE79";
         timeout = 3;
       };
       urgency_normal = {
-        frame_color = "#D16BB7";
-        background = "#18191E";
-        foreground = "#FFEE79";
+        frame_color = lib.mkDefault "#D16BB7";
+        background = lib.mkDefault "#18191E";
+        foreground = lib.mkDefault "#FFEE79";
         timeout = 5;
       };
       urgency_critical = {
-        frame_color = "#FC2929";
-        background = "#18191E";
-        foreground = "#FFFF00";
+        frame_color = lib.mkDefault "#FC2929";
+        background = lib.mkDefault "#18191E";
+        foreground = lib.mkDefault "#FFFF00";
         timeout = 0;
       };
       spotify = {
@@ -102,6 +102,48 @@
       scrot = {
         summary = "scrot";
         format = "<b>  %s</b>\\n%b";
+      };
+    };
+  };
+
+  specialisation = {
+    light.configuration = {
+      services.dunst.settings = {
+        urgency_low = {
+          frame_color = lib.mkForce "#3760bf";
+          background = lib.mkForce "#e9e9ec";
+          foreground = lib.mkForce "#3760bf";
+        };
+        urgency_normal = {
+          frame_color = lib.mkForce "#3760bf";
+          background = lib.mkForce "#e1e2e7";
+          foreground = lib.mkForce "#3760bf";
+        };
+        urgency_critical = {
+          frame_color = lib.mkForce "#c64343";
+          background = lib.mkForce "#c4c8da";
+          foreground = lib.mkForce "#c64343";
+        };
+      };
+    };
+
+    dark.configuration = {
+      services.dunst.settings = {
+        urgency_low = {
+          frame_color = lib.mkForce "#c0caf5";
+          background = lib.mkForce "#1f2335";
+          foreground = lib.mkForce "#c0caf5";
+        };
+        urgency_normal = {
+          frame_color = lib.mkForce "#c0caf5";
+          background = lib.mkForce "#24283b";
+          foreground = lib.mkForce "#c0caf5";
+        };
+        urgency_critical = {
+          frame_color = lib.mkForce "#db4b4b";
+          background = lib.mkForce "#292e42";
+          foreground = lib.mkForce "#db4b4b";
+        };
       };
     };
   };

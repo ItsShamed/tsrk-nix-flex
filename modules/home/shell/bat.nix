@@ -3,6 +3,14 @@
 {
   programs.bat = {
     enable = true;
-    config.theme = "OneHalfDark";
+  };
+
+  specialisation = {
+    light.configuration = {
+      programs.bat.config.theme = "OneHalfLight";
+    };
+    dark.configuration = {
+      programs.bat.config.theme = "OneHalfDark";
+    };
   };
 }
