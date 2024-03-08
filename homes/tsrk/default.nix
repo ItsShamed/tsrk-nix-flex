@@ -19,7 +19,11 @@
     darkman = {
       enable = true;
       nvim.enable = true;
-      feh.enable = true;
+      feh = {
+        enable = true;
+        light = ./files/bocchi-tokyonight-storm.png;
+        dark = ./files/lagtrain-tokyonight-day.png;
+      };
     };
   };
   targets.genericLinux.enable = true;
