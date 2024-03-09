@@ -25,6 +25,11 @@
         dark = ./files/lagtrain-tokyonight-day.png;
       };
     };
+    polybar = {
+      enable = true;
+      ethInterfaceName = "eno1";
+      wlanInterfaceName = "wlan0";
+    };
   };
   targets.genericLinux.enable = true;
 
