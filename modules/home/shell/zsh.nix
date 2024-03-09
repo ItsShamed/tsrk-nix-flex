@@ -11,5 +11,5 @@
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.autocd = true;
 
-  programs.zsh.initExtra = "${pkgs.neofetch}/bin/neofetch";
+  programs.zsh.initExtra = "${pkgs.fastfetch}/bin/fastfetch";
 }
