@@ -78,19 +78,19 @@ let
         };
 
         colors.focused = {
-          border = "#edcb32";
-          background = "#285577";
-          text = "#ffffff";
-          indicator = "#a0c20c";
-          childBorder = "#edcb32";
+          border = lib.mkDefault "#edcb32";
+          background = lib.mkDefault "#285577";
+          text = lib.mkDefault "#ffffff";
+          indicator = lib.mkDefault "#a0c20c";
+          childBorder = lib.mkDefault "#edcb32";
         };
 
         colors.unfocused = {
-          border = "#333333";
-          background = "#222222";
-          text = "#888888";
-          indicator = "#edcb32";
-          childBorder = "#222222";
+          border = lib.mkDefault "#333333";
+          background = lib.mkDefault "#222222";
+          text = lib.mkDefault "#888888";
+          indicator = lib.mkDefault "#edcb32";
+          childBorder = lib.mkDefault "#222222";
         };
 
         keybindings = lib.mkDefault {
@@ -194,6 +194,63 @@ let
             "j" = "resize shrink height 10 px or 10 ppt";
             "l" = "resize grow width 10 px or 10 ppt";
             "r" = "mode default";
+          };
+        };
+      };
+    };
+
+    specialisation = {
+      light.configuration = {
+        xsession.windowManager.i3.config = {
+          colors.focused = {
+            border = lib.mkForce "#3760bf";
+            background = lib.mkForce "#e1e2e7";
+            text = lib.mkForce "#3760bf";
+            childBorder = lib.mkForce "#3760bf";
+            indicator = lib.mkForce "#2496ac";
+          };
+
+          colors.focusedInactive = {
+            border = lib.mkForce "#e1e2e7";
+            background = lib.mkForce "#e1e2e7";
+            text = lib.mkForce "#3760bf";
+            childBorder = lib.mkForce "#e1e2e7";
+            indicator = lib.mkForce "#3760bf";
+          };
+
+          colors.unfocused = {
+            border = lib.mkForce "#e1e2e7";
+            background = lib.mkForce "#e1e2e7";
+            text = lib.mkForce "#3760bf";
+            childBorder = lib.mkForce "#e1e2e7";
+            indicator = lib.mkForce "#3760bf";
+          };
+        };
+      };
+
+      dark.configuration = {
+        xsession.windowManager.i3.config = {
+          colors.focused = {
+            border = lib.mkForce "#c0caf5";
+            background = lib.mkForce "#24283b";
+            text = lib.mkForce "#c0caf5";
+            childBorder = lib.mkForce "#c0caf5";
+            indicator = lib.mkForce "#2496ac";
+          };
+          colors.focusedInactive = {
+            border = lib.mkForce "#24283b";
+            background = lib.mkForce "#24283b";
+            text = lib.mkForce "#c0caf5";
+            childBorder = lib.mkForce "#24283b";
+            indicator = lib.mkForce "#c0caf5";
+          };
+
+          colors.unfocused = {
+            border = lib.mkForce "#24283b";
+            background = lib.mkForce "#24283b";
+            text = lib.mkForce "#c0caf5";
+            childBorder = lib.mkForce "#24283b";
+            indicator = lib.mkForce "#c0caf5";
           };
         };
       };
