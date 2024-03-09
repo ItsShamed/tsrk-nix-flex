@@ -31,15 +31,15 @@ in
     };
 
     home.activation.xsettingsd-reload = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
-      _i "Reloading xsettingsd"
-      ${config.systemd.user.systemctlPath} --user restart xsettingsd
-    if ! ${pkgs.killall}/bin/killall -HUP xsettingsd; then
-      _iWarn "Failed to reload xsettingsd, themes will not be updated"
-    else
-      ${pkgs.lxappearance}/bin/lxappearance &
-      ${pkgs.coreutils}/bin/sleep 1
-      ${pkgs.killall}/bin/killall .lxappearance-wrapped
-    fi
+        _i "Reloading xsettingsd"
+        ${config.systemd.user.systemctlPath} --user restart xsettingsd
+      if ! ${pkgs.killall}/bin/killall -HUP xsettingsd; then
+        _iWarn "Failed to reload xsettingsd, themes will not be updated"
+      else
+        ${pkgs.lxappearance}/bin/lxappearance &
+        ${pkgs.coreutils}/bin/sleep 1
+        ${pkgs.killall}/bin/killall .lxappearance-wrapped
+      fi
     '';
   };
 }

@@ -19,9 +19,9 @@ let
     ${pkgs.killall}/bin/killall .lxappearance-wrapped
   '';
 
-# TODO: Changing themes via NeoVim sockets the old-fashioned way is the most
-# reasonnable thing to do for now, until me or someone is brave enough to
-# package this hell https://github.com/4e554c4c/darkman.nvim...
+  # TODO: Changing themes via NeoVim sockets the old-fashioned way is the most
+  # reasonnable thing to do for now, until me or someone is brave enough to
+  # package this hell https://github.com/4e554c4c/darkman.nvim...
 
   nvim-dark = pkgs.writeShellScript "nvim-dark" ''
     for server in $(${pkgs.neovim-remote}/bin/nvr --serverlist); do
@@ -34,58 +34,58 @@ let
     done
   '';
 
-  baseConfig = 
-  {
-    services.darkman = {
-      enable = lib.mkDefault true;
-      settings = {
-        lng = 48.87951;
-        lat = 2.28513;
+  baseConfig =
+    {
+      services.darkman = {
+        enable = lib.mkDefault true;
+        settings = {
+          lng = 48.87951;
+          lat = 2.28513;
+        };
+        lightModeScripts = {
+          dunst-notif = ''
+            ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
+          '';
+          activate-home-manager = ''
+            export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+            . ${config.home.homeDirectory}/.hm-light-activate
+          '';
+        };
+        darkModeScripts = {
+          dunst-notif = ''
+            ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
+          '';
+          activate-home-manager = ''
+            export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+            . ${config.home.homeDirectory}/.hm-dark-activate
+          '';
+        };
       };
-      lightModeScripts = {
-        dunst-notif = ''
-          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
-        '';
-        activate-home-manager = ''
-          export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-          . ${config.home.homeDirectory}/.hm-light-activate
-        '';
-      };
-      darkModeScripts = {
-        dunst-notif = ''
-          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
-        '';
-        activate-home-manager = ''
-          export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-          . ${config.home.homeDirectory}/.hm-dark-activate
-        '';
-      };
+
+      home.activation.copy-activation = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
+        echo "Copying activation scripts"
+        activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
+        activation_dir="$(cd -- "$activation_dir" && pwd)"
+        base_dir="$(basename "$activation_dir")"
+        if [ -z "$base_dir" ] || [ "$base_dir" = "light" ] || [ "$base_dir" = "dark" ]; then
+          warnEcho "Running in improper directory for linking activation scripts."
+          noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
+        else
+          $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate ${config.home.homeDirectory}/.hm-light-activate 2>/dev/null || true
+          $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate ${config.home.homeDirectory}/.hm-dark-activate 2>/dev/null || true
+        fi
+
+        unset activation_dir base_dir
+      '';
+
+      home.packages = with pkgs; [
+        (writeShellScriptBin "hm-switch" ''
+          cd $HOME/.config/home-manager
+          home-manager build $@
+          . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
+        '')
+      ];
     };
-
-    home.activation.copy-activation = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
-      echo "Copying activation scripts"
-      activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
-      activation_dir="$(cd -- "$activation_dir" && pwd)"
-      base_dir="$(basename "$activation_dir")"
-      if [ -z "$base_dir" ] || [ "$base_dir" = "light" ] || [ "$base_dir" = "dark" ]; then
-        warnEcho "Running in improper directory for linking activation scripts."
-        noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
-      else
-        $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate ${config.home.homeDirectory}/.hm-light-activate 2>/dev/null || true
-        $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate ${config.home.homeDirectory}/.hm-dark-activate 2>/dev/null || true
-      fi
-
-      unset activation_dir base_dir
-    '';
-
-    home.packages = with pkgs; [
-      (writeShellScriptBin "hm-switch" ''
-        cd $HOME/.config/home-manager
-        home-manager build $@
-        . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
-      '')
-    ];
-  };
 
   nvimLoaded = cfg.nvim.enable;
   nvimConfig = {
