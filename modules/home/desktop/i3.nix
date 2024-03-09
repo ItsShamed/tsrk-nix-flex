@@ -180,11 +180,11 @@ let
           "--release ${mod}+Shift+s" = (self.lib.mkIfElse config.tsrk.flameshot.enable
             "exec --no-startup-id \"flameshot gui\""
             "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
-            );
+          );
           "--release ${mod}+Print" = (self.lib.mkIfElse config.tsrk.flameshot.enable
             "exec --no-startup-id \"flameshot full\""
             "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
-            );
+          );
         };
 
         modes = {
