@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, pkgsUnstable, lib, home-manager, self, ... }:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
@@ -12,27 +12,8 @@ let
     ${pkgs.coreutils}/bin/sleep 1
     ${pkgs.killall}/bin/killall .lxappearance-wrapped
   '';
-in
-{
-  options = {
-    tsrk.i3 = {
-      enable = lib.options.mkEnableOption "tsrk's i3 configuration";
-      lockerBackground = lib.options.mkOption {
-        description = "Path to the background image for the locker.";
-        type = lib.types.path;
-        default = ./files/torekka.png;
-      };
-      background = lib.options.mkOption {
-        description = "Path to the main wallpaper background.";
-        type = lib.types.path;
-        default = ./files/bg-no-logo.png;
-      };
-      epitaRestrictions = lib.options.mkEnableOption "compliance with EPITA
-        regulations by using stock i3lock as the locker";
-    };
-  };
 
-  config = lib.mkIf config.tsrk.i3.enable {
+  i3Config = lib.mkIf config.tsrk.i3.enable {
     xsession.windowManager.i3 = {
       enable = true;
       config = {
@@ -190,14 +171,20 @@ in
           "${mod}+Shift+0" = "move container to workspace number 10";
 
           # lock
-          "${mod}+i" = "exec \"${lockCommand}\"";
+          "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "loginctl lock-session" "exec \"${lockCommand}\"");
           "${mod}+Shift+e" = "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'i3-msg exit'\"";
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
           "${mod}+r" = "mode \"resize\"";
-          "--release ${mod}+Shift+s" = "exec --no-startup-id \"${pkgs.flameshot}/bin/flameshot gui\"";
-          "--release ${mod}+Print" = "exec --no-startup-id \"${pkgs.flameshot}/bin/flameshot full\"";
+          "--release ${mod}+Shift+s" = (self.lib.mkIfElse config.tsrk.flameshot.enable
+            "exec --no-startup-id \"flameshot gui\""
+            "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
+            );
+          "--release ${mod}+Print" = (self.lib.mkIfElse config.tsrk.flameshot.enable
+            "exec --no-startup-id \"flameshot full\""
+            "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
+            );
         };
 
         modes = {
@@ -212,15 +199,112 @@ in
       };
     };
 
-    systemd.user.services.setup-betterlockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
+    systemd.user.services = {
+      setup-betterlockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
+        Install = {
+          WantedBy = [ "graphical-session.target" ];
+        };
 
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
+        Service = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
+        };
       };
     };
   };
+
+  logindConfig = lib.mkIf config.tsrk.i3.useLogind {
+
+    home.packages = with pkgs; [
+      pkgsUnstable.systemd-lock-handler
+    ];
+
+    systemd.user.targets = {
+      lock = {
+        Unit = {
+          Conflicts = "unlock.target";
+          Description = "Lock the current session";
+        };
+      };
+      unlock = {
+        Unit = {
+          Conflicts = "lock.target";
+          Description = "Unlocks the current session";
+        };
+      };
+      sleep = {
+        Unit = {
+          Description = "User-level target triggered when the system is about to sleep.";
+          Requires = "lock.target";
+          After = "lock.target";
+        };
+      };
+    };
+
+    systemd.user.services = {
+      systemd-lock-handler = {
+        Unit = {
+          Description = "Logind lock event to systemd target translation";
+          Documentation = "https://sr.ht/~whynothugo/systemd-lock-handler";
+        };
+
+        Service = {
+          Slice = "session.slice";
+          ExecStart = "${pkgsUnstable.systemd-lock-handler}/lib/systemd-lock-handler";
+          Type = "notify";
+          Restart = "on-failure";
+          RestartSec = "10s";
+        };
+
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+      };
+
+      i3lock = {
+        Unit = {
+          Description = "Locks the current user session";
+          PartOf = "lock.target";
+          After = "lock.target";
+          Before = "sleep.target";
+        };
+
+        Service = {
+          ExecStart = lockCommand;
+          Type = "forking";
+          Restart = "on-failure";
+          RestartSec = "0s";
+        };
+
+        Install = {
+          WantedBy = [ "lock.target" "sleep.target" ];
+        };
+      };
+    };
+  };
+in
+{
+  options = {
+    tsrk.i3 = {
+      enable = lib.options.mkEnableOption "tsrk's i3 configuration";
+      lockerBackground = lib.options.mkOption {
+        description = "Path to the background image for the locker.";
+        type = lib.types.path;
+        default = ./files/torekka.png;
+      };
+      background = lib.options.mkOption {
+        description = "Path to the main wallpaper background.";
+        type = lib.types.path;
+        default = ./files/bg-no-logo.png;
+      };
+      epitaRestrictions = lib.options.mkEnableOption "compliance with EPITA
+        regulations by using stock i3lock as the locker";
+      useLogind = lib.options.mkEnableOption "locking using logind";
+    };
+  };
+
+  config = lib.mkMerge [
+    i3Config
+    logindConfig
+  ];
 }
