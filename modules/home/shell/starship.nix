@@ -3,6 +3,7 @@
 {
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
+  programs.starship.enableBashIntegration = true;
 
   programs.starship.settings = {
     format = lib.concatStrings [
@@ -14,9 +15,11 @@
       "$git_status"
       "$c"
       "$cmake"
+      "$dart"
       "$python"
       "$nodejs"
       "$java"
+      "$go"
       "$dotnet"
       "$ocaml"
       "$rust"
@@ -34,7 +37,10 @@
       "$status"
     ];
 
-    directory.truncation_symbol = "…/";
+    directory = {
+      truncation_symbol = "…/";
+      fish_style_pwd_dir_length = 1;
+    };
 
     username = {
       show_always = true;
@@ -44,6 +50,15 @@
     hostname = {
       ssh_only = false;
       format = "[$ssh_symbol$hostname]($style)";
+    };
+
+    golang = {
+      format = "via [$symbol($version )($mod_version )]($style)";
+    };
+
+    status = {
+      pipestatus = true;
+      format = "[$symbol$status ($common_meaning$signal_name)]($style) ";
     };
 
     time.disabled = false;
