@@ -1,3 +1,7 @@
+> [!NOTE]
+> If you are viewing this on GitHub, this is a mirror of the real repo at
+> https://git.tsrk.me/tsrk/tsrk-nix-flex
+
 # tsrk. Nix Flex
 
 *(you get it? because it's pronounced likes "flakes". laugh now.)*
