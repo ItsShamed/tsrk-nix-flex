@@ -21,8 +21,8 @@
       nvim.enable = true;
       feh = {
         enable = true;
-        light = ./files/bocchi-tokyonight-storm.png;
-        dark = ./files/lagtrain-tokyonight-day.png;
+        dark = ./files/bocchi-tokyonight-storm.png;
+        light = ./files/lagtrain-tokyonight-day.png;
       };
     };
     polybar = {
