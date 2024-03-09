@@ -1,122 +1,214 @@
 { config, lib, pkgs, ... }:
+
 let
-  colors = {
-    background = "#111";
-    background-alt = "#222";
-    foreground = "#dfdfdf";
-    foreground-alt = "#555";
-    primary = "#999";
-    secondary = "#e60053";
-    alert = "#bd2c40";
-  };
+  cfg = config.tsrk.polybar;
+  polybarModules = modulesNames: lib.strings.concatStringsSep " " modulesNames;
 in
 {
-  services.polybar = lib.mkIf config.tsrk.i3.enable {
-    enable = lib.mkDefault true;
-    script = "polybar bar &";
-
-    package = pkgs.polybar.override {
-      i3Support = true;
+  options = {
+    tsrk.polybar = {
+      enable = lib.options.mkEnableOption "polybar";
+      wlanInterfaceName = lib.options.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        description = "The name of the host wireless interface";
+        default = null;
+        example = "wlan0";
+      };
+      ethInterfaceName = lib.options.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        description = "The name of the host wired interface";
+        default = null;
+        example = "eth0";
+      };
     };
+  };
+  config = lib.mkIf cfg.enable {
+    services.polybar = lib.mkIf config.tsrk.i3.enable {
+      enable = lib.mkDefault true;
+      script = "polybar bar &";
 
-    settings = {
+      package = pkgs.polybar.override {
+        i3Support = true;
+        pulseSupport = true;
+      };
 
-      "bar/bar" = {
-        inherit (colors) background foreground;
+      settings = rec {
 
-        line = {
-          size = 3;
-          color = "#f00";
+        # Tokyo Night Storm colours
+        colors = {
+          background = "#1f2335";
+          background-alt = "#24283b";
+          foreground-alt = "#a9b1d6";
+          foreground = "#c0caf5";
+          primary = "#292e42";
+          secondary = "#e60053";
+          alert = "#f7768e";
+          red = "#f7768e";
+          yellow = "#e0af68";
         };
 
-        border = {
-          size = 0;
-          color = "#00000000";
-        };
+        "bar/bar" = {
+          inherit (colors) background foreground;
 
-        font = [
-          "Iosevka Nerd Font:pixelsize=12;0"
-          "MesloLG Nerd Font:pixelsize=12;0"
-          "JetBrains Mono Nerd Font:pixelsize=12;0"
-          "fixed:pixelsize=10;1"
-          "unifont:fontformat=truetype:size=8:antialias=false;0"
-          "siji:pixelsize=10;1"
-        ];
-
-        width = "100%";
-        height = 40;
-        radius = 0;
-        fixed.center = false;
-
-        modules = {
-          margin = {
-            left = 1;
-            right = 1;
+          line = {
+            size = 2;
+            color = "#f00";
           };
 
-          left = "i3";
-          center = "xwindow";
-          right = "date";
-        };
-
-        tray = {
-          position = "right";
-          padding = 0;
-        };
-      };
-
-      "module/xwindow" = {
-        type = "internal/xwindow";
-        label = "%title:0:30:...%";
-      };
-
-      "module/i3" = {
-        type = "internal/i3";
-        format = "<label-state> <label-mode>";
-        wrapping.scroll = false;
-
-        label = rec {
-          mode = {
-            padding = 2;
-            foreground = "#000";
-            background = colors.primary;
+          border = {
+            size = 0;
+            color = "#00000000";
           };
 
-          focused = "%index%";
-          focused-background = colors.background-alt;
-          focused-underline = colors.primary;
-          focused-padding = 2;
+          font = [
+            "Iosevka Nerd Font:pixelsize=10;0"
+            "MesloLG Nerd Font:pixelsize=10;0"
+            "JetBrains Mono Nerd Font:pixelsize=10;0"
+            "fixed:pixelsize=10;1"
+            "unifont:fontformat=truetype:size=8:antialias=false;0"
+            "siji:pixelsize=10;1"
+          ];
 
-          unfocused = "%index%";
-          unfocused-padding = 2;
+          padding.right = 2;
 
-          visible = "%index%";
-          visible-background = focused-background;
-          visible-underline = focused-underline;
-          visible-padding = focused-padding;
+          width = "100%";
+          height = 35;
+          radius = 0;
+          fixed.center = false;
 
-          urgent = "%index%";
-          urgent-background = colors.alert;
-          urgent-padding = 2;
+          modules = {
+            margin = {
+              left = 2;
+              right = 2;
+            };
+
+            left = polybarModules [ "i3" "xwindow" ];
+            right = polybarModules (lib.lists.reverseList ([
+              "tray"
+              "date"
+              "audio"
+            ]
+            ++ (lib.lists.optional (cfg.wlanInterfaceName != null) "wifi")
+            ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")));
+          };
+
+          separator = " | ";
         };
-      };
 
-      "module/date" = rec {
-        type = "internal/date";
-        interval = 1;
+        "module/audio" = {
+          type = "internal/pulseaudio";
+          format = {
+            volume = "<ramp-volume> <label-volume>";
+            muted.prefix = "󰝟 ";
+          };
 
-        date = "";
-        date-alt = " %Y-%m-%d";
+          label-muted = "muted";
+          label-muted-foreground = colors.yellow;
 
-        time = "%l:%M:%S %p";
-        time-alt = time;
-
-        format = {
-          prefix = "";
-          prefix-forground = colors.foreground-alt;
+          ramp.volume = [
+            "󰕿"
+            "󰖀"
+            "󰕾 "
+          ];
         };
 
-        label = "%date% %time%";
+        "module/xwindow" = {
+          type = "internal/xwindow";
+          label = "%title:0:64:...%";
+        };
+
+        "module/i3" = {
+          type = "internal/i3";
+          format = "<label-state> <label-mode>";
+          wrapping.scroll = false;
+
+          label = rec {
+            mode = {
+              padding = 2;
+              foreground = "#000";
+              background = colors.primary;
+            };
+
+            focused = "%index%";
+            focused-background = colors.primary;
+            focused-underline = colors.foreground;
+            focused-padding = 2;
+
+            unfocused = "%index%";
+            unfocused-padding = 2;
+
+            visible = "%index%";
+            visible-background = focused-background;
+            visible-underline = focused-underline;
+            visible-padding = focused-padding;
+
+            urgent = "%index%";
+            urgent-foreground = colors.background;
+            urgent-background = colors.alert;
+            urgent-padding = 2;
+          };
+        };
+
+        "module/date" = rec {
+          type = "internal/date";
+          interval = 1;
+
+          date = "";
+          date-alt = "%Y-%m-%d ";
+
+          time = "%l:%M:%S %p";
+          time-alt = time;
+
+          format = {
+            prefix = " ";
+            prefix-forground = colors.foreground-alt;
+          };
+
+          label = "%date%%time%";
+        };
+
+        "module/wifi" = {
+          type = "internal/network";
+          interface = cfg.wlanInterfaceName;
+          interface-type = "wireless";
+
+          format-disconnected-prefix = "󰤮 ";
+          label-disconnected = "down";
+          label-disconnected-foreground = colors.red;
+
+          label-connected = "%essid%";
+          format-connected = "<ramp-signal> <label-connected>";
+
+          ramp-signal = [
+            "󰤯 "
+              "󰤟 "
+              "󰤢 "
+              "󰤥 "
+              "󰤨 "
+          ];
+        };
+
+        "module/eth" = {
+          type = "internal/network";
+          interface = cfg.ethInterfaceName;
+          interface-type = "wireless";
+
+          format-disconnected-prefix = "󰈂 ";
+          label-disconnected = "down";
+          label-disconnected-foreground = colors.red;
+
+          label-connected = "%local_ip%";
+          format-connected = "<label-connected>";
+          format-connected-prefix = "󰈁 ";
+        };
+
+        "module/tray" = {
+          type = "internal/tray";
+          tray = {
+            spacing = 2;
+            size = "50%";
+          };
+        };
       };
     };
   };
