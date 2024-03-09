@@ -48,7 +48,7 @@ let
         '';
         activate-home-manager = ''
           export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-          . ${config.xdg.configHome}/home-manager/result/specialisation/light/activate
+          . ${config.home.homeDirectory}/.hm-light-activate
         '';
       };
       darkModeScripts = {
@@ -57,10 +57,26 @@ let
         '';
         activate-home-manager = ''
           export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-          . ${config.xdg.configHome}/home-manager/result/specialisation/dark/activate
+          . ${config.home.homeDirectory}/.hm-dark-activate
         '';
       };
     };
+
+    home.activation.copy-activation = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
+      echo "Copying activation scripts"
+      activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
+      activation_dir="$(cd -- "$activation_dir" && pwd)"
+      base_dir="$(basename "$activation_dir")"
+      if [ -z "$base_dir" ] || [ "$base_dir" = "light" ] || [ "$base_dir" = "dark" ]; then
+        warnEcho "Running in improper directory for linking activation scripts."
+        noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
+      else
+        $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate ${config.home.homeDirectory}/.hm-light-activate 2>/dev/null || true
+        $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate ${config.home.homeDirectory}/.hm-dark-activate 2>/dev/null || true
+      fi
+
+      unset activation_dir base_dir
+    '';
 
     home.packages = with pkgs; [
       (writeShellScriptBin "hm-switch" ''
