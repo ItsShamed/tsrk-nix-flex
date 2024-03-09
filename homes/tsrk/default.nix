@@ -12,9 +12,9 @@
     i3 = {
       enable = true;
       epitaRestrictions = true;
+      useLogind = true;
     };
     xsettingsd.enable = true;
-    flameshot.enable = true;
     kitty.enable = true;
     darkman = {
       enable = true;
