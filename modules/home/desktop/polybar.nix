@@ -69,7 +69,7 @@ in
             "siji:pixelsize=10;1"
           ];
 
-          padding.right = 2;
+          padding.right = 1;
 
           width = "100%";
           height = 35;
@@ -78,8 +78,8 @@ in
 
           modules = {
             margin = {
-              left = 2;
-              right = 2;
+              left = 1;
+              right = 1;
             };
 
             left = polybarModules [ "i3" "xwindow" ];
@@ -205,7 +205,7 @@ in
         "module/tray" = {
           type = "internal/tray";
           tray = {
-            spacing = 2;
+            spacing = 4;
             size = "50%";
           };
         };
