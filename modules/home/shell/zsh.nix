@@ -11,5 +11,8 @@
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.autocd = true;
 
-  programs.zsh.initExtra = "${pkgs.fastfetch}/bin/fastfetch";
+  programs.zsh.initExtra = ''
+    bindkey -v
+    ${pkgs.fastfetch}/bin/fastfetch
+  '';
 }
