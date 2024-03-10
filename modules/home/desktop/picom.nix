@@ -8,7 +8,7 @@ let
       enable = true;
       fade = true;
       extraArgs = [ "--no-use-damage" ];
-      backend = "xr_glx_hybrid";
+      backend = "glx";
       fadeDelta = 5;
       fadeSteps = [ 0.075 0.030 ];
       opacityRules = [
