@@ -171,7 +171,7 @@ let
           "${mod}+Shift+0" = "move container to workspace number 10";
 
           # lock
-          "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "loginctl lock-session" "exec \"${lockCommand}\"");
+          "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");
           "${mod}+Shift+e" = "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'i3-msg exit'\"";
 
           "${mod}+Shift+r" = "restart";
