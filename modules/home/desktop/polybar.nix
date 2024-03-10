@@ -125,8 +125,8 @@ in
           label = rec {
             mode = {
               padding = 2;
-              foreground = "#000";
-              background = colors.primary;
+              foreground = colors.background;
+              background = colors.alert;
             };
 
             focused = "%index%";
