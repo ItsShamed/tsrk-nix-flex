@@ -70,6 +70,13 @@ let
               class = ".xappearance";
             };
           }
+
+          {
+            command = "floating enable";
+            criteria = {
+              window_role = "alert";
+            };
+          }
         ];
 
         gaps = {
