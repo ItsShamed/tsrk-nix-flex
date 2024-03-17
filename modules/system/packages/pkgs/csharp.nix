@@ -9,7 +9,7 @@ in
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
 
       package = lib.options.mkPackageOption pkgs ".NET" {
-        default = [ "dotnet-sdk_7" ];
+        default = [ "dotnet-sdk_8" ];
       };
 
       ide = {
