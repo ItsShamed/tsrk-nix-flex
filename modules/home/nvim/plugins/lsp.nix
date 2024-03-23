@@ -20,6 +20,7 @@
           package = pkgs.clang-tools_16;
         };
         cmake.enable = true;
+        eslint.enable = true;
         lua-ls.enable = true;
         nixd.enable = true;
         jsonls.enable = true;
