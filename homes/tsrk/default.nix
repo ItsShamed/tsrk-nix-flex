@@ -33,22 +33,35 @@
   };
   targets.genericLinux.enable = true;
 
-  accounts.email.accounts.tsrk = rec {
-    address = "tsrk@tsrk.me";
-    userName = address;
-    realName = "tsrk.";
-    imap = {
-      host = "zimbra002.pulseheberg.com";
-      port = 993;
+  accounts.email.accounts = 
+  {
+    tsrk = rec {
+      address = "tsrk@tsrk.me";
+      userName = address;
+      realName = "tsrk.";
+      imap = {
+        host = "zimbra002.pulseheberg.com";
+        port = 993;
+      };
+      signature = {
+        showSignature = "append";
+        text = ''
+          tsrk.
+          https://tsrk.me
+          '';
+      };
+      primary = true;
+      thunderbird.enable = true;
     };
-    signature = {
-      showSignature = "append";
-      text = ''
-        tsrk.
-        https://tsrk.me
-      '';
+    a5ts = rec {
+      address = "a5ts@tsrk.me";
+      userName = address;
+      realName = "a5ts";
+      imap = {
+        host = "zimbra002.pulseheberg.com";
+        port = 993;
+      };
+      thunderbird.enable = true;
     };
-    primary = true;
-    thunderbird.enable = true;
   };
 }
