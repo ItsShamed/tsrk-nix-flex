@@ -30,6 +30,7 @@ in
     };
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
     autocd = true;
 
     initExtra = ''
