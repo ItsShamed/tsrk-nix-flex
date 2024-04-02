@@ -25,6 +25,7 @@ in
     l = "lsd -lah";
     lg = "lazygit";
     ls = "lsd";
+    cd = "z";
   };
   programs.zsh.enableAutosuggestions = true;
   programs.zsh.syntaxHighlighting.enable = true;
