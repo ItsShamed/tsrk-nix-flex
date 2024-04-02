@@ -17,5 +17,6 @@
   ./packages
   ./shell/bat.nix
   ./shell/starship.nix
+  ./shell/zoxide.nix
   ./shell/zsh.nix
 ]
