@@ -35,6 +35,7 @@ in
 
     initExtra = ''
       bindkey -v
+      export GPG_TTY=$(tty)
       ${pkgs.fastfetch}/bin/fastfetch
       '';
   };
