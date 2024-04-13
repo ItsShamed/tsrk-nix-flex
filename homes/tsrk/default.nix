@@ -30,6 +30,7 @@
       ethInterfaceName = "eno1";
       wlanInterfaceName = "wlan0";
     };
+    git.cli.enable = true;
   };
   targets.genericLinux.enable = true;
 
