@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     openjdk17
     jetbrains.idea-ultimate
+    jetbrains.webstorm
     dotnet-sdk_8
     mono
     jetbrains.rider
