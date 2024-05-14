@@ -69,6 +69,16 @@ in
         gitSwitchNormal
         gitSwitchSchool
       ];
+      programs.ssh = {
+        matchBlocks = {
+        "ssh.cri.epita.fr" = {
+            extraOptions = {
+            "GSSAPIAuthentication" = "yes";
+            "GSSAPIDelegateCredentials" = "yes";
+            };
+          };
+        };
+      };
       assertions = [
         {
           assertion = (lib.strings.stringLength cfg.signature.status) <= 78;
