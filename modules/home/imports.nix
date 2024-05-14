@@ -20,4 +20,5 @@
   ./shell/starship.nix
   ./shell/zoxide.nix
   ./shell/zsh.nix
+  ./ssh.nix
 ]
