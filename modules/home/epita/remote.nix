@@ -93,10 +93,12 @@ in
         address = "${cfg.login}@epita.fr";
         userName = address;
         realName = cfg.fullName;
-        imap = {
-          host = "outlook.office365.com";
-          port = 993;
-        };
+        # Obsoleted by flavour
+        # imap = {
+        #   host = "outlook.office365.com";
+        #   port = 993;
+        # };
+        flavor = "outlook.office365.com";
         signature = {
           showSignature = "append";
           delimiter = "-- ";
