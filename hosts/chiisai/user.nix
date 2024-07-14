@@ -19,7 +19,28 @@
     self.homeManagerModules.flameshot
     self.homeManagerModules.compat
   ];
-  tsrk.i3.enable = true;
+  tsrk = {
+    i3 = {
+      enable = true;
+      epitaRestrictions = true;
+      useLogind = true;
+    };
+    xsettingsd.enable = true;
+    kitty.enable = true;
+    darkman = {
+      enable = true;
+      nvim.enable = true;
+      feh = {
+        enable = true;
+        dark = ./files/bocchi-tokyonight-storm.png;
+        light = ./files/lagtrain-tokyonight-day.png;
+      };
+    };
+    polybar = {
+      enable = true;
+    };
+    git.cli.enable = true;
+  };
 
   accounts.email.accounts =
   {
