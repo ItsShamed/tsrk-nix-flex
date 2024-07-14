@@ -6,6 +6,7 @@ let
     inherit mode;
     options = {
       inherit desc;
+      noremap = true;
       silent = true;
     };
   };
@@ -15,6 +16,7 @@ let
     inherit mode;
     options = {
       inherit desc;
+      noremap = true;
       silent = true;
     };
     lua = true;
@@ -69,6 +71,11 @@ in
         #     find_project_files { previewer = flase }
         #   end
         # '' "Find files";
+        "<leader>e" = {
+          action = ":NvimTreeToggle<CR>";
+          desc = "Show file explorer";
+          silent = true;
+        };
       };
 
       insert = {

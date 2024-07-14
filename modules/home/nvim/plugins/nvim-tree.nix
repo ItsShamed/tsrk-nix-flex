@@ -65,11 +65,5 @@
         end
       '';
     };
-
-    keymaps.normal."<leader>e" = {
-      action = ":NvimTreeToggle<CR>";
-      desc = "Show file explorer";
-      silent = true;
-    };
   };
 }
