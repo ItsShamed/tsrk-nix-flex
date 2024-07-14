@@ -13,7 +13,6 @@
   ./epita/remote.nix
   ./epita/sql.nix
   ./git
-  ./git/cli.nix
   ./nvim
   ./packages
   ./shell/bat.nix

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   delta-repo = pkgs.fetchFromGitHub {
@@ -9,14 +9,21 @@ let
   };
 in
 {
-  programs.git.includes = [{ path = "${delta-repo}/themes.gitconfig"; }];
+  options = {
+    tsrk.git.delta.enable = lib.options.mkEnableOption "tsrk's delta pager configuration for Git";
+  };
 
-  specialisation = {
-    light.configuration = {
-      programs.git.includes = [{ contents.delta.syntax-theme = "OneHalfLight"; }];
-    };
-    dark.configuration = {
-      programs.git.includes = [{ contents.delta.syntax-theme = "OneHalfDark"; }];
+  config = lib.mkIf config.tsrk.git.delta.enable {
+    programs.git.delta.enable = lib.mkDefault true;
+    programs.git.includes = [{ path = "${delta-repo}/themes.gitconfig"; }];
+
+    specialisation = {
+      light.configuration = {
+        programs.git.includes = [{ contents.delta.syntax-theme = "OneHalfLight"; }];
+      };
+      dark.configuration = {
+        programs.git.includes = [{ contents.delta.syntax-theme = "OneHalfDark"; }];
+      };
     };
   };
 }

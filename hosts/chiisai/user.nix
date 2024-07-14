@@ -39,7 +39,12 @@
     polybar = {
       enable = true;
     };
-    # git.cli.enable = true;
+    git = {
+      enable = true;
+      cli.enable = true;
+      lazygit.enable = true;
+      delta.enable = true;
+    };
   };
 
   accounts.email.accounts =
