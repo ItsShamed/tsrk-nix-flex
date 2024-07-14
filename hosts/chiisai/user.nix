@@ -19,10 +19,10 @@
     self.homeManagerModules.flameshot
     self.homeManagerModules.compat
   ];
+
   tsrk = {
     i3 = {
       enable = true;
-      epitaRestrictions = true;
       useLogind = true;
     };
     xsettingsd.enable = true;
@@ -39,7 +39,7 @@
     polybar = {
       enable = true;
     };
-    git.cli.enable = true;
+    # git.cli.enable = true;
   };
 
   accounts.email.accounts =
