@@ -112,5 +112,5 @@
     printf "\033[0;36mYou are currently booting on the \033[1;35m${host} \033[0;36m image\033[0m\n"
   '';
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }
