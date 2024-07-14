@@ -99,9 +99,10 @@
           };
 
           homeManagerModules = (import ./modules/home { inherit lib; })
+            // (import ./profiles/home { inherit lib; })
             // {
             all = import ./modules/home/all.nix;
-            default = self.homeModules.all;
+            default = self.homeManagerModules.all;
           };
 
           lib = import ./lib {

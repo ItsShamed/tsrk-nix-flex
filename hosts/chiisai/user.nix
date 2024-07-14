@@ -13,8 +13,7 @@
     self.homeManagerModules.bat
     self.homeManagerModules.nvim
     self.homeManagerModules.thunderbird
-    config.age.secrets.epitaModule.path
+    self.homeManagerModules.profile-epita-tsrk
   ];
-  age.secrets.epitaModule.file = ./epita.nix.age;
   tsrk.i3.enable = true;
 }
