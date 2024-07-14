@@ -14,6 +14,10 @@
     self.homeManagerModules.nvim
     self.homeManagerModules.thunderbird
     self.homeManagerModules.profile-epita-tsrk
+    self.homeManagerModules.xsettingsd
+    self.homeManagerModules.darkman
+    self.homeManagerModules.flameshot
+    self.homeManagerModules.compat
   ];
   tsrk.i3.enable = true;
 
