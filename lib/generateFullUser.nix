@@ -8,7 +8,7 @@ name:
 
 , password ? null
 , hashedPasswordFile ? null
-, initialPassword ? ""
+, initialPassword ? null
 , canSudo ? false
 , moreGroups ? [ ]
 }:
