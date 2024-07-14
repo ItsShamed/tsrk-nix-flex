@@ -59,11 +59,50 @@ let
   };
 
   plugin = programs.nixvim.plugin.nvim-cmp;
+
+  # Migrates the obsoleted mapping syntax to the raw one
+  # Basically https://github.com/nix-community/nixvim/blob/nixos-23.11/plugins/completion/nvim-cmp/default.nix#L502C19-L535C33
+  # Idk why they changed that for 24.05, it used to work well like it was
+  migrateMappings = with lib; mapping:
+      let
+        mappings =
+          vimHelpers.ifNonNull' mapping
+          (mapAttrs
+            (
+              key: action:
+                vimHelpers.mkRaw (
+                  if isString action
+                  then action
+                  else let
+                    modes = if action ? modes then action.modes else null;
+                    modesString =
+                      optionalString
+                      (
+                        (modes != null)
+                        && ((length modes) >= 1)
+                      )
+                      ("," + (vimHelpers.toLuaObject modes));
+                  in "cmp.mapping(${action.action}${modesString})"
+                )
+            )
+            mapping);
+
+        luaMappings = vimHelpers.toLuaObject mappings;
+
+        wrapped =
+          lists.fold
+          (
+            presetName: prevString: ''cmp.mapping.preset.${presetName}(${prevString})''
+          )
+          luaMappings
+          [];
+      in
+        vimHelpers.mkRaw wrapped;
 in
 {
   programs.nixvim = {
-    plugins.nvim-cmp.enable = true;
-    plugins.nvim-cmp.mapping = {
+    plugins.cmp.enable = true;
+    plugins.cmp.settings.mapping = migrateMappings {
       "<CR>" = {
         action = ''
           function(fallback)
@@ -141,7 +180,7 @@ in
       "<C-Space>" = "cmp.mapping.complete()";
     };
 
-    plugins.nvim-cmp.sources = [
+    plugins.cmp.settings.sources = [
       {
         name = "nvim_lsp";
         # entryFilter = ''
@@ -164,8 +203,9 @@ in
       { name = "nvim_lsp_document_symbols"; }
     ];
 
-    plugins.nvim-cmp.snippet.expand = "luasnip";
-    plugins.nvim-cmp.formatting.format = ''
+    plugins.cmp.settings.snippet.expand =
+      "function(args) require('luasnip').lsp_expand(args.body) end";
+    plugins.cmp.settings.formatting.format = ''
       function(entry, vim_item)
         local kind_icons = ${toLuaObject icons}
         local source_names = ${toLuaObject sourceNames}
