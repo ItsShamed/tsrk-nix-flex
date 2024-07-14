@@ -29,7 +29,11 @@ name:
     inherit (inputs) home-manager;
     inherit (pkgSet) pkgsUnstable;
     hmLib = inputs.home-manager.lib.hm;
-    vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
+    vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" {
+      inherit (inputs.nixpkgs) lib;
+      inherit (pkgSet) pkgs;
+      _nixvimTests = false;
+    };
     gaming = inputs.nix-gaming.packages.${system};
   };
 }
