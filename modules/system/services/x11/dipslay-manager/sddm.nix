@@ -8,7 +8,7 @@
   };
 
   config = lib.mkIf config.tsrk.sddm.enable {
-    services.xserver.displayManager.sddm = {
+    services.displayManager.sddm = {
       enable = true;
       autoNumlock = true;
     };

@@ -28,7 +28,9 @@ in
       ls = "lsd";
       cd = "z";
     };
-    enableAutosuggestions = true;
+    autosuggestion = {
+      enable = true;
+    };
     syntaxHighlighting.enable = true;
     historySubstringSearch.enable = true;
     autocd = true;

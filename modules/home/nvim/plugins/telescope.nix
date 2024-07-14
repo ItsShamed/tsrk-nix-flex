@@ -9,14 +9,15 @@
     enable = true;
     extensions.fzf-native = {
       enable = true;
-      fuzzy = true;
-      overrideGenericSorter = true;
-      overrideFileSorter = true;
-      caseMode = "smart_case";
+      settings = {
+        fuzzy = true;
+        override_generic_sorter = true;
+        override_file_sorter = true;
+        case_mode = "smart_case";
+      };
     };
-    extensions.project-nvim.enable = true;
 
-    extraOptions = {
+    settings = {
       defaults = {
         prompt_prefix = " ";
         selection_caret = " ";

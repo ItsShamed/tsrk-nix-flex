@@ -2,7 +2,7 @@
 
 {
   programs.nixvim = {
-    options = {
+    opts = {
       backup = false;
       cmdheight = 1;
       colorcolumn = "80";

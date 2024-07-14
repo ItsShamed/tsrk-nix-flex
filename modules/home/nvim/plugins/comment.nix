@@ -2,13 +2,15 @@
 
 {
   programs.nixvim = {
-    plugins.comment-nvim = {
+    plugins.comment = {
       enable = true;
-      ignore = "^s";
-      padding = true;
-      sticky = true;
-      mappings.basic = true;
-      mappings.extra = true;
+      settings = {
+        ignore = "^s";
+        padding = true;
+        sticky = true;
+        mappings.basic = true;
+        mappings.extra = true;
+      };
     };
   };
 }

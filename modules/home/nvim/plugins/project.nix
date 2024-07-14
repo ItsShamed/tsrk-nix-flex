@@ -12,6 +12,8 @@
       silentChdir = true;
       scopeChdir = "global";
 
+      enableTelescope = true;
+
       extraOptions = {
         patterns = [
           ".git"
