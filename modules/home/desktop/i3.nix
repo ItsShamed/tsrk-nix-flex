@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, lib, home-manager, self, ... }:
+{ config, pkgs, lib, self, ... }:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
@@ -280,7 +280,7 @@ let
   logindConfig = lib.mkIf config.tsrk.i3.useLogind {
 
     home.packages = with pkgs; [
-      pkgsUnstable.systemd-lock-handler
+      pkgs.systemd-lock-handler
     ];
 
     systemd.user.targets = {
@@ -314,7 +314,7 @@ let
 
         Service = {
           Slice = "session.slice";
-          ExecStart = "${pkgsUnstable.systemd-lock-handler}/lib/systemd-lock-handler";
+          ExecStart = "${pkgs.systemd-lock-handler}/lib/systemd-lock-handler";
           Type = "notify";
           Restart = "on-failure";
           RestartSec = "10s";
