@@ -71,11 +71,7 @@ in
         #     find_project_files { previewer = flase }
         #   end
         # '' "Find files";
-        "<leader>e" = {
-          action = ":NvimTreeToggle<CR>";
-          desc = "Show file explorer";
-          silent = true;
-        };
+        "<leader>e" = keymap ":NvimTreeToggle<CR>" "Show file explorer" "n";
       };
 
       insert = {
