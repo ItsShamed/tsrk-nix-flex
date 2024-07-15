@@ -1,4 +1,4 @@
-{ config, lib, pkgs, vimHelpers, ... }:
+{ lib, vimHelpers, ... }:
 
 with vimHelpers;
 let
@@ -22,8 +22,6 @@ let
     nvim_lsp = 0;
     luasnip = 1;
   };
-
-  plugin = programs.nixvim.plugin.nvim-cmp;
 
   # Migrates the obsoleted mapping syntax to the raw one
   # Basically https://github.com/nix-community/nixvim/blob/nixos-23.11/plugins/completion/nvim-cmp/default.nix#L502C19-L535C33

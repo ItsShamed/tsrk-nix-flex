@@ -2,36 +2,6 @@
 
 let
   cfg = config.tsrk.darkman;
-  xsettingsd-light = pkgs.writeShellScriptBin "xsettingsd-light" ''
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-dark/-light/' "${config.home.homeDirectory}/.xsettingsd"
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-Dark/-Light/' "${config.home.homeDirectory}/.xsettingsd"
-    ${pkgs.killall}/bin/killall -HUP xsettingsd || true
-
-    # Restarts the service if killall does an oopsie by *actually* killing
-    # xsettingsd lol
-    if ! systemctl --user is-active --quiet xsettingsd; then
-      systemctl --user enable --now xsettingsd;
-    fi
-
-    ${pkgs.lxappearance}/bin/lxappearance &
-    ${pkgs.coreutils}/bin/sleep 1
-    ${pkgs.killall}/bin/killall .lxappearance-wrapped
-  '';
-  xsettingsd-dark = pkgs.writeShellScriptBin "xsettingsd-dark" ''
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-light/-dark/' "${config.home.homeDirectory}/.xsettingsd"
-    ${pkgs.gnused}/bin/sed --in-place --follow-symlinks 's/-Light/-Dark/' "${config.home.homeDirectory}/.xsettingsd"
-    ${pkgs.killall}/bin/killall -HUP xsettingsd || true
-
-    # Restarts the service if killall does an oopsie by *actually* killing
-    # xsettingsd lol
-    if ! systemctl --user is-active --quiet xsettingsd; then
-      systemctl --user enable --now xsettingsd;
-    fi
-
-    ${pkgs.lxappearance}/bin/lxappearance &
-    ${pkgs.coreutils}/bin/sleep 1
-    ${pkgs.killall}/bin/killall .lxappearance-wrapped
-  '';
 
   # TODO: Changing themes via NeoVim sockets the old-fashioned way is the most
   # reasonnable thing to do for now, until me or someone is brave enough to

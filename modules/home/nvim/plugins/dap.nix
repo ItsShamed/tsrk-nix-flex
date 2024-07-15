@@ -1,4 +1,4 @@
-{ config, lib, vimHelpers, pkgs, pkgsUnstable, ... }:
+{ pkgsUnstable, ... }:
 
 let
   gdbProgram = ''

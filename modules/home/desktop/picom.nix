@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 
 let
   baseConfig = lib.mkIf config.tsrk.i3.enable {

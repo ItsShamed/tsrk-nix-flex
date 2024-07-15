@@ -1,4 +1,4 @@
-{ config, self, ... }:
+{ config, ... }:
 
 {
   imports = [

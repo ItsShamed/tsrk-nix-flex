@@ -3,7 +3,6 @@
 let
   literalBool = predicate: if predicate then "true" else "false";
   cfg = config.tsrk.epita.remoteWork;
-  emailCfg = config.accounts.email;
   gitCfg = config.programs.git;
   gitSwitchSchool = pkgs.writeShellScriptBin "git-switch-school" ''
     set -x

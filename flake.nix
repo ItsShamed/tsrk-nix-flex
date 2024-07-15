@@ -54,15 +54,7 @@
       # , nixpkgsMaster
     , nixgl
 
-    , nix-gaming
     , futils
-    , flake-compat
-    , nixos-generators
-
-    , home-manager
-    , nixvim
-
-    , agenix
     , ...
     } @ inputs:
     let

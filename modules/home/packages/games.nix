@@ -1,4 +1,4 @@
-{ pkgs, lib, gaming, ... }:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, vimHelpers, ... }:
+{ vimHelpers, ... }:
 
 with vimHelpers;
 let

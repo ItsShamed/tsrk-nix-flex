@@ -1,4 +1,4 @@
-{ self, inputs, pkgSet, generateSystemHome, generateUser, ... }:
+{ generateSystemHome, generateUser, ... }:
 
 name:
 
@@ -8,7 +8,6 @@ name:
 
 , password ? null
 , hashedPasswordFile ? null
-, initialPassword ? null
 , canSudo ? false
 , moreGroups ? [ ]
 }:
