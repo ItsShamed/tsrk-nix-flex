@@ -27,40 +27,42 @@ let
   # Basically https://github.com/nix-community/nixvim/blob/nixos-23.11/plugins/completion/nvim-cmp/default.nix#L502C19-L535C33
   # Idk why they changed that for 24.05, it used to work well like it was
   migrateMappings = with lib; mapping:
-      let
-        mappings =
-          vimHelpers.ifNonNull' mapping
+    let
+      mappings =
+        vimHelpers.ifNonNull' mapping
           (mapAttrs
             (
               key: action:
                 vimHelpers.mkRaw (
                   if isString action
                   then action
-                  else let
-                    modes = if action ? modes then action.modes else null;
-                    modesString =
-                      optionalString
-                      (
-                        (modes != null)
-                        && ((length modes) >= 1)
-                      )
-                      ("," + (vimHelpers.toLuaObject modes));
-                  in "cmp.mapping(${action.action}${modesString})"
+                  else
+                    let
+                      modes = if action ? modes then action.modes else null;
+                      modesString =
+                        optionalString
+                          (
+                            (modes != null)
+                            && ((length modes) >= 1)
+                          )
+                          ("," + (vimHelpers.toLuaObject modes));
+                    in
+                    "cmp.mapping(${action.action}${modesString})"
                 )
             )
             mapping);
 
-        luaMappings = vimHelpers.toLuaObject mappings;
+      luaMappings = vimHelpers.toLuaObject mappings;
 
-        wrapped =
-          lists.fold
+      wrapped =
+        lists.fold
           (
             presetName: prevString: ''cmp.mapping.preset.${presetName}(${prevString})''
           )
           luaMappings
-          [];
-      in
-        vimHelpers.mkRaw wrapped;
+          [ ];
+    in
+    vimHelpers.mkRaw wrapped;
 in
 {
   programs.nixvim = {

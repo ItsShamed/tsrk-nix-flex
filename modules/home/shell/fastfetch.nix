@@ -29,7 +29,7 @@ in
 
     programs.zsh.initExtra = ''
       ${cfg.package}/bin/fastfetch
-      '';
+    '';
 
     home.packages = [ cfg.package ];
   };

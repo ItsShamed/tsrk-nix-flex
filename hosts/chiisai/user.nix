@@ -47,8 +47,7 @@
     };
   };
 
-  accounts.email.accounts =
-  {
+  accounts.email.accounts = {
     tsrk = rec {
       address = "tsrk@tsrk.me";
       userName = address;
@@ -62,7 +61,7 @@
         text = ''
           tsrk.
           https://tsrk.me
-          '';
+        '';
       };
       primary = true;
       thunderbird.enable = true;

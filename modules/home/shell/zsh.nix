@@ -39,7 +39,7 @@ in
       bindkey -v
       export GPG_TTY=$(tty)
       ${pkgs.fastfetch}/bin/fastfetch
-      '';
+    '';
   };
 
   xdg.configFile."fastfetch/config.jsonc".text = ''

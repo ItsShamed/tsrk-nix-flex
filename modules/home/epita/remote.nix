@@ -70,10 +70,10 @@ in
       ];
       programs.ssh = {
         matchBlocks = {
-        "ssh.cri.epita.fr" = {
+          "ssh.cri.epita.fr" = {
             extraOptions = {
-            "GSSAPIAuthentication" = "yes";
-            "GSSAPIDelegateCredentials" = "yes";
+              "GSSAPIAuthentication" = "yes";
+              "GSSAPIDelegateCredentials" = "yes";
             };
           };
         };

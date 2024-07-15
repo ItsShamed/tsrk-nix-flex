@@ -3,7 +3,6 @@
 let
   baseConfig = lib.mkIf config.tsrk.i3.enable {
     services.picom = {
-      # FIXME: find better alternative, this fork will be deleted anytime soon
       enable = true;
       fade = true;
       extraArgs = [ "--no-use-damage" ];
@@ -25,11 +24,11 @@ let
 
   compatConfig = lib.mkIf config.targets.genericLinux.enable {
     systemd.user.services.picom.Service.ExecStart = lib.mkForce (
-        lib.strings.concatStringsSep " " ([
-          config.tsrk.compatWrapper
-          "${lib.meta.getExe picomCfg.package}"
-          "--config ${config.xdg.configFile."picom/picom.conf".source}"
-        ] ++ picomCfg.extraArgs)
+      lib.strings.concatStringsSep " " ([
+        config.tsrk.compatWrapper
+        "${lib.meta.getExe picomCfg.package}"
+        "--config ${config.xdg.configFile."picom/picom.conf".source}"
+      ] ++ picomCfg.extraArgs)
     );
   };
 in
@@ -39,7 +38,7 @@ in
   };
 
   config = lib.mkIf config.tsrk.picom.enable (lib.mkMerge [
-      baseConfig
-      compatConfig
+    baseConfig
+    compatConfig
   ]);
 }
