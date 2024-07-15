@@ -2,7 +2,7 @@
 
 {
   options = {
-    tsrk.git.lazygit.enable = lib.options.mkEnableOption "tsrk's lazygit configuration";
+    tsrk.git.lazygit.enable = lib.options.mkEnableOption "tsrk's Lazygit configuration";
   };
 
   config = lib.mkIf config.tsrk.git.lazygit.enable {
@@ -50,6 +50,5 @@
 
     home.shellAliases.lg = "lazygit";
     programs.zsh.shellAliases.lg = "lazygit";
-
   };
 }

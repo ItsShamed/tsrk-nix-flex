@@ -34,8 +34,12 @@ let
   };
 in
 {
-  config = lib.mkMerge [
-    baseConfig
-    compatConfig
-  ];
+  options = {
+    tsrk.picom.enable = lib.options.mkEnableOption "tsrk's Picom configuration";
+  };
+
+  config = lib.mkIf config.tsrk.picom.enable (lib.mkMerge [
+      baseConfig
+      compatConfig
+  ]);
 }
