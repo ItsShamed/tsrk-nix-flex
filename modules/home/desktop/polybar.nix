@@ -32,7 +32,7 @@ in
         pulseSupport = true;
       };
 
-      settings = rec {
+      settings = {
 
         # Tokyo Night Storm colours
         colors = {
@@ -48,7 +48,8 @@ in
         };
 
         "bar/bar" = {
-          inherit (colors) background foreground;
+          background = "\${colors.background}";
+          background-alt = "\${colors.background-alt}";
 
           line = {
             size = 2;
@@ -102,8 +103,10 @@ in
             muted.prefix = "󰝟 ";
           };
 
-          label-muted = "muted";
-          label-muted-foreground = colors.yellow;
+          label.muted = {
+            text = "muted";
+            foreground = "\${colors.yellow}";
+          };
 
           ramp.volume = [
             "󰕿"
@@ -122,46 +125,60 @@ in
           format = "<label-state> <label-mode>";
           wrapping.scroll = false;
 
-          label = rec {
+          label = {
             mode = {
               padding = 2;
-              foreground = colors.background;
-              background = colors.alert;
+              foreground = "\${colors.background}";
+              background = "\${colors.alert}";
             };
 
-            focused = "%index%";
-            focused-background = colors.primary;
-            focused-underline = colors.foreground;
-            focused-padding = 2;
+            focused = {
+              text = "%index%";
+              background = "\${colors.primary}";
+              underline = "\${colors.foreground}";
+              padding = 2;
+            };
 
-            unfocused = "%index%";
-            unfocused-padding = 2;
+            unfocused = {
+              text = "%index%";
+              padding = 2;
+            };
 
-            visible = "%index%";
-            visible-background = focused-background;
-            visible-underline = focused-underline;
-            visible-padding = focused-padding;
+            visible = {
+              text = "%index%";
+              background = "\${colors.primary}";
+              underline = "\${colors.foreground}";
+              padding = 2;
+            };
 
-            urgent = "%index%";
-            urgent-foreground = colors.background;
-            urgent-background = colors.alert;
-            urgent-padding = 2;
+            urgent = {
+              text = "%index%";
+              foreground = "\${colors.background}";
+              background = "\${colors.alert}";
+              padding = 2;
+            };
           };
         };
 
-        "module/date" = rec {
+        "module/date" = {
           type = "internal/date";
           interval = 1;
 
-          date = "";
-          date-alt = " %Y-%m-%d";
+          date = {
+            text = "";
+            alt = " %Y-%m-%d";
+          };
 
-          time = "%l:%M:%S %p";
-          time-alt = time;
+          time = {
+            text = "%l:%M:%S %p";
+            alt = "%l:%M:%S %p";
+          };
 
           format = {
-            prefix = " ";
-            prefix-forground = colors.foreground-alt;
+            prefix = {
+              text = " ";
+              foreground = "\${colors.foreground-alt}";
+            };
           };
 
           label = "%date%%time%";
@@ -169,17 +186,25 @@ in
 
         "module/wifi" = {
           type = "internal/network";
-          interface = cfg.wlanInterfaceName;
-          interface-type = "wireless";
+          interface = {
+            text = cfg.wlanInterfaceName;
+            type = "wireless";
+          };
 
-          format-disconnected-prefix = "󰤮 ";
-          label-disconnected = "down";
-          label-disconnected-foreground = colors.red;
+          format = {
+            disconnected.prefix = "󰤮 ";
+            connected.text = "<ramp-signal> <label-connected>";
+          };
 
-          label-connected = "%essid%";
-          format-connected = "<ramp-signal> <label-connected>";
+          label = {
+            disconnected = {
+              text = "down";
+              foreground = "\${colors.red}";
+            };
+            connected = "%essid%";
+          };
 
-          ramp-signal = [
+          ramp.signal = [
             "󰤯 "
             "󰤟 "
             "󰤢 "
@@ -190,16 +215,26 @@ in
 
         "module/eth" = {
           type = "internal/network";
-          interface = cfg.ethInterfaceName;
-          interface-type = "wireless";
+          interface = {
+            text = cfg.ethInterfaceName;
+            type = "wireless";
+          };
 
-          format-disconnected-prefix = "󰈂 ";
-          label-disconnected = "down";
-          label-disconnected-foreground = colors.red;
+          format = {
+            disconnected.prefix = "󰈂 ";
+            connected = {
+              text = "<label-connected>";
+              prefix = "󰈁 ";
+            };
+          };
 
-          label-connected = "%local_ip%";
-          format-connected = "<label-connected>";
-          format-connected-prefix = "󰈁 ";
+          label = {
+            disconnected = {
+              text = "down";
+              foreground = "\${colors.red}";
+            };
+            connected = "%local_ip%";
+          };
         };
 
         "module/tray" = {
