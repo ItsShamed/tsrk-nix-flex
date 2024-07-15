@@ -5,5 +5,8 @@
     # gaming.osu-lazer-bin
     typespeed
     tetrio-desktop
+    retroarch-assets
+    retroarchFull
+    retroarch-joypad-autoconfig
   ];
 }
