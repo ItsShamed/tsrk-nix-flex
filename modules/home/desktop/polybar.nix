@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 let
   cfg = config.tsrk.polybar;
@@ -187,7 +187,7 @@ in
         "module/wifi" = {
           type = "internal/network";
           interface = {
-            text = cfg.wlanInterfaceName;
+            text = self.lib.mkIfElse (cfg.wlanInterfaceName != null) cfg.wlanInterfaceName "wlan0";
             type = "wireless";
           };
 
@@ -216,7 +216,7 @@ in
         "module/eth" = {
           type = "internal/network";
           interface = {
-            text = cfg.ethInterfaceName;
+            text = self.lib.mkIfElse (cfg.ethInterfaceName != null) cfg.ethInterfaceName "eth0";
             type = "wireless";
           };
 
