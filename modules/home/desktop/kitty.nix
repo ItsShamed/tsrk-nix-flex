@@ -26,7 +26,11 @@ in
 
       theme = lib.mkDefault "Tokyo Night";
 
-      shellIntegration.enableZshIntegration = true;
+      shellIntegration = {
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        enableFishIntegration = true;
+      };
     };
 
     specialisation = {
