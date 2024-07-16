@@ -1,22 +1,15 @@
-{ pkgs, ... }:
+{ lib, config, ... }:
 
 {
-  home.packages = with pkgs; [
-    btop
-    delta
-    lsd
-    git-crypt
-  ];
-
-  home.shellAliases = {
-    l = "lsd -lah";
-    ls = "lsd";
-    cat = "bat";
+  options = {
+    tsrk.packages.core = {
+      enable = lib.options.mkEnableOption "tsrk's core user packages bundle";
+    };
   };
 
-  programs.zsh.shellAliases = {
-    l = "lsd -lah";
-    ls = "lsd";
-    cat = "bat";
+  config = lib.mkIf config.tsrk.packages.core.enable {
+    programs = {
+      btop.enable = true;
+    };
   };
 }

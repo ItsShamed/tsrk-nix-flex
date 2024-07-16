@@ -1,8 +1,24 @@
-{ ... }:
+{ lib, config, ... }:
 
 {
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
+  options = {
+    tsrk.shell.zoxide = {
+      enable = lib.options.mkEnableOption "tsrk's zoxide shell integration";
+    };
+  };
+
+  config = lib.mkIf config.tsrk.shell.zoxide.enable {
+
+    home.shellAliases = {
+      cd = "z";
+    };
+
+    program.zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      enableFishIntegration = true;
+      enableNushellIntegration = true;
+    };
   };
 }

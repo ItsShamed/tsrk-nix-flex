@@ -23,6 +23,8 @@
       enable = true;
     };
 
+    home.shellAliases.cat = "bat";
+
     specialisation = {
       light.configuration = {
         programs.bat.config.theme = config.tsrk.shell.bat.themes.light;

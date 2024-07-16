@@ -15,10 +15,6 @@
   ./git
   ./nvim
   ./packages
-  ./shell/bat.nix
-  ./shell/fastfetch.nix
-  ./shell/starship.nix
-  ./shell/zoxide.nix
-  ./shell/zsh.nix
+  ./shell
   ./ssh.nix
 ]
