@@ -92,11 +92,6 @@ in
         address = "${cfg.login}@epita.fr";
         userName = address;
         realName = cfg.fullName;
-        # Obsoleted by flavour
-        # imap = {
-        #   host = "outlook.office365.com";
-        #   port = 993;
-        # };
         flavor = "outlook.office365.com";
         signature = {
           showSignature = "append";
@@ -106,7 +101,20 @@ in
             "${cfg.signature.quote}"
           '';
         };
-        thunderbird.enable = true;
+        thunderbird = {
+          enable = true;
+          settings = id: {
+            # Even though the flavour does a lot of work for us, it does not
+            # enforce OAuth2 authentication for the SMTP server, and there is
+            # no option to configure that yet (as of 2024-07-16)
+            # Relevant issues:
+            #   https://github.com/nix-community/home-manager/issues/5137
+            #   https://github.com/nix-community/home-manager/issues/4988
+            "mail.server.server_${id}.authMethod" = 10;
+            "mail.smtpserver.smtp_${id}.authMethod" = 10;
+            "mail.smtpserver.smtp_${id}.oauth2.issuer" = "login.microsoftonline.com";
+          };
+        };
       };
     })
   ];
