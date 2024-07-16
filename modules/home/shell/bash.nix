@@ -10,6 +10,7 @@
   config = lib.mkIf config.tsrk.shell.bash.enable {
     programs.bash = {
       enable = true;
+      enableCompletion = true;
     };
   };
 }
