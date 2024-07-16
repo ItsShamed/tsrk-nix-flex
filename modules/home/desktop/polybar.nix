@@ -28,7 +28,7 @@ in
       script = "polybar bar &";
 
       package = pkgs.polybar.override {
-        i3Support = true;
+        i3Support = config.programs.i3.enable;
         pulseSupport = true;
       };
 
