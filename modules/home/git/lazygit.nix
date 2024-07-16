@@ -6,6 +6,11 @@
   };
 
   config = lib.mkIf config.tsrk.git.lazygit.enable {
+
+    home.shellAliases = {
+      lg = "lazygit";
+    };
+
     programs.lazygit = {
       enable = true;
       settings = {
