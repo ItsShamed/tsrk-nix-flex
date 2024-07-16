@@ -4,6 +4,7 @@
   imports = [
     ./nvim-tree.nix
     ./treesitter.nix
+    ./gitsigns.nix
     ./indentline.nix
     ./lsp.nix
     ./cmp.nix
