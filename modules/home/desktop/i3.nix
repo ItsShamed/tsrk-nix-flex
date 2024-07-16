@@ -13,6 +13,34 @@ let
     ${pkgs.killall}/bin/killall .lxappearance-wrapped
   '';
 
+  teardown = pkgs.writeShellScript "i3-teardown" lib.strings.concatLines [
+    ''
+      # This script is responsible for stopping all services started with i3
+      # and to stop i3
+    ''
+    (lib.string.optionalString config.services.polybar.enable ''
+      # Polybar
+      systemctl --user disable --now polybar
+    '')
+    (lib.string.optionalString config.services.xsettingsd.enable ''
+      # xsettingsd
+      systemctl --user disable --now xsettingsd
+    '')
+    (lib.string.optionalString config.services.darkman.enable ''
+      # darkman
+      systemctl --user disable --now darkman
+    '')
+    (lib.string.optionalString config.tsrk.i3.useLogind ''
+      # i3lock service
+      # This service runs when the lock.target is reach and before sleeping
+      systemctl --user disable --now i3lock
+    '')
+    ''
+      # Stop i3
+      i3-msg exit
+    ''
+  ];
+
   i3Config = lib.mkIf config.tsrk.i3.enable {
     xsession.windowManager.i3 = {
       enable = true;
@@ -31,10 +59,13 @@ let
             always = false;
           }
         ] ++ (lib.lists.optional (config.services.polybar.enable) {
-          command = "systemctl --user restart polybar";
+          command = "systemctl --user enable --now polybar";
           always = true;
         }) ++ (lib.lists.optional (config.services.xsettingsd.enable) {
           command = "systemctl --user enable --now xsettingsd";
+          always = false;
+        }) ++ (lib.lists.optional (config.tsrk.i3.useLogind) {
+          command = "systemctl --user enable i3lock";
           always = false;
         })
         ++ (lib.lists.optionals (config.services.darkman.enable) [
@@ -182,7 +213,7 @@ let
 
           # lock
           "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");
-          "${mod}+Shift+e" = "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'i3-msg exit'\"";
+          "${mod}+Shift+e" = "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'\"";
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
