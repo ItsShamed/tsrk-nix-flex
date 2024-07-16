@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  baseConfig = lib.mkIf config.tsrk.i3.enable {
+  baseConfig = {
     services.picom = {
       enable = true;
       fade = true;
@@ -17,6 +17,8 @@ let
       shadowExclude = [
         "class_g = 'Dunst'"
       ];
+      # TODO: Looking forward to put back animations when the new picom with
+      # animations get pacakged for nixpkgs
     };
   };
 
