@@ -22,6 +22,7 @@ in
 
   imports = [
     ./bat.nix
+    ./bash.nix
     ./fastfetch.nix
     ./lsd.nix
     ./starship.nix
