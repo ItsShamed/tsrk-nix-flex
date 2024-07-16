@@ -1,6 +1,8 @@
 { pkgs, lib, config, ... }:
 
 let
+  cfg = config.tsrk.git.delta;
+
   delta-repo = pkgs.fetchFromGitHub {
     owner = "dandavison";
     repo = "delta";
@@ -28,14 +30,15 @@ in
   };
 
   config = lib.mkIf config.tsrk.git.delta.enable {
+    programs.git.delta.enable = true;
     programs.git.includes = [{ path = "${delta-repo}/themes.gitconfig"; }];
 
     specialisation = {
       light.configuration = {
-        programs.git.includes = [{ contents.delta.syntax-theme = config.tsrk.git.delta.themes.light; }];
+        programs.git.delta.options.syntax-theme = cfg.themes.light;
       };
       dark.configuration = {
-        programs.git.includes = [{ contents.delta.syntax-theme = config.tsrk.git.delta.themes.dark; }];
+        programs.git.delta.options.syntax-theme = cfg.themes.dark;
       };
     };
   };
