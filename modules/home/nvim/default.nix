@@ -9,6 +9,7 @@
 
   programs.nixvim = {
     enable = true;
+    defaultEditor = true;
     clipboard.register = "unnamedplus";
     clipboard.providers = {
       xclip.enable = true;
