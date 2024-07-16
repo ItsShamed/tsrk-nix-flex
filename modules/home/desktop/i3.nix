@@ -19,7 +19,10 @@ let
       config = {
         modifier = "Mod4";
         terminal = "${config.tsrk.compatWrapper} kitty";
-        menu = "${pkgs.bash}/bin/bash -c \"${pkgs.rofi}/bin/rofi -show drun\"";
+        menu = (self.lib.mkIfElse (config.programs.rofi.enable)
+          "sh -c \"rofi -show drun\""
+          "${pkgs.dmenu}/bin/dmenu_run"
+        );
         bars = [ ];
 
         startup = [
@@ -30,11 +33,11 @@ let
         ] ++ (lib.lists.optional (config.services.polybar.enable) {
           command = "systemctl --user restart polybar";
           always = true;
-        }) ++ (lib.lists.optional (config.tsrk.xsettingsd.enable) {
+        }) ++ (lib.lists.optional (config.services.xsettingsd.enable) {
           command = "systemctl --user enable --now xsettingsd";
           always = false;
         })
-        ++ (lib.lists.optionals (config.tsrk.darkman.enable) [
+        ++ (lib.lists.optionals (config.services.darkman.enable) [
           {
             command = "systemctl --user enable --now darkman";
             always = false;
@@ -184,11 +187,11 @@ let
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
           "${mod}+r" = "mode \"resize\"";
-          "--release ${mod}+Shift+s" = (self.lib.mkIfElse config.tsrk.flameshot.enable
+          "--release ${mod}+Shift+s" = (self.lib.mkIfElse config.services.flameshot.enable
             "exec --no-startup-id \"flameshot gui\""
             "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
           );
-          "--release ${mod}+Print" = (self.lib.mkIfElse config.tsrk.flameshot.enable
+          "--release ${mod}+Print" = (self.lib.mkIfElse config.services.flameshot.enable
             "exec --no-startup-id \"flameshot full\""
             "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
           );
