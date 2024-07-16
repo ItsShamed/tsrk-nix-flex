@@ -52,8 +52,5 @@
         ];
       };
     };
-
-    home.shellAliases.lg = "lazygit";
-    programs.zsh.shellAliases.lg = "lazygit";
   };
 }
