@@ -1,4 +1,4 @@
 {
   ### MISC
-  tokyonight-extras = ../misc/tokyonight-extras;
+  tokyonight-extras = ./misc/tokyonight-extras;
 }

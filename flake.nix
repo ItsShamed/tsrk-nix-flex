@@ -61,8 +61,6 @@
       inherit (nixpkgs) lib;
       inherit (futils.lib) eachDefaultSystem;
 
-      mkOverlays = withLocal: (import ./pkgs/as-overlays.nix) ++ (lib.lists.optionals withLocal (import ./overlays));
-
       importPkgs = pkgs: system: withOverlays:
         import pkgs {
           inherit system;
@@ -71,7 +69,8 @@
           };
           overlays = [
             nixgl.overlay
-          ] ++ (mkOverlays withOverlays);
+          ] ++ (builtins.attrValues (builtins.removeAttrs (import ./pkgs/as-overlays.nix) [ "all" "default" ]))
+          ++ (lib.lists.optionals withOverlays (builtins.attrValues (import ./overlays { inherit lib; })));
         };
 
       pkgSet = system: {
@@ -83,6 +82,10 @@
       linuxOutputs =
         let
           system = "x86_64-linux";
+          baseOverlays = (import ./pkgs/as-overlays.nix) // (import ./overlays { inherit lib; });
+          allOverlays = self: super: builtins.attrValues (
+            builtins.mapAttrs (_: overlay: overlay self super) baseOverlays
+          );
         in
         {
           nixosModules = (import ./modules/system { inherit lib; })
@@ -114,7 +117,11 @@
             pkgSet = pkgSet system;
           });
 
-          overlays = mkOverlays true;
+          overlays = baseOverlays
+            // {
+            all = allOverlays;
+            default = self.overlays.all;
+          };
         };
 
       allOutputs = eachDefaultSystem (system:
