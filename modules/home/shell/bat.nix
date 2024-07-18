@@ -27,7 +27,7 @@
     */
     programs.bat = {
       enable = true;
-      themes.tokyonight = {
+      themes.tokyonight = lib.mkOptionDefault {
         src = pkgs.tokyonight-extras;
         file = "sublime/tokyonight_night.tmTheme";
       };
