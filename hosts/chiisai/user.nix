@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, lib, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -9,6 +9,7 @@
   ];
 
   tsrk = {
+    picom.enable = lib.mkImageMediaOverride false;
     darkman = {
       feh = {
         dark = ./files/bocchi-tokyonight-storm.png;
