@@ -13,24 +13,24 @@ let
     ${pkgs.killall}/bin/killall .lxappearance-wrapped
   '';
 
-  teardown = pkgs.writeShellScript "i3-teardown" lib.strings.concatLines [
+  teardown = pkgs.writeShellScript "i3-teardown" (lib.strings.concatLines [
     ''
       # This script is responsible for stopping all services started with i3
       # and to stop i3
     ''
-    (lib.string.optionalString config.services.polybar.enable ''
+    (lib.strings.optionalString config.services.polybar.enable ''
       # Polybar
       systemctl --user disable --now polybar
     '')
-    (lib.string.optionalString config.services.xsettingsd.enable ''
+    (lib.strings.optionalString config.services.xsettingsd.enable ''
       # xsettingsd
       systemctl --user disable --now xsettingsd
     '')
-    (lib.string.optionalString config.services.darkman.enable ''
+    (lib.strings.optionalString config.services.darkman.enable ''
       # darkman
       systemctl --user disable --now darkman
     '')
-    (lib.string.optionalString config.tsrk.i3.useLogind ''
+    (lib.strings.optionalString config.tsrk.i3.useLogind ''
       # i3lock service
       # This service runs when the lock.target is reach and before sleeping
       systemctl --user disable --now i3lock
@@ -39,7 +39,7 @@ let
       # Stop i3
       i3-msg exit
     ''
-  ];
+  ]);
 
   i3Config = lib.mkIf config.tsrk.i3.enable {
     xsession.windowManager.i3 = {
