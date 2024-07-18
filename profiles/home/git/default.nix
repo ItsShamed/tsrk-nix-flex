@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, lib, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -7,10 +7,10 @@
 
   config = {
     tsrk.git = {
-      enable = true;
-      cli.enable = true;
-      delta.enable = true;
-      lazygit.enable = true;
+      enable = lib.mkDefault true;
+      cli.enable = lib.mkDefault true;
+      delta.enable = lib.mkDefault true;
+      lazygit.enable = lib.mkDefault true;
     };
   };
 }

@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, lib, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -10,11 +10,11 @@
   config = {
     tsrk = {
       i3 = {
-        enable = true;
-        useLogind = true;
+        enable = lib.mkDefault true;
+        useLogind = lib.mkDefault true;
       };
-      kitty.enable = true;
-      polybar.enable = true;
+      kitty.enable = lib.mkDefault true;
+      polybar.enable = lib.mkDefault true;
     };
   };
 }
