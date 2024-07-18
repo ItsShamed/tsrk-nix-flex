@@ -58,12 +58,10 @@ let
         );
         bars = [ ];
 
-        startup = [
-          {
-            command = "feh --bg-scale ${config.tsrk.i3.background}";
-            always = false;
-          }
-        ] ++ (lib.lists.optional (config.services.polybar.enable) {
+        startup = (lib.lists.optional (!config.services.darkman.enable) {
+          command = "feh --bg-scale ${config.tsrk.i4.background}";
+          always = false;
+        }) ++ (lib.lists.optional (config.services.polybar.enable) {
           command = "systemctl --user enable --now polybar";
           always = true;
         }) ++ (lib.lists.optional (config.services.xsettingsd.enable) {
@@ -72,8 +70,7 @@ let
         }) ++ (lib.lists.optional (config.tsrk.i3.useLogind) {
           command = "systemctl --user enable i3lock";
           always = false;
-        })
-        ++ (lib.lists.optionals (config.services.darkman.enable) [
+        }) ++ (lib.lists.optionals (config.services.darkman.enable) [
           {
             command = "systemctl --user enable --now darkman";
             always = false;
