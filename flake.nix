@@ -61,6 +61,8 @@
       inherit (nixpkgs) lib;
       inherit (futils.lib) eachDefaultSystem;
 
+      mkOverlays = withLocal: (import ./pkgs/as-overlays.nix) ++ (lib.lists.optionals withLocal (import ./overlays));
+
       importPkgs = pkgs: system: withOverlays:
         import pkgs {
           inherit system;
@@ -69,7 +71,7 @@
           };
           overlays = [
             nixgl.overlay
-          ] ++ (lib.lists.optionals withOverlays (import ./overlays));
+          ] ++ (mkOverlays withOverlays);
         };
 
       pkgSet = system: {
@@ -111,6 +113,8 @@
             inherit lib system;
             pkgSet = pkgSet system;
           });
+
+          overlays = mkOverlays true;
         };
 
       allOutputs = eachDefaultSystem (system:
@@ -119,6 +123,7 @@
         in
         {
           formatter = pkgs.nixpkgs-fmt;
+          packages = (import ./pkgs { inherit lib pkgs; });
         });
     in
     lib.recursiveUpdate linuxOutputs allOutputs;
