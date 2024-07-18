@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
   options = {
@@ -50,6 +50,19 @@
             ];
           }
         ];
+      };
+    };
+
+    specialisation = {
+      light.configuration = {
+        programs.lazygit.settings = self.lib.fromYAML (
+          builtins.readFile "${pkgs.tokyonight-extras}/lazygit/tokyonight_day.yml"
+        );
+      };
+      dark.configuration = {
+        programs.lazygit.settings = self.lib.fromYAML (
+          builtins.readFile "${pkgs.tokyonight-extras}/lazygit/tokyonight_storm.yml"
+        );
       };
     };
   };
