@@ -23,12 +23,12 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    services.polybar = lib.mkIf config.tsrk.i3.enable {
+    services.polybar = {
       enable = lib.mkDefault true;
       script = "polybar bar &";
 
       package = pkgs.polybar.override {
-        i3Support = config.programs.i3.enable;
+        i3Support = config.xsession.windowManager.i3.enable;
         pulseSupport = true;
       };
 
