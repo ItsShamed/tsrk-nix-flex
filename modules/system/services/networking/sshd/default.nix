@@ -1,5 +1,6 @@
 { config, lib, options, ... }:
 let
+  cfg = config.tsrk.sshd;
   keypair = {
     options = {
       private = lib.options.mkOption {
@@ -12,12 +13,6 @@ let
       };
     };
   };
-
-  checkKey = algo: keyType: against:
-    let
-      cfg = config.tsrk.sshd.customKeyPair."${algo}"."${keyType}";
-    in
-    lib.trivial.warnIf (cfg == against) "using default ${algo} SSH host keys. DO NOT USE THIS IN PRODUCTION!!!!" cfg;
 in
 {
   options = {
@@ -27,25 +22,19 @@ in
         enable = lib.options.mkEnableOption "custom SSH Host keypairs";
         rsa = lib.options.mkOption {
           description = "The RSA keypair";
-          type = lib.types.submodule keypair;
-          default = {
-            private = ./ssh_host_rsa_key;
-            public = ./ssh_host_rsa_key.pub;
-          };
+          type = lib.types.nullOr (lib.types.submodule keypair);
+          default = null;
         };
         ed25519 = lib.options.mkOption {
           description = "The ED25519 keypair";
           type = lib.types.submodule keypair;
-          default = {
-            private = ./ssh_host_ed25519_key;
-            public = ./ssh_host_ed25519_key.pub;
-          };
+          default = null;
         };
       };
     };
   };
 
-  config = lib.mkIf config.tsrk.sshd.enable (lib.mkMerge
+  config = lib.mkIf cfg.enable (lib.mkMerge
     [
       {
         services.openssh = {
@@ -57,29 +46,47 @@ in
           };
         };
       }
-      (lib.mkIf config.tsrk.sshd.customKeyPair.enable {
-
-        environment.etc = {
-          # Private keys
-          "ssh/ssh_host_rsa_key" = {
-            source = checkKey "rsa" "private" ./ssh_host_rsa_key;
-            mode = "0600";
+      (lib.mkIf cfg.customKeyPair.enable (lib.mkMerge [
+        {
+          warnings = (lib.mkMerge [
+            (lib.mkIf (cfg.customKeyPair.rsa == null) [
+              ''
+                You enabled SSH host key overrides but did not provide an RSA keypair.
+                One will be generated automatically at first boot.
+              ''
+            ])
+            (lib.mkIf (cfg.customKeyPair.ed25519 == null) [
+              ''
+                You enabled SSH host key overrides but did not provide an ED25519 keypair.
+                One will be generated automatically at first boot.
+              ''
+            ])
+          ]);
+        }
+        (lib.mkIf cfg.customKeyPair.rsa != null {
+          environment.etc = {
+            "ssh/ssh_host_rsa_key" = {
+              source = cfg.customKeyPair.rsa.private;
+              mode = "0600";
+            };
+            "ssh/ssh_host_rsa_key.pub" = {
+              source = cfg.customKeyPair.rsa.public;
+              mode = "0600";
+            };
           };
-          "ssh/ssh_host_ed25519_key" = {
-            source = checkKey "ed25519" "private" ./ssh_host_ed25519_key;
-            mode = "0600";
+        })
+        (lib.mkIf cfg.customKeyPair.ed25519 != null {
+          environment.etc = {
+            "ssh/ssh_host_ed25519_key" = {
+              source = cfg.customKeyPair.ed25519.private;
+              mode = "0600";
+            };
+            "ssh/ssh_host_ed25519_key.pub" = {
+              source = cfg.customKeyPair.ed25519.public;
+              mode = "0600";
+            };
           };
-
-          # Public keys
-          "ssh/ssh_host_rsa_key.pub" = {
-            source = checkKey "rsa" "public" ./ssh_host_rsa_key.pub;
-            mode = "0644";
-          };
-          "ssh/ssh_host_ed25519_key.pub" = {
-            source = checkKey "ed25519" "public" ./ssh_host_ed25519_key.pub;
-            mode = "0644";
-          };
-        };
-      })
+        })
+      ]))
     ]);
 }
