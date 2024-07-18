@@ -1,5 +1,4 @@
 [
-  ./compat.nix
   ./desktop/darkman.nix
   ./desktop/dunst.nix
   ./desktop/flameshot.nix

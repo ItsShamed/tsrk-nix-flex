@@ -11,4 +11,5 @@ rec {
   generateSystemHome = import ./generateSystemHome.nix args;
   generateFullUser = import ./generateFullUser.nix (args // { inherit generateUser generateSystemHome; });
   fromYAML = import ./fromYAML.nix args;
+  mkGL = import ./fromYAML.nix (args // { inherit mkIfElse; });
 }

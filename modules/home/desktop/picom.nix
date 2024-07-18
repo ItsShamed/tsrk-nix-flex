@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, self, ... }:
 
 let
   baseConfig = {
@@ -24,13 +24,13 @@ let
 
   picomCfg = config.services.picom;
 
-  compatConfig = lib.mkIf config.targets.genericLinux.enable {
+  compatConfig = {
     systemd.user.services.picom.Service.ExecStart = lib.mkForce (
-      lib.strings.concatStringsSep " " ([
-        config.tsrk.compatWrapper
+      self.mkGL config (lib.strings.concatStringsSep " " ([
         "${lib.meta.getExe picomCfg.package}"
         "--config ${config.xdg.configFile."picom/picom.conf".source}"
       ] ++ picomCfg.extraArgs)
+      )
     );
   };
 in

@@ -47,10 +47,10 @@ let
       config = {
         modifier = "Mod4";
         terminal = (self.lib.mkIfElse (config.programs.kitty.enable)
-          "${config.tsrk.compatWrapper} kitty"
+          (self.lib.mkGL config "kitty")
           # This is for the EPITA die-hards that never bothered to change their
           # default terminal emulator for their session lol
-          "${config.tsrk.compatWrapper} ${pkgs.alacritty}/bin/alacritty"
+          (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")
         );
         menu = (self.lib.mkIfElse (config.programs.rofi.enable)
           "sh -c \"rofi -show drun\""
