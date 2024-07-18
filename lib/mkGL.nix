@@ -1,10 +1,11 @@
-{ pkgSet, mkIfElse, ... }:
+{ pkgSet, ... }:
 
 let
   inherit (pkgSet) pkgs;
 in
 config: command:
 
-mkIfElse (config.targets.genericLinux.enable)
+if (config.targets.genericLinux.enable) then
   "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL ${command}"
+else
   command
