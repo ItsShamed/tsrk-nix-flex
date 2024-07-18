@@ -63,7 +63,7 @@ in
             ])
           ]);
         }
-        (lib.mkIf cfg.customKeyPair.rsa != null {
+        (lib.mkIf (cfg.customKeyPair.rsa != null) {
           environment.etc = {
             "ssh/ssh_host_rsa_key" = {
               source = cfg.customKeyPair.rsa.private;
@@ -75,7 +75,7 @@ in
             };
           };
         })
-        (lib.mkIf cfg.customKeyPair.ed25519 != null {
+        (lib.mkIf (cfg.customKeyPair.ed25519 != null) {
           environment.etc = {
             "ssh/ssh_host_ed25519_key" = {
               source = cfg.customKeyPair.ed25519.private;
