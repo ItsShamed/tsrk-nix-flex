@@ -4,6 +4,7 @@
   programs.nixvim = {
     plugins.illuminate = {
       enable = true;
+      delay = 120;
       filetypesDenylist = [
         "dirvish"
         "fugitive"
