@@ -11,20 +11,22 @@
     xsettingsd
   ];
 
-  tsrk = {
-    darkman = {
-      enable = true;
-      feh = {
+  config = {
+    tsrk = {
+      darkman = {
         enable = true;
-        dark = ./files/cirnix-bg-dark.png;
-        light = ./files/cirnix-bg-light.png;
+        feh = {
+          enable = true;
+          dark = ./files/cirnix-bg-dark.png;
+          light = ./files/cirnix-bg-light.png;
+        };
+        nvim.enable = true;
       };
-      nvim.enable = true;
+      dunst.enable = true;
+      flameshot.enable = true;
+      picom.enable = true;
+      thunderbird.enable = true;
+      xsettingsd.enable = true;
     };
-    dunst.enable = true;
-    flameshot.enable = true;
-    picom.enable = true;
-    thunderbird.enable = true;
-    xsettingsd.enable = true;
   };
 }
