@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, lib, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -17,8 +17,8 @@
         enable = true;
         feh = {
           enable = true;
-          dark = ./files/cirnix-bg-dark.png;
-          light = ./files/cirnix-bg-light.png;
+          dark = lib.mkDefault ./files/cirnix-bg-dark.png;
+          light = lib.mkDefault ./files/cirnix-bg-light.png;
         };
         nvim.enable = true;
       };

@@ -13,8 +13,8 @@
         enable = true;
         useLogind = true;
       };
+      kitty.enable = true;
+      polybar.enable = true;
     };
-    kitty.enable = true;
-    polybar.enable = true;
   };
 }

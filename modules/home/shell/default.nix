@@ -49,7 +49,7 @@ in
       cfg.initExtra
     ];
 
-    program.zsh = {
+    programs.zsh = {
       defaultKeymap = lib.mkIf cfg.enableViKeybinds "viins";
     };
   };
