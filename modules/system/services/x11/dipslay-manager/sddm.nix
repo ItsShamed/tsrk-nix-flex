@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options = {
@@ -11,6 +11,16 @@
     services.displayManager.sddm = {
       enable = true;
       autoNumlock = true;
+      theme = "slice";
     };
+
+    environment.systemPackages = [
+      (pkgs.sddm-slice-theme.withConfig {
+        color_bg = "#24283b";
+        color_contrast = "#1f2335";
+        color_dimmed = "#a9b1d6";
+        color_main = "#c0caf5";
+      })
+    ];
   };
 }
