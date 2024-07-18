@@ -10,4 +10,5 @@ rec {
   generateHome = import ./generateHome.nix args;
   generateSystemHome = import ./generateSystemHome.nix args;
   generateFullUser = import ./generateFullUser.nix (args // { inherit generateUser generateSystemHome; });
+  fromYAML = import ./fromYAML.nix args;
 }
