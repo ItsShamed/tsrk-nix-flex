@@ -1,11 +1,11 @@
 { self, ... }:
 
 {
-  imports = [
-    self.profile-epita-tsrk
-    self.profile-x11
-    self.profile-git
-    self.profile-shell
+  imports = with self.homeManagerModules; [
+    profile-epita-tsrk
+    profile-x11
+    profile-git
+    profile-shell
   ];
 
   tsrk = {
