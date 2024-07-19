@@ -1,5 +1,26 @@
 { ... }:
 
+let
+  mkButton = { shortcut, desc, command }: {
+    type = "button";
+    on_press.__raw = ''
+      function()
+        local cmd_ = "${command}"
+        local key = vim.api.nvim_replace_termcodes(cmd_ .. "<Ignore>", true, false, true)
+        vim.api.nvim_feedkeys(key, "t", false)
+      end
+    '';
+    val = desc;
+    opts = {
+      inherit shortcut;
+      position = "center";
+      cursor = 3;
+      width = 50;
+      align_shortcut = "right";
+      hl_shortcut = "Keyword";
+    };
+  };
+in
 {
   programs.nixvim = {
     plugins.alpha = {
@@ -50,7 +71,7 @@
         }
         {
           type = "group";
-          val = [
+          val = (builtins.map mkButton [
             {
               command = "<CMD>Telescope find_files<CR>";
               desc = "󰈞  Find file";
@@ -81,7 +102,10 @@
               desc = "Quit Neovim";
               shortcut = "q";
             }
-          ];
+          ]);
+          opts = {
+            spacing = 1;
+          };
         }
         {
           type = "padding";
