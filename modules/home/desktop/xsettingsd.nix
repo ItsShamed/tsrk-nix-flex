@@ -50,6 +50,7 @@ in
         ${pkgs.coreutils}/bin/sleep 1
         ${pkgs.killall}/bin/killall .lxappearance-wrapped
       fi
+      systemctl --user restart xsettingsd
     '';
   };
 }
