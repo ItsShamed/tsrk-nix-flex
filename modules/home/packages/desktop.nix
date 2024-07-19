@@ -1,29 +1,37 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 
 {
-  home.packages = with pkgs; [
-    # Discord replacement
-    # vesktop
-    armcord
+  options = {
+    tsrk.packages.desktop = {
+      enable = lib.options.mkEnableOption "tsrk's desktop package bundle";
+    };
+  };
 
-    # Fonts
-    (nerdfonts.override {
-      fonts = [
-        "Iosevka"
-        "IosevkaTerm"
-        "JetBrainsMono"
-        "Meslo"
-      ];
-    })
-    iosevka
-    meslo-lgs-nf
+  config = lib.mkIf config.tsrk.packages.desktop.enable {
+    home.packages = with pkgs; [
+      # Discord replacement
+      # vesktop
+      armcord
 
-    rofi
+      # Fonts
+      (nerdfonts.override {
+        fonts = [
+          "Iosevka"
+          "IosevkaTerm"
+          "JetBrainsMono"
+          "Meslo"
+        ];
+      })
+      iosevka
+      meslo-lgs-nf
 
-    # The best password manager (real)
-    bitwarden
-    spotify
+      rofi
 
-    vimix-gtk-themes
-  ];
+      # The best password manager (real)
+      bitwarden
+      spotify
+
+      vimix-gtk-themes
+    ];
+  };
 }
