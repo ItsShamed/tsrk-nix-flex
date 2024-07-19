@@ -1,72 +1,26 @@
-{ self, inputs, ... }:
+{ self, inputs, lib, ... }:
 
 {
-  imports = [
-    self.homeManagerModules.all
-    ./epita.nix
+  imports = with self.homeManagerModules; [
+    packages
+    profile-tsrk-common
+    profile-tsrk-private
     ./extra-packages.nix
     (inputs.spotify-notifyx.homeManagerModules.default inputs.spotify-notifyx)
   ];
 
   tsrk = {
-    i3 = {
-      enable = true;
-      epitaRestrictions = true;
-      useLogind = true;
-    };
-    xsettingsd.enable = true;
-    kitty.enable = true;
+    picom.enable = lib.mkImageMediaOverride false;
     darkman = {
-      enable = true;
-      nvim.enable = true;
       feh = {
-        enable = true;
         dark = ./files/bocchi-tokyonight-storm.png;
         light = ./files/lagtrain-tokyonight-day.png;
       };
     };
     polybar = {
-      enable = true;
       ethInterfaceName = "eno1";
       wlanInterfaceName = "wlan0";
     };
-    git = {
-      enable = true;
-      cli.enable = true;
-      lazygit.enable = true;
-      delta.enable = true;
-    };
   };
   targets.genericLinux.enable = true;
-
-  accounts.email.accounts = {
-    tsrk = rec {
-      address = "tsrk@tsrk.me";
-      userName = address;
-      realName = "tsrk.";
-      imap = {
-        host = "zimbra002.pulseheberg.com";
-        port = 993;
-      };
-      signature = {
-        showSignature = "append";
-        text = ''
-          tsrk.
-          https://tsrk.me
-        '';
-      };
-      primary = true;
-      thunderbird.enable = true;
-    };
-    a5ts = rec {
-      address = "a5ts@tsrk.me";
-      userName = address;
-      realName = "a5ts";
-      imap = {
-        host = "zimbra002.pulseheberg.com";
-        port = 993;
-      };
-      thunderbird.enable = true;
-    };
-  };
 }
