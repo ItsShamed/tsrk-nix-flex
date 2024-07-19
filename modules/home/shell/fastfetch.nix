@@ -18,7 +18,9 @@
       settings = {
         logo = {
           source = "${./files/cirnix.png}";
-          width = 100;
+          width = 30;
+          height = 12;
+          type = lib.mkDefault "kitty-direct";
         };
         modules = [
           "title"
