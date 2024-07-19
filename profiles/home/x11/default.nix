@@ -7,6 +7,7 @@
     flameshot
     picom
     profile-x11-base
+    rofi
     thunderbird
     xsettingsd
   ];
