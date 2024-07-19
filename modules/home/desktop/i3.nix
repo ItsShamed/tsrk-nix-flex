@@ -215,7 +215,7 @@ let
 
           # lock
           "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");
-          "${mod}+Shift+e" = lib.mkDefault "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'\"";
+          "${mod}+Shift+e" = config.tsrk.i3.exitPromptCommand teardown;
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
@@ -400,6 +400,11 @@ in
       epitaRestrictions = lib.options.mkEnableOption "compliance with EPITA
         regulations by using stock i3lock as the locker";
       useLogind = lib.options.mkEnableOption "locking using logind";
+      exitPromptCommand = lib.options.mkOption {
+        description = "Command to execute when pressing the exit keybind.";
+        type = lib.types.functionTo lib.types.str;
+        default = teardown: "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'\"";
+      };
     };
   };
 

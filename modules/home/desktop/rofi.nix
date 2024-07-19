@@ -7,37 +7,25 @@
     };
   };
 
-  config = lib.mkIf config.tsrk.rofi.enable (lib.mkMerge [
-    {
-      programs.rofi = {
-        enable = true;
-        plugins = with pkgs; [
-          rofi-emoji
-        ];
-        theme = "${pkgs.rofi-themes-collection}/simple-tokyonight.rasi";
-        terminal = (self.lib.mkIfElse (config.programs.kitty.enable)
-          "kitty"
-          "${pkgs.alacritty}/bin/alacritty"
-        );
-        extraConfig = {
-          modi = "drun,run";
-          font = "Iosevka Nerd Font 12";
-        };
-      };
-
-      home.packages = with pkgs; [
-        rofi-power-menu
+  config = lib.mkIf config.tsrk.rofi.enable {
+    programs.rofi = {
+      enable = true;
+      plugins = with pkgs; [
+        rofi-emoji
       ];
-    }
-    (lib.mkIf config.xsession.windowManager.i3.enable (
-      let
-        mod = config.xsession.windowManager.i3.config.modifier;
-      in
-      {
-        xsession.windowManager.i3.config.keybindings = {
-          "${mod}+Shift+e" = "rofi -show p -modi p:'rofi-power-menu'";
-        };
-      }
-    ))
-  ]);
+      theme = "${pkgs.rofi-themes-collection}/simple-tokyonight.rasi";
+      terminal = (self.lib.mkIfElse (config.programs.kitty.enable)
+        "kitty"
+        "${pkgs.alacritty}/bin/alacritty"
+      );
+      extraConfig = {
+        modi = "drun,run";
+        font = "Iosevka Nerd Font 12";
+      };
+    };
+
+    home.packages = with pkgs; [
+      rofi-power-menu
+    ];
+  };
 }
