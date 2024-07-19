@@ -34,7 +34,7 @@
         mod = config.xsession.windowManager.i3.config.modifier;
       in
       {
-        xsession.windowManager.i3.config.keybindings = lib.mkDefault {
+        xsession.windowManager.i3.config.keybindings = {
           "${mod}+Shift+e" = "rofi -show p -modi p:'rofi-power-menu'";
         };
       }

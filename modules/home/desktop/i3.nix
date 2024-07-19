@@ -215,7 +215,7 @@ let
 
           # lock
           "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");
-          "${mod}+Shift+e" = "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'\"";
+          "${mod}+Shift+e" = lib.mkDefault "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'\"";
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
