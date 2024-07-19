@@ -16,6 +16,10 @@
         light = ./files/lagtrain-tokyonight-day.png;
       };
     };
+    delta.themes = {
+      light = "TokyoNight Day";
+      dark = "TokyoNight Storm";
+    };
   };
 
   accounts.email.accounts = {

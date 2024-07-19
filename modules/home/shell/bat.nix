@@ -8,12 +8,12 @@
         light = lib.options.mkOption {
           type = lib.types.str;
           description = "Light theme name";
-          default = "TokyoNight";
+          default = "TokyoNight Day";
         };
         dark = lib.options.mkOption {
           type = lib.types.str;
           description = "Dark theme name";
-          default = "TokyoNight";
+          default = "TokyoNight Storm";
         };
       };
     };
@@ -27,9 +27,19 @@
     */
     programs.bat = {
       enable = true;
-      themes.tokyonight = lib.mkOptionDefault {
-        src = pkgs.tokyonight-extras;
-        file = "sublime/tokyonight_night.tmTheme";
+      themes = {
+        "TokyoNight Day" = {
+          src = pkgs.tokyonight-extras;
+          file = "sublime/tokyonight_day.tmTheme";
+        };
+        "TokyoNight" = {
+          src = pkgs.tokyonight-extras;
+          file = "sublime/tokyonight_night.tmTheme";
+        };
+        "TokyoNight Storm" = {
+          src = pkgs.tokyonight-extras;
+          file = "sublime/tokyonight_storm.tmTheme";
+        };
       };
     };
 

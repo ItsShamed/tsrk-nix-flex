@@ -29,7 +29,7 @@ in
     # In which case will be enventually overriden if it is imported
     programs.bat = {
       enable = lib.mkDefault true;
-      themes.tokyonight = lib.mkDefault {
+      themes."TokyoNight" = lib.mkDefault {
         src = pkgs.tokyonight-extras;
         file = "sublime/tokyonight_night.tmTheme";
       };
