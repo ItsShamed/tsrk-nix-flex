@@ -17,7 +17,7 @@
     };
 
     colorschemes.tokyonight.enable = true;
-    colorscheme = "tokyonight-night";
+    colorscheme = "tokyonight";
 
     extraConfigVim = ''
       augroup highlight_yank
