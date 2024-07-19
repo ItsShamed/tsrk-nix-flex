@@ -15,7 +15,7 @@
   config = {
     assertions = [ (self.lib.profileNeedsPkg "X11 Full" config) ];
     tsrk = {
-      i3.exitPromptCommand = lib.mkDefault (_: "sh -c \"rofi -show p -modi p:'rofi-power-menu'\"");
+      i3.exitPromptCommand = lib.mkDefault (_: "exec rofi -show p -modi p:'rofi-power-menu'");
       packages.desktop.enable = lib.mkDefault true;
       darkman = {
         enable = lib.mkDefault true;
