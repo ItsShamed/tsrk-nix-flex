@@ -5,12 +5,12 @@
 
 stdenvNoCC.mkDerivation {
   pname = "tokyonight-extras";
-  version = "2024-07-18";
+  version = "4.7.0";
   src = fetchFromGitHub {
     owner = "folke";
     repo = "tokyonight.nvim";
-    rev = "a2979cef3300b44ad4d649e7dba8547d47bfbf16";
-    hash = "sha256-H3Tioz9Ya032WoHSmBlN1gjQO028MVd7lQG+D0r4sQM=";
+    rev = "1471dab694ad88351185758bb4275624d8b798ec";
+    hash = "sha256-NWbI9g1UoiN/h+8JPeFZLN+Uh261fjiZviDMHQWM2Ks=";
   };
   installPhase = ''
     mkdir -p $out
