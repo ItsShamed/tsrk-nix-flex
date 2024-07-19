@@ -1,5 +1,6 @@
 { fetchFromGitHub
 , stdenvNoCC
+, lib
 }:
 
 stdenvNoCC.mkDerivation {
@@ -14,5 +15,13 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     mkdir -p $out
     cp -r extras/* $out
+    cp LICENSE $out
   '';
+
+  meta = with lib; {
+    license = licenses.asl20;
+    homepage = "https://github.com/folke/tokyonight.nvim";
+    description = "A clean, dark Neovim theme written in Lua.";
+    platforms = platforms.all;
+  };
 }
