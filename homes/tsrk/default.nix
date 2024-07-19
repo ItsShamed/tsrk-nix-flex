@@ -11,6 +11,7 @@
 
   tsrk = {
     picom.enable = lib.mkImageMediaOverride false;
+    i3.epitaRestrictions = true;
     darkman = {
       feh = {
         dark = ./files/bocchi-tokyonight-storm.png;
