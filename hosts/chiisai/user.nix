@@ -2,6 +2,7 @@
 
 {
   imports = with self.homeManagerModules; [
+    packages
     profile-epita-tsrk
     profile-x11
     profile-git
