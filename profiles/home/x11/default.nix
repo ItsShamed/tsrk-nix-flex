@@ -27,6 +27,7 @@
       dunst.enable = lib.mkDefault true;
       flameshot.enable = lib.mkDefault true;
       picom.enable = lib.mkDefault true;
+      rofi.enable = lib.mkDefault true;
       thunderbird.enable = lib.mkDefault true;
       xsettingsd.enable = lib.mkDefault true;
     };
