@@ -25,8 +25,6 @@
       iosevka
       meslo-lgs-nf
 
-      rofi
-
       # The best password manager (real)
       bitwarden
       spotify
