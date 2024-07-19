@@ -12,4 +12,9 @@ rec {
   generateFullUser = import ./generateFullUser.nix (args // { inherit generateUser generateSystemHome; });
   fromYAML = import ./fromYAML.nix args;
   mkGL = import ./mkGL.nix args;
+
+  profileNeedsPkg = name: config: {
+    assertion = config ? tsrk && config.tsrk ? packages;
+    message = "This profile (${name}) requires the `package' module to be imported.";
+  };
 }

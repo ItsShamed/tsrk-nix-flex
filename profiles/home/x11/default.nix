@@ -1,4 +1,4 @@
-{ self, lib, ... }:
+{ self, lib, config, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -12,7 +12,9 @@
   ];
 
   config = {
+    assertions = [ (self.lib.profileNeedsPkg "X11 Full" config) ];
     tsrk = {
+      packages.desktop.enable = lib.mkDefault true;
       darkman = {
         enable = lib.mkDefault true;
         feh = {

@@ -1,4 +1,4 @@
-{ self, lib, ... }:
+{ self, lib, config, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -7,6 +7,8 @@
   ];
 
   config = {
+    assertions = [ (self.lib.profileNeedsPkg "Shell" config) ];
+    tsrk.packages.core.enable = lib.mkDefault true;
     tsrk.shell = {
       bash.enable = lib.mkDefault true;
       bat.enable = lib.mkDefault true;
