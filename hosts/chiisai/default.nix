@@ -14,6 +14,11 @@
         ./user.nix
       ];
     })
+    # Little silly experiment
+    (self.lib.generateSystemHome "root" {
+      homeDir = "/root";
+      modules = [ ./root.nix ];
+    })
   ];
 
   # TODO: override keys manually when installed
