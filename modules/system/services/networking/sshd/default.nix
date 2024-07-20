@@ -62,6 +62,18 @@ in
               ''
             ])
           ]);
+
+          services.openssh = {
+            hostKeys = (lib.lists.optional (cfg.customKeyPair.rsa == null) {
+              bits = 4096;
+              path = "/etc/ssh/ssh_host_rsa_key";
+              type = "rsa";
+            })
+            ++ (lib.lists.optional (cfg.customKeyPair.ed25519 == null) {
+              path = "/etc/ssh/ssh_host_ed25519_key";
+              type = "ed25519";
+            });
+          };
         }
         (lib.mkIf (cfg.customKeyPair.rsa != null) {
           environment.etc = {
