@@ -1,17 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  tsrk-librewolf = with pkgs; (wrapFirefox librewolf-unwrapped {
-    extraPrefs = ''
-      defaultPref("pricacy.resistFingerprinting", false);
-      defaultPref("privacy.resistFingerprinting.letterboxing", true);
-      defaultPref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true);
-      defaultPref("identity.fxaccounts.enabled", true);
-      defaultPref("extensions.update.autoUpdateDefault", true);
-      defaultPref("extensions.update.enabled", true);
-    '';
-  });
-in
 {
   options = {
     tsrk.packages.pkgs.desktop.enable =
@@ -29,7 +17,7 @@ in
       scrot
 
       # Browser
-      tsrk-librewolf
+      librewolf
 
       # video
       mpv
