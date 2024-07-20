@@ -65,6 +65,10 @@ let
       else
         systemctl --user enable --now xsettingsd
       fi
+
+      (${pkgs.lxappearance}/bin/lxappearance &
+      sleep 2
+      ${pkgs.killall}/bin/killall .lxappearance-wrapped)&
     '')
     (lib.strings.optionalString config.services.darkman.enable ''
       # darkman
