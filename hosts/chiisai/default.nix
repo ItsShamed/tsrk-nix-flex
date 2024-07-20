@@ -19,6 +19,8 @@
   # TODO: override keys manually when installed
   tsrk.age.bootstrapKeys = true;
 
+  tsrk.nvim.wakatime.enable = true;
+
   age.secrets.zpasswd.file = ./secrets/passwd.age;
 
   age.identityPaths = lib.mkOptionDefault [

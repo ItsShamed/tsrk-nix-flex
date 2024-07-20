@@ -22,6 +22,7 @@
       ethInterfaceName = "eno1";
       wlanInterfaceName = "wlan0";
     };
+    nvim.wakatime.enable = true;
   };
   targets.genericLinux.enable = true;
 }

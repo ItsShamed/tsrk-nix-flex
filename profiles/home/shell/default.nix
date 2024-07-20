@@ -19,5 +19,6 @@
       zoxide.enable = lib.mkDefault true;
       zsh.enable = lib.mkDefault true;
     };
+    tsrk.nvim.enable = lib.mkDefault true;
   };
 }

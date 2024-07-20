@@ -15,5 +15,6 @@
         light = ./files/lagtrain-tokyonight-day.png;
       };
     };
+    nvim.wakatime.enable = true;
   };
 }
