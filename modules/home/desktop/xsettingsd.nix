@@ -1,4 +1,4 @@
-{ config, lib, hmLib, ... }:
+{ config, lib, hmLib, pkgs, ... }:
 
 let
   cfg = config.tsrk.xsettingsd;
@@ -18,8 +18,13 @@ in
         "Xft/HintStyle" = "hintfull";
         "Xft/Hinting" = 1;
         "Xft/RGBA" = "rgb";
+        "Net/CursorThemeName" = "macOS-BigSur";
       };
     };
+
+    home.packages = with pkgs; [
+      apple-cursor
+    ];
 
     specialisation = {
       light.configuration = {
