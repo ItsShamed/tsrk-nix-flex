@@ -54,7 +54,7 @@ let
         bars = [ ];
 
         startup = (lib.lists.optional (!config.services.darkman.enable) {
-          command = "feh --bg-scale ${config.tsrk.i4.background}";
+          command = "feh --bg-scale ${config.tsrk.i3.background}";
           always = false;
         }) ++ (lib.lists.optional (config.services.polybar.enable) {
           command = "systemctl --user enable --now polybar";
