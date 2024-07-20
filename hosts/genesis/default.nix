@@ -14,17 +14,7 @@
     self.nixosModules.profile-iso
   ];
 
-  tsrk.sshd.customKeyPair = {
-    enable = true;
-    rsa = {
-      private = ../.tsrk-files/ssh_host_rsa_key;
-      public = ../.tsrk-files/ssh_host_rsa_key.pub;
-    };
-    ed25519 = {
-      private = ../.tsrk-files/ssh_host_ed25519_key;
-      public = ../.tsrk-files/ssh_host_ed25519_key.pub;
-    };
-  };
+  tsrk.age.bootstrapKeys = true;
 
   nix = {
 
@@ -47,16 +37,8 @@
   };
 
   age.identityPaths = lib.mkOptionDefault [
-    ../.tsrk-files/ssh_host_ed25519_key
-    ../.tsrk-files/ssh_host_rsa_key
+    "/etc/ssh/ssh_host_ed25519_key"
   ];
-
-  boot.postBootCommands = ''
-    rm -f /etc/ssh/ssh_host_*
-    ln -s ${../.tsrk-files/ssh_host_rsa_key} /etc/ssh/ssh_host_rsa_key
-    ln -s ${../.tsrk-files/ssh_host_ed25519_key} /etc/ssh/ssh_host_ed25519_key
-    chmod 600 /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_ed25519_key
-  '';
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
 

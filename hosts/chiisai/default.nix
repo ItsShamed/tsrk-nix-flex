@@ -16,21 +16,14 @@
     })
   ];
 
-  tsrk.sshd.customKeyPair = {
-    enable = true;
-    rsa = {
-      private = ../.tsrk-files/ssh_host_rsa_key;
-      public = ../.tsrk-files/ssh_host_rsa_key.pub;
-    };
-    ed25519 = {
-      private = ../.tsrk-files/ssh_host_ed25519_key;
-      public = ../.tsrk-files/ssh_host_ed25519_key.pub;
-    };
-  };
+  # TODO: override keys manually when installed
+  tsrk.age.bootstrapKeys = true;
+
+  age.secrets.zpasswd.file = ./secrets/passwd.age;
 
   age.identityPaths = lib.mkOptionDefault [
-    ../.tsrk-files/ssh_host_ed25519_key
-    ../.tsrk-files/ssh_host_rsa_key
+    "/etc/ssh/ssh_host_ed25519_key"
+    "/etc/ssh/ssh_host_rsa_key"
   ];
 
   tsrk.packages.pkgs = {
