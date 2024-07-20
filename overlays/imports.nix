@@ -1,2 +1,3 @@
 [
+  ./rofi-power-menu
 ]
