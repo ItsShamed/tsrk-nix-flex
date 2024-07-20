@@ -28,8 +28,6 @@
       # The best password manager (real)
       bitwarden
       spotify
-
-      vimix-gtk-themes
     ];
   };
 }

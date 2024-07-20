@@ -24,6 +24,7 @@ in
 
     home.packages = with pkgs; [
       apple-cursor
+      vimix-gtk-themes
     ];
 
     specialisation = {
