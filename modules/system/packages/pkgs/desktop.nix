@@ -30,6 +30,7 @@
       xclip
       xsel
       x11vnc
+      lxappearance
     ];
   };
 }
