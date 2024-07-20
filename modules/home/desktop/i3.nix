@@ -36,6 +36,51 @@ let
     ''
   ]);
 
+  startup = pkgs.writeShellScript "i3-startup" (lib.strings.concatLines [
+    ''
+      ##
+      # This script is responsible for (re)starting all services to be used with i3
+      ##
+
+    ''
+    ''
+      # Run the stored fehbg, so that we always have a background between
+      # Sessions
+      if [ -x "${config.home.homeDirectory}/.fehbg" ]; then
+        "${config.home.homeDirectory}/.fehbg"
+      fi
+    ''
+    (lib.strings.optionalString config.services.polybar.enable ''
+      # Polybar
+      if systemctl --user is-active polybar; then
+        systemctl --user restart polybar
+      else
+        systemctl --user enable --now polybar
+      fi
+    '')
+    (lib.strings.optionalString config.services.xsettingsd.enable ''
+      # xsettingsd
+      if systemctl --user is-active xsettingsd; then
+        systemctl --user restart xsettingsd
+      else
+        systemctl --user enable --now xsettingsd
+      fi
+    '')
+    (lib.strings.optionalString config.services.darkman.enable ''
+      # darkman
+      if systemctl --user is-active darkman; then
+        systemctl --user restart darkman
+      else
+        systemctl --user enable --now darkman
+      fi
+    '')
+    (lib.strings.optionalString config.tsrk.i3.useLogind ''
+      # i3lock service
+      # This service runs when the lock.target is reached and before sleeping
+      systemctl --user enable i3lock
+    '')
+  ]);
+
   i3Config = lib.mkIf config.tsrk.i3.enable {
     xsession.windowManager.i3 = {
       enable = true;
@@ -56,21 +101,12 @@ let
         startup = (lib.lists.optional (!config.services.darkman.enable) {
           command = "feh --bg-scale ${config.tsrk.i3.background}";
           always = false;
-        }) ++ (lib.lists.optional (config.services.polybar.enable) {
-          command = "systemctl --user enable --now polybar";
-          always = true;
-        }) ++ (lib.lists.optional (config.services.xsettingsd.enable) {
-          command = "systemctl --user enable --now xsettingsd";
-          always = false;
-        }) ++ (lib.lists.optional (config.tsrk.i3.useLogind) {
-          command = "systemctl --user enable i3lock";
-          always = false;
-        }) ++ (lib.lists.optionals (config.services.darkman.enable) [
+        }) ++ [
           {
-            command = "systemctl --user enable --now darkman";
-            always = false;
+            command = "sh ${startup}";
+            always = true;
           }
-        ]);
+        ];
 
         window.titlebar = false;
         window.commands = [
