@@ -1,4 +1,4 @@
-{ self, inputs, lib, ... }:
+{ self, inputs, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -10,7 +10,6 @@
   ];
 
   tsrk = {
-    picom.enable = lib.mkImageMediaOverride false;
     i3.epitaRestrictions = true;
     darkman = {
       feh = {
