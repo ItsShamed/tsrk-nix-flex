@@ -1,4 +1,4 @@
-{ self, config, lib, ... }:
+{ self, config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -23,6 +23,9 @@
 
   # TODO: override keys manually when installed
   tsrk.age.bootstrapKeys = true;
+
+  users.users.tsrk.shell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
 
