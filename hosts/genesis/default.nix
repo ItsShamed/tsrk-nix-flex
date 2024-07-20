@@ -1,4 +1,4 @@
-{ self, lib, inputs, pkgs, ... }:
+{ self, lib, inputs, ... }:
 
 {
   imports = [
@@ -39,8 +39,6 @@
   age.identityPaths = lib.mkOptionDefault [
     "/etc/ssh/ssh_host_ed25519_key"
   ];
-
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
 
   boot.blacklistedKernelModules = [ "elan_i2c" ];
   boot.plymouth.enable = lib.mkForce false;
