@@ -18,7 +18,7 @@ in
         "Xft/HintStyle" = "hintfull";
         "Xft/Hinting" = 1;
         "Xft/RGBA" = "rgb";
-        "Net/CursorThemeName" = "macOS-BigSur";
+        "Gtk/CursorThemeName" = "macOS-BigSur";
       };
     };
 
