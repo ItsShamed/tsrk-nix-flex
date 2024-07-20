@@ -7,11 +7,6 @@ let
     if config.tsrk.i3.epitaRestrictions then
       "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
     else "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
-  updateGtk = pkgs.writeShellScript "update-gtk" ''
-    ${pkgs.lxappearance}/bin/lxappearance &
-    ${pkgs.coreutils}/bin/sleep 1
-    ${pkgs.killall}/bin/killall .lxappearance-wrapped
-  '';
 
   teardown = pkgs.writeShellScript "i3-teardown" (lib.strings.concatLines [
     ''
@@ -74,10 +69,6 @@ let
           {
             command = "systemctl --user enable --now darkman";
             always = false;
-          }
-          {
-            command = "sh ${updateGtk}";
-            always = true;
           }
         ]);
 
