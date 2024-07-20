@@ -1,9 +1,9 @@
 { self, ... }:
 
 {
-  imports = [
-    self.homeManagerModules.bat
-    self.homeManagerModules.nvim
+  imports = with self.homeManagerModules; [
+    profile-shell
+    packages
   ];
 
   home.file."tsrk-nix-flex".source = "${self}";
