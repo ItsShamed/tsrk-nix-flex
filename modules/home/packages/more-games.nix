@@ -1,4 +1,4 @@
-{ gaming, lib, config, ... }:
+{ gaming, lib, config, pkgs, ... }:
 
 {
   options = {
@@ -11,6 +11,7 @@
     home.packages = [
       gaming.osu-lazer-bin
       gaming.osu-stable
+      pkgs.prismlauncher
     ];
   };
 }
