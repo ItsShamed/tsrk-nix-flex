@@ -3,6 +3,7 @@
 {
   imports = [
     self.nixosModules.profile-agenix
+    self.nixosModules.sshd
     self.nixosModules.hostname
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
     (self.lib.generateSystemHome "nixos" {
@@ -14,6 +15,7 @@
   ];
 
   tsrk.age.bootstrapKeys = true;
+  tsrk.sshd.enable = true;
 
   nix = {
 
