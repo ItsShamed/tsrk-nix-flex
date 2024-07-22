@@ -16,7 +16,7 @@
         gamemode
       ];
 
-      hardware.steam.enable = lib.mkDefault true;
+      hardware.steam-hardware.enable = lib.mkDefault true;
       programs.steam = {
         enable = lib.mkDefault true;
         extraCompatPackages = with pkgs; [
