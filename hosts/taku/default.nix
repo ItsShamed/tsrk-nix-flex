@@ -8,6 +8,7 @@
     self.nixosModules.profile-graphical-x11
     self.nixosModules.hostname
     self.nixosModules.bluetooth
+    self.nixosModules.containers
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -47,6 +48,10 @@
 
   tsrk.networking.networkmanager.enable = true;
   tsrk.bluetooth.enable = true;
+  tsrk.containers = {
+    enable = true;
+    podman.enable = true;
+  };
 
   time.hardwareClockInLocalTime = true;
 }
