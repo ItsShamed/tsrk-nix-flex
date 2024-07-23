@@ -21,5 +21,7 @@ in
       languages = [ "eng" "fra" "deu" "spa" "grc" ];
       symbolsFile = "${qwerty-fr}/linux/us_qwerty-fr";
     };
+
+    services.xserver.layout = "us_qwerty-fr";
   };
 }
