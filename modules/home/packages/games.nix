@@ -8,6 +8,13 @@
   };
 
   config = lib.mkIf config.tsrk.packages.games.enable {
+    warnings = [
+      ''
+        This module (packages/games.nix) installs a package from fufexan/nix-gaming, which is
+        known to cause issues with nixos-install.
+      ''
+    ];
+
     home.packages = with pkgs; [
       # gaming.osu-lazer-bin
       typespeed
