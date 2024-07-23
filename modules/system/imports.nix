@@ -1,5 +1,6 @@
 [
   ./network/hostname.nix
+  ./network/networkmanager.nix
   ./packages
   ./services/audio.nix
   ./services/hardware/bluetooth.nix
