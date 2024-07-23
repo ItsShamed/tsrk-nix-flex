@@ -13,7 +13,7 @@
       typespeed
       tetrio-desktop
       retroarch-assets
-      retroarchFull
+      retroarch
       retroarch-joypad-autoconfig
       gaming.wine-osu
       gaming.wine-ge

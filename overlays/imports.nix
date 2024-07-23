@@ -1,3 +1,4 @@
 [
+  ./retroarch
   ./rofi-power-menu
 ]
