@@ -33,7 +33,7 @@ in
         cfg.package
         mono
         msbuild
-        rolsyn
+        roslyn
       ]
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
