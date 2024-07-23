@@ -36,4 +36,6 @@
 
   tsrk.packages.pkgs.desktop.enable = true;
   tsrk.redshift.enable = lib.mkDefault true;
+
+  hardware.opentabletdriver.enable = lib.mkDefault true;
 }
