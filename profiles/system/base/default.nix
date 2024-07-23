@@ -6,6 +6,7 @@
     self.nixosModules.packages
     self.nixosModules.disks
     self.nixosModules.sshd
+    self.nixosModules.networkmanager
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
