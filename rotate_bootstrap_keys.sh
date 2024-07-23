@@ -16,3 +16,6 @@ echo "Replacing old public key with generated one"
 new_pub_key=$(cat "$pub_key_path")
 
 sed -i "s;$old_pub_key;$new_pub_key;" secrets.nix
+
+echo "Rekeying secrets"
+agenix -r
