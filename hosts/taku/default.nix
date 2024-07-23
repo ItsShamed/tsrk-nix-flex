@@ -23,9 +23,6 @@
     ./hardware-config.nix
   ];
 
-  # TODO: override keys manually when installed
-  tsrk.age.bootstrapKeys = true;
-
   users.users.tsrk.shell = pkgs.zsh;
   programs.zsh.enable = true;
 
