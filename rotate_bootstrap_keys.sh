@@ -10,7 +10,7 @@ echo "Removing existing bootstrap keys"
 rm -fv "$kp_path"/*
 
 echo "Generating new bootstrap keys"
-ssh-keygen -q -N "" -C "tsrk-bootstrap" -t ed25519 -f "$kp_path/ssh_host_ed25519_key"
+ssh-keygen -N "" -C "tsrk-bootstrap" -t ed25519 -f "$kp_path/ssh_host_ed25519_key"
 
 echo "Replacing old public key with generated one"
 new_pub_key=$(cat "$pub_key_path")
