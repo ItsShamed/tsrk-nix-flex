@@ -44,5 +44,7 @@
     go.enable = true;
   };
 
+  tsrk.networking.networkmanager.enable = true;
+
   time.hardwareClockInLocalTime = true;
 }
