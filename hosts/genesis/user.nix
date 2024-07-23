@@ -6,6 +6,4 @@
     packages
     ssh
   ];
-
-  home.file."tsrk-nix-flex".source = "${self}";
 }

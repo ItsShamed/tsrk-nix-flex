@@ -47,6 +47,10 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqKG1hRtbiN+ChXAwKqpHxlyCdFQdOSo8IfsUgi8Qh6 tsrk@tsrk-forge"
   ];
 
+  boot.postBootCommands = ''
+    echo "copying config to installer..."
+    cp -r -L ${self} /home/nixos/tsrk-nix-flex
+  '';
 
   programs.gnupg.agent = {
     enable = true;
