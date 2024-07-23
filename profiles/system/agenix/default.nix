@@ -1,4 +1,4 @@
-{ config, inputs, lib, ... }:
+{ config, inputs, lib, agenix, ... }:
 
 {
   imports = [
@@ -37,6 +37,10 @@
 
     age.identityPaths = [
       ./bootstrap-keys/ssh_host_ed25519_key
+    ];
+
+    environment.systemPackages = [
+      agenix.default
     ];
   };
 }

@@ -47,6 +47,7 @@ let
           vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
           gaming = inputs.nix-gaming.packages.${system};
           host = imageName;
+          agenix = inputs.agenix.packages.${system};
         };
       };
     };
