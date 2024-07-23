@@ -6,6 +6,7 @@
     self.nixosModules.bluetooth
     self.nixosModules.sddm
     self.nixosModules.audio
+    self.nixosModules.redshift
   ];
 
   services.xserver.enable = lib.mkForce true;
@@ -34,4 +35,5 @@
   };
 
   tsrk.packages.pkgs.desktop.enable = true;
+  tsrk.redshift.enable = lib.mkDefault true;
 }
