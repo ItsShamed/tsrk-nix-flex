@@ -12,10 +12,9 @@
       dockerCompat = true;
 
       defaultNetwork.settings.dns_enabled = true;
+      extraPackages = with pkgs; [
+        podman-compose
+      ];
     };
-
-    environment.systemPackages = with pkgs; [
-      compose
-    ];
   };
 }
