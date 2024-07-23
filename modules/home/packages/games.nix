@@ -15,7 +15,6 @@
       retroarch-assets
       retroarch
       retroarch-joypad-autoconfig
-      gaming.wine-osu
       gaming.wine-ge
     ];
   };
