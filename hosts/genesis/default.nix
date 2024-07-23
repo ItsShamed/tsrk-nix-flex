@@ -1,4 +1,4 @@
-{ self, lib, inputs, ... }:
+{ self, lib, inputs, pkgs, ... }:
 
 {
   imports = [
@@ -12,10 +12,12 @@
       ];
     })
     self.nixosModules.profile-iso
+    self.nixosModules.packages
   ];
 
   tsrk.age.bootstrapKeys = true;
   tsrk.sshd.enable = true;
+  tsrk.packages.pkgs.base.enable = true;
 
   nix = {
 
@@ -40,6 +42,17 @@
   age.identityPaths = lib.mkOptionDefault [
     "/etc/ssh/ssh_host_ed25519_key"
   ];
+
+  users.users.nixos.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqKG1hRtbiN+ChXAwKqpHxlyCdFQdOSo8IfsUgi8Qh6 tsrk@tsrk-forge"
+  ];
+
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableBrowserSocket = true;
+    pinentryPackage = pkgs.pinentry-tty;
+  };
 
   boot.blacklistedKernelModules = [ "elan_i2c" ];
   boot.plymouth.enable = lib.mkForce false;
