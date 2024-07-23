@@ -13,5 +13,9 @@
       more-gaming.enable = true;
     };
     nvim.wakatime.enable = true;
+    polybar = {
+      ethInterfaceName = "enp16s0";
+      wlanInterfaceName = "wlp15s0";
+    };
   };
 }
