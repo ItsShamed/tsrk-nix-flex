@@ -19,10 +19,7 @@
       flake = false;
     };
 
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
