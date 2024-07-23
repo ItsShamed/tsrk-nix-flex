@@ -7,7 +7,6 @@
     self.nixosModules.profile-graphical-base
     self.nixosModules.profile-graphical-x11
     self.nixosModules.hostname
-    self.nixosModules.bluetooth
     self.nixosModules.containers
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
@@ -47,7 +46,6 @@
   };
 
   tsrk.networking.networkmanager.enable = true;
-  tsrk.bluetooth.enable = true;
   tsrk.containers = {
     enable = true;
     podman.enable = true;
