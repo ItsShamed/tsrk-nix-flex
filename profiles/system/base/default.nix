@@ -1,4 +1,4 @@
-{ pkgs, lib, self, host, ... }:
+{ pkgs, lib, self, host, agenix, ... }:
 
 {
 
@@ -90,6 +90,10 @@
     IDEA_JDK = "/run/current-system/sw/lib/openjdk/";
     PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
   };
+
+  environment.systemPackages = [
+    agenix.agenix
+  ];
 
   programs.gnupg.agent = {
     enable = true;
