@@ -11,6 +11,7 @@
     packages = {
       games.enable = true;
       more-gaming.enable = true;
+      media.enable = true;
     };
     nvim.wakatime.enable = true;
     polybar = {
