@@ -15,7 +15,7 @@ name:
     inherit name;
     inherit hashedPasswordFile password initialPassword;
     isNormalUser = true;
-    extraGroups = [ "video" "audio" "input" ]
+    extraGroups = [ "video" "audio" "input" "networkmanager" ]
       ++ (lib.lists.optional canSudo "wheel")
       ++ moreGroups;
   };
