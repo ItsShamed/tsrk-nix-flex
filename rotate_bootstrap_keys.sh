@@ -18,4 +18,13 @@ new_pub_key=$(cat "$pub_key_path")
 sed -i "s;$old_pub_key;$new_pub_key;" secrets.nix
 
 echo "Rekeying secrets"
-agenix -r
+
+agenixCommand=
+
+if command -v agenix &>/dev/null; then
+    agenixCommand=agenix
+else
+    agenixCommand=nix run github:ryantm/agenix --
+fi
+
+$agenixCommand -r
