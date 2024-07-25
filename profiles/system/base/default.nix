@@ -100,6 +100,11 @@
     enableBrowserSocket = true;
   };
 
+  boot.loader.grub = lib.mkImageMediaOverride {
+    theme = "${pkgs.hyperfluent-grub-theme}";
+    splashImage = "${pkgs.hyperfluent-grub-theme}/background.png";
+  };
+
   boot.initrd.postMountCommands = ''
     printf "\033[0;33m    /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               @@@@@@@@@@\n"
     echo '  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@           @@@@@@@@@@'
