@@ -1,6 +1,8 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 {
+  imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
+
   options = {
     tsrk.packages.pkgs = {
       gaming = {
@@ -24,6 +26,7 @@
         ];
         remotePlay.openFirewall = lib.mkDefault true;
         localNetworkGameTransfers.openFirewall = lib.mkDefault true;
+        platformOptimizations.enable = lib.mkDefault true;
       };
     }
     (lib.mkIf (config.tsrk.packages.pkgs.gaming.amdSupport) {
