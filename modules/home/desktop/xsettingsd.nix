@@ -33,19 +33,25 @@ in
     gtk = {
       enable = lib.mkDefault true;
       theme = {
-        package = lib.mkDefault pkgs.vimix-gtk-themes;
-        name = lib.mkDefault "vimix-dark-doder";
+        package = lib.mkDefault pkgs.tokyonight-gtk-theme;
+        name = lib.mkDefault "TokyoNight-Dark";
       };
     };
 
+    home.packages = with pkgs; [
+      (tokyonight-gtk-theme.override (self: super: {
+        tweaks = [ "storm" ];
+      }))
+    ];
+
     specialisation = {
       light.configuration = {
-        services.xsettingsd.settings."Net/ThemeName" = "vimix-light-doder";
-        gtk.theme.name = "vimix-light-doder";
+        services.xsettingsd.settings."Net/ThemeName" = "TokyoNight-Light";
+        gtk.theme.name = "TokyoNight-Light";
       };
       dark.configuration = {
-        services.xsettingsd.settings."Net/ThemeName" = "vimix-dark-doder";
-        gtk.theme.name = "vimix-dark-doder";
+        services.xsettingsd.settings."Net/ThemeName" = "TokyoNight-Dark-Storm";
+        gtk.theme.name = "TokyoNight-storm-Dark";
       };
     };
 
