@@ -10,4 +10,6 @@
   hyperfluent-grub-theme = ./data/themes/hyperfluent-grub-theme;
 
   rofi-themes-collection = ./data/themes/rofi-themes-collection;
+
+  tokyonight-gtk-theme = ./data/themes/tokyonight-gtk-theme;
 }
