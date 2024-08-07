@@ -11,6 +11,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.pointerCursor = {
+      gtk.enable = lib.mkDefault true;
+      x11.enable = lib.mkDefault true;
+      package = pkgs.apple-cursor;
+      name = "macOS-BigSur";
+    };
+
     services.xsettingsd = {
       enable = true;
       settings = {
@@ -19,20 +26,26 @@ in
         "Xft/Hinting" = 1;
         "Xft/RGBA" = "rgb";
         "Gtk/CursorThemeName" = "macOS-BigSur";
+        "Gtk/CursorThemeSize" = 32;
       };
     };
 
-    home.packages = with pkgs; [
-      apple-cursor
-      vimix-gtk-themes
-    ];
+    gtk = {
+      enable = lib.mkDefault true;
+      theme = {
+        package = lib.mkDefault pkgs.vimix-gtk-themes;
+        name = lib.mkDefault "vimix-dark-doder";
+      };
+    };
 
     specialisation = {
       light.configuration = {
         services.xsettingsd.settings."Net/ThemeName" = "vimix-light-doder";
+        gtk.theme.name = "vimix-light-doder";
       };
       dark.configuration = {
         services.xsettingsd.settings."Net/ThemeName" = "vimix-dark-doder";
+        gtk.theme.name = "vimix-dark-doder";
       };
     };
 
