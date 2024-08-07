@@ -2,7 +2,8 @@
 , gtk-engine-murrine
 , gnome-themes-extra
 , sassc
-, stdenv
+, gnome
+, stdenvNoCC
 , fetchFromGitHub
 , tweaks ? []
 }:
@@ -24,8 +25,8 @@ let
   tweakSuffixes = lib.strings.optionalString (tweaks != [])
     ("_" + (builtins.concatStringsSep "-" tweaks));
 in
-stdenv.mkDerivation rec {
-  pname = "tokyonight-gtk-theme${tweakSuffixes}";
+stdenvNoCC.mkDerivation rec {
+  pname = "tokyonight-gtk-theme";
   version = "unstable-2024-07-22";
 
   src = fetchFromGitHub {
@@ -35,12 +36,15 @@ stdenv.mkDerivation rec {
     hash = "sha256-HbrDDiMej4DjvskGItele/iCUY1NzlWlu3ZneA76feM=";
   };
 
-  propagatedBuildInputs = [
+  propagatedUserEnvPkgs = [
     gnome-themes-extra
     gtk-engine-murrine
-    sassc
   ];
 
+  propagatedBuildInputs = [
+    sassc
+    gnome.gnome-shell
+  ];
 
   dontPatch = true;
   dontConfigure = true;
@@ -50,19 +54,11 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
 
-    mkdir -vp $out/share/{themes,icons,tokyonight-gtk-theme}
-    cp -av LICENSE $out/share/tokyonight-gtk-theme
+    mkdir -p $out/share/{themes,icons,tokyonight-gtk-theme}
+    cp -a LICENSE $out/share/tokyonight-gtk-theme
 
     (cd themes; bash install.sh -t all -n TokyoNight -d $out/share/themes${tweaksArg})
     cp -a icons/* $out/share/icons/
-
-    mkdir -pv $out/nix-support
-
-    ${lib.strings.concatStrings (lib.forEach propagatedBuildInputs (input:
-      ''
-        echo "${input}" >> $out/nix-support/propagated-user-env-packages
-      ''
-    ))}
 
     runHook postInstall
   '';
