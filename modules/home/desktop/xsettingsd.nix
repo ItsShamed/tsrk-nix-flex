@@ -40,6 +40,9 @@ in
       _i "Reloading xsettingsd"
 
       ${config.systemd.user.systemctlPath} --user restart xsettingsd
+      ${lib.meta.getExe pkgs.lxappearance}&
+      sleep 2
+      ${lib.meta.getExe pkgs.killall} .lxappearance-wrapped
     '';
   };
 }
