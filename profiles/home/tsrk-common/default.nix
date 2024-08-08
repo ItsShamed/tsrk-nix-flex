@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -48,4 +48,8 @@
     };
     userEmail = "tsrk@tsrk.me";
   };
+
+  home.packages = with pkgs; [
+    premid
+  ];
 }
