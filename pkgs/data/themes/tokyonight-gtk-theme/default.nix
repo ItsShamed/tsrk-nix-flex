@@ -5,7 +5,7 @@
 , gnome
 , stdenvNoCC
 , fetchFromGitHub
-, tweaks ? []
+, tweaks ? [ ]
 }:
 
 assert let
@@ -17,13 +17,12 @@ assert let
     "outline"
     "macos"
   ];
-in builtins.all isValidTweak tweaks;
+in
+builtins.all isValidTweak tweaks;
 
 let
-  tweaksArg = lib.strings.optionalString (tweaks != [])
+  tweaksArg = lib.strings.optionalString (tweaks != [ ])
     " --tweaks ${builtins.concatStringsSep " " tweaks}";
-  tweakSuffixes = lib.strings.optionalString (tweaks != [])
-    ("_" + (builtins.concatStringsSep "-" tweaks));
 in
 stdenvNoCC.mkDerivation rec {
   pname = "tokyonight-gtk-theme";
