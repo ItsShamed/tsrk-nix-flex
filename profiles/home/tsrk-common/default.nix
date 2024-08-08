@@ -51,5 +51,6 @@
 
   home.packages = with pkgs; [
     premid
+    deadnix
   ];
 }
