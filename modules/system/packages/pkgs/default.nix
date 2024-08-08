@@ -11,6 +11,7 @@
     ./go.nix
     ./java.nix
     ./python.nix
+    ./qmk.nix
     ./rust.nix
     ./sql.nix
   ];
