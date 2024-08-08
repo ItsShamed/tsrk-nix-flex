@@ -21,6 +21,7 @@
         usbutils
 
         git
+        pre-commit
         git-crypt
         wget
         diffutils
