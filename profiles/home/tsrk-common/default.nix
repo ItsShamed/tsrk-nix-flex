@@ -17,6 +17,7 @@
       light = "TokyoNight Day";
       dark = "TokyoNight Storm";
     };
+    premid.enable = true;
   };
 
   accounts.email.accounts = {
@@ -50,7 +51,6 @@
   };
 
   home.packages = with pkgs; [
-    premid
     deadnix
   ];
 }

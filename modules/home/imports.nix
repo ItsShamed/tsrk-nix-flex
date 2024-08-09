@@ -6,6 +6,7 @@
   ./desktop/kitty.nix
   ./desktop/picom.nix
   ./desktop/polybar.nix
+  ./desktop/premid.nix
   ./desktop/rofi.nix
   ./desktop/thunderbird.nix
   ./desktop/xsettingsd.nix

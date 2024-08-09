@@ -6,6 +6,7 @@
     dunst
     flameshot
     picom
+    premid
     profile-x11-base
     rofi
     thunderbird
