@@ -60,7 +60,7 @@ in
 
       ${config.systemd.user.systemctlPath} --user restart xsettingsd
       ${lib.meta.getExe pkgs.lxappearance}&
-      sleep 2
+      sleep 1
       ${lib.meta.getExe pkgs.killall} .lxappearance-wrapped
     '';
   };
