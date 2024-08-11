@@ -7,6 +7,7 @@
     self.nixosModules.profile-graphical-base
     self.nixosModules.profile-graphical-x11
     self.nixosModules.hostname
+    self.nixosModules.containers
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -37,5 +38,10 @@
   tsrk.packages.pkgs = {
     cDev.enable = true;
     java.enable = true;
+  };
+
+  tsrk.containers = {
+    enable = true;
+    podman.enable = true;
   };
 }
