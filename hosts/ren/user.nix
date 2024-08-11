@@ -9,6 +9,11 @@
 
   tsrk = {
     picom.enable = lib.mkImageMediaOverride false;
+    packages = {
+      # TODO: Re-enable after bootstrap
+      # games.enable = true;
+      media.enable = true;
+    };
     darkman = {
       feh = {
         dark = ./files/bocchi-tokyonight-storm.png;

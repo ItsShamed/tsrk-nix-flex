@@ -35,6 +35,8 @@
     "/etc/ssh/ssh_host_rsa_key"
   ];
 
+  tsrk.sound.enable = false; # TODO: Re-enable after bootstrap
+
   tsrk.packages.pkgs = {
     cDev.enable = true;
     java.enable = true;
@@ -49,4 +51,6 @@
     enable = true;
     podman.enable = true;
   };
+
+  time.hardwareClockInLocalTime = true;
 }
