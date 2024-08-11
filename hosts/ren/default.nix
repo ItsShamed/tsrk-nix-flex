@@ -38,6 +38,11 @@
   tsrk.packages.pkgs = {
     cDev.enable = true;
     java.enable = true;
+    csharp.enable = true;
+    android.enable = true;
+    python.enable = true;
+    gaming.enable = true;
+    qmk.enable = true;
   };
 
   tsrk.containers = {
