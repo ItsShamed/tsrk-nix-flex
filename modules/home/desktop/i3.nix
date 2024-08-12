@@ -244,6 +244,15 @@ let
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
 
+          # Media keys
+          XF86AudioRaiseVolume = "exec --no-startup-id \"${pkgs.pamixer}/bin/pamixer -i 10\"";
+          XF86AudioLowerVolume = "exec --no-startup-id \"${pkgs.pamixer}/bin/pamixer -d 10\"";
+          XF86AudioMute = "exec --no-startup-id \"${pkgs.pamixer}/bin/pamixer -t\"";
+
+          # Brightness
+          XF86MonBrightnessUp = "exec --no-startup-id \"${pkgs.brightnessctl}/bin/brightnessctl set +2%\"";
+          XF86MonBrightnessDown = "exec --no-startup-id \"${pkgs.brightnessctl}/bin/brightnessctl set 2%-\"";
+
           # lock
           "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");
           "${mod}+Shift+e" = config.tsrk.i3.exitPromptCommand teardown;
