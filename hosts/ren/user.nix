@@ -20,6 +20,9 @@
         light = ./files/lagtrain-tokyonight-day.png;
       };
     };
+    polybar = {
+      wlanInterfaceName = "wlp1s0";
+    };
     nvim.wakatime.enable = true;
   };
 }

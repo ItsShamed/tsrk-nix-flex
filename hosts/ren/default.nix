@@ -20,6 +20,8 @@
       homeDir = "/root";
       modules = [ ./root.nix ];
     })
+    ./disk.nix
+    ./hardware-config.nix
   ];
 
   # TODO: override keys manually when installed
