@@ -50,5 +50,7 @@
     podman.enable = true;
   };
 
+  services.libinput.touchpad.naturalScrolling = true;
+
   time.hardwareClockInLocalTime = true;
 }
