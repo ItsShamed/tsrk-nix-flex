@@ -9,7 +9,7 @@ systems, and includes this flake in user space.
 
 ![Lenovo Yoga Slim 7 14ARE05](https://gist.github.com/user-attachments/assets/7c4a9b44-d792-4e21-a548-aa6d6c42dd64)
 
-*Status: waiting for storage upgrade before installing*
+*Status: installed! 🎉*
 
 ### Specs
 
@@ -19,8 +19,9 @@ systems, and includes this flake in user space.
 
 **RAM**: 16 GB
 
-**Storage**:
- - Boot drive (`/dev/nvme0n1`): M.2 2442 SSD 512 GB 
+**Storage (*upgraded*)**:
+ - Boot drive (`/dev/nvme0n1`): KingSpec M.2 2242 NVMe SSD 1 TB
+ - Data drive (`/dev/nvme1n1`): Crucial P3 Plus M.2 2280 NVMe SSD 2 TB
 
 [Product Specification Reference (PSREF)](https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_Slim_7_14ARE05/Yoga_Slim_7_14ARE05_Spec.PDF)
 
