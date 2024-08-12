@@ -1,4 +1,7 @@
 {
+  ### GAMES
+  rewind = ./games/rewind;
+
   ### MISC
   tokyonight-extras = ./misc/tokyonight-extras;
 
