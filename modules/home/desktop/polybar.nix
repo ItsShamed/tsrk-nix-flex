@@ -32,6 +32,21 @@ in
         default = null;
         example = "HDMI-1";
       };
+      battery = {
+        enable = lib.options.mkEnableOption "the battery display module";
+        battery = lib.options.mkOption {
+          type = lib.types.str;
+          description = "The name of the battery device";
+          default = "BAT0";
+          example = "BAT1";
+        };
+        adapter = lib.options.mkOption {
+          type = lib.types.str;
+          description = "The name of the adapter device";
+          default = "ADP1";
+          example = "ACAD";
+        };
+      };
     };
   };
   config = lib.mkIf cfg.enable {
@@ -57,6 +72,7 @@ in
           alert = "#f7768e";
           red = "#f7768e";
           yellow = "#e0af68";
+          green = "#9ece6a";
         };
 
         "bar/bar" = {
@@ -103,6 +119,7 @@ in
             ]
             ++ (lib.lists.optional (cfg.backlightCard != null) "backlight-acpi")
             ++ (lib.lists.optional (cfg.backlightOutput != null) "backlight-xrandr")
+            ++ (lib.lists.optional (cfg.battery.enable) "battery")
             ++ (lib.lists.optional (cfg.wlanInterfaceName != null) "wifi")
             ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")));
           };
@@ -220,6 +237,71 @@ in
         "module/backlight-xrandr" = {
           "inherit" = "module/backlight-base";
           output = self.lib.mkIfElse (cfg.backlightOutput != null) cfg.backlightOutput "NULL";
+        };
+
+        "module/battery" = {
+          type = "internal/battery";
+          battery = cfg.battery.battery;
+          adapter = cfg.battery.adapter;
+          low-at = 20;
+
+          format = {
+            charging = "<animation-charging> <label-charging>";
+            discharging = "<ramp-capacity> <label-discharging>";
+            full = "<ramp-capacity> <label-full>";
+            low = "<animation-low> <label-low>";
+          };
+
+          label = {
+            charging = {
+              text = "%percentage%% charging";
+              foreground = "\${colors.yellow}";
+            };
+            discharging = "%percentage%%";
+            low = {
+              text = "%percentage%% LOW";
+              foreground = "\${colors.red}";
+            };
+            full = {
+              text = "%percentage%% FULL";
+              foreground = "\${colors.green}";
+            };
+          };
+
+          ramp-capacity = [
+            "󰂎"
+            "󰁺"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂀"
+            "󰂁"
+            "󰂂"
+            "󰁹"
+          ];
+
+          animation-charging = [
+            "󰢜 "
+            "󰢜 "
+            "󰂇 "
+            "󰂈 "
+            "󰢝 "
+            "󰂉 "
+            "󰢞 "
+            "󰂊 "
+            "󰂋 "
+            "󰂅 "
+          ];
+
+          animation-charging-framerate = 100;
+
+          animation-low = [
+            "󱉞 "
+            "  "
+          ];
+          animation-low-framerate = 500;
         };
 
         "module/wifi" = {
