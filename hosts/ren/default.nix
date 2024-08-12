@@ -49,6 +49,7 @@
     qmk.enable = true;
   };
 
+  tsrk.networking.networkmanager.enable = true;
   tsrk.containers = {
     enable = true;
     podman.enable = true;
