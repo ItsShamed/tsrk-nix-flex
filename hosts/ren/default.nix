@@ -54,7 +54,5 @@
     podman.enable = true;
   };
 
-  tsrk.i3.lockerBackground = ../../modules/home/desktop/files/bg-no-logo.png;
-
   time.hardwareClockInLocalTime = true;
 }
