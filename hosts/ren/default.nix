@@ -24,9 +24,6 @@
     ./hardware-config.nix
   ];
 
-  # TODO: override keys manually when installed
-  tsrk.age.bootstrapKeys = true;
-
   users.users.tsrk.shell = pkgs.zsh;
   programs.zsh.enable = true;
 
@@ -36,8 +33,6 @@
     "/etc/ssh/ssh_host_ed25519_key"
     "/etc/ssh/ssh_host_rsa_key"
   ];
-
-  tsrk.sound.enable = false; # TODO: Re-enable after bootstrap
 
   tsrk.packages.pkgs = {
     cDev.enable = true;
