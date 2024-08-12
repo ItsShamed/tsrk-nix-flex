@@ -20,6 +20,18 @@ in
         default = null;
         example = "eth0";
       };
+      backlightCard = lib.options.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        description = "The name of the card that will have its brightness displayed";
+        default = null;
+        example = "intel_backlight";
+      };
+      backlightOutput = lib.options.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        description = "The name of the output that will have its brightness displayed";
+        default = null;
+        example = "HDMI-1";
+      };
     };
   };
   config = lib.mkIf cfg.enable {
@@ -89,6 +101,8 @@ in
               "date"
               "audio"
             ]
+            ++ (lib.lists.optional (cfg.backlightCard != null) "backlight-acpi")
+            ++ (lib.lists.optional (cfg.backlightOutput != null) "backlight-xrandr")
             ++ (lib.lists.optional (cfg.wlanInterfaceName != null) "wifi")
             ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")));
           };
@@ -182,6 +196,30 @@ in
           };
 
           label = "%date%%time%";
+        };
+
+        "module/backlight-base" = {
+          type = "internal/xbacklight";
+
+          format = {
+            text = "<label>";
+            prefix = {
+              text = " ";
+              foreground = "\${colors.foreground-alt}";
+            };
+          };
+          label = "%percentage%%";
+        };
+
+        "module/backlight-acpi" = {
+          "inherit" = "module/backlight-base";
+          type = "internal/backlight";
+          card = self.lib.mkIfElse (cfg.backlightCard != null) cfg.backlightCard "NULL";
+        };
+
+        "module/backlight-xrandr" = {
+          "inherit" = "module/backlight-base";
+          output = self.lib.mkIfElse (cfg.backlightOutput != null) cfg.backlightOutput "NULL";
         };
 
         "module/wifi" = {

@@ -22,6 +22,7 @@
     };
     polybar = {
       wlanInterfaceName = "wlp1s0";
+      backlightCard = "amdgpu_bl1";
     };
     nvim.wakatime.enable = true;
   };
