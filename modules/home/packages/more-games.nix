@@ -18,6 +18,7 @@
       gaming.osu-lazer-bin
       gaming.osu-stable
       pkgs.prismlauncher
+      pkgs.rewind
     ];
   };
 }
