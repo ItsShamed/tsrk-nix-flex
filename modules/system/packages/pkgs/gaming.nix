@@ -28,6 +28,8 @@
         localNetworkGameTransfers.openFirewall = lib.mkDefault true;
         platformOptimizations.enable = lib.mkDefault true;
       };
+
+      services.joycond.enable = lib.mkDefault true;
     }
     (lib.mkIf (config.tsrk.packages.pkgs.gaming.amdSupport) {
       hardware.opengl = {
