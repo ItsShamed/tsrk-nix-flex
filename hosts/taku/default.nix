@@ -58,4 +58,8 @@
   };
 
   time.hardwareClockInLocalTime = true;
+
+  services.xserver.displayManager.setupCommands = ''
+    ${pkgs.xorg.xrandr}/bin/xrandr --rate 165
+  '';
 }
