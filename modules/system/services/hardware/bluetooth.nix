@@ -16,6 +16,7 @@
     environment.systemPackages = with pkgs; [
       bluez-tools
       blueberry
+      overskride
     ];
 
     # Taken from https://github.com/Litarvan/legion/blob/main/modules/hardware/bluetooth.nix
