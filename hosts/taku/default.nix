@@ -61,5 +61,6 @@
 
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xrandr}/bin/xrandr --rate 165
+    ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
 }
