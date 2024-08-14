@@ -27,18 +27,12 @@ in
         "Xft/RGBA" = "rgb";
         "Gtk/CursorThemeName" = "macOS-BigSur";
         "Gtk/CursorThemeSize" = 32;
-      };
-    };
-
-    gtk = {
-      enable = lib.mkDefault true;
-      theme = {
-        package = lib.mkDefault pkgs.tokyonight-gtk-theme;
-        name = lib.mkDefault "TokyoNight-Dark";
+        "Xcursor/size" = 32;
       };
     };
 
     home.packages = with pkgs; [
+      tokyonight-gtk-theme
       (tokyonight-gtk-theme.override (self: super: {
         tweaks = [ "storm" ];
       }))
@@ -47,11 +41,9 @@ in
     specialisation = {
       light.configuration = {
         services.xsettingsd.settings."Net/ThemeName" = "TokyoNight-Light";
-        gtk.theme.name = "TokyoNight-Light";
       };
       dark.configuration = {
         services.xsettingsd.settings."Net/ThemeName" = "TokyoNight-Dark-Storm";
-        gtk.theme.name = "TokyoNight-storm-Dark";
       };
     };
 
