@@ -63,4 +63,9 @@
     ${pkgs.xorg.xrandr}/bin/xrandr --rate 165
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
+
+  services.hardware.openrgb = {
+    enable = true;
+    package = pkgs.openrgb-with-all-plugins;
+  };
 }
