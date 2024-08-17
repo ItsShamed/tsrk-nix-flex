@@ -1,0 +1,161 @@
+let mapleader=" "
+
+set surround
+set NERDTree
+Plug 'terryma/vim-multiple-cursors'
+set highlightedyank
+let g:highlightedyank_highlight_duration = "250"
+let g:highlightedyank_highlight_color = "rgba(176, 255, 115, 155)"
+
+Plug 'kana/vim-textobj-entire'
+Plug 'dbakker/vim-paragraph-motion'
+
+set timeoutlen=5000
+set showmode
+set ic
+set so=7
+set siso=10
+set incsearch
+set clipboard+=unnamed
+
+set which-key 
+let g:WhichKey_ShowVimActions = "true"
+let g:WhichKeyDesc_Leader = "<leader> Leader"
+let g:WhichKeyDesc_Space = "<Space> Leader"
+let g:WhichKeyDesc_WinCmd = "<C-w> Window"
+
+let g:WhichKeyDesc_SplitPaneHorizontally = "<C-w>s Split pane horizontally"
+let g:WhichKeyDesc_SplitPaneVertically = "<C-w>j Split pane vertically"
+
+""" Non-leader actions
+" Insert mode
+
+" Normal mode
+nmap L <Action>(NextTab)
+nmap H <Action>(PreviousTab)
+nmap K <Action>(QuickJavaDoc)
+nmap <C-Up> <Action>(StretchSplitToTop)
+nmap <C-Right> <Action>(StretchSplitToRight)
+nmap <C-Left> <Action>(StretchSplitToLeft)
+nmap <C-Down> <Action>(StretchSplitToBottom)
+nnoremap <c-k> <C-w>k
+nnoremap <c-j> <C-w>j
+nnoremap <c-h> <C-w>h
+nnoremap <c-l> <C-w>l
+
+" Visual mode
+vnoremap < <gv
+vnoremap > >gv
+
+" Visual-block mode
+xmap J <Action>(MoveStatementDown)
+xmap K <Action>(MoveStatementUp)
+
+""" Which-key mappings
+"" 0-level mappings
+map <leader>/ <Action>(CommentByLineComment)
+vmap <leader>/ <Action>(CommentByBlockComment)
+map <leader>c <Action>(CloseEditor)
+map <leader>e :NERDTreeToggle<CR>
+map <leader>f <Action>(GotoFile)
+map <leader>q <Action>(Exit)
+map <leader>w <Action>(SaveAll)
+let g:WhichKeyDesc_Comment = "<leader>/ Comment"
+let g:WhichKeyDesc_CloseBuffer = "<leader>c Close Buffer"
+let g:WhichKeyDesc_ToggleExplorer = "<leader>e Explorer"
+let g:WhichKeyDesc_FindFile = "<leader>f Find File"
+let g:WhichKeyDesc_Quit = "<leader>q Quit"
+let g:WhichKeyDesc_Save = "<leader>w Save"
+let g:WhichKeyDesc_Buffer = "<leader>b +Buffers"
+let g:WhichKeyDesc_Git = "<leader>g +Git"
+let g:WhichKeyDesc_Code = "<leader>l +Code"
+let g:WhichKeyDesc_IdeaVim = "<leader>L +IdeaVim"
+let g:WhichKeyDesc_Search = "<leader>s +Search"
+
+"" Buffer mappings
+map <leader>bb <Action>(PreviousTab)
+map <leader>be <Action>(CloseAllEditorsButActive)
+map <leader>bh <Action>(CloseAllToTheLeft)
+map <leader>bl <Action>(CloseAllToTheRight)
+map <leader>bw <Action>(CloseAllEditors)
+let g:WhichKeyDesc_Buffer_PreviousBuffer = "<leader>bb Previous"
+let g:WhichKeyDesc_Buffer_CloseAllButCurrent = "<leader>be Close all but current"
+let g:WhichKeyDesc_Buffer_CloseAllToTheLeft = "<leader>bh Close all to the left"
+let g:WhichKeyDesc_Buffer_CloseAllToTheRight = "<leader>bl Close all to the right"
+let g:WhichKeyDesc_Buffer_Wipeout = "<leader>bw Wipeout"
+
+"" Git mappings
+map <leader>gb <Action>(Git.ShowBranches)
+map <leader>gd <Action>(Diff.ShowDiff)
+map <leader>gg <Action>(Vcs.Show.Log)
+map <leader>gj <Action>(VcsShowNextChangeMarker)jkkj
+map <leader>gk <Action>(VcsShowPrevChangeMarker)jkkj
+map <leader>gl <Action>(Annotate)
+map <leader>gr <Action>(Vcs.RollbackChangedLines)
+let g:WhichKeyDesc_Git_ShowBranches = "<leader>gb Show branches"
+let g:WhichKeyDesc_Git_GitDiff = "<leader>gd Git Diff"
+let g:WhichKeyDesc_Git_ShowLog = "<leader>gg Show log"
+let g:WhichKeyDesc_Git_Blame = "<leader>gl Blame"
+let g:WhichKeyDesc_Git_NextHunk = "<leader>gj Next Hunk"
+let g:WhichKeyDesc_Git_PrevHunk = "<leader>gk Prev Hunk"
+let g:WhichKeyDesc_Git_ResetHunk = "<leader>gr Reset Hunk"
+
+"" IdeaVim mappings
+" Change if you use Windows
+" map <leader>Lc :e ~\.ideavimrc <CR>
+map <leader>Lc :e ~/.ideavimrc <CR>
+let g:WhichKeyDesc_IdeaVim_ideavimrc = "<leader>Lc Edit ~/.ideavimrc"
+
+"" Code mappings
+map <leader>ld <Action>(ActivateProblemsViewToolWindow)
+map <leader>lf <Action>(SilentCodeCleanup)
+if has('ide')
+    if &ide =~? 'rider'
+        map <leader>lj <Action>(ReSharperGotoNextErrorInSolution)
+        map <leader>lk <Action>(ReSharperGotoPrevErrorInSolution)
+    else
+        map <leader>lj <Action>(SwitcherNextProblem)
+        map <leader>lk <Action>(SwitcherPreviousProblem)
+    endif
+endif
+map <leader>lr <Action>(RenameElement)
+map <leader>lS <Action>(GotoSymbol)
+let g:WhichKeyDesc_Code_Problems = "<leader>ld Problems"
+let g:WhichKeyDesc_Code_Format = "<leader>lf Format"
+let g:WhichKeyDesc_Code_NextProblem = "<leader>lj Next Problem"
+let g:WhichKeyDesc_Code_PrevProblem = "<leader>lk Prev Problem"
+let g:WhichKeyDesc_Code_Rename = "<leader>lr Rename"
+let g:WhichKeyDesc_Code_Symbols = "<leader>lS Symbols"
+let g:WhichKeyDesc_Code_Peek = "<leader>lp +Peek"
+" Peek actions
+map <leader>lpi <Action>(QuickImplementations)
+map <leader>lpt <Action>(QuickTypeDefinition)
+let g:WhichKeyDesc_Code_Peek_Impl = "<leader>lpi Implementation"
+let g:WhichKeyDesc_Code_Peek_TypeDef = "<leader>lpt Type Definition"
+
+"" Search actions
+map <leader>sb <Action>(Git.ShowBranches)
+map <leader>sf <Action>(GotoFile)
+map <leader>st <Action>(FindInPath)
+let g:WhichKeyDesc_Search_Branches = "<leader>sb Branches"
+let g:WhichKeyDesc_Search_File = "<leader>sf Find File"
+let g:WhichKeyDesc_Search_Text = "<leader>st Text"
+
+""" Goto
+map gD <Action>(GotoDeclaration)
+map gI <Action>(GotoImplementation)
+map gp <Action>(QuickImplementations)
+map gr <Action>(FindUsages)
+
+let g:WhichKeyDesc_g_GotoDecl = "gD Goto declaration"
+let g:WhichKeyDesc_g_GotoImpl = "gI Goto Implementation"
+let g:WhichKeyDesc_g_PeekDef = "gp Peek Definition"
+let g:WhichKeyDesc_g_GotoRef = "gr Goto references"
+
+let g:WhichKeyDesc_g_hash = "g#"
+let g:WhichKeyDesc_g_dollar = "g$"
+let g:WhichKeyDesc_g_and = "g&"
+let g:WhichKeyDesc_g_squote = "g'"
+let g:WhichKeyDesc_g_lparenth = "g("
+let g:WhichKeyDesc_g_rparenth = "g)"
+let g:WhichKeyDesc_g_star = "g*"

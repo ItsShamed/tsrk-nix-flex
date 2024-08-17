@@ -33,5 +33,7 @@
         augroup END
       '';
     };
+
+    home.file.".ideavimrc".source = ./ideavimrc;
   };
 }
