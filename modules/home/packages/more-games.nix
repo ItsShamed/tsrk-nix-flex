@@ -19,6 +19,7 @@
       gaming.osu-stable
       pkgs.prismlauncher
       pkgs.rewind
+      pkgs.lunar-client
     ];
   };
 }
