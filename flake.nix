@@ -52,6 +52,7 @@
     , nixgl
 
     , futils
+    , nixvim
     , ...
     } @ inputs:
     let
@@ -129,7 +130,12 @@
         in
         {
           formatter = pkgs.nixpkgs-fmt;
-          packages = (import ./pkgs { inherit lib pkgs; });
+          packages = (import ./pkgs { inherit lib pkgs; }) // {
+            nvim-cirno = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+              inherit pkgs;
+              module = self.nixvimModules.default;
+            };
+          };
         });
     in
     lib.recursiveUpdate linuxOutputs allOutputs;
