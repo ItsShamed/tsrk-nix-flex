@@ -35,19 +35,19 @@ config to do by hand.
 
 ## Modules
 
-The `modules/` directory contains modules for both NixOS and Home-Manager. The
-modules are written in a waa that each module can be imported individually
+The `modules/` directory contains modules for NixOS, Nixvim and Home-Manager. 
+Modules are written in a way that each module can be imported individually
 without causing to much discrepancy to their original goal.
 
 ## Overlays
 
-The `overlays/` directory contains nixpkgs overlays for various package so that
+The `overlays/` directory contains nixpkgs overlays for various packages so that
 they fit for my needs without having to inline them in modules.
 
 ## Packages
 
 The `pkgs/` directory contains custom packages not available on upstream
-`nixpkgs`.
+`nixpkgs`, and a standalone binary of my Nixvim configuration (`nvim-cirno`).
 
 ## Profiles
 
