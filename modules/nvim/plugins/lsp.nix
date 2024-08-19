@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  programs.nixvim.plugins = {
+  plugins = {
     none-ls.enable = true;
     lsp-format.enable = true;
     lsp = {

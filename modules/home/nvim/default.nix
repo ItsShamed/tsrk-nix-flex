@@ -1,39 +1,27 @@
-{ config, lib, ... }:
+{ config, lib, self, pkgs, ... }:
 
 {
-  imports = [
-    ./keymaps.nix
-    ./options.nix
-    ./plugins
-  ];
-
   options = {
     tsrk.nvim = {
       enable = lib.options.mkEnableOption "tsrk's nvim configuration";
+      wakatime.enable = lib.options.mkEnableOption "Vim WakaTime";
     };
   };
 
   config = lib.mkIf config.tsrk.nvim.enable {
-    programs.nixvim = {
+    programs.nixvim = { ... }: {
+      _module.args.helpers = config.lib.nixvim;
       enable = true;
       defaultEditor = true;
-      clipboard.register = "unnamedplus";
-      clipboard.providers = {
-        xclip.enable = true;
-        xsel.enable = true;
-      };
 
-      colorschemes.tokyonight.enable = true;
-      colorscheme = "tokyonight";
+      imports = [
+        self.nixvimModules.default
+      ];
 
-      extraConfigVim = ''
-          augroup highlight_yank
-          autocmd!
-          au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
-        augroup END
-      '';
+      tsrk.wakatime.enable = config.tsrk.nvim.wakatime.enable;
     };
 
     home.file.".ideavimrc".source = ./ideavimrc;
+    home.packages = with pkgs; [ fzf ];
   };
 }

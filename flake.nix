@@ -99,6 +99,8 @@
             default = self.homeManagerModules.all;
           };
 
+          nixvimModules.default = import ./modules/nvim;
+
           lib = import ./lib {
             inherit lib self;
             pkgSet = pkgSet system;

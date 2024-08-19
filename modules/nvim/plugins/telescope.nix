@@ -1,11 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    fzf
-  ];
-
-  programs.nixvim.plugins.telescope = {
+  plugins.telescope = {
     enable = true;
     extensions.fzf-native = {
       enable = true;
@@ -39,7 +35,7 @@
     };
   };
 
-  programs.nixvim.extraConfigLuaPost = ''
+  extraConfigLuaPost = ''
     local tsp_builtin = require("telescope.builtin")
 
     function find_project_files(opts)

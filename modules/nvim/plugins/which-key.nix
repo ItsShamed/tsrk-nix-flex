@@ -1,6 +1,6 @@
-{ vimHelpers, ... }:
+{ helpers, ... }:
 
-with vimHelpers;
+with helpers;
 let
 
   lua = code: { __raw = code; };
@@ -167,77 +167,75 @@ let
   };
 in
 {
-  programs.nixvim = {
-    plugins.which-key = {
-      enable = true;
+  plugins.which-key = {
+    enable = true;
 
-      plugins = {
-        marks = false;
-        registers = false;
+    plugins = {
+      marks = false;
+      registers = false;
 
-        presets = {
-          g = false;
-          z = false;
-          motions = false;
-          nav = false;
-          operators = false;
-          textObjects = false;
-          windows = false;
-        };
-      };
-
-      ignoreMissing = true;
-      showHelp = true;
-      showKeys = true;
-
-      disable.filetypes = [ "TelescopePrompt" ];
-
-      layout = {
-        height = { min = 4; max = 25; };
-        width = { min = 20; max = 50; };
-      };
-
-      window = {
-        border = "single";
-        padding = { top = 2; right = 2; bottom = 2; left = 2; };
+      presets = {
+        g = false;
+        z = false;
+        motions = false;
+        nav = false;
+        operators = false;
+        textObjects = false;
+        windows = false;
       };
     };
 
-    extraConfigLuaPost = ''
-      function format_filter(client)
-        local filetype = vim.bo.filetype
-        local n = require "null-ls"
-        local s = require "null-ls.sources"
-        local method = n.methods.FORMATTING
-        local available_formatters = s.get_available(filetype, method)
+    ignoreMissing = true;
+    showHelp = true;
+    showKeys = true;
 
-        if #available_formatters > 0 then
-          return client.name == "null-ls"
-        elseif client.supports_method "textDocument/formatting" then
-          return true
-        else
-          return false
-        end
-      end
+    disable.filetypes = [ "TelescopePrompt" ];
 
-      function format(opts)
-        opts = opts or {}
-        opts.filter = opts.filter or format_filter
+    layout = {
+      height = { min = 4; max = 25; };
+      width = { min = 20; max = 50; };
+    };
 
-        return vim.lsp.buf.format(opts)
-      end
-      -- Which-key mappings
-
-      local which_key = require "which-key"
-
-      local wk_opts = ${toLuaObject mappingsOptions}
-      local wk_vopts = ${toLuaObject visualMappingsOptions}
-
-      local wk_mappings = ${toLuaObject mappings}
-      local wk_vmappings = ${toLuaObject visualMappings}
-
-      which_key.register(wk_mappings, wk_opts)
-      which_key.register(wk_vmappings, wk_vopts)
-    '';
+    window = {
+      border = "single";
+      padding = { top = 2; right = 2; bottom = 2; left = 2; };
+    };
   };
+
+  extraConfigLuaPost = ''
+    function format_filter(client)
+      local filetype = vim.bo.filetype
+      local n = require "null-ls"
+      local s = require "null-ls.sources"
+      local method = n.methods.FORMATTING
+      local available_formatters = s.get_available(filetype, method)
+
+      if #available_formatters > 0 then
+        return client.name == "null-ls"
+      elseif client.supports_method "textDocument/formatting" then
+        return true
+      else
+        return false
+      end
+    end
+
+    function format(opts)
+      opts = opts or {}
+      opts.filter = opts.filter or format_filter
+
+      return vim.lsp.buf.format(opts)
+    end
+    -- Which-key mappings
+
+    local which_key = require "which-key"
+
+    local wk_opts = ${toLuaObject mappingsOptions}
+    local wk_vopts = ${toLuaObject visualMappingsOptions}
+
+    local wk_mappings = ${toLuaObject mappings}
+    local wk_vmappings = ${toLuaObject visualMappings}
+
+    which_key.register(wk_mappings, wk_opts)
+    which_key.register(wk_vmappings, wk_vopts)
+  '';
 }

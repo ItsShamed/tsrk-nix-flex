@@ -7,6 +7,7 @@
     ./gitsigns.nix
     ./indentline.nix
     ./lsp.nix
+    ./no-neck-pain.nix
     ./cmp.nix
     ./comment.nix
     ./project.nix
@@ -17,7 +18,7 @@
     ./wakatime.nix
   ];
 
-  programs.nixvim.plugins = {
+  plugins = {
     bufferline.enable = true;
     lualine.enable = true;
     luasnip.enable = true;
