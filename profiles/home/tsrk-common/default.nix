@@ -52,5 +52,6 @@
 
   home.packages = with pkgs; [
     deadnix
+    teams-for-linux
   ];
 }
