@@ -2,6 +2,25 @@
 
 let
   cfg = config.tsrk.packages.pkgs.android;
+  androidComposition = pkgs.androidenv.composeAndroidPackages {
+    cmdLineToolsVersion = "8.0";
+    toolsVersion = "26.1.1";
+    platformToolsVersion = "33.0.3";
+    buildToolsVersions = [ "33.0.3" ];
+    includeEmulator = false;
+    emulatorVersion = "30.3.4";
+    includeSources = false;
+    includeSystemImages = true;
+    systemImageTypes = [ "google_apis_playstore" "default" ];
+    abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+    cmakeVersions = [ "3.10.2" ];
+    includeNDK = true;
+    ndkVersions = [ "22.0.7026061" ];
+    useGoogleAPIs = true;
+    includeExtras = [
+      "extras;google;gcm"
+    ];
+  };
 in
 {
   options = {
@@ -15,6 +34,11 @@ in
           example = "pkgs.androidStudioPackages.beta";
         };
       };
+      androidComposition = lib.options.mkOption {
+        description = "The Android SDK composition";
+        type = lib.types.attrs;
+        default = androidComposition;
+      };
     };
   };
 
@@ -22,8 +46,10 @@ in
     tsrk.packages.pkgs.java.enable = lib.mkDefault true;
     programs.adb.enable = true;
 
-    environment.systemPackages =
-      with pkgs; [ apktool ] ++
-        lib.lists.optional cfg.ide.enable cfg.ide.package;
+    environment.systemPackages = with pkgs; [
+      apktool
+      cfg.androidComposition.androidsdk
+      cfg.androidComposition.platform-tools
+    ] ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
   };
 }
