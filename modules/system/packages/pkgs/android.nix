@@ -23,6 +23,7 @@ in
     programs.adb.enable = true;
 
     environment.systemPackages =
-      lib.lists.optional cfg.ide.enable cfg.ide.package;
+      with pkgs; [ apktool ] ++
+        lib.lists.optional cfg.ide.enable cfg.ide.package;
   };
 }
