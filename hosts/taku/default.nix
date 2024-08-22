@@ -11,6 +11,7 @@
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
+      moreGroups = [ "adbusers" ];
       modules = [
         ./user.nix
       ];
