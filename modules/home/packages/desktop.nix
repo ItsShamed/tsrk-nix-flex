@@ -24,6 +24,7 @@
       })
       iosevka
       meslo-lgs-nf
+      libreoffice
 
       # The best password manager (real)
       bitwarden
