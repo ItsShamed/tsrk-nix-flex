@@ -25,6 +25,8 @@
       iosevka
       meslo-lgs-nf
       libreoffice
+      xfce.thunar
+      ranger
 
       # The best password manager (real)
       bitwarden
