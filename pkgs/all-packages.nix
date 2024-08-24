@@ -1,5 +1,7 @@
 {
   ### GAMES
+  paladium-launcher = ./games/paladium-launcher;
+
   rewind = ./games/rewind;
 
   ### MISC
