@@ -57,7 +57,8 @@ let
       cp -a $packed/paladium-launcher.jar $out/share/java
 
       makeWrapper ${openjdk8}/bin/java $out/bin/paladium-launcher \
-        --add-flags "-cp $out/share/java/paladium-launcher.jar fr.paladium.Launcher"
+        --add-flags "-cp $out/share/java/paladium-launcher.jar fr.paladium.Launcher" \
+        --add-flags "-Djavax.net.ssl.trustStore=${./truststore.jks}"
     '';
   };
 
