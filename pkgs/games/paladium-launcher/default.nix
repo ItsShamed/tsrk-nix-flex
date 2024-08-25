@@ -5,7 +5,7 @@
 , fetchurl
 , callPackage
 , stdenvNoCC
-, openjdk8
+, jre8
 , unzip
 , zip
 }:
@@ -56,7 +56,7 @@ let
 
       cp -a $packed/paladium-launcher.jar $out/share/java
 
-      makeWrapper ${openjdk8}/bin/java $out/bin/paladium-launcher \
+      makeWrapper ${jre8}/bin/java $out/bin/paladium-launcher \
         --add-flags "-cp $out/share/java/paladium-launcher.jar fr.paladium.Launcher" \
         --add-flags "-Djavax.net.ssl.trustStore=${./truststore.jks}"
     '';
