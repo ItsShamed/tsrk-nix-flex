@@ -20,7 +20,6 @@
       pkgs.prismlauncher
       pkgs.rewind
       pkgs.lunar-client
-      pkgs.paladium-launcher
     ];
   };
 }
