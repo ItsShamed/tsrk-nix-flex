@@ -58,7 +58,11 @@ let
 
       makeWrapper ${jre-paladium}/bin/java $out/bin/paladium-launcher \
         --add-flags "-cp $out/share/java/paladium-launcher.jar fr.paladium.Launcher" \
-        --add-flags "-Djavax.net.ssl.trustStore=${./truststore.jks}"
+        --add-flags "-Djavax.net.ssl.trustStore=${./truststore.jks}" \
+        --add-flags "'-Djavax.net.ssl.trustStorePassword=01pG^{QV(*6j'" \
+        --add-flags "-Djavax.net.ssl.keyStore=${./truststore.jks}" \
+        --add-flags "'-Djavax.net.ssl.keyStorePassword=01pG^{QV(*6j'" \
+        --add-flags "-Djavax.net.debug=all"
     '';
   };
 
