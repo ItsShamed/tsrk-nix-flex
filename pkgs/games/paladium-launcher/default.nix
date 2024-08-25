@@ -5,7 +5,6 @@
 , fetchurl
 , callPackage
 , stdenvNoCC
-, jre8
 , unzip
 , zip
 }:
@@ -15,6 +14,7 @@ let
   pname = "paladium-launcher";
 
   jcef = callPackage ./jcef.nix { };
+  jre-paladium = callPackage ./jre.nix { };
 
   paladium-launcher = stdenvNoCC.mkDerivation {
     inherit (info) version;
@@ -56,7 +56,7 @@ let
 
       cp -a $packed/paladium-launcher.jar $out/share/java
 
-      makeWrapper ${jre8}/bin/java $out/bin/paladium-launcher \
+      makeWrapper ${jre-paladium}/bin/java $out/bin/paladium-launcher \
         --add-flags "-cp $out/share/java/paladium-launcher.jar fr.paladium.Launcher" \
         --add-flags "-Djavax.net.ssl.trustStore=${./truststore.jks}"
     '';
