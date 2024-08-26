@@ -18,6 +18,7 @@
       dark = "TokyoNight Storm";
     };
     premid.enable = true;
+    packages.dev.enable = true;
   };
 
   accounts.email.accounts = {
