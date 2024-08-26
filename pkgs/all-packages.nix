@@ -1,4 +1,7 @@
 {
+  ### DEVELOPMENT
+  realm-studio = ./development/misc/realm-studio;
+
   ### GAMES
   paladium-launcher = ./games/paladium-launcher;
 
