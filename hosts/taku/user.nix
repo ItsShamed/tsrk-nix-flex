@@ -1,10 +1,11 @@
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
   imports = with self.homeManagerModules; [
     packages
     profile-tsrk-common
     profile-tsrk-private
+    inputs.spotify-notifyx.homeManagerModules.default
   ];
 
   tsrk = {
