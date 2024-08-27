@@ -148,7 +148,7 @@ in
 
         "module/xwindow" = {
           type = "internal/xwindow";
-          label = "%title:0:64:...%";
+          label = "%title:0:32:...%";
         };
 
         "module/i3" = {
