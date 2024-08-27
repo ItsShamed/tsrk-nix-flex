@@ -206,11 +206,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705309234,
-        "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "1ef2e671c3b0c19053962c07dbda38332dcebf26",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
         "type": "github"
       },
       "original": {
@@ -506,6 +506,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1720535198,
+        "narHash": "sha256-zwVvxrdIzralnSbcpghA92tWu2DV2lwv89xZc8MTrbg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "205fd4226592cc83fd4c0885a3e4c9c400efabb5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-23.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "devshell": "devshell",
@@ -553,17 +569,15 @@
       "inputs": {
         "flake-compat": "flake-compat_4",
         "futils": "futils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_4",
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1724785671,
-        "narHash": "sha256-XJV1d3uPfM4l+QqAe783aXUAV2Jwq0O5QDmUVoUWxxM=",
+        "lastModified": 1724788610,
+        "narHash": "sha256-99l9OSud1+1BloyFC1yhqcLaZDazOWatRaIikUODj5o=",
         "owner": "ItsShamed",
         "repo": "spotify-dbus-enhancer",
-        "rev": "6db12d28682a6d4d73764211a98b345cefbc47fe",
+        "rev": "aa965080f9dd98393b4c66a5819d3bdf6cb36560",
         "type": "github"
       },
       "original": {
