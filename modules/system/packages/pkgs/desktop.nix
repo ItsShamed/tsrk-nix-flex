@@ -16,8 +16,10 @@
       imagemagick
       scrot
 
-      # Browser
+      # Browsers
       librewolf
+      firefox
+      ungoogled-chromium
 
       # video
       mpv
@@ -32,5 +34,14 @@
       x11vnc
       lxappearance
     ];
+
+    xdg.mime.defaultApplications = {
+      "application/pdf" = [ "librewolf.desktop" "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "librewolf.desktop" "firefox.desktop" ];
+      "x-scheme-handler/https" = [ "librewolf.desktop" "firefox.desktop" ];
+      "text/html" = [ "librewolf.desktop" "firefox.desktop" ];
+      "application/xhtml+xml" = [ "librewolf.desktop" "firefox.desktop" ];
+      "application/xhtml_xml" = [ "librewolf.desktop" "firefox.desktop" ];
+    };
   };
 }

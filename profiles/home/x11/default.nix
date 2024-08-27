@@ -10,6 +10,7 @@
     profile-x11-base
     rofi
     thunderbird
+    xdg
     xsettingsd
   ];
 
@@ -17,6 +18,7 @@
     assertions = [ (self.lib.profileNeedsPkg "X11 Full" config) ];
     tsrk = {
       i3.exitPromptCommand = lib.mkDefault (_: "exec rofi -show p -modi p:'rofi-power-menu'");
+      xdg.enable = true;
       packages.desktop.enable = lib.mkDefault true;
       darkman = {
         enable = lib.mkDefault true;

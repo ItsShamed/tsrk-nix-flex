@@ -9,6 +9,7 @@
   ./desktop/premid.nix
   ./desktop/rofi.nix
   ./desktop/thunderbird.nix
+  ./desktop/xdg.nix
   ./desktop/xsettingsd.nix
   ./epita
   ./git
