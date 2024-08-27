@@ -1,4 +1,7 @@
 {
+  ### AUDIO
+  spotify-adblock = ./applications/audio/spotify-adblock;
+
   ### DEVELOPMENT
   realm-studio = ./development/misc/realm-studio;
 

@@ -1,0 +1,12 @@
+diff --git a/src/lib.rs b/src/lib.rs
+index fefcd9c..2e267ff 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -43,6 +43,7 @@ lazy_static! {
+             PathBuf::from("config.toml"),
+             #[allow(deprecated)] // std::env::home_dir() is only broken on Windows
+             std::env::home_dir().unwrap().join(".config/spotify-adblock/config.toml"),
++            PathBuf::from("@@out@@/etc/spotify-adblock/config.toml"),
+             PathBuf::from("/etc/spotify-adblock/config.toml"),
+         ];
+ 

@@ -1,0 +1,22 @@
+From 94683467b0a8589461b69598f8f24ac616f3e226 Mon Sep 17 00:00:00 2001
+From: kodenamekrak <kyelodge2005@gmail.com>
+Date: Mon, 29 Jul 2024 19:56:54 +0100
+Subject: [PATCH] Update allowlist to fix discord presence
+
+---
+ config.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config.toml b/config.toml
+index e8831f1..d0fc733 100644
+--- a/config.toml
++++ b/config.toml
+@@ -48,7 +48,7 @@ allowlist = [
+     'xpui\.app\.spotify\.com', # user interface
+     'apresolve\.spotify\.com', # access point resolving
+     'clienttoken\.spotify\.com', # login
+-    '.*dealer\.spotify\.com', # websocket connections
++    '.*dealer.?\.spotify\.com', # websocket connections
+     'image-upload.*\.spotify\.com', # image uploading
+     'login.*\.spotify\.com', # login
+     '.*-spclient\.spotify\.com', # client APIs
