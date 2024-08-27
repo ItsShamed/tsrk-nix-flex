@@ -30,7 +30,7 @@
 
       # The best password manager (real)
       bitwarden
-      spotify
+      spotify-adblock
     ];
   };
 }
