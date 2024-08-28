@@ -14,6 +14,8 @@
     };
 
     futils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -51,6 +53,7 @@
     , nixgl
 
     , futils
+    , flake-parts
     , nixvim
     , ...
     } @ inputs:
@@ -138,5 +141,11 @@
           };
         });
     in
-    lib.recursiveUpdate linuxOutputs allOutputs;
+    lib.recursiveUpdate (lib.recursiveUpdate linuxOutputs allOutputs) (flake-parts.lib.mkFlake { inherit inputs; } {
+      flake = { };
+
+      systems = futils.lib.defaultSystems;
+
+      perSystem = { ... }: { };
+    });
 }
