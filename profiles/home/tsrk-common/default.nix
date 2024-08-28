@@ -1,4 +1,4 @@
-{ self, pkgs, ... }:
+{ self, pkgs, inputs, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -6,6 +6,7 @@
     profile-x11
     profile-git
     profile-shell
+    inputs.spotify-notifyx.homeManagerModules.default
   ];
 
   tsrk = {
