@@ -1,0 +1,38 @@
+diff --git a/get_status.sh b/get_status.sh
+index 11e2d12..1e49838 100755
+--- a/get_status.sh
++++ b/get_status.sh
+@@ -40,9 +40,9 @@ get_info() {
+ 
+         if [ -n "$artist" ]; then
+             album=$(extract_meta album)
+-            [ -n "$album" ] && echo -n " 󰀥 $album "
++            [ -n "$album" ] && echo -n " 󰀥 $album /"
+ 
+-            echo -n " 󰠃 $artist  "
++            echo -n " 󰠃 $artist / "
+         fi
+ 
+         echo "$title"
+@@ -54,7 +54,7 @@ get_info() {
+     case "$1" in
+         spotify* | vlc | mpv) echo "$1";;
+         kdeconnect*) echo "kdeconnect";;
+-        chromium*|firefox*|brave*)
++        chromium*|firefox*|brave*|librewolf*)
+             # if a browser, search window titles:
+             # this tries to avoid title messing up the regex
+             regex_title=$(echo "$title" | tr "[:punct:]" ".")
+diff --git a/scroll_status.sh b/scroll_status.sh
+index d6c0eb8..9bbc2ee 100755
+--- a/scroll_status.sh
++++ b/scroll_status.sh
+@@ -16,7 +16,7 @@ zscroll -l 30 \
+     -m "mpv"        "-b ' '" \
+     -m "kdeconnect" "-b ' '" \
+     -m "corridor"   "-b ' '" \
+-    -U 10 -u t "$cmd" &
++    -u t "$cmd" &
+ 
+ wait
+ 

@@ -11,6 +11,7 @@
   rewind = ./games/rewind;
 
   ### MISC
+  polybar-mpris = ./applications/misc/polybar-mpris;
   tokyonight-extras = ./misc/tokyonight-extras;
 
   ### THEMES

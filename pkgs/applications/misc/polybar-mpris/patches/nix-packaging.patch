@@ -1,0 +1,12 @@
+diff --git a/scroll_status.sh b/scroll_status.sh
+index 9bbc2ee..891d3a7 100755
+--- a/scroll_status.sh
++++ b/scroll_status.sh
+@@ -1,6 +1,6 @@
+ #!/bin/bash
+ 
+-cmd="${0%/*}/get_status.sh $1"
++cmd="@out@/share/polybar-mpris/get-mpris-text $1"
+ 
+ zscroll -l 30 \
+     --scroll-padding "$(printf ' %.0s' {1..8})" \
