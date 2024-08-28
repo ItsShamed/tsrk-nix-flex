@@ -53,4 +53,8 @@
   services.libinput.touchpad.naturalScrolling = true;
 
   time.hardwareClockInLocalTime = true;
+
+  services.xserver.displayManager.setupCommands = ''
+    ${pkgs.xorg.xset}/bin/xset r rate 230 40
+  '';
 }
