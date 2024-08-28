@@ -47,6 +47,7 @@ stdenvNoCC.mkDerivation {
   patches = [
     ./patches/tsrk-usage.patch
     ./patches/nix-packaging.patch
+    ./patches/decrease-scroll-delay.patch
   ];
 
   installPhase = ''

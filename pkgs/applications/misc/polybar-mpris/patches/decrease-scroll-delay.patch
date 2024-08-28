@@ -1,0 +1,13 @@
+diff --git a/scroll_status.sh b/scroll_status.sh
+index 891d3a7..8d8d73c 100755
+--- a/scroll_status.sh
++++ b/scroll_status.sh
+@@ -4,7 +4,7 @@ cmd="@out@/share/polybar-mpris/get-mpris-text $1"
+ 
+ zscroll -l 30 \
+     --scroll-padding "$(printf ' %.0s' {1..8})" \
+-    -d 0.1 \
++    -d 0.05 \
+     -M "$cmd icon" \
+     -m "none"       "-b ''" \
+     -m "browser"    "-b ' '" \
