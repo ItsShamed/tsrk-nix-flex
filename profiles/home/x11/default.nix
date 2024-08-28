@@ -35,6 +35,7 @@
       rofi.enable = lib.mkDefault true;
       thunderbird.enable = lib.mkDefault true;
       xsettingsd.enable = lib.mkDefault true;
+      polybar.mpris.enable = lib.mkDefault true;
     };
   };
 }

@@ -47,6 +47,9 @@ in
           example = "ACAD";
         };
       };
+      mpris = {
+        enable = lib.options.mkEnableOption "MPRIS display";
+      };
     };
   };
   config = lib.mkIf cfg.enable {
@@ -54,10 +57,7 @@ in
       enable = lib.mkDefault true;
       script = "polybar bar &";
 
-      package = pkgs.polybar.override {
-        i3Support = config.xsession.windowManager.i3.enable;
-        pulseSupport = true;
-      };
+      package = pkgs.polybarFull;
 
       settings = {
 
@@ -78,6 +78,8 @@ in
         "bar/bar" = {
           background = "\${colors.background}";
           background-alt = "\${colors.background-alt}";
+
+          enable-ipc = true;
 
           line = {
             size = 2;
@@ -121,7 +123,8 @@ in
             ++ (lib.lists.optional (cfg.backlightOutput != null) "backlight-xrandr")
             ++ (lib.lists.optional (cfg.battery.enable) "battery")
             ++ (lib.lists.optional (cfg.wlanInterfaceName != null) "wifi")
-            ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")));
+            ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")
+            ++ (lib.lists.optional (cfg.mpris.enable) "mpris")));
           };
 
           separator = " | ";
@@ -148,7 +151,7 @@ in
 
         "module/xwindow" = {
           type = "internal/xwindow";
-          label = "%title:0:32:...%";
+          label = "%title:0:32:…%";
         };
 
         "module/i3" = {
@@ -321,7 +324,7 @@ in
               text = "down";
               foreground = "\${colors.red}";
             };
-            connected = "%essid%";
+            connected = "%essid:0:16:…%";
           };
 
           ramp.signal = [
@@ -363,6 +366,12 @@ in
             spacing = 4;
             size = "50%";
           };
+        };
+
+        "module/mpris" = {
+          type = "custom/script";
+          tail = true;
+          exec = "${pkgs.polybar-mpris}/bin/polybar-mpris bar";
         };
       };
     };
