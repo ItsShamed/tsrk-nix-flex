@@ -85,6 +85,94 @@ let
     '')
   ]);
 
+  volumeControl = pkgs.writeShellScript "volume-control" ''
+    notifyVolume_() {
+      volume="$(${pkgs.pamixer}/bin/pamixer --get-volume)"
+      if [ "$(${pkgs.pamixer}/bin/pamixer --get-mute)" = "true" ]; then
+        ${pkgs.libnotify}/bin/notify-send -a "tsrk-cirnos-nix-i3" "Volume" -h "int:value:$volume" -h string:synchronous:volume -u low " [Muted]"
+      else
+        ${pkgs.libnotify}/bin/notify-send -a "tsrk-cirnos-nix-i3" "Volume" -h "int:value:$volume" -h string:synchronous:volume -u low
+      fi
+    }
+
+    increase() {
+      if [ -n "$1" ]; then
+        step="$1"
+      else
+        step=5
+      fi
+      ${pkgs.pamixer}/bin/pamixer -i "$step"
+      notifyVolume_
+    }
+
+    decrease() {
+      if [ -n "$1" ]; then
+        step="$1"
+      else
+        step=5
+      fi
+      ${pkgs.pamixer}/bin/pamixer -d "$step"
+      notifyVolume_
+    }
+
+    tmute() {
+      ${pkgs.pamixer}/bin/pamixer -t
+      notifyVolume_
+    }
+
+    case "$1" in
+      increase|decrease|tmute)
+        "$@"
+        ;;
+      *)
+        echo "'$1' is not a valid command." >&2
+        exit 1
+        ;;
+    esac
+  '';
+
+  brightnessControl = pkgs.writeShellScript "brightness-control" ''
+    getBrightness_() {
+      maxBrightness="$(${pkgs.brightnessctl}/bin/brightnessctl m)"
+      curBrightness="$(${pkgs.brightnessctl}/bin/brightnessctl g)"
+      ${pkgs.gawk}/bin/awk "BEGIN { print int(($curBrightness / $maxBrightness) * 100) }"
+    }
+
+    notifyBrightness_() {
+      ${pkgs.libnotify}/bin/notify-send -a "tsrk-cirnos-nix-i3" "Brightness" -h "int:value:$(getBrightness_)" -h string:synchronous:brightness -u low
+    }
+
+    increase() {
+      if [ -n "$1" ]; then
+        step="$1"
+      else
+        step=5
+      fi
+      ${pkgs.brightnessctl}/bin/brightnessctl s +"$step"%
+      notifyBrightness_
+    }
+
+    decrease() {
+      if [ -n "$1" ]; then
+        step="$1"
+      else
+        step=5
+      fi
+      ${pkgs.brightnessctl}/bin/brightnessctl s "$step"%-
+      notifyBrightness_
+    }
+
+    case "$1" in
+      increase|decrease)
+        "$@"
+        ;;
+      *)
+        echo "'$1' is not a valid command." >&2
+        exit 1
+        ;;
+    esac
+  '';
+
   i3Config = lib.mkIf config.tsrk.i3.enable {
     xsession.windowManager.i3 = {
       enable = true;
@@ -245,13 +333,17 @@ let
           "${mod}+Shift+0" = "move container to workspace number 10";
 
           # Media keys
-          XF86AudioRaiseVolume = "exec --no-startup-id \"${pkgs.pamixer}/bin/pamixer -i 10\"";
-          XF86AudioLowerVolume = "exec --no-startup-id \"${pkgs.pamixer}/bin/pamixer -d 10\"";
-          XF86AudioMute = "exec --no-startup-id \"${pkgs.pamixer}/bin/pamixer -t\"";
+          XF86AudioRaiseVolume = "exec --no-startup-id \"${volumeControl} increase 5\"";
+          XF86AudioLowerVolume = "exec --no-startup-id \"${volumeControl} decrease 5\"";
+          XF86AudioMute = "exec --no-startup-id \"${volumeControl} tmute\"";
+          XF86AudioPlay = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl play-pause\"";
+          XF86AudioPause = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl play-pause\"";
+          XF86AudioPrev = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl previous\" ";
+          XF86AudioNext = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl next\" ";
 
           # Brightness
-          XF86MonBrightnessUp = "exec --no-startup-id \"${pkgs.brightnessctl}/bin/brightnessctl set +2%\"";
-          XF86MonBrightnessDown = "exec --no-startup-id \"${pkgs.brightnessctl}/bin/brightnessctl set 2%-\"";
+          XF86MonBrightnessUp = "exec --no-startup-id \"${brightnessControl} increase 2\"";
+          XF86MonBrightnessDown = "exec --no-startup-id \"${brightnessControl} decrease 2\"";
 
           # lock
           "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");

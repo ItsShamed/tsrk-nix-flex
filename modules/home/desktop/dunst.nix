@@ -104,6 +104,10 @@
           icon_position = "left";
           timeout = 5;
         };
+        tsrk-cirnos-nix-i3 = {
+          appname = "tsrk-cirnos-nix-i3";
+          format = "<span font_size=\"11pt\">%s%b %p</span>";
+        };
         scrot = {
           summary = "scrot";
           format = "<b>  %s</b>\\n%b";
@@ -118,16 +122,19 @@
             frame_color = lib.mkForce "#3760bf";
             background = lib.mkForce "#e9e9ec";
             foreground = lib.mkForce "#3760bf";
+            highlight = lib.mkForce "#3760bf";
           };
           urgency_normal = {
             frame_color = lib.mkForce "#3760bf";
             background = lib.mkForce "#e1e2e7";
             foreground = lib.mkForce "#3760bf";
+            highlight = lib.mkForce "#3760bf";
           };
           urgency_critical = {
             frame_color = lib.mkForce "#c64343";
             background = lib.mkForce "#c4c8da";
             foreground = lib.mkForce "#c64343";
+            highlight = lib.mkForce "#c64343";
           };
         };
       };
@@ -138,16 +145,19 @@
             frame_color = lib.mkForce "#c0caf5";
             background = lib.mkForce "#1f2335";
             foreground = lib.mkForce "#c0caf5";
+            highlight = lib.mkForce "#c0caf5";
           };
           urgency_normal = {
             frame_color = lib.mkForce "#c0caf5";
             background = lib.mkForce "#24283b";
             foreground = lib.mkForce "#c0caf5";
+            highlight = lib.mkForce "#c0caf5";
           };
           urgency_critical = {
             frame_color = lib.mkForce "#db4b4b";
             background = lib.mkForce "#292e42";
             foreground = lib.mkForce "#db4b4b";
+            highlight = lib.mkForce "#db4b4b";
           };
         };
       };
