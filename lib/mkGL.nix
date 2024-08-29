@@ -1,11 +1,10 @@
-{ pkgSet, ... }:
+{ withSystem }:
 
-let
-  inherit (pkgSet) pkgs;
-in
-config: command:
+pkgs: config: command:
 
+withSystem pkgs.stdenv.hostPlatform.system ({ inputs', ... }:
 if (config.targets.genericLinux.enable) then
-  "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL ${command}"
+  "${inputs'.nixgl.default}/bin/nixGL ${command}"
 else
   command
+)

@@ -1,4 +1,4 @@
-{ self, inputs, pkgSet, ... }:
+{ inputs, withSystem, ... }:
 
 name:
 
@@ -15,26 +15,12 @@ let
     programs.home-manager.enable = true;
   };
 
-  configuration = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = pkgSet.pkgs;
-
-    modules = modules ++ [
-      homeManagerBase
-      inputs.nixvim.homeManagerModules.nixvim
-    ];
-
-    extraSpecialArgs = {
-      inherit self;
-      inherit inputs;
-      inherit (pkgSet) pkgsUnstable;
-      vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" {
-        inherit (inputs.nixpkgs) lib;
-        inherit (pkgSet) pkgs;
-        _nixvimTests = false;
-      };
-      hmLib = inputs.home-manager.lib.hm;
-      gaming = inputs.nix-gaming.packages.${system};
-    };
-  };
+  configuration = withSystem system ({ pkgs, ... }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = modules ++ [
+        homeManagerBase
+      ];
+    });
 in
 configuration

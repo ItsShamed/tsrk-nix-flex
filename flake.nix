@@ -95,12 +95,6 @@
 
           nixvimModules.default = import ./modules/nvim;
 
-          lib = import ./lib {
-            inherit lib self;
-            pkgSet = pkgSet system;
-            inherit inputs;
-          };
-
           homeConfigurations = import ./homes {
             inherit lib self;
           };

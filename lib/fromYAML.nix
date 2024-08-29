@@ -1,8 +1,5 @@
-{ pkgSet, ... }:
+{ pkgs, ... }:
 
-let
-  inherit (pkgSet) pkgs;
-in
 contents:
 builtins.fromJSON (
   builtins.readFile (

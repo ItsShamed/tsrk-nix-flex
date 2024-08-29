@@ -18,6 +18,7 @@ in
   imports = [
     ./overlays.nix
     ./packages.nix
+    ../lib
   ];
 
   perSystem = { system, ... }: {
