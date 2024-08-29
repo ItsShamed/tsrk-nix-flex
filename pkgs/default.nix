@@ -1,7 +1,10 @@
-{ lib, pkgs }:
+{ lib, pkgs, system }:
 
 let
-  packageNames = builtins.attrNames (import ./all-packages.nix);
+  topLevelPackages = import ./all-packages.nix;
+
+  mkCallPackage = pkgDecl: pkgs:
+    (pkgDecl.callPackage pkgs) pkgDecl.path (pkgDecl.args pkgs);
 
   getPlatforms = drv:
     if drv ? meta && drv.meta ? platforms then
@@ -9,9 +12,27 @@ let
     else
       lib.platforms.all;
 
-  # This works because we assume that the provided pkgs has been modified by our
-  # overlays
-  drvs = lib.attrsets.filterAttrs (name: _: builtins.elem name packageNames) pkgs;
+  isCompatibleWithSystem = _: drv: builtins.elem system (getPlatforms drv);
+
+  pkgToDrv = name: pkgArgs:
+    let
+      defaultArgs = {
+        callPackage = pkgs: pkgs.callPackage;
+        args = pkgs: { };
+      };
+
+      pkgDecl =
+        if builtins.isAttrs pkgArgs then
+          (defaultArgs // pkgArgs)
+        else
+          defaultArgs // { path = pkgArgs; };
+
+      overrideDecl = args: pkgDecl // { args = _: args; };
+    in
+    (mkCallPackage pkgDecl pkgs) // {
+      override = args: mkCallPackage (overrideDecl args) pkgs;
+    };
+
+  allDrvs = builtins.mapAttrs pkgToDrv topLevelPackages;
 in
-# We only output packages available for the pkgs' system
-lib.attrsets.filterAttrs (_: drv: builtins.elem pkgs.system (getPlatforms drv)) drvs
+lib.attrsets.filterAttrs isCompatibleWithSystem allDrvs

@@ -6,7 +6,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
     nixgl = {
       url = "github:nix-community/nixGL";
@@ -49,17 +48,13 @@
     { self
     , nixpkgs
     , nixpkgsUnstable
-      # , nixpkgsMaster
-    , nixgl
 
     , futils
     , flake-parts
-    , nixvim
     , ...
     } @ inputs:
     let
       inherit (nixpkgs) lib;
-      inherit (futils.lib) eachDefaultSystem;
 
       importPkgs = pkgs: system: withOverlays:
         import pkgs {
@@ -69,9 +64,8 @@
             android_sdk.accept_license = true;
           };
           overlays = [
-            nixgl.overlay
           ] ++ (builtins.attrValues (builtins.removeAttrs (import ./pkgs/as-overlays.nix) [ "all" "default" ]))
-          ++ (lib.lists.optionals withOverlays (builtins.attrValues (import ./overlays { inherit lib; })));
+          ++ (lib.lists.optionals withOverlays (builtins.removeAttrs (self.overlays) [ "all" "default" ]));
         };
 
       pkgSet = system: {
@@ -83,10 +77,6 @@
       linuxOutputs =
         let
           system = "x86_64-linux";
-          baseOverlays = (import ./pkgs/as-overlays.nix) // (import ./overlays { inherit lib; });
-          allOverlays = self: super: builtins.attrValues (
-            builtins.mapAttrs (_: overlay: overlay self super) baseOverlays
-          );
         in
         {
           nixosModules = (import ./modules/system { inherit lib; })
@@ -119,33 +109,12 @@
             inherit lib system;
             pkgSet = pkgSet system;
           });
-
-          overlays = baseOverlays
-            // {
-            all = allOverlays;
-            default = self.overlays.all;
-          };
         };
-
-      allOutputs = eachDefaultSystem (system:
-        let
-          inherit (pkgSet system) pkgs;
-        in
-        {
-          formatter = pkgs.nixpkgs-fmt;
-          packages = (import ./pkgs { inherit lib pkgs; }) // {
-            nvim-cirno = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-              inherit pkgs;
-              module = self.nixvimModules.default;
-            };
-          };
-        });
     in
-    lib.recursiveUpdate (lib.recursiveUpdate linuxOutputs allOutputs) (flake-parts.lib.mkFlake { inherit inputs; } {
-      flake = { };
+    lib.recursiveUpdate linuxOutputs (flake-parts.lib.mkFlake { inherit inputs; } {
+
+      imports = [ ./flake-modules ];
 
       systems = futils.lib.defaultSystems;
-
-      perSystem = { ... }: { };
     });
 }

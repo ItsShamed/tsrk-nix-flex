@@ -1,14 +1,14 @@
 let
   topLevelPackages = import ./all-packages.nix;
 
-  callPackage = pkgDecl: self: super:
-    (pkgDecl.callPackage self super) pkgDecl.path (pkgDecl.args self super);
+  mkCallPackage = pkgDecl: pkgs:
+    (pkgDecl.callPackage pkgs) pkgDecl.path (pkgDecl.args pkgs);
 
   pkgToOverlay = name: pkgArgs: self: super:
     let
       defaultArgs = {
-        callPackage = self: super: self.callPackage;
-        args = self: super: { };
+        callPackage = pkgs: pkgs.callPackage;
+        args = pkgs: { };
       };
 
       pkgDecl =
@@ -17,11 +17,11 @@ let
         else
           defaultArgs // { path = pkgArgs; };
 
-      overrideDecl = args: pkgDecl // { inherit args; };
+      overrideDecl = args: pkgDecl // { args = _: args; };
     in
     {
-      "${name}" = (callPackage pkgDecl self super) // {
-        override = args: callPackage (overrideDecl args) self super;
+      "${name}" = (mkCallPackage pkgDecl super) // {
+        override = args: mkCallPackage (overrideDecl args) super;
       };
     };
 in
