@@ -1,55 +1,52 @@
-{ lib
-, nixpkgs
-  # , nixpkgsUnstable
-  # , nixpkgsMaster
-, pkgSet
-, self
-, system
-, ...
-} @ inputs:
+{ lib, self, withSystem, inputs, ... }:
 
 let
   generateSystem = module:
     let
       imageName = lib.strings.removeSuffix ".nix" (builtins.baseNameOf module);
+      system =
+        if builtins.pathExists "${module}/system"
+        then builtins.readFile module else "x86_64-linux";
       modules =
         let
-          global = {
-            system.name = imageName;
-            nix.nixPath = [
-              "nixpkgs=${nixpkgs}"
-              # "nixpkgs-unstable=${nixpkgsUnstable}"
-              # "nixpkgs-master=${nixpkgsMaster}"
-              "nixos-config=${self}"
-            ];
+          global = withSystem system ({ pkgs, ... }:
+            { ... }:
+            {
+              system.name = imageName;
+              nix.nixPath = [
+                "nixpkgs=${inputs.nixpkgs}"
+                "nixpkgsUnstable=${inputs.nixpkgs}"
+                "nixos-config=${module}"
+                "tsrk=${self}"
+                "/nix/var/nix/profiles/per-user/root/channels"
+              ];
 
-            nix.registry = {
-              nixpkgs.flake = nixpkgs;
-              # nixpkgsUnstable.flake = nixpkgsUnstable;
-              # nixpkgsMaster.flake = nixpkgsMaster;
-            };
+              nix.registry = {
+                nixpkgs.flake = inputs.nixpkgs;
+                nixpkgsUnstable.flake = inputs.nixpkgsUnstable;
+                tsrk.flake = self;
+                # nixpkgsMaster.flake = nixpkgsMaster;
+              };
 
-            nixpkgs = {
-              inherit (pkgSet) pkgs;
-            };
-          };
+              nixpkgs = {
+                inherit pkgs;
+              };
+
+              networking.hostName = "tsrk-" + imageName;
+            }
+          );
           imported = import module;
         in
         [ global imported ];
     in
     {
       name = imageName;
-      value = lib.nixosSystem {
+      value = inputs.nixpkgs.lib.nixosSystem {
         inherit system modules;
-        specialArgs = {
-          inherit inputs self;
-          inherit (inputs) home-manager;
-          vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" { inherit (inputs.nixpkgs) lib; };
-          gaming = inputs.nix-gaming.packages.${system};
-          host = imageName;
-          agenix = inputs.agenix.packages.${system};
-        };
       };
     };
 in
-builtins.listToAttrs (builtins.map generateSystem (import ./hosts.nix))
+{
+  flake.nixosConfigurations =
+    builtins.listToAttrs (builtins.map generateSystem (import ./hosts.nix));
+}

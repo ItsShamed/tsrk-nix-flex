@@ -44,55 +44,11 @@
     agenix.url = "github:ryantm/agenix";
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , nixpkgsUnstable
-
-    , futils
-    , flake-parts
-    , ...
-    } @ inputs:
-    let
-      inherit (nixpkgs) lib;
-
-      importPkgs = pkgs: system: withOverlays:
-        import pkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            android_sdk.accept_license = true;
-          };
-          overlays = [
-          ] ++ (builtins.attrValues (builtins.removeAttrs (import ./pkgs/as-overlays.nix) [ "all" "default" ]))
-          ++ (lib.lists.optionals withOverlays (builtins.removeAttrs (self.overlays) [ "all" "default" ]));
-        };
-
-      pkgSet = system: {
-        pkgs = importPkgs nixpkgs system true;
-        pkgsUnstable = importPkgs nixpkgsUnstable system false;
-        # pkgsMaster = importPkgs nixpkgsMaster system false;
-      };
-
-      linuxOutputs =
-        let
-          system = "x86_64-linux";
-        in
-        {
-          homeConfigurations = import ./homes {
-            inherit lib self;
-          };
-
-          nixosConfigurations = import ./hosts (lib.recursiveUpdate inputs {
-            inherit lib system;
-            pkgSet = pkgSet system;
-          });
-        };
-    in
-    lib.recursiveUpdate linuxOutputs (flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = { futils, flake-parts, ... } @ inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
 
       imports = [ ./flake-modules ];
 
       systems = futils.lib.defaultSystems;
-    });
+    };
 }

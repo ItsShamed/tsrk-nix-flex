@@ -20,6 +20,8 @@ in
     ./packages.nix
     ../lib
     ./modules.nix
+    ../hosts
+    ../homes
   ];
 
   perSystem = { system, ... }: {
