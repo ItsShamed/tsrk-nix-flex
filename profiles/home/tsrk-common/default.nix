@@ -1,7 +1,9 @@
-{ self, pkgs, inputs, ... }:
+{ localModules, inputs, ... }:
+
+{ pkgs, ... }:
 
 {
-  imports = with self.homeManagerModules; [
+  imports = with localModules; [
     packages
     profile-x11
     profile-git

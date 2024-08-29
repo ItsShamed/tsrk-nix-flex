@@ -1,5 +1,10 @@
-{ pkgs, lib, config, self, ... }:
+{ withSystem, self, ... }:
 
+{ pkgs, lib, config, ... }:
+
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   options = {
     tsrk.rofi = {
@@ -13,7 +18,7 @@
       plugins = with pkgs; [
         rofi-emoji
       ];
-      theme = "${pkgs.rofi-themes-collection}/simple-tokyonight.rasi";
+      theme = withSystem system ({ self', ... }: "${self'.packages.rofi-themes-collection}/simple-tokyonight.rasi");
       terminal = (self.lib.mkIfElse (config.programs.kitty.enable)
         "kitty"
         "${pkgs.alacritty}/bin/alacritty"

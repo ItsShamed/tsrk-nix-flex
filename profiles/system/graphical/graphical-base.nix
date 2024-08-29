@@ -1,4 +1,6 @@
-{ lib, pkgs, self, ... }:
+{ self, ... }:
+
+{ lib, pkgs, ... }:
 
 {
 

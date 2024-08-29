@@ -1,12 +1,17 @@
-{ pkgs, lib, self, host, agenix, ... }:
+{ localModules, withSystem, ... }:
 
+{ pkgs, lib, ... }:
+
+let
+  agenix = withSystem pkgs.stdenv.hostPlatform.system ({ inputs', ... }: inputs'.agenix.packages);
+in
 {
 
   imports = [
-    self.nixosModules.packages
-    self.nixosModules.disks
-    self.nixosModules.sshd
-    self.nixosModules.networkmanager
+    localModules.packages
+    localModules.disks
+    localModules.sshd
+    localModules.networkmanager
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -119,7 +124,6 @@
     echo '    @@@@@@@@                @@@@@@@       @@@@@@@@@@'
     echo '   @@@@@@@/                 @@@@@@@           @@@@@@@@@@'
     echo '   @@@@@@@                  @@@@@@@               @@@@@@@@@@'
-    printf "\033[0;36mYou are currently booting on the \033[1;35m${host} \033[0;36m image\033[0m\n"
   '';
 
   system.stateVersion = "24.05";

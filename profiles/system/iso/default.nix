@@ -1,5 +1,5 @@
-{ host, lib, ... }:
+{ config, lib, ... }:
 
 {
-  isoImage.isoName = lib.mkImageMediaOverride "nixos-tsrk-${host}.iso";
+  isoImage.isoName = lib.mkImageMediaOverride "nixos-${config.networking.hostName}.iso";
 }

@@ -1,7 +1,9 @@
-{ self, lib, config, ... }:
+{ localModules, self, ... }:
+
+{ lib, config, ... }:
 
 {
-  imports = with self.homeManagerModules; [
+  imports = with localModules; [
     darkman
     dunst
     flameshot

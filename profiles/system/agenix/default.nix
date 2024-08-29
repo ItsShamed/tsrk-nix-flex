@@ -1,4 +1,6 @@
-{ config, inputs, lib, agenix, ... }:
+{ inputs, ... }:
+
+{ config, lib, ... }:
 
 {
   imports = [

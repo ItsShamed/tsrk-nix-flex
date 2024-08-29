@@ -1,5 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ self' }:
 
+{ config, lib, ... }:
+
+let
+  tokyonight-extras = self'.packages.tokyonight-extras;
+in
 {
   options = {
     tsrk.shell.bat = {
@@ -29,15 +34,15 @@
       enable = true;
       themes = {
         "TokyoNight Day" = {
-          src = pkgs.tokyonight-extras;
+          src = tokyonight-extras;
           file = "sublime/tokyonight_day.tmTheme";
         };
         "TokyoNight" = {
-          src = pkgs.tokyonight-extras;
+          src = tokyonight-extras;
           file = "sublime/tokyonight_night.tmTheme";
         };
         "TokyoNight Storm" = {
-          src = pkgs.tokyonight-extras;
+          src = tokyonight-extras;
           file = "sublime/tokyonight_storm.tmTheme";
         };
       };
@@ -49,14 +54,14 @@
       light.configuration = {
         programs.bat.config.theme = config.tsrk.shell.bat.themes.light;
         programs.bat.themes.tokyonight = {
-          src = pkgs.tokyonight-extras;
+          src = tokyonight-extras;
           file = "sublime/tokyonight_day.tmTheme";
         };
       };
       dark.configuration = {
         programs.bat.config.theme = config.tsrk.shell.bat.themes.dark;
         programs.bat.themes.tokyonight = {
-          src = pkgs.tokyonight-extras;
+          src = tokyonight-extras;
           file = "sublime/tokyonight_storm.tmTheme";
         };
       };

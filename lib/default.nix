@@ -1,4 +1,5 @@
-{ lib, withSystem, ... } @ args:
+# deadnix: skip
+{ lib, withSystem, moduleWithSystem, self, inputs, ... } @ args:
 
 {
   flake.lib = rec {
@@ -13,7 +14,7 @@
     generateFullUser = import ./generateFullUser.nix (args // { inherit generateUser generateSystemHome; });
     fromYAML = withSystem "x86_64-linux" (import ./fromYAML.nix);
     mkGL = import ./mkGL.nix { inherit withSystem; };
-    mkBulkImportModule = import ./mkBulkImportModule.nix;
+    mkBulkImportModule = import ./mkBulkImportModule.nix args;
 
     profileNeedsPkg = name: config: {
       assertion = config ? tsrk && config.tsrk ? packages;

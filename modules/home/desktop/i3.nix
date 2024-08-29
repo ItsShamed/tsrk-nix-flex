@@ -1,4 +1,6 @@
-{ config, pkgs, lib, self, ... }:
+{ self, ... }:
+
+{ config, pkgs, lib, ... }:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
@@ -179,10 +181,10 @@ let
       config = {
         modifier = "Mod4";
         terminal = (self.lib.mkIfElse (config.programs.kitty.enable)
-          (self.lib.mkGL config "kitty")
+          (self.lib.mkGL pkgs config "kitty")
           # This is for the EPITA die-hards that never bothered to change their
           # default terminal emulator for their session lol
-          (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")
+          (self.lib.mkGL pkgs config "${pkgs.alacritty}/bin/alacritty")
         );
         menu = (self.lib.mkIfElse (config.programs.rofi.enable)
           "sh -c \"rofi -show drun\""
@@ -448,7 +450,7 @@ let
   logindConfig = lib.mkIf config.tsrk.i3.useLogind {
 
     home.packages = with pkgs; [
-      pkgs.systemd-lock-handler
+      systemd-lock-handler
     ];
 
     systemd.user.targets = {

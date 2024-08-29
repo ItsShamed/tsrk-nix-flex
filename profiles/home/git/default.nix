@@ -1,8 +1,13 @@
-{ self, lib, ... }:
+{ localModules, ... }:
+
+{ lib, ... }:
 
 {
-  imports = with self.homeManagerModules; [
+  imports = with localModules; [
+    default
     git
+    git-cli
+    lazygit
   ];
 
   config = {

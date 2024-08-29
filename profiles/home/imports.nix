@@ -1,4 +1,6 @@
-[
+{ mkImport, ... }:
+
+builtins.map mkImport [
   ./git
   ./shell
   ./x11

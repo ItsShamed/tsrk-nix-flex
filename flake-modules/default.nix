@@ -19,6 +19,7 @@ in
     ./overlays.nix
     ./packages.nix
     ../lib
+    ./modules.nix
   ];
 
   perSystem = { system, ... }: {

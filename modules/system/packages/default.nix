@@ -1,7 +1,9 @@
+{ importApplyLocal, ... }:
+
 { ... }:
 
 {
   imports = [
-    ./pkgs
+    (importApplyLocal ./pkgs)
   ];
 }

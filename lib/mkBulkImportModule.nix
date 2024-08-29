@@ -1,10 +1,13 @@
-{ prefix ? "", path, generateAll ? true }:
+{ lib, inputs, self, withSystem, moduleWithSystem, ... }:
 
-{ lib, flake-parts-lib, inputs, self, withSystem, moduleWithSystem, ... }:
+{ prefix ? "", path, generateAll ? true, localModules ? self.nixosModules }:
+
+# Asserting this here so that it evaluates `localModules` here and avoids
+# triggering a potential infinite recursion due to evaluating `self` multiple
+# times during module evaluation.
+assert lib.assertMsg (builtins.isAttrs localModules) "localModules is not an attrset.";
 
 let
-  inherit (flake-parts-lib) importApply;
-
   fileModuleWithSystem = path: moduleWithSystem (import path);
 
   deprecationModule = file: { ... }: {
@@ -25,27 +28,41 @@ let
       ''
         (deprecationModule file);
 
-  importApplyLocal = file: importApply file {
-    inherit importApplyLocal inputs self withSystem fileModuleWithSystem;
+  injectFileLoc = module: file:
+    if builtins.isAttrs module then module // { _file = file; key = file; }
+    else assert lib.assertMsg (builtins.isFunction module) "${file} is not a module.";
+    let
+      mirrorArgs = lib.mirrorFunctionArgs module;
+    in
+    mirrorArgs (origArgs:
+      let
+        result = module origArgs;
+      in
+      assert lib.assertMsg (builtins.isAttrs result) "${file} is not a module.";
+      result // { _file = file; key = file; }
+    );
+
+  importLocal = file: import file {
+    inherit importLocal inputs self withSystem fileModuleWithSystem localModules;
   };
 
   prefix' = if prefix == "" then "" else prefix + "-";
 
-  mkImportApply = file: {
+  mkImport = file: {
     _type = "tsrk-appliedModule";
     name = prefix' + lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
-    value = warnInexistent importApplyLocal file;
+    value = injectFileLoc (warnInexistent importLocal file) file;
   };
 
   mkModuleWithSystem = file: {
     _type = "tsrk-appliedModule";
     name = prefix' + lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
-    value = warnInexistent fileModuleWithSystem file;
+    value = injectFileLoc (warnInexistent fileModuleWithSystem file) file;
   };
 
   importFile = file: {
     name = prefix' + lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
-    value = warnInexistent builtins.import file;
+    value = injectFileLoc (warnInexistent builtins.import file) file;
   };
 
   importModule = maybeModule:
@@ -65,12 +82,14 @@ let
     **    # Paths
     **  ]
     **
-    ** use importApply. Otherwise just import it as is.
+    ** apply needed arguments. Otherwise just import it as is.
     */
     if builtins.isFunction imports' then
-      importApply path
+      imports'
         {
-          inherit importApplyLocal mkImportApply inputs self withSystem fileModuleWithSystem mkModuleWithSystem;
+          inherit
+            importLocal mkImport inputs self withSystem fileModuleWithSystem
+            mkModuleWithSystem;
         } else imports';
 in
 builtins.listToAttrs (builtins.map importModule imports)

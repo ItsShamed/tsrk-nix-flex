@@ -1,7 +1,13 @@
-{ config, pkgs, pkgsUnstable, lib, hmLib, ... }:
+{ withSystem, inputs, ... }:
+
+{ config, pkgs, lib, ... }:
 
 let
   cfg = config.tsrk.darkman;
+
+  # TODO: Remove when 24.11 releases
+  darkmanPkg = withSystem pkgs.stdenv.hostPlatform.system ({ pkgsUnstable, ... }: pkgsUnstable.darkman);
+  hmLib = inputs.home-manager.lib.hm;
 
   # TODO: Changing themes via NeoVim sockets the old-fashioned way is the most
   # reasonnable thing to do for now, until me or someone is brave enough to
@@ -22,8 +28,7 @@ let
     {
       services.darkman = {
         enable = lib.mkDefault true;
-        # TODO: Remove when 24.11 releases
-        package = pkgsUnstable.darkman;
+        package = darkmanPkg;
         settings = {
           lng = 48.87951;
           lat = 2.28513;
@@ -64,11 +69,11 @@ let
         unset activation_dir base_dir
       '';
 
-      home.packages = with pkgs; [
-        (writeShellScriptBin "hm-switch" ''
+      home.packages = [
+        (pkgs.writeShellScriptBin "hm-switch" ''
           cd $HOME/.config/home-manager
           home-manager build $@
-          . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
+          . result/specialisation/$(${darkmanPkg}/bin/darkman get)/activate
         '')
       ];
     };

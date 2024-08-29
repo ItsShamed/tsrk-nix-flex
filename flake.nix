@@ -79,22 +79,6 @@
           system = "x86_64-linux";
         in
         {
-          nixosModules = (import ./modules/system { inherit lib; })
-            // (import ./profiles/system { inherit lib; })
-            // {
-            all = import ./modules/system/all.nix;
-            default = self.nixosModules.all;
-          };
-
-          homeManagerModules = (import ./modules/home { inherit lib; })
-            // (import ./profiles/home { inherit lib; })
-            // {
-            all = import ./modules/home/all.nix;
-            default = self.homeManagerModules.all;
-          };
-
-          nixvimModules.default = import ./modules/nvim;
-
           homeConfigurations = import ./homes {
             inherit lib self;
           };

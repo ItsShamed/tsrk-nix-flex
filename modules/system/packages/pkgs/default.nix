@@ -1,3 +1,5 @@
+{ importApplyLocal, ... }:
+
 {
   imports = [
     ./android.nix
@@ -7,7 +9,7 @@
     ./csharp.nix
     ./desktop.nix
     ./fs.nix
-    ./gaming.nix
+    (importApplyLocal ./gaming.nix)
     ./go.nix
     ./java.nix
     ./python.nix

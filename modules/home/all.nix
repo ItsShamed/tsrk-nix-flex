@@ -1,3 +1,0 @@
-{
-  imports = import ./imports.nix;
-}

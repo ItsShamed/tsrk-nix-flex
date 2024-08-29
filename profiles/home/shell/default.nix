@@ -1,9 +1,18 @@
-{ self, lib, config, ... }:
+{ localModules, self, ... }:
+
+{ lib, config, ... }:
 
 {
-  imports = with self.homeManagerModules; [
+  imports = with localModules; [
+    bash
+    bat
+    fastfetch
+    lsd
     nvim
     shell
+    starship
+    zoxide
+    zsh
   ];
 
   config = {

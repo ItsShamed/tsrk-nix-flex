@@ -1,7 +1,9 @@
-{ self, lib, ... }:
+{ localModules, ... }:
+
+{ lib, ... }:
 
 {
-  imports = with self.homeManagerModules; [
+  imports = with localModules; [
     i3
     kitty
     polybar

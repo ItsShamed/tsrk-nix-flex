@@ -1,4 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ self' }:
+
+{ config, lib, ... }:
 
 {
   options = {
@@ -15,7 +17,7 @@
     };
 
     environment.systemPackages = [
-      (pkgs.sddm-slice-theme.withConfig {
+      (self'.packages.sddm-slice-theme.withConfig {
         color_bg = "#24283b";
         color_contrast = "#1f2335";
         color_dimmed = "#a9b1d6";

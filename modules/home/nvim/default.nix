@@ -1,6 +1,13 @@
-{ config, lib, self, pkgs, ... }:
+{ self, inputs, ... }:
+
+{ config, lib, pkgs, ... }:
 
 {
+
+  imports = [
+    inputs.nixvim.homeManagerModules.default
+  ];
+
   options = {
     tsrk.nvim = {
       enable = lib.options.mkEnableOption "tsrk's nvim configuration";

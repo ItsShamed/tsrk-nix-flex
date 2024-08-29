@@ -1,5 +1,10 @@
-{ pkgs, lib, config, gaming, ... }:
+{ withSystem, ... }:
 
+{ pkgs, lib, config, ... }:
+
+let
+  gaming = withSystem pkgs.stdenv.hostPlatform.system ({ inputs', ... }: inputs'.gaming.packages);
+in
 {
   options = {
     tsrk.packages.games = {

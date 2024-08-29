@@ -1,7 +1,11 @@
-{ config, lib, hmLib, pkgs, ... }:
+{ withSystem, inputs, ... }:
+
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.tsrk.xsettingsd;
+  system = pkgs.stdenv.hostPlatform.system;
+  hmLib = inputs.home-manager.lib.hm;
 in
 {
   options = {
@@ -31,12 +35,12 @@ in
       };
     };
 
-    home.packages = with pkgs; [
+    home.packages = withSystem system ({ self', ... }: with self'.packages; [
       tokyonight-gtk-theme
-      (tokyonight-gtk-theme.override (self: super: {
+      (tokyonight-gtk-theme.override {
         tweaks = [ "storm" ];
-      }))
-    ];
+      })
+    ]);
 
     specialisation = {
       light.configuration = {

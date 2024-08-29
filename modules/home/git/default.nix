@@ -1,12 +1,6 @@
 { config, lib, ... }:
 
 {
-  imports = [
-    ./cli.nix
-    ./delta.nix
-    ./lazygit.nix
-  ];
-
   options = {
     tsrk.git.enable = lib.options.mkEnableOption "tsrk's Git configuration";
   };

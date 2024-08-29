@@ -1,5 +1,12 @@
-{ gaming, lib, config, pkgs, ... }:
+{ withSystem, ... }:
 
+{ lib, config, pkgs, ... }:
+
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  gaming = withSystem system ({ inputs', ... }: inputs'.gaming.packages);
+  selfPkgs = withSystem system ({ config, ... }: config.packages);
+in
 {
   options = {
     tsrk.packages.more-gaming = {
@@ -18,7 +25,7 @@
       gaming.osu-lazer-bin
       gaming.osu-stable
       pkgs.prismlauncher
-      pkgs.rewind
+      selfPkgs.rewind
       pkgs.lunar-client
     ];
   };

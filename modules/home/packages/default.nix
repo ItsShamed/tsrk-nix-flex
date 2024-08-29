@@ -1,10 +1,12 @@
+{ importApplyLocal, ... }:
+
 {
   imports = [
     ./core.nix
     ./desktop.nix
     ./dev.nix
-    ./games.nix
+    (importApplyLocal ./games.nix)
     ./media.nix
-    ./more-games.nix
+    (importApplyLocal ./more-games.nix)
   ];
 }

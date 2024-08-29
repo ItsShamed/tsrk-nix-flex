@@ -1,4 +1,6 @@
-{ config, pkgs, lib, hmLib, ... }:
+{ inputs, ... }:
+
+{ config, pkgs, lib, ... }:
 
 let
   fonts = pkgs.nerdfonts.override {
@@ -9,6 +11,7 @@ let
       "Meslo"
     ];
   };
+  hmLib = inputs.home-manager.lib.hm;
   cfg = config.tsrk.kitty;
 in
 {
