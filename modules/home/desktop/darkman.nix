@@ -25,8 +25,8 @@ let
         # TODO: Remove when 24.11 releases
         package = pkgsUnstable.darkman;
         settings = {
-          lng = 48.87951;
-          lat = 2.28513;
+          lat = 48.87951;
+          lng = 2.28513;
         };
         lightModeScripts = {
           dunst-notif = ''
