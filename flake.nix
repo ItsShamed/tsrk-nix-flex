@@ -102,6 +102,8 @@
 
           nixvimModules.default = import ./modules/nvim;
 
+          lspHints = import ./lsp-hints.nix { inherit lib self inputs; };
+
           lib = import ./lib {
             inherit lib self;
             pkgSet = pkgSet system;
