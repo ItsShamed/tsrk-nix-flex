@@ -22,7 +22,16 @@
         cmake.enable = true;
         eslint.enable = true;
         lua-ls.enable = true;
-        nixd.enable = true;
+        nixd = {
+          enable = true;
+          settings = {
+            formatting.command = [ "nixpkgs-fmt" ];
+            options = {
+              nixos.expr = "(builtins.getFlake (\"git+file://\" + toString ./.)).lspHints.nixos or {}";
+              homeManager.expr = "(builtins.getFlake (\"git+file://\" + toString ./.)).lspHints.homeManager or {}";
+            };
+          };
+        };
         jsonls.enable = true;
         texlab.enable = true;
         yamlls.enable = true;
