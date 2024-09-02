@@ -97,8 +97,9 @@ in
           showSignature = "append";
           delimiter = "-- ";
           text = ''
+            ${cfg.fullName}
             ${cfg.signature.status}
-            "${cfg.signature.quote}"
+            « ${cfg.signature.quote} »
           '';
         };
         thunderbird = {
