@@ -78,14 +78,21 @@ in
           };
         };
       };
+
+      warnings =
+        if (lib.strings.stringLength cfg.fullName) > 80 then
+          [ "You full name is over 80 characters, which will violate the nettiquete if included in the signature." ]
+        else [ ]
+      ;
+
       assertions = [
         {
-          assertion = (lib.strings.stringLength cfg.signature.status) <= 78;
+          assertion = (lib.strings.stringLength cfg.signature.status) <= 80;
           message = "E-mail signature status is too long (${cfg.signature.status} > 80) and would violate the netiquette.";
         }
         {
-          assertion = (lib.strings.stringLength cfg.signature.quote) <= 78;
-          message = "E-mail signature quote is too long (${cfg.signature.quote} > 78) and would violate the netiquette.";
+          assertion = (lib.strings.stringLength cfg.signature.quote) <= 76;
+          message = "E-mail signature quote is too long (${cfg.signature.quote} > 76) and would violate the netiquette.";
         }
       ];
       accounts.email.accounts.epita = rec {
