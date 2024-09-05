@@ -63,6 +63,7 @@
   tsrk.sound = {
     bufferSize = 64;
     sampleRate = 44100;
+    focusriteSupport = true;
   };
 
   time.hardwareClockInLocalTime = true;

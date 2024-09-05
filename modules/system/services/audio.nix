@@ -18,38 +18,77 @@
         default = 48000;
         example = 44100; # Can be used when performing live.
       };
+
+      focusriteSupport = lib.options.mkEnableOption "Focusrite audio interfaces support";
     };
   };
 
-  config = lib.mkIf config.tsrk.sound.enable {
-    warnings = [
-      ''
-        This module (audio.nix) enables a module from fufexan/nix-gaming, which is
-        known to cause issues with nixos-install.
-      ''
-    ];
+  config = lib.mkIf config.tsrk.sound.enable (lib.mkMerge [
+    {
+      warnings = [
+        ''
+          This module (audio.nix) enables a module from fufexan/nix-gaming, which is
+          known to cause issues with nixos-install.
+        ''
+      ];
 
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-
-      lowLatency = {
+      services.pipewire = {
         enable = true;
-        quantum = config.tsrk.sound.bufferSize;
-        rate = config.tsrk.sound.sampleRate;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+
+        lowLatency = {
+          enable = true;
+          quantum = config.tsrk.sound.bufferSize;
+          rate = config.tsrk.sound.sampleRate;
+        };
       };
-    };
 
-    sound.mediaKeys.enable = lib.mkDefault true;
+      sound.mediaKeys.enable = lib.mkDefault true;
 
-    security.rtkit.enable = true;
+      security.rtkit.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      pavucontrol
-      pa_applet
-      paprefs
-    ];
-  };
+      environment.systemPackages = with pkgs; [
+        pavucontrol
+        pa_applet
+        paprefs
+      ];
+    }
+    (lib.mkIf config.tsrk.sound.focusriteSupport {
+      # TODO: Remove this when NixOS will upgrade to Linux 6.7+
+      boot.extraModprobeConfig = ''
+        ### FOCUSRITE SUPPORT
+
+        ## Scarlett Gen 2
+        # 6i6
+        options snd_usb_audio vid=0x1235 pid=0x8203 device_setup=1
+        # 18i8
+        options snd_usb_audio vid=0x1235 pid=0x8204 device_setup=1
+        # 18i20
+        options snd_usb_audio vid=0x1235 pid=0x8201 device_setup=1
+
+        ## Scarlett Gen 3
+        # Solo
+        options snd_usb_audio vid=0x1235 pid=0x8211 device_setup=1
+        # 2i2
+        options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1
+        # 4i4
+        options snd_usb_audio vid=0x1235 pid=0x8212 device_setup=1
+        # 8i6
+        options snd_usb_audio vid=0x1235 pid=0x8213 device_setup=1
+        # 18i8
+        options snd_usb_audio vid=0x1235 pid=0x8214 device_setup=1
+        # 18i20
+        options snd_usb_audio vid=0x1235 pid=0x8215 device_setup=1
+
+        ## Clarett+ 8 Pre
+        options snd_usb_audio vid=0x1235 pid=0x820c device_setup=1
+      '';
+
+      environment.systemPackages = with pkgs; [
+        alsa-scarlett-gui
+      ];
+    })
+  ]);
 }
