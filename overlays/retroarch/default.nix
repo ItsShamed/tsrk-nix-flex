@@ -17,6 +17,7 @@ self: super:
       meteor
       mgba
       mupen64plus
+      pcsx2
       ppsspp
       sameboy
       snes9x
