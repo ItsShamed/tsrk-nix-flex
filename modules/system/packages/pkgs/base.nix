@@ -16,6 +16,7 @@
         tree
         unzip
         zip
+        p7zip
         lsof
         rsync
         usbutils
