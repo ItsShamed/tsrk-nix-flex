@@ -28,6 +28,10 @@
   users.users.tsrk.shell = pkgs.zsh;
   programs.zsh.enable = true;
 
+  programs.steam.gamescopeSession = {
+    enable = true;
+  };
+
   age.secrets.zpasswd.file = ./secrets/passwd.age;
 
   age.identityPaths = lib.mkOptionDefault [
