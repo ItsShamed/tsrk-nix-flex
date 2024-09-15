@@ -8,6 +8,7 @@
     self.nixosModules.profile-graphical-x11
     self.nixosModules.hostname
     self.nixosModules.containers
+    self.nixosModules.gamescope
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -28,9 +29,7 @@
   users.users.tsrk.shell = pkgs.zsh;
   programs.zsh.enable = true;
 
-  programs.steam.gamescopeSession = {
-    enable = true;
-  };
+  tsrk.programs.gamescope.enable = true;
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
 

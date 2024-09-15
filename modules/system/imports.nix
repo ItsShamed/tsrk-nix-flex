@@ -2,6 +2,7 @@
   ./network/hostname.nix
   ./network/networkmanager.nix
   ./packages
+  ./programs/gamescope.nix
   ./services/audio.nix
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
