@@ -17,6 +17,9 @@
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
       autocd = true;
+      initExtra = ''
+        bindkey '^R' history-incremental-search-backward
+      '';
     };
   };
 }
