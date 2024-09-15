@@ -1,6 +1,6 @@
 { lib
 , nixpkgs
-  # , nixpkgsUnstable
+, nixpkgsUnstable
   # , nixpkgsMaster
 , pkgSet
 , self
@@ -18,14 +18,14 @@ let
             system.name = imageName;
             nix.nixPath = [
               "nixpkgs=${nixpkgs}"
-              # "nixpkgs-unstable=${nixpkgsUnstable}"
+              "nixpkgs-unstable=${nixpkgsUnstable}"
               # "nixpkgs-master=${nixpkgsMaster}"
               "nixos-config=${self}"
             ];
 
             nix.registry = {
               nixpkgs.flake = nixpkgs;
-              # nixpkgsUnstable.flake = nixpkgsUnstable;
+              nixpkgsUnstable.flake = nixpkgsUnstable;
               # nixpkgsMaster.flake = nixpkgsMaster;
             };
 
