@@ -16,6 +16,7 @@
     {
       environment.systemPackages = with pkgs; [
         gamemode
+        protontricks
       ];
 
       hardware.steam-hardware.enable = lib.mkDefault true;
