@@ -100,6 +100,11 @@
     enableBrowserSocket = true;
   };
 
+  # Sometimes it's a little bit of a pain to run some programs so i'll just use
+  # nix-ld when I'm lazy to develop a proper devshell or nix package
+  programs.nix-ld.enable = lib.mkDefault true;
+  programs.nix-ld.libraries = with pkgs; [ ] ++ osu-lazer.runtimeDeps;
+
   boot.loader.grub = lib.mkImageMediaOverride {
     theme = "${pkgs.hyperfluent-grub-theme}";
     splashImage = "${pkgs.hyperfluent-grub-theme}/background.png";
