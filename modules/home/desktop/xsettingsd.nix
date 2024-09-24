@@ -1,4 +1,4 @@
-{ config, lib, hmLib, pkgs, ... }:
+{ config, lib, hmLib, pkgs, pkgsUnstable, ... }:
 
 let
   cfg = config.tsrk.xsettingsd;
@@ -31,19 +31,30 @@ in
       };
     };
 
-    home.packages = with pkgs; [
-      tokyonight-gtk-theme
-      (tokyonight-gtk-theme.override (self: super: {
-        tweaks = [ "storm" ];
-      }))
+    home.packages = with pkgsUnstable; [
+      (tokyonight-gtk-theme.override {
+        colorVariants = [
+          "dark"
+          "light"
+        ];
+        tweakVariants = [
+          "storm"
+        ];
+        iconVariants = [
+          "Dark"
+          "Light"
+        ];
+      })
     ];
 
     specialisation = {
       light.configuration = {
-        services.xsettingsd.settings."Net/ThemeName" = "TokyoNight-Light";
+        services.xsettingsd.settings."Net/ThemeName" = "Tokyonight-Light-Storm";
+        services.xsettingsd.settings."Net/IconThemeName" = "Tokyonight-Light";
       };
       dark.configuration = {
-        services.xsettingsd.settings."Net/ThemeName" = "TokyoNight-Dark-Storm";
+        services.xsettingsd.settings."Net/ThemeName" = "Tokyonight-Dark-Storm";
+        services.xsettingsd.settings."Net/IconThemeName" = "Tokyonight-Dark";
       };
     };
 
