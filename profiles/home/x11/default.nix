@@ -5,6 +5,7 @@
     darkman
     dunst
     flameshot
+    music-player
     picom
     premid
     profile-x11-base
@@ -31,6 +32,9 @@
       };
       dunst.enable = lib.mkDefault true;
       flameshot.enable = lib.mkDefault true;
+      # Currently it seems like the scanned is no-oped so it seemingly does
+      # nothing yet.
+      # music-player.enable = lib.mkDefault true;
       picom.enable = lib.mkDefault true;
       rofi.enable = lib.mkDefault true;
       thunderbird.enable = lib.mkDefault true;
