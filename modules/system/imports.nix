@@ -4,6 +4,7 @@
   ./packages
   ./programs/gamescope.nix
   ./services/audio.nix
+  ./services/audio/mopidy
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
   ./services/networking/sshd
