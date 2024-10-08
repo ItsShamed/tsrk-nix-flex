@@ -4,6 +4,7 @@
   ./desktop/flameshot.nix
   ./desktop/i3.nix
   ./desktop/kitty.nix
+  ./desktop/mopidy.nix
   ./desktop/music-player.nix
   ./desktop/picom.nix
   ./desktop/polybar.nix

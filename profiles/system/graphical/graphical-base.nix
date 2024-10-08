@@ -7,7 +7,6 @@
     self.nixosModules.sddm
     self.nixosModules.audio
     self.nixosModules.redshift
-    self.nixosModules.mopidy
   ];
 
   services.xserver.enable = lib.mkForce true;
@@ -16,7 +15,6 @@
     bluetooth.enable = lib.mkDefault true;
     sddm.enable = lib.mkDefault true;
     sound.enable = lib.mkDefault true;
-    mopidy.enable = lib.mkDefault true;
   };
 
   environment.variables = {
