@@ -42,6 +42,7 @@
     python.enable = true;
     gaming.enable = true;
     qmk.enable = true;
+    ops.enable = true;
   };
 
   tsrk.networking.networkmanager.enable = true;

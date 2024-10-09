@@ -10,6 +10,7 @@
     ./gaming.nix
     ./go.nix
     ./java.nix
+    ./ops.nix
     ./python.nix
     ./qmk.nix
     ./rust.nix

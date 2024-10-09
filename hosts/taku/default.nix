@@ -56,6 +56,7 @@
     gaming.enable = true;
     go.enable = true;
     qmk.enable = true;
+    ops.enable = true;
   };
 
   tsrk.networking.networkmanager.enable = true;
