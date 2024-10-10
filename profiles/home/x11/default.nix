@@ -5,7 +5,6 @@
     darkman
     dunst
     flameshot
-    mopidy
     music-player
     picom
     premid
@@ -32,7 +31,6 @@
         nvim.enable = lib.mkDefault true;
       };
       dunst.enable = lib.mkDefault true;
-      mopidy.enable = lib.mkDefault true;
       flameshot.enable = lib.mkDefault true;
       # Currently it seems like the scanned is no-oped so it seemingly does
       # nothing yet.

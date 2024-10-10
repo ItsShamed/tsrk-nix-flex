@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgsUnstable, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options = {
@@ -31,7 +31,6 @@
       kdePackages.kdenlive
       tenacity
       vlc
-      pkgsUnstable.rmpc
     ];
   };
 }
