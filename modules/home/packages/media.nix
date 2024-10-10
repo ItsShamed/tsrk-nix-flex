@@ -31,6 +31,7 @@
       kdePackages.kdenlive
       tenacity
       vlc
+      strawberry
     ];
   };
 }
