@@ -6,7 +6,7 @@
     profile-tsrk-common
     profile-tsrk-private
     ./extra-packages.nix
-    (inputs.spotify-notifyx.homeManagerModules.default inputs.spotify-notifyx)
+    (inputs.spotify-notifyx.homeManagerModules.default)
   ];
 
   tsrk = {
