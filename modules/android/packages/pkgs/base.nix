@@ -47,6 +47,9 @@
 
         # Basic editor
         vim
+
+        # SSH because it is not installed by default for some reason
+        openssh
       ];
     })
   ];
