@@ -3,7 +3,7 @@
 {
   imports = with self.nixOnDroidModules; [
     profile-base
-    (self.generateAndroidHome {
+    (self.lib.generateAndroidHome {
       modules = [
         ./home.nix
       ];
