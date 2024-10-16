@@ -38,7 +38,7 @@
 
   # HACK: see https://gitlab.cri.epita.fr/cri/infrastructure/nixpie/-/blob/master/profiles/core/default.nix#L108-123
   # I need this for school dev
-  environment.pathsToLink = [ "/include" "/lib" "/share" "/share/zsh" ];
+  # environment.pathsToLink = [ "/include" "/lib" "/share" "/share/zsh" ];
   environment.extraOutputsToInstall = [ "out" "lib" "bin" "dev" ];
   environment.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1";

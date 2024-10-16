@@ -16,8 +16,8 @@ in
       sqlfluff
     ];
 
-    environment.pathsToLink = [
-      "/share/postgresql"
-    ];
+    # environment.pathsToLink = [
+    #   "/share/postgresql"
+    # ];
   };
 }
