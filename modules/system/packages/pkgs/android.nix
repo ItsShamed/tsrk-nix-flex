@@ -46,6 +46,10 @@ in
     tsrk.packages.pkgs.java.enable = lib.mkDefault true;
     programs.adb.enable = true;
 
+    environment.variables = {
+      ANDROID_SDK_ROOT = "${cfg.androidComposition.androidsdk}/libexec/android-sdk";
+    };
+
     environment.systemPackages = with pkgs; [
       apktool
       android-file-transfer
