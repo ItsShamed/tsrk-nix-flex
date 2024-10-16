@@ -10,6 +10,8 @@
     })
   ];
 
+  environment.etcBackupExtension = ".bak";
+
   tsrk.packages = {
     pkgs = {
       ops.enable = true;
