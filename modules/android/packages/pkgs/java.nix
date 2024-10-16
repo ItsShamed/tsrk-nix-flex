@@ -77,13 +77,11 @@ in
       })
       cfg.jdk.extraPackages;
 
-    programs.java = {
-      enable = true;
-      package = lib.meta.hiPrio cfg.jdk.package;
-    };
-
-    environment.systemPackages =
-      [ printJDKScript ]
+    environment.packages =
+      [
+        printJDKScript
+        (lib.meta.hiPrio cfg.jdk.package)
+      ]
       ++ cfg.jdk.extraPackages
       ++ (lib.lists.optional cfg.maven.enable pkgs.maven)
       ++ (lib.lists.optional cfg.gradle.enable cfg.gradle.package);
