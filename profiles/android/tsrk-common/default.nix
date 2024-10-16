@@ -3,11 +3,6 @@
 {
   imports = with self.nixOnDroidModules; [
     profile-base
-    (self.lib.generateAndroidHome {
-      modules = [
-        ./home.nix
-      ];
-    })
   ];
 
   environment.etcBackupExtension = ".bak";

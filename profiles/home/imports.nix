@@ -4,5 +4,6 @@
   ./x11
   ./x11/x11-base.nix
   ./tsrk-common
+  ./tsrk-common/tsrk-android.nix
   ./tsrk-common/tsrk-private.nix
 ]
