@@ -48,6 +48,8 @@ in
 
     environment.systemPackages = with pkgs; [
       apktool
+      android-file-transfer
+      flutter
       cfg.androidComposition.androidsdk
       cfg.androidComposition.platform-tools
     ] ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
