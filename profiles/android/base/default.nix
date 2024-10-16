@@ -17,11 +17,13 @@
       "https://s3.cri.epita.fr/cri-nix-cache.s3.cri.epita.fr"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
+      "https://nix-on-droid.cachix.org";
     ];
     trustedPublicKeys = [
       "cache.nix.cri.epita.fr:qDIfJpZWGBWaGXKO3wZL1zmC+DikhMwFRO4RVE6VVeo="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
     ];
 
     extraOptions = ''
