@@ -143,10 +143,10 @@
             default = self.nixOnDroidModules.all;
           };
 
-          nixOnDroidConfigurations = import ./droids {
+          nixOnDroidConfigurations = import ./droids (lib.recursiveUpdate inputs {
             inherit lib;
             pkgSet = pkgSet system;
-          };
+          });
         };
 
       allOutputs = eachDefaultSystem (system:
