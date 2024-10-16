@@ -1,0 +1,4 @@
+[
+  ./integrations.nix
+  ./packages
+]
