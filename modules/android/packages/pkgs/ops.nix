@@ -1,0 +1,22 @@
+{ config, lib, pkgs, ... }:
+
+let
+  cfg = config.tsrk.packages.pkgs.ops;
+in
+{
+  options = {
+    tsrk.packages.pkgs.ops = {
+      enable = lib.options.mkEnableOption "tsrk's Ops bundle";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    environment.packages = with pkgs; [
+      ansible
+      opentofu
+      kubectl
+      kustomize
+      k9s
+    ];
+  };
+}

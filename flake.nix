@@ -31,6 +31,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -126,6 +131,24 @@
           };
         };
 
+      androidOutputs =
+        let
+          system = "aarch64-linux";
+        in
+        {
+          nixOnDroidModules = (import ./modules/android { inherit lib; })
+            // (import ./profiles/android { inherit lib; })
+            // {
+            all = import ./modules/android/all.nix;
+            default = self.nixOnDroidModules.all;
+          };
+
+          nixOnDroidConfigurations = import ./droids (lib.recursiveUpdate inputs {
+            inherit lib;
+            pkgSet = pkgSet system;
+          });
+        };
+
       allOutputs = eachDefaultSystem (system:
         let
           inherit (pkgSet system) pkgs;
@@ -140,5 +163,5 @@
           };
         });
     in
-    lib.recursiveUpdate linuxOutputs allOutputs;
+    lib.recursiveUpdate (lib.recursiveUpdate linuxOutputs allOutputs) androidOutputs;
 }
