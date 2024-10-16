@@ -15,7 +15,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
+    environment.packages = with pkgs;
       [
         cfg.package
         mono
@@ -23,7 +23,7 @@ in
         roslyn
       ];
 
-    environment.variables = {
+    environment.sessionVariables = {
       DOTNET_ROOT = "${cfg.package}";
       DOTNET_CLI_TELEMETRY_OPTOUT = "true";
     };

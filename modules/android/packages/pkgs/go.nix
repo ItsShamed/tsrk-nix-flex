@@ -11,7 +11,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
+    environment.packages = with pkgs; [
       go
       gox
     ];
