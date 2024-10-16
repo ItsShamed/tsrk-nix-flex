@@ -8,8 +8,6 @@
 
   time.timeZone = "Europe/Paris";
 
-  console.keyMap = "us";
-
   nix = {
     package = pkgs.nixFlakes;
 
