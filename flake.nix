@@ -144,6 +144,7 @@
           };
 
           nixOnDroidConfigurations = import ./droids {
+            inherit lib;
             pkgSet = pkgSet system;
           };
         };
