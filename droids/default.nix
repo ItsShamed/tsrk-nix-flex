@@ -28,10 +28,6 @@ let
               nixpkgsUnstable.flake = nixpkgsUnstable;
               # nixpkgsMaster.flake = nixpkgsMaster;
             };
-
-            nixpkgs = {
-              inherit (pkgSet.pkgs) config overlays;
-            };
           };
           imported = import module;
         in
