@@ -43,6 +43,7 @@
     gaming.enable = true;
     qmk.enable = true;
     ops.enable = true;
+    rust.enable = true;
   };
 
   tsrk.networking.networkmanager.enable = true;
