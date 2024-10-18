@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   plugins = {
@@ -35,7 +35,11 @@
         jsonls.enable = true;
         texlab.enable = true;
         yamlls.enable = true;
-        rust_analyzer.enable = true;
+        rust-analyzer = {
+          enable = true;
+          installCargo = lib.mkDefault false;
+          installRustc = lib.mkDefault false;
+        };
       };
     };
   };
