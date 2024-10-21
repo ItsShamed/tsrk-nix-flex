@@ -56,4 +56,10 @@
     deadnix
     teams-for-linux
   ];
+
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
+    "$GOPATH/bin"
+    "$HOME/go/bin"
+  ];
 }
