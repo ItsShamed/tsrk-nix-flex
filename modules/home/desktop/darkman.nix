@@ -34,7 +34,7 @@ let
           '';
           activate-home-manager = ''
             export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-            . ${config.home.homeDirectory}/.hm-light-activate
+            . ${config.home.homeDirectory}/.local/bin/.hm-light-activate
           '';
         };
         darkModeScripts = {
@@ -43,7 +43,7 @@ let
           '';
           activate-home-manager = ''
             export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-            . ${config.home.homeDirectory}/.hm-dark-activate
+            . ${config.home.homeDirectory}/.local/bin/.hm-dark-activate
           '';
         };
       };
@@ -57,8 +57,10 @@ let
           warnEcho "Running in improper directory for linking activation scripts."
           noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
         else
-          $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate ${config.home.homeDirectory}/.hm-light-activate 2>/dev/null || true
-          $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate ${config.home.homeDirectory}/.hm-dark-activate 2>/dev/null || true
+          local_bin_path="${config.home.homeDirectory}/.local/bin"
+          mkdir -p "$local_bin_path"
+          $DRY_RUN_CMD ln -sf $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
+          $DRY_RUN_CMD ln -sf $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
         fi
 
         unset activation_dir base_dir
@@ -70,6 +72,10 @@ let
           home-manager build $@
           . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
         '')
+      ];
+
+      home.sessionPath = [
+        "$HOME/.local/bin"
       ];
     };
 
