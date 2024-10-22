@@ -51,7 +51,7 @@
   tsrk.networking.networkmanager.enable = true;
   tsrk.containers = {
     enable = true;
-    podman.enable = true;
+    docker.enable = true;
   };
 
   tsrk.libvirt.enable = true;
