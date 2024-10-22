@@ -34,7 +34,7 @@ let
           '';
           activate-home-manager = ''
             export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-            . ${config.home.homeDirectory}/.local/bin/.hm-light-activate
+            . ${config.home.homeDirectory}/.local/bin/hm-light-activate
           '';
         };
         darkModeScripts = {
@@ -43,7 +43,7 @@ let
           '';
           activate-home-manager = ''
             export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-            . ${config.home.homeDirectory}/.local/bin/.hm-dark-activate
+            . ${config.home.homeDirectory}/.local/bin/hm-dark-activate
           '';
         };
       };
@@ -59,8 +59,8 @@ let
         else
           local_bin_path="${config.home.homeDirectory}/.local/bin"
           mkdir -p "$local_bin_path"
-          $DRY_RUN_CMD ln -sf $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
-          $DRY_RUN_CMD ln -sf $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
+          $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
+          $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
         fi
 
         unset activation_dir base_dir
