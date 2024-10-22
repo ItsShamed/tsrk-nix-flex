@@ -8,9 +8,11 @@
     self.nixosModules.profile-graphical-x11
     self.nixosModules.hostname
     self.nixosModules.containers
+    self.nixosModules.libvirt
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
+      moreGroups = [ "libvirtd" ];
       modules = [
         ./user.nix
       ];
@@ -51,6 +53,8 @@
     enable = true;
     podman.enable = true;
   };
+
+  tsrk.libvirt.enable = true;
 
   services.libinput.touchpad.naturalScrolling = true;
 
