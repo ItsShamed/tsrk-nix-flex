@@ -51,6 +51,7 @@
   tsrk.networking.networkmanager.enable = true;
   tsrk.containers = {
     enable = true;
+    services.pihole.enable = true;
     docker.enable = true;
   };
 
