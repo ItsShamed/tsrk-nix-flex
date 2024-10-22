@@ -20,6 +20,7 @@
         lsof
         rsync
         usbutils
+        pciutils
 
         git
         pre-commit
