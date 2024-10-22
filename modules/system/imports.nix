@@ -9,6 +9,7 @@
   ./services/hardware/disks.nix
   ./services/networking/sshd
   ./services/virtualisation/containers
+  ./services/virtualisation/libvirt.nix
   ./services/x11/dipslay-manager/sddm.nix
   ./services/x11/keyboard/qwerty-fr.nix
   ./services/x11/redshift.nix
