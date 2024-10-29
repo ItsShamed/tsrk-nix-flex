@@ -54,6 +54,7 @@ in
       apktool
       android-file-transfer
       flutter
+      scrcpy
       cfg.androidComposition.androidsdk
       cfg.androidComposition.platform-tools
     ] ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
