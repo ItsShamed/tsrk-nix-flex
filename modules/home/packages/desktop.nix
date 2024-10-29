@@ -11,7 +11,7 @@
     home.packages = with pkgs; [
       # Discord replacement
       vesktop
-      armcord
+      legcord
 
       # Fonts
       (nerdfonts.override {
