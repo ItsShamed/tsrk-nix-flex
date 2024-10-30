@@ -6,6 +6,7 @@
     self.nixosModules.profile-base
     self.nixosModules.profile-graphical-base
     self.nixosModules.profile-graphical-x11
+    self.nixosModules.profile-tsrk-common
     self.nixosModules.hostname
     self.nixosModules.containers
     self.nixosModules.libvirt
