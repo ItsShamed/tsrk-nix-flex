@@ -51,7 +51,12 @@
   tsrk.networking.networkmanager.enable = true;
   tsrk.containers = {
     enable = true;
-    services.pihole.enable = true;
+    services.pihole = {
+      enable = true;
+      exposeTo = [
+        "127.0.0.53"
+      ];
+    };
     docker.enable = true;
   };
 
