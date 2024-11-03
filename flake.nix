@@ -19,7 +19,7 @@
       flake = false;
     };
 
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming.url = "github:ItsShamed/nix-gaming?ref=e41d23d5329c96c62c3ac0ec81922116384999e1";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
