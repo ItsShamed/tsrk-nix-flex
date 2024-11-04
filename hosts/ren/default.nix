@@ -73,6 +73,13 @@
 
   time.hardwareClockInLocalTime = true;
 
+  networking.firewall.extraCommands = ''
+    iptables -A nixos-fw -p tcp --source 127.0.0.0/8 --dport 80:80 -j nixos-fw-accept
+    iptables -A nixos-fw -p tcp --source 127.0.0.0/8 --dport 443:443 -j nixos-fw-accept
+    iptables -A nixos-fw -p tcp --source 192.168.122.0/24 --dport 443:443 -j nixos-fw-accept
+    iptables -A nixos-fw -p tcp --source 192.168.122.0/24 --dport 443:443 -j nixos-fw-accept
+  '';
+
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
