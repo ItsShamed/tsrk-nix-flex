@@ -17,6 +17,10 @@ in
       kubectl
       kustomize
       k9s
+      postgresql
+      sqlfluff
     ];
+
+    environment.pathsToLink = [ "/share/postgresql" ];
   };
 }
