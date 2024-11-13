@@ -27,5 +27,9 @@ in
     };
 
     programs.virt-manager.enable = lib.mkDefault true;
+
+    environment.systemPackages = with pkgs; [
+      libguestfs
+    ];
   };
 }
