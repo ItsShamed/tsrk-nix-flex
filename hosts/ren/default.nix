@@ -84,4 +84,10 @@
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
+
+  virtualisation.docker.daemon.settings = {
+    insecure-registries = [
+      "reg.ren.libvirt.local"
+    ];
+  };
 }
