@@ -1,4 +1,4 @@
-{ self, lib, config, ... }:
+{ self, lib, config, options, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -10,6 +10,7 @@
     premid
     profile-x11-base
     rofi
+    screenkey
     thunderbird
     xdg
     xsettingsd
@@ -40,6 +41,19 @@
       thunderbird.enable = lib.mkDefault true;
       xsettingsd.enable = lib.mkDefault true;
       polybar.mpris.enable = lib.mkDefault true;
+      screenkey = {
+        enable = lib.mkDefault true;
+        settings = options.tsrk.screenkey.settings.default // {
+          timeout = 0.5;
+          font_desc = "IosevkaTerm Nerd Font 10";
+          font_size = "small";
+          font_color = "#c0c0cacaf5f5";
+          bg_color = "#242428283b3b";
+          opacity = 0.5;
+          mouse = true;
+          button_hide_duration = 0.5;
+        };
+      };
     };
   };
 }

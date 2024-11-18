@@ -10,6 +10,7 @@
   ./desktop/polybar.nix
   ./desktop/premid.nix
   ./desktop/rofi.nix
+  ./desktop/screenkey.nix
   ./desktop/thunderbird.nix
   ./desktop/xdg.nix
   ./desktop/xsettingsd.nix
