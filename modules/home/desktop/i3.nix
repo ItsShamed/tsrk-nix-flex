@@ -8,6 +8,9 @@ let
       "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
     else "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
 
+  # TODO: figure how to disable services without them disappearing
+  # I initially used `systemctl --user disable` so that if I ever need to run
+  # other sessions, i3 user services would not pollute other window managers
   teardown = pkgs.writeShellScript "i3-teardown" (lib.strings.concatLines [
     ''
       # This script is responsible for stopping all services started with i3
@@ -15,20 +18,20 @@ let
     ''
     (lib.strings.optionalString config.services.polybar.enable ''
       # Polybar
-      systemctl --user disable --now polybar &
+      systemctl --user stop polybar &
     '')
     (lib.strings.optionalString config.services.xsettingsd.enable ''
       # xsettingsd
-      systemctl --user disable --now xsettingsd &
+      systemctl --user stop xsettingsd &
     '')
     (lib.strings.optionalString config.services.darkman.enable ''
       # darkman
-      systemctl --user disable --now darkman &
+      systemctl --user stop darkman &
     '')
     (lib.strings.optionalString config.tsrk.i3.useLogind ''
       # i3lock service
       # This service runs when the lock.target is reach and before sleeping
-      systemctl --user disable --now i3lock &
+      systemctl --user stop i3lock &
     '')
     ''
       # Stop i3
