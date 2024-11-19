@@ -1,0 +1,50 @@
+From 528ba6dadcac3de7adef2e60eb554aa188bd656e Mon Sep 17 00:00:00 2001
+From: "tsrk." <tsrk@tsrk.me>
+Date: Tue, 19 Nov 2024 16:40:45 +0100
+Subject: [PATCH] refactor: allow passing logout command
+
+This is especially useful for WM/DE that do not work well with
+`logind terminate-session` (i.e. i3wm)
+
+Signed-off-by: tsrk. <tsrk@tsrk.me>
+---
+ rofi-power-menu | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/rofi-power-menu b/rofi-power-menu
+index 13e17e3..009bb84 100755
+--- a/rofi-power-menu
++++ b/rofi-power-menu
+@@ -68,7 +68,7 @@ function check_valid {
+ }
+ 
+ # Parse command-line options
+-parsed=$(getopt --options=h --longoptions=help,dry-run,confirm:,choices:,choose:,symbols,no-symbols,text,no-text,symbols-font: --name "$0" -- "$@")
++parsed=$(getopt --options=h --longoptions=help,dry-run,confirm:,choices:,choose:,logout:,symbols,no-symbols,text,no-text,symbols-font: --name "$0" -- "$@")
+ if [ $? -ne 0 ]; then
+     echo 'Terminating...' >&2
+     exit 1
+@@ -104,6 +104,9 @@ while true; do
+             echo "                       --confirm=CHOICE if the choice wouldn't require"
+             echo "                       confirmation by default. Available choices are"
+             echo "                       lockscreen, logout, suspend, hibernate, reboot and"
++            echo "  --logout COMMAND     Change what command needs to be run when logging out."
++            echo "                       This is useful for some window managers where logind does"
++            echo "                       not work well..."
+             echo "                       shutdown."
+             echo "  --[no-]symbols       Show Unicode symbols or not. Requires a font with support"
+             echo "                       for the symbols. Use, for instance, fonts from the"
+@@ -135,6 +138,10 @@ while true; do
+             selectionID="$2"
+             shift 2
+             ;;
++        "--logout")
++            actions[logout]="$2"
++            shift 2
++            ;;
+         "--symbols")
+             showsymbols=true
+             shift 1
+-- 
+2.44.1
+
