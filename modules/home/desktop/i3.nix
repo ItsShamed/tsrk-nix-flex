@@ -15,20 +15,20 @@ let
     ''
     (lib.strings.optionalString config.services.polybar.enable ''
       # Polybar
-      systemctl --user disable --now polybar
+      systemctl --user disable --now polybar &
     '')
     (lib.strings.optionalString config.services.xsettingsd.enable ''
       # xsettingsd
-      systemctl --user disable --now xsettingsd
+      systemctl --user disable --now xsettingsd &
     '')
     (lib.strings.optionalString config.services.darkman.enable ''
       # darkman
-      systemctl --user disable --now darkman
+      systemctl --user disable --now darkman &
     '')
     (lib.strings.optionalString config.tsrk.i3.useLogind ''
       # i3lock service
       # This service runs when the lock.target is reach and before sleeping
-      systemctl --user disable --now i3lock
+      systemctl --user disable --now i3lock &
     '')
     ''
       # Stop i3
@@ -53,17 +53,17 @@ let
     (lib.strings.optionalString config.services.polybar.enable ''
       # Polybar
       if systemctl --user is-active polybar; then
-        systemctl --user restart polybar
+        systemctl --user restart polybar &
       else
-        systemctl --user enable --now polybar
+        systemctl --user enable --now polybar &
       fi
     '')
     (lib.strings.optionalString config.services.xsettingsd.enable ''
       # xsettingsd
       if systemctl --user is-active xsettingsd; then
-        systemctl --user restart xsettingsd
+        systemctl --user restart xsettingsd &
       else
-        systemctl --user enable --now xsettingsd
+        systemctl --user enable --now xsettingsd &
       fi
 
       (${pkgs.lxappearance}/bin/lxappearance &
@@ -73,15 +73,15 @@ let
     (lib.strings.optionalString config.services.darkman.enable ''
       # darkman
       if systemctl --user is-active darkman; then
-        systemctl --user restart darkman
+        systemctl --user restart darkman &
       else
-        systemctl --user enable --now darkman
+        systemctl --user enable --now darkman &
       fi
     '')
     (lib.strings.optionalString config.tsrk.i3.useLogind ''
       # i3lock service
       # This service runs when the lock.target is reached and before sleeping
-      systemctl --user enable i3lock
+      systemctl --user enable i3lock &
     '')
   ]);
 
