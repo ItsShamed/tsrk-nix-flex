@@ -85,6 +85,9 @@
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
 
+  # OBS WebSocket
+  networking.firewall.allowedTCPPorts = [ 4455 ];
+
   virtualisation.docker.daemon.settings = {
     insecure-registries = [
       "reg.ren.libvirt.local"
