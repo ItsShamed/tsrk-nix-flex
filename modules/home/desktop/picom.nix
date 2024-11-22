@@ -16,6 +16,8 @@ let
       shadow = true;
       shadowExclude = [
         "class_g = 'Dunst'"
+        "class_g = 'Screenkey'"
+        "class_g = 'screenkey'"
       ];
       # TODO: Looking forward to put back animations when the new picom with
       # animations get pacakged for nixpkgs
