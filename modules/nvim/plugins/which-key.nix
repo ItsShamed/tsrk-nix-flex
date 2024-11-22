@@ -170,35 +170,37 @@ in
   plugins.which-key = {
     enable = true;
 
-    plugins = {
-      marks = false;
-      registers = false;
+    settings = {
+      plugins = {
+        marks = false;
+        registers = false;
 
-      presets = {
-        g = false;
-        z = false;
-        motions = false;
-        nav = false;
-        operators = false;
-        textObjects = false;
-        windows = false;
+        presets = {
+          g = false;
+          z = false;
+          motions = false;
+          nav = false;
+          operators = false;
+          textObjects = false;
+          windows = false;
+        };
       };
-    };
 
-    ignoreMissing = true;
-    showHelp = true;
-    showKeys = true;
+      ignoreMissing = true;
+      showHelp = true;
+      showKeys = true;
 
-    disable.filetypes = [ "TelescopePrompt" ];
+      disable.filetypes = [ "TelescopePrompt" ];
 
-    layout = {
-      height = { min = 4; max = 25; };
-      width = { min = 20; max = 50; };
-    };
+      layout = {
+        height = { min = 4; max = 25; };
+        width = { min = 20; max = 50; };
+      };
 
-    window = {
-      border = "single";
-      padding = { top = 2; right = 2; bottom = 2; left = 2; };
+      window = {
+        border = "single";
+        padding = { top = 2; right = 2; bottom = 2; left = 2; };
+      };
     };
   };
 

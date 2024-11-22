@@ -3,17 +3,16 @@
 {
   plugins.project-nvim = {
     enable = true;
-    detectionMethods = [ "pattern" ];
-    manualMode = false;
-
-    ignoreLsp = [ ];
-    showHidden = false;
-    silentChdir = true;
-    scopeChdir = "global";
-
     enableTelescope = true;
+    settings = {
+      detection_methods = [ "pattern" ];
+      manual_mode = false;
 
-    extraOptions = {
+      ignore_lsp = [ ];
+      show_hidde = false;
+      silend_chdir = true;
+      scope_chdir = "global";
+
       patterns = [
         ".git"
         "Makefile"

@@ -24,7 +24,7 @@ in
         name = "Iosevka Nerd Font";
       };
 
-      theme = lib.mkDefault "Tokyo Night";
+      themeFile = lib.mkDefault "tokyo_night_moon";
 
       shellIntegration = {
         enableBashIntegration = true;
@@ -35,10 +35,10 @@ in
 
     specialisation = {
       light.configuration = {
-        programs.kitty.theme = lib.mkForce "Tokyo Night Day";
+        programs.kitty.themeFile = lib.mkForce "tokyo_night_day";
       };
       dark.configuration = {
-        programs.kitty.theme = lib.mkForce "Tokyo Night Storm";
+        programs.kitty.themeFile = lib.mkForce "tokyo_night_storm";
       };
     };
 

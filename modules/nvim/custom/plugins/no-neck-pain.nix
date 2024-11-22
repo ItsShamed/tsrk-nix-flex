@@ -1,4 +1,4 @@
-{ pkgs, lib, config, helpers, ... }:
+{ lib, helpers, ... }:
 
 with helpers;
 let
@@ -18,18 +18,18 @@ let
     };
   };
 
-  mkStaticMapping = default: actionDescription: helpers.defaultNullOpts.mkNullableWithRaw' {
+  mkStaticMapping = pluginDefault: actionDescription: helpers.defaultNullOpts.mkNullableWithRaw' {
     type = lib.types.either lib.types.str lib.types.bool;
-    inherit default;
+    inherit pluginDefault;
     description = ''
       Sets a global mapping to Neovim, which allows you to ${actionDescription}.
       When `false`, the mapping is not created.
     '';
   };
 
-  mkValuedMapping = default: actionDescription: helpers.defaultNullOpts.mkNullableWithRaw' {
+  mkValuedMapping = pluginDefault: actionDescription: helpers.defaultNullOpts.mkNullableWithRaw' {
     type = lib.types.either (lib.types.either (lib.types.submodule valuedMappingType) lib.types.str) lib.types.bool;
-    inherit default;
+    inherit pluginDefault;
     description = ''
       Sets a global mapping to Neovim, which allows you to ${actionDescription}.
       When `false`, the mapping is not created.
@@ -37,10 +37,10 @@ let
   };
 in
 
-helpers.neovim-plugin.mkNeovimPlugin config {
+helpers.neovim-plugin.mkNeovimPlugin {
   name = "no-neck-pain";
   originalName = "no-neck-pain.nvim";
-  defaultPackage = pkgs.vimPlugins.no-neck-pain-nvim;
+  package = "no-neck-pain-nvim";
 
   maintainers = [ ];
 
@@ -119,7 +119,7 @@ helpers.neovim-plugin.mkNeovimPlugin config {
     buffer =
       let
         mkNormalizedInt' = args: mkNullableWithRaw' (args // { type = (lib.types.ints.between (-1) 1); });
-        mkNormalizedInt = default: description: mkNormalizedInt' { inherit default description; };
+        mkNormalizedInt = pluginDefault: description: mkNormalizedInt' { inherit pluginDefault description; };
         scratchPad = mkSettingsOption {
           options = {
             enabled = mkBool false ''

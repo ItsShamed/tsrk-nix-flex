@@ -45,7 +45,9 @@
         };
       };
 
-      sound.mediaKeys.enable = lib.mkDefault true;
+      # 2024-12-01: sound.mediaKeys has been removed in 24.11
+      # TODO: find how much effect this had in 24.05 and how to cope around it
+      # sound.mediaKeys.enable = lib.mkDefault true;
 
       security.rtkit.enable = true;
 

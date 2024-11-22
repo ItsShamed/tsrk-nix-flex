@@ -21,7 +21,12 @@
   console.keyMap = "us";
 
   nix = {
-    package = pkgs.nixFlakes;
+    /*
+    * pkgs.nixFlakes was just an alias to pkgs.nixVersions.stable, and has
+    * been removed in 24.11
+    * Rather just use the pkgs.nixStable alias directly at that point.
+    */
+    package = pkgs.nixStable;
 
     settings = {
       trusted-users = [ "root" "@wheel" ];
@@ -103,7 +108,16 @@
   # Sometimes it's a little bit of a pain to run some programs so i'll just use
   # nix-ld when I'm lazy to develop a proper devshell or nix package
   programs.nix-ld.enable = lib.mkDefault true;
-  programs.nix-ld.libraries = with pkgs; [ ] ++ osu-lazer.runtimeDeps;
+  programs.nix-ld.libraries = with pkgs; [
+    ffmpeg
+    alsa-lib
+    SDL2
+    lttng-ust
+    numactl
+    libglvnd
+    xorg.libXi
+    udev
+  ];
 
   boot.loader.grub = lib.mkImageMediaOverride {
     theme = "${pkgs.hyperfluent-grub-theme}";

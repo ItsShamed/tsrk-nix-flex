@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   plugins = {
@@ -21,7 +21,7 @@
         };
         cmake.enable = true;
         eslint.enable = true;
-        lua-ls.enable = true;
+        lua_ls.enable = true;
         nixd = {
           enable = true;
           settings = {
@@ -35,10 +35,10 @@
         jsonls.enable = true;
         texlab.enable = true;
         yamlls.enable = true;
-        rust-analyzer = {
+        rust_analyzer = {
           enable = true;
-          installCargo = lib.mkDefault false;
-          installRustc = lib.mkDefault false;
+          installCargo = false;
+          installRustc = false;
         };
       };
     };

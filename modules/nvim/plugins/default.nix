@@ -15,14 +15,14 @@
     ./which-key.nix
     ./alpha.nix
     ./dap.nix
-    ./wakatime.nix
   ];
 
   plugins = {
+    web-devicons.enable = true;
     bufferline.enable = true;
     lualine.enable = true;
     luasnip.enable = true;
-    surround.enable = true;
+    vim-surround.enable = true;
     notify.enable = true;
     nvim-autopairs.enable = true;
   };

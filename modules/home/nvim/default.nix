@@ -18,7 +18,7 @@
         self.nixvimModules.default
       ];
 
-      tsrk.wakatime.enable = config.tsrk.nvim.wakatime.enable;
+      plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
     };
 
     home.file.".ideavimrc".source = ./ideavimrc;
