@@ -7,7 +7,6 @@
   ];
 
   config = {
-    assertions = [ (self.lib.profileNeedsPkg "Shell" config) ];
     tsrk.packages.core.enable = lib.mkDefault true;
     tsrk.shell = {
       bash.enable = lib.mkDefault true;

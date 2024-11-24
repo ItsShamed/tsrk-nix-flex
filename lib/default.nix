@@ -10,6 +10,7 @@ rec {
   generateHome = import ./generateHome.nix args;
   generateSystemHome = import ./generateSystemHome.nix args;
   generateFullUser = import ./generateFullUser.nix (args // { inherit generateUser generateSystemHome; });
+  generateAndroidHome = import ./generateAndroidHome.nix args;
   fromYAML = import ./fromYAML.nix args;
   mkGL = import ./mkGL.nix args;
 
