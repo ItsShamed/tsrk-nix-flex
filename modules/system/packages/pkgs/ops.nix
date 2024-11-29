@@ -19,6 +19,8 @@ in
       k9s
       postgresql
       sqlfluff
+      vault-bin
+      kubernetes-helm
     ];
 
     environment.pathsToLink = [ "/share/postgresql" ];
