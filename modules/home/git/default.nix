@@ -23,6 +23,9 @@
       enable = true;
       lfs.enable = lib.mkDefault true;
       userName = lib.mkDefault "${config.home.username}";
+      extraConfig = {
+        init.defaultBranch = "main";
+      };
     };
   };
 }
