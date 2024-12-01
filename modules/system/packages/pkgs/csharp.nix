@@ -32,8 +32,6 @@ in
       [
         cfg.package
         mono
-        msbuild
-        roslyn
       ]
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
