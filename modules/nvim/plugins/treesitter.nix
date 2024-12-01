@@ -18,7 +18,6 @@
         "rust"
         "java"
         "yaml"
-        "csharp"
       ];
     };
   };

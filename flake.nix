@@ -131,7 +131,7 @@
           inherit (pkgSet system) pkgs;
         in
         {
-          formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.nixfmt-rfc-style;
           packages = (import ./pkgs { inherit lib pkgs; }) // {
             nvim-cirno = nixvim.legacyPackages.${system}.makeNixvimWithModule {
               inherit pkgs;
