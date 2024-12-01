@@ -64,6 +64,17 @@
           config = {
             allowUnfree = true;
             android_sdk.accept_license = true;
+            # TODO: Rider is currently fucking up things, remove on new releases
+            permittedInsecurePackages = [
+              "dotnet-sdk-wrapped-7.0.410"
+              "dotnet-sdk-7.0.410"
+              "dotnet-runtime-6.0.36"
+              "dotnet-sdk-6.0.36"
+              "dotnet-sdk-wrapped-6.0.36"
+              "dotnet-sdk-wrapped-6.0.428"
+              "dotnet-sdk-6.0.428"
+              "dotnet-runtime-6.0.428"
+            ];
           };
           overlays = [
             nixgl.overlay
