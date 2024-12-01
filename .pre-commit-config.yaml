@@ -7,10 +7,10 @@ repos:
         args:
           - --edit
           - --no-lambda-arg
-        stages: [commit]
+        stages: [pre-commit]
   - repo: https://github.com/nix-community/nixpkgs-fmt
     rev: v1.3.0
     hooks:
       - id: nixpkgs-fmt
         name: Format nix code with nixpkgs-fmt
-        stages: [commit]
+        stages: [pre-commit]
