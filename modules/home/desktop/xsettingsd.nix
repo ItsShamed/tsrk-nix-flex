@@ -25,7 +25,7 @@ in
         "Xft/HintStyle" = "hintfull";
         "Xft/Hinting" = 1;
         "Xft/RGBA" = "rgb";
-        "Gtk/CursorThemeName" = "macOS-BigSur";
+        "Gtk/CursorThemeName" = "macOS";
         "Gtk/CursorThemeSize" = 32;
         "Xcursor/size" = 32;
       };
