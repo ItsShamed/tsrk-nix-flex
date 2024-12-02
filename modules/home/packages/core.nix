@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = {
@@ -10,6 +10,11 @@
   config = lib.mkIf config.tsrk.packages.core.enable {
     programs = {
       btop.enable = true;
+      ripgrep = {
+        enable = true;
+        package = pkgs.ripgrep;
+      };
+      fd.enable = true;
     };
   };
 }
