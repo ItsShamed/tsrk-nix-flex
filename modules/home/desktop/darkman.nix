@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, lib, hmLib, ... }:
+{ config, pkgs, lib, hmLib, ... }:
 
 let
   cfg = config.tsrk.darkman;
@@ -22,8 +22,7 @@ let
     {
       services.darkman = {
         enable = lib.mkDefault true;
-        # TODO: Remove when 24.11 releases
-        package = pkgsUnstable.darkman;
+        package = pkgs.darkman;
         settings = {
           lat = 48.87951;
           lng = 2.28513;

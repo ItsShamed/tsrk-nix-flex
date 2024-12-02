@@ -1,4 +1,4 @@
-{ config, lib, hmLib, pkgs, pkgsUnstable, ... }:
+{ config, lib, hmLib, pkgs, ... }:
 
 let
   cfg = config.tsrk.xsettingsd;
@@ -31,7 +31,7 @@ in
       };
     };
 
-    home.packages = with pkgsUnstable; [
+    home.packages = with pkgs; [
       (tokyonight-gtk-theme.override {
         colorVariants = [
           "dark"
