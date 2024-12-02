@@ -1,4 +1,4 @@
-{ helpers, ... }:
+{ helpers, lib, ... }:
 
 with helpers;
 let
@@ -23,7 +23,58 @@ let
     nowait = true;
   };
 
-  visualMappings = {
+  mkConvertedSpec = options: attrs:
+    let
+      filteredAttrs = [
+        "prefix"
+        "buffer"
+        "noremap"
+        "silent"
+      ];
+
+      checkAttrValid = n: builtins.all (s: s != n) filteredAttrs;
+      filteredOptions = lib.attrsets.filterAttrs (n: _: checkAttrValid n) options;
+
+      mkConvertedMap = keys: mapping: options:
+        assert (builtins.length mapping) >= 1;
+        {
+          __unkeyed-1 = keys;
+          __unkeyed-2 = builtins.elemAt mapping 0;
+          remap = !(options.noremap or true);
+        } // filteredOptions
+        // (if (builtins.length mapping) > 1 then { desc = builtins.elemAt mapping 1; } else { })
+      ;
+
+      convertMappingChild = prefix: obj:
+        if builtins.isList obj then
+          mkConvertedMap prefix obj options
+        else if builtins.isAttrs obj then
+          (lib.lists.flatten (
+            convertMappingNode prefix (lib.attrsets.filterAttrs
+              (n: _: n != "name") # avoid 'name' being treated as a keybind
+              obj
+            )
+          ))
+          ++ (lib.lists.optional (builtins.hasAttr "name" obj) ({ group = obj.name; __unkeyed-1 = prefix; } // filteredOptions))
+        else
+          builtins.throw "child should either be an attrset (group) or a list (mapping)."
+      ;
+
+      convertMappingNode = prefix: attrs:
+        lib.lists.flatten (
+          lib.attrsets.mapAttrsToList
+            (key: mapping:
+              builtins.addErrorContext "while converting which-key `${prefix + key}` mapping node to new spec"
+                (convertMappingChild (prefix + key) mapping)
+            )
+            attrs
+        );
+    in
+    builtins.addErrorContext "while converting which-key mapping to new spec"
+      (lib.lists.flatten (convertMappingNode (options.prefix) attrs))
+  ;
+
+  visualMappings = mkConvertedSpec visualMappingsOptions {
     "/" = [ "<Plug>(comment_toggle_linewise_visual)" "Comment toggle (visual)" ];
     l = {
       name = "LSP";
@@ -31,7 +82,7 @@ let
     };
   };
 
-  mappings = {
+  mappings = mkConvertedSpec mappingsOptions {
     ";" = [ "<cmd>Alpha<CR>" "Dashboard" ];
     "a" = [ "<cmd>w!<CR>" "Save" ];
     "q" = [ "<cmd>confirm q<CR>" "Quit" ];
@@ -40,7 +91,7 @@ let
     "f" = [
       (lua ''
         function()
-          find_project_files { previewer = flase }
+          find_project_files { previewer = false }
         end
       '')
       "Find File"
@@ -165,6 +216,8 @@ let
       ];
     };
   };
+
+  resultingMappings = mappings ++ visualMappings;
 in
 {
   plugins.which-key = {
@@ -197,47 +250,49 @@ in
         width = { min = 20; max = 50; };
       };
 
-      window = {
+      win = {
         border = "single";
-        padding = { top = 2; right = 2; bottom = 2; left = 2; };
+        padding = [ 2 2 ];
       };
+
+      spec = resultingMappings;
     };
   };
 
-  extraConfigLuaPost = ''
-    function format_filter(client)
-      local filetype = vim.bo.filetype
-      local n = require "null-ls"
-      local s = require "null-ls.sources"
-      local method = n.methods.FORMATTING
-      local available_formatters = s.get_available(filetype, method)
-
-      if #available_formatters > 0 then
-        return client.name == "null-ls"
-      elseif client.supports_method "textDocument/formatting" then
-        return true
-      else
-        return false
-      end
-    end
-
-    function format(opts)
-      opts = opts or {}
-      opts.filter = opts.filter or format_filter
-
-      return vim.lsp.buf.format(opts)
-    end
-    -- Which-key mappings
-
-    local which_key = require "which-key"
-
-    local wk_opts = ${toLuaObject mappingsOptions}
-    local wk_vopts = ${toLuaObject visualMappingsOptions}
-
-    local wk_mappings = ${toLuaObject mappings}
-    local wk_vmappings = ${toLuaObject visualMappings}
-
-    which_key.register(wk_mappings, wk_opts)
-    which_key.register(wk_vmappings, wk_vopts)
-  '';
+  # extraConfigLuaPost = ''
+  #   function format_filter(client)
+  #     local filetype = vim.bo.filetype
+  #     local n = require "null-ls"
+  #     local s = require "null-ls.sources"
+  #     local method = n.methods.FORMATTING
+  #     local available_formatters = s.get_available(filetype, method)
+  #
+  #     if #available_formatters > 0 then
+  #       return client.name == "null-ls"
+  #     elseif client.supports_method "textDocument/formatting" then
+  #       return true
+  #     else
+  #       return false
+  #     end
+  #   end
+  #
+  #   function format(opts)
+  #     opts = opts or {}
+  #     opts.filter = opts.filter or format_filter
+  #
+  #     return vim.lsp.buf.format(opts)
+  #   end
+  #   -- Which-key mappings
+  #
+  #   local which_key = require "which-key"
+  #
+  #   local wk_opts = ${toLuaObject mappingsOptions}
+  #   local wk_vopts = ${toLuaObject visualMappingsOptions}
+  #
+  #   local wk_mappings = ${toLuaObject mappings}
+  #   local wk_vmappings = ${toLuaObject visualMappings}
+  #
+  #   which_key.register(wk_mappings, wk_opts)
+  #   which_key.register(wk_vmappings, wk_vopts)
+  # '';
 }
