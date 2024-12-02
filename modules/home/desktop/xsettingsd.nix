@@ -15,7 +15,7 @@ in
       gtk.enable = lib.mkDefault true;
       x11.enable = lib.mkDefault true;
       package = pkgs.apple-cursor;
-      name = "macOS-BigSur";
+      name = "macOS";
     };
 
     services.xsettingsd = {
