@@ -15,12 +15,23 @@
       };
 
       servers = {
+        autotools_ls.enable = true;
         clangd = {
           enable = true;
           package = pkgs.clang-tools_16;
         };
         cmake.enable = true;
+        dockerls = {
+          enable = true;
+          settings = {
+            docker.languageserver.formatter.ignoreMultilineInstructions = true;
+          };
+        };
         eslint.enable = true;
+        helm_ls = {
+          enable = true;
+          cmd = [ "${pkgs.helm-ls}/bin/helm_ls" ];
+        };
         lua_ls.enable = true;
         nixd = {
           enable = true;

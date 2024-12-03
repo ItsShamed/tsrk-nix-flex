@@ -25,5 +25,14 @@
     vim-surround.enable = true;
     notify.enable = true;
     nvim-autopairs.enable = true;
+    helm.enable = true;
   };
+
+  autoCmd = [
+    {
+      event = "FileType";
+      pattern = "helm";
+      command = "LspRestart";
+    }
+  ];
 }
