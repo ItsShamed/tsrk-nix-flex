@@ -52,20 +52,8 @@
   tsrk.networking.networkmanager.enable = true;
   tsrk.containers = {
     enable = true;
-    services.pihole = {
-      enable = true;
-      exposeTo = [
-        "127.0.0.53"
-      ];
-    };
     docker.enable = true;
   };
-
-  networking.nameservers = [
-    "127.0.0.53"
-    "1.1.1.1"
-    "1.0.0.1"
-  ];
 
   tsrk.libvirt.enable = true;
 
