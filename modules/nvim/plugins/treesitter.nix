@@ -18,6 +18,7 @@
         "rust"
         "java"
         "yaml"
+        "vala"
       ];
     };
   };
