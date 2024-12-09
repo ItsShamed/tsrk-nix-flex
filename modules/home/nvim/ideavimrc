@@ -17,6 +17,7 @@ set so=7
 set siso=10
 set incsearch
 set clipboard+=unnamed
+set relativenumber
 
 set which-key 
 let g:WhichKey_ShowVimActions = "true"
