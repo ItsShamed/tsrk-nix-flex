@@ -45,6 +45,7 @@
         };
         jsonls.enable = true;
         texlab.enable = true;
+        vala_ls.enable = true;
         yamlls.enable = true;
         rust_analyzer = {
           enable = true;
