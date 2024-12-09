@@ -1,4 +1,4 @@
-{ self, lib, ... }:
+{ self, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -9,7 +9,6 @@
 
   tsrk = {
     i3.lockerBackground = ../../modules/home/desktop/files/bg-no-logo.png;
-    picom.enable = lib.mkImageMediaOverride false;
     packages = {
       games.enable = true;
       media.enable = true;
