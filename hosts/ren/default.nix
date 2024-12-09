@@ -43,7 +43,12 @@
 
   tsrk.packages.pkgs = {
     cDev.enable = true;
-    java.enable = true;
+    java = {
+      enable = true;
+      jdk.extraPackages = with pkgs; [
+        jdk17
+      ];
+    };
     csharp.enable = true;
     android.enable = true;
     python.enable = true;
