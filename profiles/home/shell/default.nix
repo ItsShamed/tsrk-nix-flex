@@ -12,6 +12,7 @@
     tsrk.shell = {
       bash.enable = lib.mkDefault true;
       bat.enable = lib.mkDefault true;
+      direnv.enable = lib.mkDefault true;
       enableViKeybinds = lib.mkDefault true;
       fastfetch.enable = lib.mkDefault true;
       lsd.enable = lib.mkDefault true;
