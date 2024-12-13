@@ -1,4 +1,6 @@
-{ pkgs, lib, config, self, ... }:
+{ self, ... }:
+
+{ pkgs, lib, config, ... }:
 
 {
   options = {

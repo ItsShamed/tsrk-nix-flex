@@ -1,9 +1,8 @@
-{ self, inputs, pkgSet, ... }:
+{ self, inputs, ... }:
 
 name:
 
 { modules ? [ ]
-, system ? "x86_64-linux"
 , homeDir ? "/home/${name}"
 }:
 
@@ -26,14 +25,5 @@ name:
   home-manager.extraSpecialArgs = {
     inherit self;
     inherit inputs;
-    inherit (inputs) home-manager;
-    inherit (pkgSet) pkgsUnstable;
-    hmLib = inputs.home-manager.lib.hm;
-    vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" {
-      inherit (inputs.nixpkgs) lib;
-      inherit (pkgSet) pkgs;
-      _nixvimTests = false;
-    };
-    gaming = inputs.nix-gaming.packages.${system};
   };
 }

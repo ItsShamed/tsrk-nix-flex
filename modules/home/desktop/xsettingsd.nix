@@ -1,4 +1,4 @@
-{ config, lib, hmLib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.tsrk.xsettingsd;
@@ -58,7 +58,7 @@ in
       };
     };
 
-    home.activation.xsettingsd-reload = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
+    home.activation.xsettingsd-reload = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
       _i "Reloading xsettingsd"
 
       {

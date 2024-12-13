@@ -1,10 +1,9 @@
 [
-  ./network/hostname.nix
+  { path = ./network/hostname.nix; }
   ./network/networkmanager.nix
-  ./packages
+  { path = ./packages; }
   ./programs/gamescope.nix
-  ./services/audio.nix
-  ./services/audio/mopidy
+  { path = ./services/audio.nix; }
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
   ./services/networking/sshd

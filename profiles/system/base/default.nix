@@ -1,4 +1,6 @@
-{ pkgs, lib, self, agenix, config, ... }:
+{ self, inputs, ... }:
+
+{ pkgs, lib, config, ... }:
 
 {
 
@@ -100,7 +102,7 @@
   };
 
   environment.systemPackages = [
-    agenix.agenix
+    inputs.agenix.packages.${pkgs.system}.agenix
   ];
 
   programs.gnupg.agent = {

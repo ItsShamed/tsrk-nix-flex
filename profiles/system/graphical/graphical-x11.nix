@@ -1,6 +1,10 @@
-{ lib, self, ... }:
+{ self, ... }:
+
+{ lib, ... }:
 
 {
+  key = ./.;
+
   imports = [
     self.nixosModules.i3
     self.nixosModules.qwerty-fr

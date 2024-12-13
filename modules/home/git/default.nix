@@ -1,10 +1,12 @@
+args:
+
 { config, lib, ... }:
 
 {
   imports = [
     ./cli.nix
     ./delta.nix
-    ./lazygit.nix
+    (lib.modules.importApply ./lazygit.nix args)
   ];
 
   options = {

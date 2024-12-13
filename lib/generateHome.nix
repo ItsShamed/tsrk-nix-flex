@@ -3,7 +3,6 @@
 name:
 
 { modules ? [ ]
-, system ? "x86_64-linux"
 , homeDir ? "/home/${name}"
 }:
 
@@ -26,14 +25,6 @@ let
     extraSpecialArgs = {
       inherit self;
       inherit inputs;
-      inherit (pkgSet) pkgsUnstable;
-      vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" {
-        inherit (inputs.nixpkgs) lib;
-        inherit (pkgSet) pkgs;
-        _nixvimTests = false;
-      };
-      hmLib = inputs.home-manager.lib.hm;
-      gaming = inputs.nix-gaming.packages.${system};
     };
   };
 in

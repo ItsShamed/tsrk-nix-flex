@@ -1,4 +1,6 @@
-{ self, lib, ... }:
+{ self, ... }:
+
+{ lib, ... }:
 
 {
   imports = with self.homeManagerModules; [

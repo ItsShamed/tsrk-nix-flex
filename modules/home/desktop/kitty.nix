@@ -1,4 +1,4 @@
-{ config, pkgs, lib, hmLib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   fonts = pkgs.nerdfonts.override {
@@ -42,7 +42,7 @@ in
       };
     };
 
-    home.activation.kitty-reload = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
+    home.activation.kitty-reload = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
       _i "Reloading kitty"
       if ! ${pkgs.killall}/bin/killall -USR1 .kitty-wrapped; then
         _iWarn "Failed to reload kitty, theme will not be updated"

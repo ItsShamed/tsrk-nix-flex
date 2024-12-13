@@ -1,4 +1,6 @@
-{ config, lib, self, ... }:
+{ self, ... }:
+
+{ config, lib, ... }:
 
 let
   baseConfig = {

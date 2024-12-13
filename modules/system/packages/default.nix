@@ -1,7 +1,9 @@
-{ ... }:
+args:
+
+{ lib, ... }:
 
 {
   imports = [
-    ./pkgs
+    (lib.modules.importApply ./pkgs args)
   ];
 }

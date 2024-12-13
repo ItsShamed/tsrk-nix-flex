@@ -1,3 +1,7 @@
+args:
+
+{ lib, ... }:
+
 {
   imports = [
     ./android.nix
@@ -7,7 +11,7 @@
     ./csharp.nix
     ./desktop.nix
     ./fs.nix
-    ./gaming.nix
+    (lib.modules.importApply ./gaming.nix args)
     ./go.nix
     ./java.nix
     ./ops.nix

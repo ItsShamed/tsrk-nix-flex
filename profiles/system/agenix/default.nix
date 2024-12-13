@@ -1,6 +1,10 @@
-{ config, inputs, lib, agenix, ... }:
+{ inputs, ... }:
+
+{ config, lib, ... }:
 
 {
+  key = ./.;
+
   imports = [
     (inputs.agenix.nixosModules.default)
   ];

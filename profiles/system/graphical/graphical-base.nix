@@ -1,6 +1,9 @@
-{ lib, pkgs, self, ... }:
+{ self, ... }:
+
+{ lib, pkgs, ... }:
 
 {
+  key = ./.;
 
   imports = [
     self.nixosModules.bluetooth

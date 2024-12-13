@@ -1,4 +1,4 @@
-{ config, pkgs, lib, hmLib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   cfg = config.tsrk.darkman;
@@ -47,7 +47,7 @@ let
         };
       };
 
-      home.activation.copy-activation = hmLib.dag.entryAfter [ "reloadSystemd" ] ''
+      home.activation.copy-activation = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
         echo "Copying activation scripts"
         activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
         activation_dir="$(cd -- "$activation_dir" && pwd)"

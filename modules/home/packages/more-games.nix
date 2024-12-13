@@ -1,5 +1,10 @@
-{ gaming, lib, config, pkgs, ... }:
+{ inputs, ... }:
 
+{ lib, config, pkgs, ... }:
+
+let
+  gaming = inputs.nix-gaming.packages.${pkgs.system};
+in
 {
   options = {
     tsrk.packages.more-gaming = {

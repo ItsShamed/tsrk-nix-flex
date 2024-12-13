@@ -96,25 +96,28 @@
           allOverlays = self: super: builtins.attrValues (
             builtins.mapAttrs (_: overlay: overlay self super) baseOverlays
           );
+          commonArgs = {
+            inherit lib self inputs;
+          };
         in
         {
-          nixosModules = (import ./modules/system { inherit lib; })
-            // (import ./profiles/system { inherit lib; })
+          nixosModules = (import ./modules/system commonArgs)
+            // (import ./profiles/system commonArgs)
             // {
-            all = import ./modules/system/all.nix;
+            all = lib.modules.importApply ./modules/system/all.nix commonArgs;
             default = self.nixosModules.all;
           };
 
-          homeManagerModules = (import ./modules/home { inherit lib; })
-            // (import ./profiles/home { inherit lib; })
+          homeManagerModules = (import ./modules/home commonArgs)
+            // (import ./profiles/home commonArgs)
             // {
-            all = import ./modules/home/all.nix;
+            all = lib.modules.importApply ./modules/home/all.nix commonArgs;
             default = self.homeManagerModules.all;
           };
 
           nixvimModules.default = import ./modules/nvim;
 
-          lspHints = import ./lsp-hints.nix { inherit lib self inputs; };
+          lspHints = import ./lsp-hints.nix commonArgs;
 
           lib = import ./lib {
             inherit lib self;

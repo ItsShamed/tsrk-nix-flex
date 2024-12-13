@@ -1,6 +1,10 @@
-{ self, lib, ... }:
+{ self, ... }:
+
+{ lib, ... }:
 
 {
+  key = ./x11-base.nix;
+
   imports = with self.homeManagerModules; [
     i3
     kitty

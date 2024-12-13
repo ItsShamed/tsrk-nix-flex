@@ -1,6 +1,10 @@
-{ self, lib, config, options, ... }:
+{ self, ... }:
+
+{ lib, config, options, ... }:
 
 {
+  key = ./.;
+
   imports = with self.homeManagerModules; [
     darkman
     dunst

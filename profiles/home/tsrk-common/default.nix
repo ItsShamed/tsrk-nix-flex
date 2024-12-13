@@ -1,6 +1,10 @@
-{ self, pkgs, inputs, ... }:
+{ self, inputs, ... }:
+
+{ pkgs, ... }:
 
 {
+  key = ./.;
+
   imports = with self.homeManagerModules; [
     packages
     profile-x11

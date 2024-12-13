@@ -1,10 +1,14 @@
+args:
+
+{ lib, ... }:
+
 {
   imports = [
     ./core.nix
     ./desktop.nix
     ./dev.nix
-    ./games.nix
+    (lib.modules.importApply ./games.nix args)
     ./media.nix
-    ./more-games.nix
+    (lib.modules.importApply ./more-games.nix args)
   ];
 }

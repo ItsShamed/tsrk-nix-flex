@@ -1,6 +1,10 @@
-{ self, lib, config, ... }:
+{ self, ... }:
+
+{ lib, config, ... }:
 
 {
+  key = ./.;
+
   imports = with self.homeManagerModules; [
     nvim
     shell
