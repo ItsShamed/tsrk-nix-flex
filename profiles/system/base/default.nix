@@ -1,6 +1,9 @@
-{ pkgs, lib, self, host, agenix, ... }:
+{ pkgs, lib, self, agenix, config, ... }:
 
 {
+
+  _file = ./default.nix;
+  key = ./default.nix;
 
   imports = [
     self.nixosModules.packages
@@ -138,7 +141,7 @@
     echo '    @@@@@@@@                @@@@@@@       @@@@@@@@@@'
     echo '   @@@@@@@/                 @@@@@@@           @@@@@@@@@@'
     echo '   @@@@@@@                  @@@@@@@               @@@@@@@@@@'
-    printf "\033[0;36mYou are currently booting on the \033[1;35m${host} \033[0;36m image\033[0m\n"
+    printf "\033[0;36mYou are currently booting on the \033[1;35m${config.lib.tsrk.imageName or "unspecified"} \033[0;36m image\033[0m\n"
   '';
 
   system.stateVersion = "24.05";

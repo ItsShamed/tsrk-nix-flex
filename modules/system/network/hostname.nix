@@ -1,11 +1,14 @@
-{ config, lib, self, host, ... }:
+{ config, lib, self, ... }:
 
 let
   cfg = config.tsrk.networking.hostname;
+  host = config.lib.tsrk.imageName or null;
 in
 {
   options = {
     tsrk.networking.hostname = {
+      enable = (lib.options.mkEnableOption "custom hostname options")
+        // { default = true; };
       useDHCPHostname = lib.options.mkOption {
         type = lib.types.bool;
         description = "Whether to use the hostname provided by DHCP.";
@@ -24,11 +27,17 @@ in
     };
   };
 
-  config = (self.lib.mkIfElse cfg.useDHCPHostname
+  config = (lib.mkIf cfg.enable (self.lib.mkIfElse cfg.useDHCPHostname
     {
       networking.hostName = "";
     }
     {
+      assertions = [
+        {
+          assertion = host != null;
+          message = "Please set `lib.tsrk.imageName' in your config, othewrise set `tsrk.networking.hostname.enable' to false.";
+        }
+      ];
       networking.hostName = cfg.base + (lib.strings.optionalString (!cfg.removeImageSuffix) ("-" + host));
-    });
+    }));
 }

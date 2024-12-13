@@ -15,6 +15,7 @@ let
       modules =
         let
           global = {
+            lib.tsrk.imageName = imageName;
             system.name = imageName;
             nix.nixPath = [
               "nixpkgs=${nixpkgs}"
