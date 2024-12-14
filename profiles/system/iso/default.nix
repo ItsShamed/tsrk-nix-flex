@@ -1,3 +1,5 @@
+{ self, ... }:
+
 { lib, config, ... }:
 
 let
@@ -8,5 +10,10 @@ let
 in
 {
   key = ./.;
+
+  imports = with self.nixosModules; [
+    profile-base
+  ];
+
   isoImage.isoName = lib.mkImageMediaOverride "nixos-tsrk-${host}.iso";
 }

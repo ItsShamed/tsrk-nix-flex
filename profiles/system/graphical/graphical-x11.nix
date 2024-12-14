@@ -3,9 +3,10 @@
 { lib, ... }:
 
 {
-  key = ./.;
+  key = ./graphical-x11.nix;
 
   imports = [
+    self.nixosModules.profile-graphical-base
     self.nixosModules.i3
     self.nixosModules.qwerty-fr
   ];

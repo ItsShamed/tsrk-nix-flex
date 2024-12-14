@@ -1,11 +1,12 @@
-{ self, ... }:
+{ self, ... } @ args:
 
 { lib, pkgs, ... }:
 
 {
-  key = ./.;
+  key = ./graphical-base.nix;
 
   imports = [
+    (lib.modules.importApply ../base args)
     self.nixosModules.bluetooth
     self.nixosModules.sddm
     self.nixosModules.audio

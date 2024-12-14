@@ -3,9 +3,7 @@
 { pkgs, lib, config, ... }:
 
 {
-
-  _file = ./default.nix;
-  key = ./default.nix;
+  key = ./.;
 
   imports = [
     self.nixosModules.packages

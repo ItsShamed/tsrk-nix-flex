@@ -15,6 +15,8 @@ let
       modules =
         let
           global = {
+            _file = ./.;
+            key = ./.;
             lib.tsrk.imageName = imageName;
             system.name = imageName;
             nix.nixPath = [
@@ -34,9 +36,8 @@ let
               inherit (pkgSet) pkgs;
             };
           };
-          imported = import module;
         in
-        [ global imported ];
+        [ global module ];
     in
     {
       name = imageName;
