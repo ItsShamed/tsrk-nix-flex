@@ -1,17 +1,18 @@
 { self, ... }:
 
-{ lib, config, ... }:
+{ lib, ... }:
 
 {
   key = ./.;
 
   imports = with self.homeManagerModules; [
+    packages
     nvim
+    git
     shell
   ];
 
   config = {
-    assertions = [ (self.lib.profileNeedsPkg "Shell" config) ];
     tsrk.packages.core.enable = lib.mkDefault true;
     tsrk.shell = {
       bash.enable = lib.mkDefault true;
@@ -23,6 +24,12 @@
       starship.enable = lib.mkDefault true;
       zoxide.enable = lib.mkDefault true;
       zsh.enable = lib.mkDefault true;
+    };
+    tsrk.git = {
+      enable = lib.mkDefault true;
+      cli.enable = lib.mkDefault true;
+      delta.enable = lib.mkDefault true;
+      lazygit.enable = lib.mkDefault true;
     };
     tsrk.nvim.enable = lib.mkDefault true;
   };

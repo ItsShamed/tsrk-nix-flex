@@ -2,7 +2,6 @@
 
 {
   imports = with self.homeManagerModules; [
-    profile-tsrk-common
     profile-tsrk-private
   ];
 

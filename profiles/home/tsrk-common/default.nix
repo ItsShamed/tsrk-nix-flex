@@ -6,10 +6,7 @@
   key = ./.;
 
   imports = with self.homeManagerModules; [
-    packages
     profile-x11
-    profile-git
-    profile-shell
     inputs.spotify-notifyx.homeManagerModules.default
   ];
 

@@ -1,6 +1,6 @@
 { self, ... }:
 
-{ lib, config, options, ... }:
+{ lib, options, ... }:
 
 {
   key = ./.;
@@ -21,7 +21,6 @@
   ];
 
   config = {
-    assertions = [ (self.lib.profileNeedsPkg "X11 Full" config) ];
     tsrk = {
       i3.exitPromptCommand = lib.mkDefault (teardown:
         "exec rofi -show p -modi p:'rofi-power-menu --logout ${teardown}'"

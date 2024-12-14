@@ -2,7 +2,6 @@
 
 {
   imports = with self.homeManagerModules; [
-    profile-shell
-    packages
+    profile-base
   ];
 }

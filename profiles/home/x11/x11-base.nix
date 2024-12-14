@@ -6,6 +6,7 @@
   key = ./x11-base.nix;
 
   imports = with self.homeManagerModules; [
+    profile-base
     i3
     kitty
     polybar
