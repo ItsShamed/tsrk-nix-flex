@@ -55,6 +55,10 @@ let
         "${config.home.homeDirectory}/.fehbg"
       fi
     ''
+    ''
+      ## Launch betterlockscreen setup
+      systemctl --user start setup-betterlockscreen &
+    ''
     (lib.strings.optionalString config.services.polybar.enable ''
       # Polybar
       if systemctl --user is-active polybar; then
