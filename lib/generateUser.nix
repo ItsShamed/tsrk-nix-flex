@@ -11,6 +11,9 @@ name:
 { lib, ... }:
 
 {
+  _file = ./generateUser.nix;
+  key = ./generateUser.nix + ".${name}";
+
   users.users."${name}" = {
     inherit name;
     inherit hashedPasswordFile password initialPassword;

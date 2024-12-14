@@ -12,6 +12,9 @@ name:
 }:
 
 {
+  _file = ./generateFullUser.nix;
+  key = ./generateFullUser.nix + ".${name}";
+
   imports = [
     (generateSystemHome name { inherit modules homeDir; })
     (generateUser name { inherit password hashedPasswordFile canSudo moreGroups; })

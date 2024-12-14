@@ -7,6 +7,8 @@ name:
 }:
 
 {
+  _file = ./generateSystemHome.nix;
+  key = ./generateSystemHome.nix + ".${name}";
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];

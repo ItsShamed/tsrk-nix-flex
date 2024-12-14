@@ -8,6 +8,8 @@ name:
 
 let
   homeManagerBase = { ... }: {
+    _file = ./generateHome.nix;
+    key = ./generateHome.nix + ".${name}";
     home.username = name;
     home.homeDirectory = homeDir;
     home.stateVersion = "24.05";
