@@ -27,6 +27,7 @@
     vim-surround.enable = true;
     notify.enable = true;
     nvim-autopairs.enable = true;
+    todo-comments.enable = true;
     helm.enable = true;
   };
 
