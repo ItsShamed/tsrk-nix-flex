@@ -224,3 +224,7 @@ fabric.properties
 
 *.iml
 .idea/**/*
+
+# DevShell
+.direnv/
+.devenv/

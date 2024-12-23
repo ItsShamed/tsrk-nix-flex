@@ -41,6 +41,8 @@
     };
 
     agenix.url = "github:ryantm/agenix";
+
+    devenv.url = "github:cachix/devenv";
   };
 
   outputs =
@@ -52,6 +54,7 @@
 
     , futils
     , nixvim
+    , devenv
     , ...
     } @ inputs:
     let
@@ -148,10 +151,16 @@
         {
           formatter = pkgs.nixfmt-rfc-style;
           packages = (import ./pkgs { inherit lib pkgs; }) // {
+            devenv-up = self.devShells.${system}.default.config.procfileScript;
+            devenv-test = self.devShells.${system}.default.config.test;
             nvim-cirno = nixvim.legacyPackages.${system}.makeNixvimWithModule {
               inherit pkgs;
               module = self.nixvimModules.default;
             };
+          };
+          devShells.default = devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [ ./devenv.nix ];
           };
         });
     in
