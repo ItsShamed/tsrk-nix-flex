@@ -20,6 +20,7 @@
   plugins = {
     web-devicons.enable = true;
     bufferline.enable = true;
+    hardtime.enable = true;
     lualine.enable = true;
     luasnip.enable = true;
     vim-surround.enable = true;
