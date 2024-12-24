@@ -8,6 +8,7 @@
     ./indentline.nix
     ./lsp.nix
     ./markview.nix
+    ./noice.nix
     ./no-neck-pain.nix
     ./cmp.nix
     ./comment.nix
@@ -26,6 +27,7 @@
     luasnip.enable = true;
     vim-surround.enable = true;
     notify.enable = true;
+    nui.enable = true;
     nvim-autopairs.enable = true;
     todo-comments.enable = true;
     helm.enable = true;
