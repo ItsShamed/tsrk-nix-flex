@@ -228,3 +228,4 @@ fabric.properties
 # DevShell
 .direnv/**/*
 .devenv/
+.pre-commit-config.yaml
