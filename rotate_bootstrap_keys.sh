@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# This file is not licensed as it operates on encrypted data.
+
+# This scripts rotates keys used for agenix bootstrapping during an
+# installation.
+
 set -euo pipefail
 
 kp_path="profiles/system/agenix/bootstrap-keys"

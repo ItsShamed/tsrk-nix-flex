@@ -1,3 +1,9 @@
+# Copyright (c) 2024 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT License.
+# See the LICENSE file in the repository root for more info.
+
+# SPDX-License-Identifier: MIT
+
 { swingSupport ? true, lib, stdenv, requireFile, makeWrapper, unzip, file
 , xorg ? null, pluginSupport ? true, glib, libxml2, ffmpeg, libxslt, libGL
 , freetype, fontconfig, gtk2, pango, cairo, alsa-lib, atk, gdk-pixbuf

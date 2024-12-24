@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Copyright (c) 2024 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT License.
+# See the LICENSE file in the repository root for more info.
+#
+# SPDX-License-Identifier: MIT
+
+# This script retrieves a single nixos-option from an host
+
+# TODO: Make this script gather options from lsp-hints.nix
+
 set -euo pipefail
 
 if [ $# -lt 2 ]; then

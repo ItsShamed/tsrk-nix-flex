@@ -1,3 +1,9 @@
+<!--
+Copyright (c) 2024 tsrk. <tsrk@tsrk.me>
+This file is licensed under the MIT License.
+See the LICENSE file in the repository root for more info
+-->
+
 > [!NOTE]
 > ~~If you are viewing this on GitHub, this is a mirror of the real repo at
 > https://git.tsrk.me/tsrk/tsrk-nix-flex~~
@@ -38,7 +44,7 @@ I have.
 The `lib/` diretory contains some util functions to avoid a lot of boilerplate
 config to do by hand.
 
-## Modules
+### Modules
 
 The `modules/` directory contains modules for NixOS, Nixvim and Home-Manager. 
 Cool thing about them is that you can use them without depending on my inputs!
@@ -70,17 +76,17 @@ You can use them by using the `nixosModules` output:
 }
 ```
 
-## Overlays
+### Overlays
 
 The `overlays/` directory contains nixpkgs overlays for various packages so that
 they fit for my needs without having to inline them in modules.
 
-## Packages
+### Packages
 
 The `pkgs/` directory contains custom packages not available on upstream
 `nixpkgs`, and a standalone binary of my Nixvim configuration (`nvim-cirno`).
 
-## Profiles
+### Profiles
 
 The `profiles/` directory contains a set of NixOS and Home-Manager modules with
 defaults configurations.
@@ -92,12 +98,18 @@ just have to prefix the name of the profile you want to use with `profile-`.
 > There are some profiles (like `profile-tsrk-private`) that are encrypted with
 > Git-Crypt (for privacy reasons) and you cannot use them.
 
-## Secrets management
+### Secrets management
 
 I use [agenix](https://github.com/ryantm/agenix) to manage secrets needed for
 my NixOS configurations.
 
-## TODOs
+### TODOs
 
 - [~] Finish polishing i3 environment
 - [-] Create hyprland environment
+
+## Licensing
+
+All unencrypted files which include a license header are licensed under the MIT
+License.
+Please refer to the [LICENSE](./LICENSE) file for more info.

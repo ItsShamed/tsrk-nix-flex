@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Copyright (c) 2024 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT License.
+# See the LICENSE file in the repository root for more info.
+#
+# SPDX-License-Identifier: MIT
+
+# This script is a wrapper around `nixos-rebuild` and `nom` (nix-output-monitor)
+# to make rebuilding a nixos system in this flake more informative while having
+# less boilerplate arguments to write manually
+
 set -euo pipefail
 
 print_usage() {
