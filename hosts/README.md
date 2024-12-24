@@ -7,7 +7,7 @@ systems, and includes this flake in user space.
 
 ## ren
 
-![Lenovo Yoga Slim 7 14ARE05](https://gist.github.com/user-attachments/assets/7c4a9b44-d792-4e21-a548-aa6d6c42dd64)
+![Lenovo Yoga Slim 7 14ARE05](https://github.com/user-attachments/assets/fffa0a2a-47b6-45b1-a836-e43ee8c8f77b)
 
 *Status: installed! 🎉*
 
@@ -27,7 +27,7 @@ systems, and includes this flake in user space.
 
 ## taku
 
-![BitFenix Apllo - Black case](https://gist.github.com/user-attachments/assets/d339eba9-2885-4444-9833-f80499485003)
+![BitFenix Apllo - Black case](https://github.com/user-attachments/assets/3492c55e-df35-4654-bde4-e6c23390282d)
 
 *Status: installed! 🎉*
 
