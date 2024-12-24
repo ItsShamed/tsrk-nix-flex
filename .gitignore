@@ -226,5 +226,5 @@ fabric.properties
 .idea/**/*
 
 # DevShell
-.direnv/
+.direnv/**/*
 .devenv/
