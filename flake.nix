@@ -45,18 +45,11 @@
     devenv.url = "github:cachix/devenv";
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , nixpkgsUnstable
-      # , nixpkgsMaster
+  outputs = { self, nixpkgs, nixpkgsUnstable
+    # , nixpkgsMaster
     , nixgl
 
-    , futils
-    , nixvim
-    , devenv
-    , ...
-    } @ inputs:
+    , futils, nixvim, devenv, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (futils.lib) eachDefaultSystem;
@@ -80,10 +73,12 @@
               "dotnet-runtime-wrapped-6.0.36"
             ];
           };
-          overlays = [
-            nixgl.overlay
-          ] ++ (builtins.attrValues (builtins.removeAttrs (import ./pkgs/as-overlays.nix) [ "all" "default" ]))
-          ++ (lib.lists.optionals withOverlays (builtins.attrValues (import ./overlays { inherit lib; })));
+          overlays = [ nixgl.overlay ] ++ (builtins.attrValues
+            (builtins.removeAttrs (import ./pkgs/as-overlays.nix) [
+              "all"
+              "default"
+            ])) ++ (lib.lists.optionals withOverlays
+              (builtins.attrValues (import ./overlays { inherit lib; })));
         };
 
       pkgSet = system: {
@@ -92,64 +87,54 @@
         # pkgsMaster = importPkgs nixpkgsMaster system false;
       };
 
-      linuxOutputs =
-        let
-          system = "x86_64-linux";
-          baseOverlays = (import ./pkgs/as-overlays.nix) // (import ./overlays { inherit lib; });
-          allOverlays = self: super: builtins.attrValues (
-            builtins.mapAttrs (_: overlay: overlay self super) baseOverlays
-          );
-          commonArgs = {
-            inherit lib self inputs;
-          };
-        in
-        {
-          nixosModules = (import ./modules/system commonArgs)
-            // (import ./profiles/system commonArgs)
-            // {
+      linuxOutputs = let
+        system = "x86_64-linux";
+        baseOverlays = (import ./pkgs/as-overlays.nix)
+          // (import ./overlays { inherit lib; });
+        allOverlays = self: super:
+          builtins.attrValues
+          (builtins.mapAttrs (_: overlay: overlay self super) baseOverlays);
+        commonArgs = { inherit lib self inputs; };
+      in {
+        nixosModules = (import ./modules/system commonArgs)
+          // (import ./profiles/system commonArgs) // {
             all = lib.modules.importApply ./modules/system/all.nix commonArgs;
             default = self.nixosModules.all;
           };
 
-          homeManagerModules = (import ./modules/home commonArgs)
-            // (import ./profiles/home commonArgs)
-            // {
+        homeManagerModules = (import ./modules/home commonArgs)
+          // (import ./profiles/home commonArgs) // {
             all = lib.modules.importApply ./modules/home/all.nix commonArgs;
             default = self.homeManagerModules.all;
           };
 
-          nixvimModules.default = import ./modules/nvim;
+        nixvimModules.default = import ./modules/nvim;
 
-          lspHints = import ./lsp-hints.nix commonArgs;
+        lspHints = import ./lsp-hints.nix commonArgs;
 
-          lib = import ./lib {
-            inherit lib self;
-            pkgSet = pkgSet system;
-            inherit inputs;
-          };
-
-          homeConfigurations = import ./homes {
-            inherit lib self;
-          };
-
-          nixosConfigurations = import ./hosts (lib.recursiveUpdate inputs {
-            inherit lib system;
-            pkgSet = pkgSet system;
-          });
-
-          overlays = baseOverlays
-            // {
-            all = allOverlays;
-            default = self.overlays.all;
-          };
+        lib = import ./lib {
+          inherit lib self;
+          pkgSet = pkgSet system;
+          inherit inputs;
         };
 
+        homeConfigurations = import ./homes { inherit lib self; };
+
+        nixosConfigurations = import ./hosts (lib.recursiveUpdate inputs {
+          inherit lib system;
+          pkgSet = pkgSet system;
+        });
+
+        overlays = baseOverlays // {
+          all = allOverlays;
+          default = self.overlays.all;
+        };
+      };
+
       allOutputs = eachDefaultSystem (system:
-        let
-          inherit (pkgSet system) pkgs;
-        in
-        {
-          formatter = pkgs.nixfmt-rfc-style;
+        let inherit (pkgSet system) pkgs;
+        in {
+          formatter = pkgs.nixfmt-classic;
           packages = (import ./pkgs { inherit lib pkgs; }) // {
             devenv-up = self.devShells.${system}.default.config.procfileScript;
             devenv-test = self.devShells.${system}.default.config.test;
@@ -163,6 +148,5 @@
             modules = [ ./devenv.nix ];
           };
         });
-    in
-    lib.recursiveUpdate linuxOutputs allOutputs;
+    in lib.recursiveUpdate linuxOutputs allOutputs;
 }

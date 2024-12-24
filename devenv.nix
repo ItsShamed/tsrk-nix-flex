@@ -17,11 +17,9 @@
           noLambdaArg = true;
         };
       };
-      nixfmt-rfc-style = {
+      nixfmt-classic = {
         enable = true;
-        settings = {
-          width = 80;
-        };
+        settings = { width = 80; };
       };
     };
   };
