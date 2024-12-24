@@ -7,6 +7,7 @@
     ./gitsigns.nix
     ./indentline.nix
     ./lsp.nix
+    ./markdown-preview.nix
     ./markview.nix
     ./noice.nix
     ./no-neck-pain.nix
