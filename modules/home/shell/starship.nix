@@ -53,6 +53,7 @@ in
     programs.starship.enableBashIntegration = true;
 
     programs.starship.settings = (lib.attrsets.recursiveUpdate
+      iconConfig
       {
         format = lib.concatStrings ([
           "[ $username@$hostname ](bg:#a3aed2 fg:#090c0c)"
@@ -150,7 +151,6 @@ in
         status.disabled = false;
         shell.disabled = false;
         os.disabled = false;
-      }
-      iconConfig);
+      });
   };
 }
