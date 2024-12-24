@@ -36,10 +36,12 @@
         nixd = {
           enable = true;
           settings = {
-            formatting.command = [ "nixpkgs-fmt" ];
+            formatting.command = [ "nixfmt" ];
             options = {
-              nixos.expr = "(builtins.getFlake (\"git+file://\" + toString ./.)).lspHints.nixos or {}";
-              homeManager.expr = "(builtins.getFlake (\"git+file://\" + toString ./.)).lspHints.homeManager or {}";
+              nixos.expr = ''
+                (builtins.getFlake ("git+file://" + toString ./.)).lspHints.nixos or {}'';
+              homeManager.expr = ''
+                (builtins.getFlake ("git+file://" + toString ./.)).lspHints.homeManager or {}'';
             };
           };
         };

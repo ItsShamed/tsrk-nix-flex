@@ -1,9 +1,7 @@
 { self, ... }:
 
 {
-  imports = with self.homeManagerModules; [
-    profile-tsrk-private
-  ];
+  imports = with self.homeManagerModules; [ profile-tsrk-private ];
 
   tsrk = {
     packages = {

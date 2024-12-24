@@ -16,17 +16,12 @@
 
   config = lib.mkIf config.tsrk.packages.pkgs.gaming.enable (lib.mkMerge [
     {
-      environment.systemPackages = with pkgs; [
-        gamemode
-        protontricks
-      ];
+      environment.systemPackages = with pkgs; [ gamemode protontricks ];
 
       hardware.steam-hardware.enable = lib.mkDefault true;
       programs.steam = {
         enable = lib.mkDefault true;
-        extraCompatPackages = with pkgs; [
-          proton-ge-bin
-        ];
+        extraCompatPackages = with pkgs; [ proton-ge-bin ];
         remotePlay.openFirewall = lib.mkDefault true;
         localNetworkGameTransfers.openFirewall = lib.mkDefault true;
         platformOptimizations.enable = lib.mkDefault true;

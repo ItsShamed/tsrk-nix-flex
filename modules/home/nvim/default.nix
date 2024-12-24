@@ -16,9 +16,7 @@
       enable = true;
       defaultEditor = true;
 
-      imports = [
-        self.nixvimModules.default
-      ];
+      imports = [ self.nixvimModules.default ];
 
       plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
     };

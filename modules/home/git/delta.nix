@@ -1,9 +1,7 @@
 { pkgs, lib, config, ... }:
 
-let
-  cfg = config.tsrk.git.delta;
-in
-{
+let cfg = config.tsrk.git.delta;
+in {
   options = {
     tsrk.git.delta = {
       enable = lib.options.mkEnableOption "delta";
@@ -37,11 +35,15 @@ in
 
     specialisation = {
       light.configuration = {
-        programs.git.includes = [{ path = "${pkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig"; }];
+        programs.git.includes = [{
+          path = "${pkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig";
+        }];
         programs.git.delta.options.syntax-theme = cfg.themes.light;
       };
       dark.configuration = {
-        programs.git.includes = [{ path = "${pkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig"; }];
+        programs.git.includes = [{
+          path = "${pkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig";
+        }];
         programs.git.delta.options.syntax-theme = cfg.themes.dark;
       };
     };

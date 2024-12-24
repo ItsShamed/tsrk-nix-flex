@@ -1,5 +1,1 @@
-{
-  imports = [
-    ./no-neck-pain.nix
-  ];
-}
+{ imports = [ ./no-neck-pain.nix ]; }

@@ -5,8 +5,7 @@
 let
   cfg = config.tsrk.polybar;
   polybarModules = modulesNames: lib.strings.concatStringsSep " " modulesNames;
-in
-{
+in {
   options = {
     tsrk.polybar = {
       enable = lib.options.mkEnableOption "polybar";
@@ -24,13 +23,15 @@ in
       };
       backlightCard = lib.options.mkOption {
         type = lib.types.nullOr lib.types.str;
-        description = "The name of the card that will have its brightness displayed";
+        description =
+          "The name of the card that will have its brightness displayed";
         default = null;
         example = "intel_backlight";
       };
       backlightOutput = lib.options.mkOption {
         type = lib.types.nullOr lib.types.str;
-        description = "The name of the output that will have its brightness displayed";
+        description =
+          "The name of the output that will have its brightness displayed";
         default = null;
         example = "HDMI-1";
       };
@@ -49,9 +50,7 @@ in
           example = "ACAD";
         };
       };
-      mpris = {
-        enable = lib.options.mkEnableOption "MPRIS display";
-      };
+      mpris = { enable = lib.options.mkEnableOption "MPRIS display"; };
     };
   };
   config = lib.mkIf cfg.enable {
@@ -116,17 +115,16 @@ in
             };
 
             left = polybarModules [ "i3" "xwindow" ];
-            right = polybarModules (lib.lists.reverseList ([
-              "tray"
-              "date"
-              "audio"
-            ]
-            ++ (lib.lists.optional (cfg.backlightCard != null) "backlight-acpi")
-            ++ (lib.lists.optional (cfg.backlightOutput != null) "backlight-xrandr")
-            ++ (lib.lists.optional (cfg.battery.enable) "battery")
-            ++ (lib.lists.optional (cfg.wlanInterfaceName != null) "wifi")
-            ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")
-            ++ (lib.lists.optional (cfg.mpris.enable) "mpris")));
+            right = polybarModules (lib.lists.reverseList
+              ([ "tray" "date" "audio" ]
+                ++ (lib.lists.optional (cfg.backlightCard != null)
+                  "backlight-acpi")
+                ++ (lib.lists.optional (cfg.backlightOutput != null)
+                  "backlight-xrandr")
+                ++ (lib.lists.optional (cfg.battery.enable) "battery")
+                ++ (lib.lists.optional (cfg.wlanInterfaceName != null) "wifi")
+                ++ (lib.lists.optional (cfg.ethInterfaceName != null) "eth")
+                ++ (lib.lists.optional (cfg.mpris.enable) "mpris")));
           };
 
           separator = " | ";
@@ -144,11 +142,7 @@ in
             foreground = "\${colors.yellow}";
           };
 
-          ramp.volume = [
-            "󰕿"
-            "󰖀"
-            "󰕾 "
-          ];
+          ramp.volume = [ "󰕿" "󰖀" "󰕾 " ];
         };
 
         "module/xwindow" = {
@@ -236,12 +230,15 @@ in
         "module/backlight-acpi" = {
           "inherit" = "module/backlight-base";
           type = "internal/backlight";
-          card = self.lib.mkIfElse (cfg.backlightCard != null) cfg.backlightCard "NULL";
+          card = self.lib.mkIfElse (cfg.backlightCard != null) cfg.backlightCard
+            "NULL";
         };
 
         "module/backlight-xrandr" = {
           "inherit" = "module/backlight-base";
-          output = self.lib.mkIfElse (cfg.backlightOutput != null) cfg.backlightOutput "NULL";
+          output =
+            self.lib.mkIfElse (cfg.backlightOutput != null) cfg.backlightOutput
+            "NULL";
         };
 
         "module/battery" = {
@@ -273,46 +270,22 @@ in
             };
           };
 
-          ramp-capacity = [
-            "󰂎"
-            "󰁺"
-            "󰁻"
-            "󰁼"
-            "󰁽"
-            "󰁾"
-            "󰁿"
-            "󰂀"
-            "󰂁"
-            "󰂂"
-            "󰁹"
-          ];
+          ramp-capacity = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
 
-          animation-charging = [
-            "󰢜 "
-            "󰢜 "
-            "󰂇 "
-            "󰂈 "
-            "󰢝 "
-            "󰂉 "
-            "󰢞 "
-            "󰂊 "
-            "󰂋 "
-            "󰂅 "
-          ];
+          animation-charging =
+            [ "󰢜 " "󰢜 " "󰂇 " "󰂈 " "󰢝 " "󰂉 " "󰢞 " "󰂊 " "󰂋 " "󰂅 " ];
 
           animation-charging-framerate = 100;
 
-          animation-low = [
-            "󱉞 "
-            "  "
-          ];
+          animation-low = [ "󱉞 " "  " ];
           animation-low-framerate = 500;
         };
 
         "module/wifi" = {
           type = "internal/network";
           interface = {
-            text = self.lib.mkIfElse (cfg.wlanInterfaceName != null) cfg.wlanInterfaceName "wlan0";
+            text = self.lib.mkIfElse (cfg.wlanInterfaceName != null)
+              cfg.wlanInterfaceName "wlan0";
             type = "wireless";
           };
 
@@ -329,19 +302,14 @@ in
             connected = "%essid:0:16:…%";
           };
 
-          ramp.signal = [
-            "󰤯 "
-            "󰤟 "
-            "󰤢 "
-            "󰤥 "
-            "󰤨 "
-          ];
+          ramp.signal = [ "󰤯 " "󰤟 " "󰤢 " "󰤥 " "󰤨 " ];
         };
 
         "module/eth" = {
           type = "internal/network";
           interface = {
-            text = self.lib.mkIfElse (cfg.ethInterfaceName != null) cfg.ethInterfaceName "eth0";
+            text = self.lib.mkIfElse (cfg.ethInterfaceName != null)
+              cfg.ethInterfaceName "eth0";
             type = "wireless";
           };
 

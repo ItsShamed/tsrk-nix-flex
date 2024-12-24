@@ -5,10 +5,10 @@
 let
   mod = config.xsession.windowManager.i3.config.modifier;
   cfg = config.xsession.windowManager.i3.config;
-  lockCommand =
-    if config.tsrk.i3.epitaRestrictions then
-      "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
-    else "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
+  lockCommand = if config.tsrk.i3.epitaRestrictions then
+    "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
+  else
+    "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
 
   # TODO: figure how to disable services without them disappearing
   # I initially used `systemctl --user disable` so that if I ever need to run
@@ -191,55 +191,42 @@ let
           (self.lib.mkGL config "kitty")
           # This is for the EPITA die-hards that never bothered to change their
           # default terminal emulator for their session lol
-          (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")
-        );
+          (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty"));
         menu = (self.lib.mkIfElse (config.programs.rofi.enable)
-          "sh -c \"rofi -show drun\""
-          "${pkgs.dmenu}/bin/dmenu_run"
-        );
+          ''sh -c "rofi -show drun"'' "${pkgs.dmenu}/bin/dmenu_run");
         bars = [ ];
 
         startup = (lib.lists.optional (!config.services.darkman.enable) {
           command = "feh --bg-scale ${config.tsrk.i3.background}";
           always = false;
-        }) ++ [
-          {
-            command = "sh ${startup}";
-            always = true;
-          }
-        ];
+        }) ++ [{
+          command = "sh ${startup}";
+          always = true;
+        }];
 
         window.titlebar = false;
         window.commands = [
           # Enable border for "normal" windows
           {
             command = "border pixel 3";
-            criteria = {
-              class = "^.*";
-            };
+            criteria = { class = "^.*"; };
           }
 
           # Floating only for Pavucontrol
           {
             command = "floating enable";
-            criteria = {
-              class = "Pavucontrol";
-            };
+            criteria = { class = "Pavucontrol"; };
           }
 
           # Floating only for lxappearance
           {
             command = "floating enable";
-            criteria = {
-              class = ".xappearance";
-            };
+            criteria = { class = ".xappearance"; };
           }
 
           {
             command = "floating enable";
-            criteria = {
-              window_role = "alert";
-            };
+            criteria = { window_role = "alert"; };
           }
         ];
 
@@ -342,33 +329,42 @@ let
           "${mod}+Shift+0" = "move container to workspace number 10";
 
           # Media keys
-          XF86AudioRaiseVolume = "exec --no-startup-id \"${volumeControl} increase 5\"";
-          XF86AudioLowerVolume = "exec --no-startup-id \"${volumeControl} decrease 5\"";
-          XF86AudioMute = "exec --no-startup-id \"${volumeControl} tmute\"";
-          XF86AudioPlay = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl play-pause\"";
-          XF86AudioPause = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl play-pause\"";
-          XF86AudioPrev = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl previous\" ";
-          XF86AudioNext = "exec --no-startup-id \"${pkgs.playerctl}/bin/playerctl next\" ";
+          XF86AudioRaiseVolume =
+            ''exec --no-startup-id "${volumeControl} increase 5"'';
+          XF86AudioLowerVolume =
+            ''exec --no-startup-id "${volumeControl} decrease 5"'';
+          XF86AudioMute = ''exec --no-startup-id "${volumeControl} tmute"'';
+          XF86AudioPlay = ''
+            exec --no-startup-id "${pkgs.playerctl}/bin/playerctl play-pause"'';
+          XF86AudioPause = ''
+            exec --no-startup-id "${pkgs.playerctl}/bin/playerctl play-pause"'';
+          XF86AudioPrev = ''
+            exec --no-startup-id "${pkgs.playerctl}/bin/playerctl previous" '';
+          XF86AudioNext =
+            ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl next" '';
 
           # Brightness
-          XF86MonBrightnessUp = "exec --no-startup-id \"${brightnessControl} increase 2\"";
-          XF86MonBrightnessDown = "exec --no-startup-id \"${brightnessControl} decrease 2\"";
+          XF86MonBrightnessUp =
+            ''exec --no-startup-id "${brightnessControl} increase 2"'';
+          XF86MonBrightnessDown =
+            ''exec --no-startup-id "${brightnessControl} decrease 2"'';
 
           # lock
-          "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind "exec loginctl lock-session" "exec \"${lockCommand}\"");
+          "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind
+            "exec loginctl lock-session" ''exec "${lockCommand}"'');
           "${mod}+Shift+e" = config.tsrk.i3.exitPromptCommand teardown;
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
-          "${mod}+r" = "mode \"resize\"";
-          "--release ${mod}+Shift+s" = (self.lib.mkIfElse config.services.flameshot.enable
-            "exec --no-startup-id \"flameshot gui\""
-            "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
-          );
-          "--release ${mod}+Print" = (self.lib.mkIfElse config.services.flameshot.enable
-            "exec --no-startup-id \"flameshot full\""
-            "exec --no-startup-id \"${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'\""
-          );
+          "${mod}+r" = ''mode "resize"'';
+          "--release ${mod}+Shift+s" =
+            (self.lib.mkIfElse config.services.flameshot.enable
+              ''exec --no-startup-id "flameshot gui"'' ''
+                exec --no-startup-id "${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'"'');
+          "--release ${mod}+Print" =
+            (self.lib.mkIfElse config.services.flameshot.enable
+              ''exec --no-startup-id "flameshot full"'' ''
+                exec --no-startup-id "${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'"'');
         };
 
         modes = {
@@ -442,13 +438,12 @@ let
 
     systemd.user.services = {
       setup-betterlockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
-        Install = {
-          WantedBy = [ "graphical-session.target" ];
-        };
+        Install = { WantedBy = [ "graphical-session.target" ]; };
 
         Service = {
           Type = "oneshot";
-          ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
+          ExecStart =
+            "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
         };
       };
     };
@@ -456,9 +451,7 @@ let
 
   logindConfig = lib.mkIf config.tsrk.i3.useLogind {
 
-    home.packages = with pkgs; [
-      pkgs.systemd-lock-handler
-    ];
+    home.packages = with pkgs; [ pkgs.systemd-lock-handler ];
 
     systemd.user.targets = {
       lock = {
@@ -475,7 +468,8 @@ let
       };
       sleep = {
         Unit = {
-          Description = "User-level target triggered when the system is about to sleep.";
+          Description =
+            "User-level target triggered when the system is about to sleep.";
           Requires = "lock.target";
           After = "lock.target";
         };
@@ -497,9 +491,7 @@ let
           RestartSec = "10s";
         };
 
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
+        Install = { WantedBy = [ "default.target" ]; };
       };
 
       i3lock = {
@@ -517,14 +509,11 @@ let
           RestartSec = "0s";
         };
 
-        Install = {
-          WantedBy = [ "lock.target" "sleep.target" ];
-        };
+        Install = { WantedBy = [ "lock.target" "sleep.target" ]; };
       };
     };
   };
-in
-{
+in {
   options = {
     tsrk.i3 = {
       enable = lib.options.mkEnableOption "tsrk's i3 configuration";
@@ -538,19 +527,19 @@ in
         type = lib.types.path;
         default = ./files/bg-no-logo.png;
       };
-      epitaRestrictions = lib.options.mkEnableOption "compliance with EPITA
-        regulations by using stock i3lock as the locker";
+      epitaRestrictions = lib.options.mkEnableOption ''
+        compliance with EPITA
+                regulations by using stock i3lock as the locker'';
       useLogind = lib.options.mkEnableOption "locking using logind";
       exitPromptCommand = lib.options.mkOption {
         description = "Command to execute when pressing the exit keybind.";
         type = lib.types.functionTo lib.types.str;
-        default = teardown: "exec \" i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'\"";
+        default = teardown:
+          ''
+            exec " i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'"'';
       };
     };
   };
 
-  config = lib.mkMerge [
-    i3Config
-    logindConfig
-  ];
+  config = lib.mkMerge [ i3Config logindConfig ];
 }

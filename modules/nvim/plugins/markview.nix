@@ -10,18 +10,12 @@
       hybrid_modes = [ "n" ];
       checkboxes = { __raw = "presets.checkboxes.nerd"; };
       headings = {
-        setext_1 = {
-          style = "decorated";
-        };
-        setext_2 = {
-          style = "decorated";
-        };
+        setext_1 = { style = "decorated"; };
+        setext_2 = { style = "decorated"; };
       };
       html = {
         enable = true;
-        tags = {
-          enable = true;
-        };
+        tags = { enable = true; };
       };
       inline_codes.enable = true;
       links = {

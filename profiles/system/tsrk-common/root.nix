@@ -1,7 +1,5 @@
 { self, ... }:
 
 {
-  imports = with self.homeManagerModules; [
-    profile-base
-  ];
+  imports = with self.homeManagerModules; [ profile-base ];
 }

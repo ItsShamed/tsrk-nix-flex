@@ -53,14 +53,7 @@
     userEmail = "tsrk@tsrk.me";
   };
 
-  home.packages = with pkgs; [
-    deadnix
-    teams-for-linux
-  ];
+  home.packages = with pkgs; [ deadnix teams-for-linux ];
 
-  home.sessionPath = [
-    "$HOME/.cargo/bin"
-    "$GOPATH/bin"
-    "$HOME/go/bin"
-  ];
+  home.sessionPath = [ "$HOME/.cargo/bin" "$GOPATH/bin" "$HOME/go/bin" ];
 }

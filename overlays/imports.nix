@@ -1,4 +1,1 @@
-[
-  ./retroarch
-  ./rofi-power-menu
-]
+[ ./retroarch ./rofi-power-menu ]

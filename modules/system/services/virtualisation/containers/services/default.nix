@@ -1,5 +1,1 @@
-{
-  imports = [
-    ./pihole.nix
-  ];
-}
+{ imports = [ ./pihole.nix ]; }

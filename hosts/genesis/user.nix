@@ -1,9 +1,5 @@
 { self, ... }:
 
 {
-  imports = with self.homeManagerModules; [
-    profile-shell
-    packages
-    ssh
-  ];
+  imports = with self.homeManagerModules; [ profile-shell packages ssh ];
 }

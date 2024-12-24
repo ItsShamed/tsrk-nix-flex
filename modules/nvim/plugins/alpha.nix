@@ -20,8 +20,7 @@ let
       hl_shortcut = "Keyword";
     };
   };
-in
-{
+in {
   plugins.alpha = {
     enable = true;
     layout = [
@@ -102,9 +101,7 @@ in
             shortcut = "q";
           }
         ]);
-        opts = {
-          spacing = 1;
-        };
+        opts = { spacing = 1; };
       }
       {
         type = "padding";
@@ -116,7 +113,7 @@ in
           position = "center";
         };
         type = "text";
-        val = "Very wise words from Cirno: \"Quoicoubeh.\"";
+        val = ''Very wise words from Cirno: "Quoicoubeh."'';
       }
     ];
   };

@@ -12,8 +12,7 @@ let
       return (path and path ~= "") and path or require("dap").ABORT
     end
   '';
-in
-{
+in {
   plugins.dap = {
     enable = true;
     adapters.executables = {
@@ -80,18 +79,36 @@ in
       layouts = [
         {
           elements = [
-            { id = "scopes"; size = 0.33; }
-            { id = "breakpoints"; size = 0.17; }
-            { id = "stacks"; size = 0.25; }
-            { id = "watches"; size = 0.25; }
+            {
+              id = "scopes";
+              size = 0.33;
+            }
+            {
+              id = "breakpoints";
+              size = 0.17;
+            }
+            {
+              id = "stacks";
+              size = 0.25;
+            }
+            {
+              id = "watches";
+              size = 0.25;
+            }
           ];
           size = 10;
           position = "right";
         }
         {
           elements = [
-            { id = "repl"; size = 0.45; }
-            { id = "console"; size = 0.55; }
+            {
+              id = "repl";
+              size = 0.45;
+            }
+            {
+              id = "console";
+              size = 0.55;
+            }
           ];
           size = 10;
           position = "bottom";

@@ -1,16 +1,12 @@
-{ lib
-, fetchurl
-, appimageTools
-, symlinkJoin
-, makeDesktopItem
-}:
+{ lib, fetchurl, appimageTools, symlinkJoin, makeDesktopItem }:
 
 let
   pname = "realm-studio";
   version = "15.2.1";
 
   appimageBin = fetchurl {
-    url = "https://static.realm.io/downloads/realm-studio/Realm%20Studio-${version}.AppImage";
+    url =
+      "https://static.realm.io/downloads/realm-studio/Realm%20Studio-${version}.AppImage";
     hash = "sha256-e3uUyxGdurQv++YFqEJWiLpKfxN9DJa7QTSumjcJJpA=";
   };
 
@@ -33,13 +29,9 @@ let
     terminal = false;
     categories = [ "Development" ];
   };
-in
-symlinkJoin {
+in symlinkJoin {
   name = "${pname}-bin-${version}";
-  paths = [
-    package
-    desktopItem
-  ];
+  paths = [ package desktopItem ];
 
   meta = with lib; {
     description = "Visual tool to view, edit, and model Realm databases.";

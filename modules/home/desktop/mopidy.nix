@@ -1,13 +1,9 @@
 { config, lib, pkgs, ... }:
 
-let
-  cfg = config.tsrk.mopidy;
-in
-{
+let cfg = config.tsrk.mopidy;
+in {
   options = {
-    tsrk.mopidy = {
-      enable = lib.options.mkEnableOption "Mopidy daemon";
-    };
+    tsrk.mopidy = { enable = lib.options.mkEnableOption "Mopidy daemon"; };
   };
 
   config = lib.mkIf cfg.enable {

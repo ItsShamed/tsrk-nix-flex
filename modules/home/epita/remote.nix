@@ -23,8 +23,7 @@ let
     git config user.signingKey ${gitCfg.signing.key}
     set +x
   '';
-in
-{
+in {
   options = {
     tsrk.epita.remoteWork = {
       enable = lib.options.mkEnableOption "EPITA remote work environment";
@@ -42,20 +41,23 @@ in
       };
       gpgKey = lib.options.mkOption {
         type = lib.types.nullOr lib.types.str;
-        description = "The GPG Key that will be used to sign commits and e-mails";
+        description =
+          "The GPG Key that will be used to sign commits and e-mails";
         default = null;
       };
       signature = {
         status = lib.mkOption {
           type = lib.types.str;
-          description = "Signature line describing your current state in the school.";
+          description =
+            "Signature line describing your current state in the school.";
           default = "XXX - 20XX (seriously please put something here)";
           example = "ING1 - 2026";
         };
         quote = lib.mkOption {
           type = lib.types.str;
           description = "A fun quote to include in your emails (EPITA only).";
-          default = "I am a NPC, I didn't change the quote from the config I stole.";
+          default =
+            "I am a NPC, I didn't change the quote from the config I stole.";
           example = "I want to break free(1)";
         };
       };
@@ -64,10 +66,7 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.packages = with pkgs; [
-        gitSwitchNormal
-        gitSwitchSchool
-      ];
+      home.packages = with pkgs; [ gitSwitchNormal gitSwitchSchool ];
       programs.ssh = {
         matchBlocks = {
           "ssh.cri.epita.fr" = {
@@ -79,20 +78,23 @@ in
         };
       };
 
-      warnings =
-        if (lib.strings.stringLength cfg.fullName) > 80 then
-          [ "You full name is over 80 characters, which will violate the nettiquete if included in the signature." ]
-        else [ ]
-      ;
+      warnings = if (lib.strings.stringLength cfg.fullName) > 80 then
+        [
+          "You full name is over 80 characters, which will violate the nettiquete if included in the signature."
+        ]
+      else
+        [ ];
 
       assertions = [
         {
           assertion = (lib.strings.stringLength cfg.signature.status) <= 80;
-          message = "E-mail signature status is too long (${cfg.signature.status} > 80) and would violate the netiquette.";
+          message =
+            "E-mail signature status is too long (${cfg.signature.status} > 80) and would violate the netiquette.";
         }
         {
           assertion = (lib.strings.stringLength cfg.signature.quote) <= 76;
-          message = "E-mail signature quote is too long (${cfg.signature.quote} > 76) and would violate the netiquette.";
+          message =
+            "E-mail signature quote is too long (${cfg.signature.quote} > 76) and would violate the netiquette.";
         }
       ];
       accounts.email.accounts.epita = rec {
@@ -120,7 +122,8 @@ in
             #   https://github.com/nix-community/home-manager/issues/4988
             "mail.server.server_${id}.authMethod" = 10;
             "mail.smtpserver.smtp_${id}.authMethod" = 10;
-            "mail.smtpserver.smtp_${id}.oauth2.issuer" = "login.microsoftonline.com";
+            "mail.smtpserver.smtp_${id}.oauth2.issuer" =
+              "login.microsoftonline.com";
           };
         };
       };

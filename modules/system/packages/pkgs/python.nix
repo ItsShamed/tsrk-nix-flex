@@ -2,18 +2,19 @@
 
 let
   cfg = config.tsrk.packages.pkgs.python;
-  tsrkPythonPackages = pythonPackages: with pythonPackages; [
-    pip
-    virtualenv
-    ipython
-    pytest
-    pyyaml
-  ];
+  tsrkPythonPackages = pythonPackages:
+    with pythonPackages; [
+      pip
+      virtualenv
+      ipython
+      pytest
+      pyyaml
+    ];
   extraPythonPackages = lib.attrsets.attrValues cfg.extraPackages;
   resultingPythonPackages = ps:
-    lib.lists.flatten (builtins.map (pkgList: pkgList ps) ([ tsrkPythonPackages ] ++ extraPythonPackages));
-in
-{
+    lib.lists.flatten (builtins.map (pkgList: pkgList ps)
+      ([ tsrkPythonPackages ] ++ extraPythonPackages));
+in {
   options = {
     tsrk.packages.pkgs.python = {
       enable = lib.options.mkEnableOption "tsrk's Python bundle";
@@ -26,8 +27,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      ((python3.withPackages resultingPythonPackages).override (_: { ignoreCollisions = true; }))
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        ((python3.withPackages resultingPythonPackages).override
+          (_: { ignoreCollisions = true; }))
+      ];
   };
 }

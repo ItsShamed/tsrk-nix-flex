@@ -1,4 +1,4 @@
-{ lib, ... } @ args:
+{ lib, ... }@args:
 let
   import' = file:
     if builtins.isAttrs file then
@@ -15,9 +15,7 @@ let
     else
       file;
   importModule = file: {
-    name = lib.strings.removeSuffix ".nix"
-      (builtins.baseNameOf (getPath file));
+    name = lib.strings.removeSuffix ".nix" (builtins.baseNameOf (getPath file));
     value = import' file;
   };
-in
-builtins.listToAttrs (builtins.map importModule (import ./imports.nix))
+in builtins.listToAttrs (builtins.map importModule (import ./imports.nix))

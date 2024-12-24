@@ -17,18 +17,16 @@ let
     includeNDK = true;
     ndkVersions = [ "22.0.7026061" ];
     useGoogleAPIs = true;
-    includeExtras = [
-      "extras;google;gcm"
-    ];
+    includeExtras = [ "extras;google;gcm" ];
   };
-in
-{
+in {
   options = {
     tsrk.packages.pkgs.android = {
       enable = lib.options.mkEnableOption "tsrk's Android bundle";
       ide = {
-        enable = (lib.options.mkEnableOption "Android Studio (IDE)")
-          // { default = true; };
+        enable = (lib.options.mkEnableOption "Android Studio (IDE)") // {
+          default = true;
+        };
         package = lib.options.mkPackageOption pkgs "Android Studio" {
           default = [ "android-studio" ];
           example = "pkgs.androidStudioPackages.beta";
@@ -47,16 +45,18 @@ in
     programs.adb.enable = true;
 
     environment.variables = {
-      ANDROID_SDK_ROOT = "${cfg.androidComposition.androidsdk}/libexec/android-sdk";
+      ANDROID_SDK_ROOT =
+        "${cfg.androidComposition.androidsdk}/libexec/android-sdk";
     };
 
-    environment.systemPackages = with pkgs; [
-      apktool
-      android-file-transfer
-      flutter
-      scrcpy
-      cfg.androidComposition.androidsdk
-      cfg.androidComposition.platform-tools
-    ] ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
+    environment.systemPackages = with pkgs;
+      [
+        apktool
+        android-file-transfer
+        flutter
+        scrcpy
+        cfg.androidComposition.androidsdk
+        cfg.androidComposition.platform-tools
+      ] ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
   };
 }

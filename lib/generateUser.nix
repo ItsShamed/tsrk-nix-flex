@@ -1,12 +1,7 @@
 name:
 
-{ password ? null
-, hashedPasswordFile ? null
-, initialPassword ? null
-, canSudo ? false
-, moreGroups ? [ ]
-,
-}:
+{ password ? null, hashedPasswordFile ? null, initialPassword ? null
+, canSudo ? false, moreGroups ? [ ], }:
 
 { lib, ... }:
 
@@ -19,7 +14,6 @@ name:
     inherit hashedPasswordFile password initialPassword;
     isNormalUser = true;
     extraGroups = [ "video" "audio" "input" "networkmanager" ]
-      ++ (lib.lists.optional canSudo "wheel")
-      ++ moreGroups;
+      ++ (lib.lists.optional canSudo "wheel") ++ moreGroups;
   };
 }

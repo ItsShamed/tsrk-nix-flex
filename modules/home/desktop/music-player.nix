@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
-let
-  cfg = config.tsrk.music-player;
-in
-{
+let cfg = config.tsrk.music-player;
+in {
   options = {
     tsrk.music-player = {
       enable = lib.options.mkEnableOption "the music-player daemon";
@@ -24,9 +22,7 @@ in
           Description = "Music-player daemon";
         };
 
-        Service = {
-          ExecStart = "${lib.meta.getExe cfg.package}";
-        };
+        Service = { ExecStart = "${lib.meta.getExe cfg.package}"; };
 
         Install.WantedBy = [ "default.target" ];
       };

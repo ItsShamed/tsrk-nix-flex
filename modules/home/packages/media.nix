@@ -3,7 +3,8 @@
 {
   options = {
     tsrk.packages.media = {
-      enable = lib.options.mkEnableOption "tsrk's multimedia user package bundle";
+      enable =
+        lib.options.mkEnableOption "tsrk's multimedia user package bundle";
     };
   };
 

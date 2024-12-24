@@ -19,11 +19,10 @@
     };
   };
   config = lib.mkIf config.tsrk.shell.bat.enable {
-    /*
-      Because of how the theme is generated upstream (name being the same
-      regardless of the variant), we cannot guarantee at this time that there
-      will be no conflicts internally w.r.t bat. So we provide one theme at a
-      time, depending on the specialisation.
+    /* Because of how the theme is generated upstream (name being the same
+       regardless of the variant), we cannot guarantee at this time that there
+       will be no conflicts internally w.r.t bat. So we provide one theme at a
+       time, depending on the specialisation.
     */
     programs.bat = {
       enable = true;

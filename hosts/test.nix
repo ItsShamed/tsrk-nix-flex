@@ -10,12 +10,7 @@
     (self.lib.generateFullUser "test" {
       password = "quoicoubeh";
       canSudo = true;
-      modules = [
-        self.homeManagerModules.i3
-        {
-          tsrk.i3.enable = true;
-        }
-      ];
+      modules = [ self.homeManagerModules.i3 { tsrk.i3.enable = true; } ];
     })
   ];
 

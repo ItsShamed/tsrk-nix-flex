@@ -1,5 +1,4 @@
-{ pkgs, config, lib, ... }:
-{
+{ pkgs, config, lib, ... }: {
   options = {
     tsrk.epita.cunix = {
       enable = lib.options.mkEnableOption "tsrk's EPITA C/Unix Environment";
@@ -12,82 +11,83 @@
       epiccnop = "gcc -Wextra -Wall -Werror -Wvla -std=c99";
     };
 
-    home.packages = with pkgs; [
-      (writeShellScriptBin "scaffold-c" ''
-        if [ $# -ne 1 ]; then
-          echo "Usage: $0 <name>"
-          exit 1
-        fi
+    home.packages = with pkgs;
+      [
+        (writeShellScriptBin "scaffold-c" ''
+          if [ $# -ne 1 ]; then
+            echo "Usage: $0 <name>"
+            exit 1
+          fi
 
-        cat <<EOF > compile_flags.txt
-        -Wextra
-        -Wall
-        -Wvla
-        -Werror
-        -std=c99
-        -pedantic
-        -I/run/current-system/sw/include
-        EOF
+          cat <<EOF > compile_flags.txt
+          -Wextra
+          -Wall
+          -Wvla
+          -Werror
+          -std=c99
+          -pedantic
+          -I/run/current-system/sw/include
+          EOF
 
-        cat <<EOL > tests.c
-        #include <criterion/criterion.h>
-        #include "$1.h"
-        EOL
+          cat <<EOL > tests.c
+          #include <criterion/criterion.h>
+          #include "$1.h"
+          EOL
 
-        cat <<EOL > main.c
-        #include "$1.h"
+          cat <<EOL > main.c
+          #include "$1.h"
 
-        // TODO: change this prototype
-        int main()
-        {
-            return 0;
-        }
-        EOL
+          // TODO: change this prototype
+          int main()
+          {
+              return 0;
+          }
+          EOL
 
-        cat <<EOL > .gitignore
-        .gitignore
-        compile_commands.json
-        compile_flags.txt
-        tests.c
-        main.c
-        EOL
+          cat <<EOL > .gitignore
+          .gitignore
+          compile_commands.json
+          compile_flags.txt
+          tests.c
+          main.c
+          EOL
 
-        cat <<EOL > Makefile
-        CC = gcc
-        CFLAGS = -Wall -Wextra -Wvla -Werror -std=c99 -pedantic
-        SRCFILES =
-        OFILES = \$(SRCFILES:%.c=%.o)
-        TEST_SRCFILES = tests.c
-        TEST_OFILES = \$(TEST_SRCFILES:%.c=%.o)
-        LIB = $1
+          cat <<EOL > Makefile
+          CC = gcc
+          CFLAGS = -Wall -Wextra -Wvla -Werror -std=c99 -pedantic
+          SRCFILES =
+          OFILES = \$(SRCFILES:%.c=%.o)
+          TEST_SRCFILES = tests.c
+          TEST_OFILES = \$(TEST_SRCFILES:%.c=%.o)
+          LIB = $1
 
-        # Put your global rules
-        all:
+          # Put your global rules
+          all:
 
-        # Add your required binaries
-        main: CFLAGS += -g
-        main: LDFLAGS += -fsanitize=address
-        main: main.o \$(OFILES)
+          # Add your required binaries
+          main: CFLAGS += -g
+          main: LDFLAGS += -fsanitize=address
+          main: main.o \$(OFILES)
 
-        check: CFLAGS += -g -I.
-        check: LDFLAGS += -fsanitize=address
-        check: LDLIBS += -lcriterion
-        check: \$(OFILES) \$(TEST_OFILES)
-        ''\t\$(CC) \$^ -o \$@ \$(LDFLAGS) \$(LDLIBS)
-        ''\t./\$@ --verbose
+          check: CFLAGS += -g -I.
+          check: LDFLAGS += -fsanitize=address
+          check: LDLIBS += -lcriterion
+          check: \$(OFILES) \$(TEST_OFILES)
+          	\$(CC) \$^ -o \$@ \$(LDFLAGS) \$(LDLIBS)
+          	./\$@ --verbose
 
-        library: \$(OFILES)
-        ''\tar csr lib\$(LIB).a \$^
+          library: \$(OFILES)
+          	ar csr lib\$(LIB).a \$^
 
-        clean:
-        ''\t\$(RM) \$(OFILES) lib\$(LIB).a main check tests.o main.o
+          clean:
+          	\$(RM) \$(OFILES) lib\$(LIB).a main check tests.o main.o
 
-        .PHONY: all clean library
-        EOL
+          .PHONY: all clean library
+          EOL
 
-        echo "All files were generated."
-        echo "Do not forget to add your sources!!!!!"
-      '')
-    ];
+          echo "All files were generated."
+          echo "Do not forget to add your sources!!!!!"
+        '')
+      ];
   };
 }

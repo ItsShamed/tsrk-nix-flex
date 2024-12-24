@@ -1,13 +1,9 @@
 { config, lib, pkgs, ... }:
 
-let
-  cfg = config.tsrk.xsettingsd;
-in
-{
+let cfg = config.tsrk.xsettingsd;
+in {
   options = {
-    tsrk.xsettingsd = {
-      enable = lib.options.mkEnableOption "xsettingsd";
-    };
+    tsrk.xsettingsd = { enable = lib.options.mkEnableOption "xsettingsd"; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -31,21 +27,14 @@ in
       };
     };
 
-    home.packages = with pkgs; [
-      (tokyonight-gtk-theme.override {
-        colorVariants = [
-          "dark"
-          "light"
-        ];
-        tweakVariants = [
-          "storm"
-        ];
-        iconVariants = [
-          "Dark"
-          "Light"
-        ];
-      })
-    ];
+    home.packages = with pkgs;
+      [
+        (tokyonight-gtk-theme.override {
+          colorVariants = [ "dark" "light" ];
+          tweakVariants = [ "storm" ];
+          iconVariants = [ "Dark" "Light" ];
+        })
+      ];
 
     specialisation = {
       light.configuration = {
@@ -58,16 +47,17 @@ in
       };
     };
 
-    home.activation.xsettingsd-reload = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
-      _i "Reloading xsettingsd"
+    home.activation.xsettingsd-reload =
+      lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
+        _i "Reloading xsettingsd"
 
-      {
-        # This will crash if this is running at boot (no graphical environment)
-        ${config.systemd.user.systemctlPath} --user restart xsettingsd
-        ${lib.meta.getExe pkgs.lxappearance}&
-        sleep 1
-        ${lib.meta.getExe pkgs.killall} .lxappearance-wrapped
-      } || true
-    '';
+        {
+          # This will crash if this is running at boot (no graphical environment)
+          ${config.systemd.user.systemctlPath} --user restart xsettingsd
+          ${lib.meta.getExe pkgs.lxappearance}&
+          sleep 1
+          ${lib.meta.getExe pkgs.killall} .lxappearance-wrapped
+        } || true
+      '';
   };
 }

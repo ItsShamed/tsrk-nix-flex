@@ -2,7 +2,8 @@
 
 {
   options = {
-    tsrk.packages.pkgs.cDev.enable = lib.options.mkEnableOption "tsrk's C development bundle";
+    tsrk.packages.pkgs.cDev.enable =
+      lib.options.mkEnableOption "tsrk's C development bundle";
   };
 
   config = lib.mkIf config.tsrk.packages.pkgs.cDev.enable {

@@ -1,11 +1,7 @@
 { config, lib, ... }:
 
 {
-  imports = [
-    ./docker.nix
-    ./podman.nix
-    ./services
-  ];
+  imports = [ ./docker.nix ./podman.nix ./services ];
 
   options = {
     tsrk.containers.enable = lib.options.mkEnableOption "containers";

@@ -8,9 +8,7 @@
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
       moreGroups = [ "adbusers" "libvirtd" ];
-      modules = [
-        ./user.nix
-      ];
+      modules = [ ./user.nix ];
     })
     ./disk.nix
     ./hardware-config.nix
@@ -35,8 +33,6 @@
   '';
 
   virtualisation.docker.daemon.settings = {
-    insecure-registries = [
-      "reg.ren.libvirt.local"
-    ];
+    insecure-registries = [ "reg.ren.libvirt.local" ];
   };
 }

@@ -5,17 +5,13 @@ let
   isJDK = package:
     with lib;
     let
-      pkg =
-        if isDerivation package then
-          package
-        else if isStringLike package then
-          pkgs."${package}" or { }
-        else
-          throw "Cannot check if ${package} is a JDK"
-      ;
-    in
-    (pkg.meta.mainProgram or false) == "java"
-  ;
+      pkg = if isDerivation package then
+        package
+      else if isStringLike package then
+        pkgs."${package}" or { }
+      else
+        throw "Cannot check if ${package} is a JDK";
+    in (pkg.meta.mainProgram or false) == "java";
 
   printJDKScript = pkgs.writeShellScriptBin "printjdks" ''
     javaHomeString=
@@ -32,22 +28,27 @@ let
 
     (if the two paths are different, make sure that 'programs.java.package' is set correctly)
 
-    ${if cfg.jdk.extraPackages != [ ] then
-      "The following extra JDKs are available:\n\n${lib.strings.concatLines (builtins.map (pkg: "  - ${pkg}") cfg.jdk.extraPackages)}"
-      else "No extra JDKs are available."}
+    ${if cfg.jdk.extraPackages != [ ] then ''
+      The following extra JDKs are available:
+
+      ${lib.strings.concatLines
+      (builtins.map (pkg: "  - ${pkg}") cfg.jdk.extraPackages)}'' else
+      "No extra JDKs are available."}
     EOF
   '';
-in
-{
+in {
   options = {
     tsrk.packages.pkgs.java = {
       enable = lib.options.mkEnableOption "tsrk's Java development bundle";
 
       ide = {
-        enable = (lib.options.mkEnableOption "the Java IDE.") // { default = true; };
+        enable = (lib.options.mkEnableOption "the Java IDE.") // {
+          default = true;
+        };
         package = lib.options.mkPackageOption pkgs.jetbrains "Java IDE" {
           default = [ "idea-ultimate" ];
-          example = "pkgs.jetbrains.idea-community"; # hint: you also have pkgs.eclipses.eclipse-java for those insane enough to use that
+          example =
+            "pkgs.jetbrains.idea-community"; # hint: you also have pkgs.eclipses.eclipse-java for those insane enough to use that
         };
       };
 
@@ -64,7 +65,9 @@ in
         description = "Extra JDK packages to install";
       };
 
-      maven.enable = (lib.options.mkEnableOption "Maven") // { default = true; };
+      maven.enable = (lib.options.mkEnableOption "Maven") // {
+        default = true;
+      };
 
       gradle = {
         enable = lib.options.mkEnableOption "Gradle";
@@ -78,21 +81,17 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    assertions = builtins.map
-      (package: {
-        assertion = isJDK package;
-        message = "${package} is not a valid JDK pacakge.";
-      })
-      cfg.jdk.extraPackages;
+    assertions = builtins.map (package: {
+      assertion = isJDK package;
+      message = "${package} is not a valid JDK pacakge.";
+    }) cfg.jdk.extraPackages;
 
     programs.java = {
       enable = true;
       package = lib.meta.hiPrio cfg.jdk.package;
     };
 
-    environment.systemPackages =
-      [ printJDKScript ]
-      ++ cfg.jdk.extraPackages
+    environment.systemPackages = [ printJDKScript ] ++ cfg.jdk.extraPackages
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package)
       ++ (lib.lists.optional cfg.maven.enable pkgs.maven)
       ++ (lib.lists.optional cfg.gradle.enable cfg.gradle.package);

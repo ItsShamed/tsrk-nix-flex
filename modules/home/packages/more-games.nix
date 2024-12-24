@@ -2,23 +2,20 @@
 
 { lib, config, pkgs, ... }:
 
-let
-  gaming = inputs.nix-gaming.packages.${pkgs.system};
-in
-{
+let gaming = inputs.nix-gaming.packages.${pkgs.system};
+in {
   options = {
     tsrk.packages.more-gaming = {
-      enable = lib.options.mkEnableOption "tsrk's \"More Gaming\" pacakge bundle";
+      enable =
+        lib.options.mkEnableOption ''tsrk's "More Gaming" pacakge bundle'';
     };
   };
 
   config = lib.mkIf config.tsrk.packages.more-gaming.enable {
-    warnings = [
-      ''
-        This module (packages/more-games.nix) installs a package from fufexan/nix-gaming, which is
-        known to cause issues with nixos-install.
-      ''
-    ];
+    warnings = [''
+      This module (packages/more-games.nix) installs a package from fufexan/nix-gaming, which is
+      known to cause issues with nixos-install.
+    ''];
     home.packages = [
       gaming.osu-lazer-bin
       gaming.osu-stable

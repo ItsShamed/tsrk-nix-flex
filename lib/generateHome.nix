@@ -2,9 +2,7 @@
 
 name:
 
-{ modules ? [ ]
-, homeDir ? "/home/${name}"
-}:
+{ modules ? [ ], homeDir ? "/home/${name}" }:
 
 let
   homeManagerBase = { ... }: {
@@ -19,15 +17,12 @@ let
   configuration = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = pkgSet.pkgs;
 
-    modules = modules ++ [
-      homeManagerBase
-      inputs.nixvim.homeManagerModules.nixvim
-    ];
+    modules = modules
+      ++ [ homeManagerBase inputs.nixvim.homeManagerModules.nixvim ];
 
     extraSpecialArgs = {
       inherit self;
       inherit inputs;
     };
   };
-in
-configuration
+in configuration

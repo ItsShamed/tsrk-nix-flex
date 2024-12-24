@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 let
-  normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser) (builtins.attrNames config.users.users);
-in
-{
+  normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser)
+    (builtins.attrNames config.users.users);
+in {
   options = {
     tsrk.containers.docker.enable = lib.options.mkEnableOption "Docker";
   };
@@ -21,8 +21,6 @@ in
 
     users.extraGroups.docker.members = normalUsers;
 
-    environment.systemPackages = with pkgs; [
-      docker-compose
-    ];
+    environment.systemPackages = with pkgs; [ docker-compose ];
   };
 }

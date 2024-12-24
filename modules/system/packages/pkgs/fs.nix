@@ -2,7 +2,8 @@
 
 {
   options = {
-    tsrk.packages.pkgs.fs.enable = lib.options.mkEnableOption "tsrk's filesystem package bundle";
+    tsrk.packages.pkgs.fs.enable =
+      lib.options.mkEnableOption "tsrk's filesystem package bundle";
   };
 
   config = lib.mkIf config.tsrk.packages.pkgs.fs.enable {

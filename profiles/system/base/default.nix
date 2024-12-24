@@ -24,11 +24,9 @@
   console.keyMap = "us";
 
   nix = {
-    /*
-    * pkgs.nixFlakes was just an alias to pkgs.nixVersions.stable, and has
-    * been removed in 24.11
-    * Rather just use the pkgs.nixStable alias directly at that point.
-    */
+    # pkgs.nixFlakes was just an alias to pkgs.nixVersions.stable, and has
+    # been removed in 24.11
+    # Rather just use the pkgs.nixStable alias directly at that point.
     package = pkgs.nixStable;
 
     settings = {
@@ -89,7 +87,8 @@
   environment.variables = {
     NIXPKGS_ALLOW_UNFREE = "1";
 
-    NIX_CFLAGS_COMPILE_x86_64_unknown_linux_gnu = "-isystem /run/current-system/sw/include";
+    NIX_CFLAGS_COMPILE_x86_64_unknown_linux_gnu =
+      "-isystem /run/current-system/sw/include";
     NIX_CFLAGS_LINK_x86_64_unknown_linux_gnu = "-L/run/current-system/sw/lib";
 
     CMAKE_INCLUDE_PATH = "/run/current-system/sw/include";
@@ -99,9 +98,7 @@
     PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
   };
 
-  environment.systemPackages = [
-    inputs.agenix.packages.${pkgs.system}.agenix
-  ];
+  environment.systemPackages = [ inputs.agenix.packages.${pkgs.system}.agenix ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -141,7 +138,9 @@
     echo '    @@@@@@@@                @@@@@@@       @@@@@@@@@@'
     echo '   @@@@@@@/                 @@@@@@@           @@@@@@@@@@'
     echo '   @@@@@@@                  @@@@@@@               @@@@@@@@@@'
-    printf "\033[0;36mYou are currently booting on the \033[1;35m${config.lib.tsrk.imageName or "unspecified"} \033[0;36m image\033[0m\n"
+    printf "\033[0;36mYou are currently booting on the \033[1;35m${
+      config.lib.tsrk.imageName or "unspecified"
+    } \033[0;36m image\033[0m\n"
   '';
 
   system.stateVersion = "24.05";

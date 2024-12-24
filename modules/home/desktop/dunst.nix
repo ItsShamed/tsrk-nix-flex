@@ -48,7 +48,8 @@
           line_height = 0;
 
           markup = "full";
-          format = "<b><u><span font_size=\"12.5pt\">%a</span></u> - %s</b>\\n<span font_size=\"10.5pt\">%b %p</span>";
+          format = ''
+            <b><u><span font_size="12.5pt">%a</span></u> - %s</b>\n<span font_size="10.5pt">%b %p</span>'';
 
           alignment = "left";
           vertical_alignment = "center";
@@ -106,7 +107,7 @@
         };
         tsrk-cirnos-nix-i3 = {
           appname = "tsrk-cirnos-nix-i3";
-          format = "<span font_size=\"11pt\">%s%b %p</span>";
+          format = ''<span font_size="11pt">%s%b %p</span>'';
         };
         scrot = {
           summary = "scrot";

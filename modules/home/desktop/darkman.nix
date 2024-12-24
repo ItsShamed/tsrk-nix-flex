@@ -18,36 +18,36 @@ let
     done
   '';
 
-  baseConfig =
-    {
-      services.darkman = {
-        enable = lib.mkDefault true;
-        package = pkgs.darkman;
-        settings = {
-          lat = 48.87951;
-          lng = 2.28513;
-        };
-        lightModeScripts = {
-          dunst-notif = ''
-            ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
-          '';
-          activate-home-manager = ''
-            export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-            . ${config.home.homeDirectory}/.local/bin/hm-light-activate
-          '';
-        };
-        darkModeScripts = {
-          dunst-notif = ''
-            ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
-          '';
-          activate-home-manager = ''
-            export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-            . ${config.home.homeDirectory}/.local/bin/hm-dark-activate
-          '';
-        };
+  baseConfig = {
+    services.darkman = {
+      enable = lib.mkDefault true;
+      package = pkgs.darkman;
+      settings = {
+        lat = 48.87951;
+        lng = 2.28513;
       };
+      lightModeScripts = {
+        dunst-notif = ''
+          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
+        '';
+        activate-home-manager = ''
+          export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+          . ${config.home.homeDirectory}/.local/bin/hm-light-activate
+        '';
+      };
+      darkModeScripts = {
+        dunst-notif = ''
+          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
+        '';
+        activate-home-manager = ''
+          export PATH="/nix/var/nix/profiles/default/bin:$PATH"
+          . ${config.home.homeDirectory}/.local/bin/hm-dark-activate
+        '';
+      };
+    };
 
-      home.activation.copy-activation = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
+    home.activation.copy-activation =
+      lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
         echo "Copying activation scripts"
         activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
         activation_dir="$(cd -- "$activation_dir" && pwd)"
@@ -65,7 +65,8 @@ let
         unset activation_dir base_dir
       '';
 
-      home.packages = with pkgs; [
+    home.packages = with pkgs;
+      [
         (writeShellScriptBin "hm-switch" ''
           cd $HOME/.config/home-manager
           home-manager build $@
@@ -73,10 +74,8 @@ let
         '')
       ];
 
-      home.sessionPath = [
-        "$HOME/.local/bin"
-      ];
-    };
+    home.sessionPath = [ "$HOME/.local/bin" ];
+  };
 
   nvimLoaded = cfg.nvim.enable;
   nvimConfig = {
@@ -101,8 +100,7 @@ let
       '';
     };
   };
-in
-{
+in {
   options = {
     tsrk.darkman = {
       enable = lib.options.mkEnableOption "darkman";

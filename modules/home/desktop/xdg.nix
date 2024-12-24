@@ -2,9 +2,7 @@
 
 {
   options = {
-    tsrk.xdg = {
-      enable = lib.options.mkEnableOption "tsrk's xdg config";
-    };
+    tsrk.xdg = { enable = lib.options.mkEnableOption "tsrk's xdg config"; };
   };
 
   config = lib.mkIf config.tsrk.xdg.enable {

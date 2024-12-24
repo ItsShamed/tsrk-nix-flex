@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
-    tsrk.bluetooth.enable = lib.options.mkEnableOption "Bluetooth";
-  };
+  options = { tsrk.bluetooth.enable = lib.options.mkEnableOption "Bluetooth"; };
 
   config = lib.mkIf config.tsrk.bluetooth.enable {
     hardware.bluetooth = {

@@ -5,12 +5,7 @@
 {
   key = ./.;
 
-  imports = with self.homeManagerModules; [
-    packages
-    nvim
-    git
-    shell
-  ];
+  imports = with self.homeManagerModules; [ packages nvim git shell ];
 
   config = {
     tsrk.packages.core.enable = lib.mkDefault true;

@@ -29,11 +29,7 @@
     cDev.enable = true;
     java = {
       enable = true;
-      jdk.extraPackages = with pkgs; [
-        jdk17
-        jdk11
-        jdk8
-      ];
+      jdk.extraPackages = with pkgs; [ jdk17 jdk11 jdk8 ];
     };
     csharp.enable = true;
     rust.enable = true;
@@ -52,12 +48,7 @@
     podman.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    aria2
-    qbittorrent
-    miru
-    tailscale
-  ];
+  environment.systemPackages = with pkgs; [ aria2 qbittorrent miru tailscale ];
 
   services.tailscale.enable = true;
   services.tailscale.openFirewall = true;

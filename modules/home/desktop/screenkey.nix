@@ -1,9 +1,7 @@
 { config, lib, options, pkgs, ... }:
 
-let
-  cfg = config.tsrk.screenkey;
-in
-{
+let cfg = config.tsrk.screenkey;
+in {
   options = {
     tsrk.screenkey = {
       enable = lib.options.mkEnableOption "Screenkey";
@@ -15,7 +13,7 @@ in
           "timeout" = 2;
           "recent_thr" = 0.1;
           "compr_cnt" = 5;
-          "ignore" = [];
+          "ignore" = [ ];
           "position" = "fixed";
           "persist" = false;
           "window" = null;
@@ -31,12 +29,7 @@ in
           "multiline" = false;
           "vis_shift" = false;
           "vis_space" = true;
-          "geometry" = [
-              1493
-              1046
-              427
-              34
-          ];
+          "geometry" = [ 1493 1046 427 34 ];
           "screen" = 0;
           "start_disabled" = false;
           "mouse" = false;
@@ -47,9 +40,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      screenkey
-    ];
+    home.packages = with pkgs; [ screenkey ];
 
     xdg.configFile."screenkey.json".text = builtins.toJSON cfg.settings;
   };

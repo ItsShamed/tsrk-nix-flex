@@ -1,17 +1,5 @@
-{ lib
-, fetchFromGitHub
-, stdenvNoCC
-, makeWrapper
-, playerctl
-, coreutils-full
-, polybarFull
-, procps
-, gawk
-, gnugrep
-, gnused
-, xdotool
-, zscroll
-}:
+{ lib, fetchFromGitHub, stdenvNoCC, makeWrapper, playerctl, coreutils-full
+, polybarFull, procps, gawk, gnugrep, gnused, xdotool, zscroll }:
 
 let
   statusPath = lib.makeBinPath [
@@ -25,11 +13,8 @@ let
     xdotool
   ];
 
-  entryPath = lib.makeBinPath [
-    zscroll
-  ];
-in
-stdenvNoCC.mkDerivation {
+  entryPath = lib.makeBinPath [ zscroll ];
+in stdenvNoCC.mkDerivation {
   pname = "polybar-mpris";
   version = "unstable-2024-02-25";
 
@@ -40,9 +25,7 @@ stdenvNoCC.mkDerivation {
     hash = "sha256-eDkOFpeHhDbnopJnLh2fsmTet7IHHuQPChKPseOtto4=";
   };
 
-  nativeBuildInputs = [
-    makeWrapper
-  ];
+  nativeBuildInputs = [ makeWrapper ];
 
   patches = [
     ./patches/tsrk-usage.patch
@@ -74,7 +57,8 @@ stdenvNoCC.mkDerivation {
   dontConfigure = true;
 
   meta = with lib; {
-    description = "MPRIS status and controls module for polybar with text scrolling and icons for various apps and wesbites.";
+    description =
+      "MPRIS status and controls module for polybar with text scrolling and icons for various apps and wesbites.";
     homepage = "https://github.com/0jdxt/polybar-mpris";
     license = licenses.gpl3Only;
     mainProgram = "polybar-mpris";

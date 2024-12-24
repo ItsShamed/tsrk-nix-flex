@@ -8,9 +8,7 @@
   };
 
   config = lib.mkIf config.tsrk.shell.lsd.enable {
-    home.shellAliases = {
-      l = "lsd -lah";
-    };
+    home.shellAliases = { l = "lsd -lah"; };
 
     programs.lsd = {
       enable = true;

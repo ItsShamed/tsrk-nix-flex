@@ -6,8 +6,7 @@ let
     rev = "3ac6e889a46e0c0aad44df2a0d23b3d8fe1257d5";
     ref = "refs/tags/v0.7.2";
   };
-in
-{
+in {
   options = {
     tsrk.qwerty-fr = {
       enable = lib.options.mkEnableOption "the French QWERTY keyboard layout";

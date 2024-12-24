@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
-let
-  cfg = config.tsrk.packages.pkgs.csharp;
-in
-{
+let cfg = config.tsrk.packages.pkgs.csharp;
+in {
   options = {
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
@@ -13,15 +11,12 @@ in
       };
 
       ide = {
-        enable =
-          (lib.options.mkEnableOption "the .NET IDE")
-          // {
-            default = true;
-          };
+        enable = (lib.options.mkEnableOption "the .NET IDE") // {
+          default = true;
+        };
 
         package = lib.options.mkPackageOption pkgs.jetbrains ".NET IDE" {
-          default =
-            [ "rider" ]; # Sorry not sorry, school free license is yummy
+          default = [ "rider" ]; # Sorry not sorry, school free license is yummy
         };
       };
     };
@@ -29,10 +24,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs;
-      [
-        cfg.package
-        mono
-      ]
+      [ cfg.package mono ]
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
     environment.variables = {

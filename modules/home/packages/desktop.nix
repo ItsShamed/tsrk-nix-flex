@@ -15,12 +15,7 @@
 
       # Fonts
       (nerdfonts.override {
-        fonts = [
-          "Iosevka"
-          "IosevkaTerm"
-          "JetBrainsMono"
-          "Meslo"
-        ];
+        fonts = [ "Iosevka" "IosevkaTerm" "JetBrainsMono" "Meslo" ];
       })
       iosevka
       meslo-lgs-nf

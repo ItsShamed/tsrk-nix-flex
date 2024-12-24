@@ -2,16 +2,10 @@
 
 let
   fonts = pkgs.nerdfonts.override {
-    fonts = [
-      "Iosevka"
-      "IosevkaTerm"
-      "JetBrainsMono"
-      "Meslo"
-    ];
+    fonts = [ "Iosevka" "IosevkaTerm" "JetBrainsMono" "Meslo" ];
   };
   cfg = config.tsrk.kitty;
-in
-{
+in {
   options = {
     tsrk.kitty.enable = lib.options.mkEnableOption "kitty terminal emulator";
   };

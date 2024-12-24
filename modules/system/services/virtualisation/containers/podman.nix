@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
-    tsrk.containers.podman.enable = lib.mkEnableOption "Podman";
-  };
+  options = { tsrk.containers.podman.enable = lib.mkEnableOption "Podman"; };
 
   config = {
     tsrk.containers.enable = lib.mkDefault true;
@@ -11,9 +9,7 @@
       enable = true;
 
       defaultNetwork.settings.dns_enabled = true;
-      extraPackages = with pkgs; [
-        podman-compose
-      ];
+      extraPackages = with pkgs; [ podman-compose ];
     };
   };
 }

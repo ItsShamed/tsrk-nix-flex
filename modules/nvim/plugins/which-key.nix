@@ -25,15 +25,11 @@ let
 
   mkConvertedSpec = options: attrs:
     let
-      filteredAttrs = [
-        "prefix"
-        "buffer"
-        "noremap"
-        "silent"
-      ];
+      filteredAttrs = [ "prefix" "buffer" "noremap" "silent" ];
 
       checkAttrValid = n: builtins.all (s: s != n) filteredAttrs;
-      filteredOptions = lib.attrsets.filterAttrs (n: _: checkAttrValid n) options;
+      filteredOptions =
+        lib.attrsets.filterAttrs (n: _: checkAttrValid n) options;
 
       mkConvertedMap = keys: mapping: options:
         assert (builtins.length mapping) >= 1;
@@ -41,41 +37,38 @@ let
           __unkeyed-1 = keys;
           __unkeyed-2 = builtins.elemAt mapping 0;
           remap = !(options.noremap or true);
-        } // filteredOptions
-        // (if (builtins.length mapping) > 1 then { desc = builtins.elemAt mapping 1; } else { })
-      ;
+        } // filteredOptions // (if (builtins.length mapping) > 1 then {
+          desc = builtins.elemAt mapping 1;
+        } else
+          { });
 
       convertMappingChild = prefix: obj:
         if builtins.isList obj then
           mkConvertedMap prefix obj options
         else if builtins.isAttrs obj then
-          (lib.lists.flatten (
-            convertMappingNode prefix (lib.attrsets.filterAttrs
+          (lib.lists.flatten (convertMappingNode prefix
+            (lib.attrsets.filterAttrs
               (n: _: n != "name") # avoid 'name' being treated as a keybind
-              obj
-            )
-          ))
-          ++ (lib.lists.optional (builtins.hasAttr "name" obj) ({ group = obj.name; __unkeyed-1 = prefix; } // filteredOptions))
+              obj))) ++ (lib.lists.optional (builtins.hasAttr "name" obj) ({
+                group = obj.name;
+                __unkeyed-1 = prefix;
+              } // filteredOptions))
         else
-          builtins.throw "child should either be an attrset (group) or a list (mapping)."
-      ;
+          builtins.throw
+          "child should either be an attrset (group) or a list (mapping).";
 
       convertMappingNode = prefix: attrs:
-        lib.lists.flatten (
-          lib.attrsets.mapAttrsToList
-            (key: mapping:
-              builtins.addErrorContext "while converting which-key `${prefix + key}` mapping node to new spec"
-                (convertMappingChild (prefix + key) mapping)
-            )
-            attrs
-        );
-    in
-    builtins.addErrorContext "while converting which-key mapping to new spec"
-      (lib.lists.flatten (convertMappingNode (options.prefix) attrs))
-  ;
+        lib.lists.flatten (lib.attrsets.mapAttrsToList (key: mapping:
+          builtins.addErrorContext "while converting which-key `${
+            prefix + key
+          }` mapping node to new spec"
+          (convertMappingChild (prefix + key) mapping)) attrs);
+    in builtins.addErrorContext "while converting which-key mapping to new spec"
+    (lib.lists.flatten (convertMappingNode (options.prefix) attrs));
 
   visualMappings = mkConvertedSpec visualMappingsOptions {
-    "/" = [ "<Plug>(comment_toggle_linewise_visual)" "Comment toggle (visual)" ];
+    "/" =
+      [ "<Plug>(comment_toggle_linewise_visual)" "Comment toggle (visual)" ];
     l = {
       name = "LSP";
       a = [ "<cmd>lua vim.lsp.buf.code_action()<cr>" "Code action" ];
@@ -86,7 +79,10 @@ let
     ";" = [ "<cmd>Alpha<CR>" "Dashboard" ];
     "a" = [ "<cmd>w!<CR>" "Save" ];
     "q" = [ "<cmd>confirm q<CR>" "Quit" ];
-    "/" = [ "<Plug>(comment_toggle_linewise_current)" "Comment toggle current line" ];
+    "/" = [
+      "<Plug>(comment_toggle_linewise_current)"
+      "Comment toggle current line"
+    ];
     "c" = [ "<cmd>bd<CR>" "Close Buffer" ];
     "f" = [
       (lua ''
@@ -106,29 +102,18 @@ let
       b = [ "<cmd>BufferLineCyclePrev<cr>" "Previous" ];
       n = [ "<cmd>BufferLineCycleNext<cr>" "Next" ];
       W = [ "<cmd>noautocmd w<cr>" "Save without formatting (noautocmd)" ];
-      e = [
-        "<cmd>BufferLinePickClose<cr>"
-        "Pick which buffer to close"
-      ];
+      e = [ "<cmd>BufferLinePickClose<cr>" "Pick which buffer to close" ];
       h = [ "<cmd>BufferLineCloseLeft<cr>" "Close all to the left" ];
-      l = [
-        "<cmd>BufferLineCloseRight<cr>"
-        "Close all to the right"
-      ];
-      D = [
-        "<cmd>BufferLineSortByDirectory<cr>"
-        "Sort by directory"
-      ];
-      L = [
-        "<cmd>BufferLineSortByExtension<cr>"
-        "Sort by language"
-      ];
+      l = [ "<cmd>BufferLineCloseRight<cr>" "Close all to the right" ];
+      D = [ "<cmd>BufferLineSortByDirectory<cr>" "Sort by directory" ];
+      L = [ "<cmd>BufferLineSortByExtension<cr>" "Sort by language" ];
       "c" = [ "<cmd>bd<CR>" "Close Buffer" ];
     };
 
     d = {
       name = "Debug";
-      t = [ "<cmd>lua require'dap'.toggle_breakpoint()<cr>" "Toggle Breakpoint" ];
+      t =
+        [ "<cmd>lua require'dap'.toggle_breakpoint()<cr>" "Toggle Breakpoint" ];
       b = [ "<cmd>lua require'dap'.step_back()<cr>" "Step Back" ];
       c = [ "<cmd>lua require'dap'.continue()<cr>" "Continue" ];
       C = [ "<cmd>lua require'dap'.run_to_cursor()<cr>" "Run To Cursor" ];
@@ -147,18 +132,15 @@ let
     l = {
       name = "LSP";
       a = [ "<cmd>lua vim.lsp.buf.code_action()<cr>" "Code Action" ];
-      d = [ "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>" "Buffer Diagnostics" ];
+      d = [
+        "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>"
+        "Buffer Diagnostics"
+      ];
       w = [ "<cmd>Telescope diagnostics<cr>" "Diagnostics" ];
       f = [ "<cmd>lua format()<cr>" "Format" ];
       i = [ "<cmd>LspInfo<cr>" "Info" ];
-      j = [
-        "<cmd>lua vim.diagnostic.goto_next()<cr>"
-        "Next Diagnostic"
-      ];
-      k = [
-        "<cmd>lua vim.diagnostic.goto_prev()<cr>"
-        "Prev Diagnostic"
-      ];
+      j = [ "<cmd>lua vim.diagnostic.goto_next()<cr>" "Next Diagnostic" ];
+      k = [ "<cmd>lua vim.diagnostic.goto_prev()<cr>" "Prev Diagnostic" ];
       l = [ "<cmd>lua vim.lsp.codelens.run()<cr>" "CodeLens Action" ];
       q = [ "<cmd>lua vim.diagnostic.setloclist()<cr>" "Quickfix" ];
       r = [ "<cmd>lua vim.lsp.buf.rename()<cr>" "Rename" ];
@@ -190,11 +172,23 @@ let
     };
     g = {
       name = "Git";
-      g = [ "<cmd>lua require 'lvim.core.terminal'.lazygit_toggle()<cr>" "Lazygit" ];
-      j = [ "<cmd>lua require 'gitsigns'.nav_hunk('next', {navigation_message = false})<cr>" "Next Hunk" ];
-      k = [ "<cmd>lua require 'gitsigns'.nav_hunk('prev', {navigation_message = false})<cr>" "Prev Hunk" ];
+      g = [
+        "<cmd>lua require 'lvim.core.terminal'.lazygit_toggle()<cr>"
+        "Lazygit"
+      ];
+      j = [
+        "<cmd>lua require 'gitsigns'.nav_hunk('next', {navigation_message = false})<cr>"
+        "Next Hunk"
+      ];
+      k = [
+        "<cmd>lua require 'gitsigns'.nav_hunk('prev', {navigation_message = false})<cr>"
+        "Prev Hunk"
+      ];
       l = [ "<cmd>lua require 'gitsigns'.blame_line()<cr>" "Blame" ];
-      L = [ "<cmd>lua require 'gitsigns'.blame_line({full=true})<cr>" "Blame Line (full)" ];
+      L = [
+        "<cmd>lua require 'gitsigns'.blame_line({full=true})<cr>"
+        "Blame Line (full)"
+      ];
       p = [ "<cmd>lua require 'gitsigns'.preview_hunk()<cr>" "Preview Hunk" ];
       r = [ "<cmd>lua require 'gitsigns'.reset_hunk()<cr>" "Reset Hunk" ];
       R = [ "<cmd>lua require 'gitsigns'.reset_buffer()<cr>" "Reset Buffer" ];
@@ -210,16 +204,12 @@ let
         "<cmd>Telescope git_bcommits<cr>"
         "Checkout commit(for current file)"
       ];
-      d = [
-        "<cmd>Gitsigns diffthis HEAD<cr>"
-        "Git Diff"
-      ];
+      d = [ "<cmd>Gitsigns diffthis HEAD<cr>" "Git Diff" ];
     };
   };
 
   resultingMappings = mappings ++ visualMappings;
-in
-{
+in {
   plugins.which-key = {
     enable = true;
 
@@ -246,8 +236,14 @@ in
       disable.filetypes = [ "TelescopePrompt" ];
 
       layout = {
-        height = { min = 4; max = 25; };
-        width = { min = 20; max = 50; };
+        height = {
+          min = 4;
+          max = 25;
+        };
+        width = {
+          min = 20;
+          max = 50;
+        };
       };
 
       win = {

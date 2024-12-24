@@ -1,9 +1,7 @@
 { self, ... }:
 
 {
-  imports = with self.homeManagerModules; [
-    profile-tsrk-private
-  ];
+  imports = with self.homeManagerModules; [ profile-tsrk-private ];
 
   tsrk = {
     i3.lockerBackground = ../../modules/home/desktop/files/bg-no-logo.png;

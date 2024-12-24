@@ -1,10 +1,5 @@
 {
-  imports = [
-    ./custom/plugins
-    ./keymaps.nix
-    ./options.nix
-    ./plugins
-  ];
+  imports = [ ./custom/plugins ./keymaps.nix ./options.nix ./plugins ];
 
   clipboard.register = "unnamedplus";
   clipboard.providers = {

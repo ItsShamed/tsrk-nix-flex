@@ -6,8 +6,6 @@
   };
 
   config = lib.mkIf config.tsrk.i3.enable {
-    services.xserver.windowManager.i3 = {
-      enable = true;
-    };
+    services.xserver.windowManager.i3 = { enable = true; };
   };
 }

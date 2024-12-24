@@ -18,8 +18,6 @@
         git_protocol = "ssh";
       };
     };
-    home.packages = with pkgs; [
-      glab
-    ];
+    home.packages = with pkgs; [ glab ];
   };
 }

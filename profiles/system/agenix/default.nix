@@ -5,9 +5,7 @@
 {
   key = ./.;
 
-  imports = [
-    (inputs.agenix.nixosModules.default)
-  ];
+  imports = [ (inputs.agenix.nixosModules.default) ];
 
   options = {
     tsrk.age = {
@@ -20,14 +18,12 @@
   };
 
   config = lib.mkIf config.tsrk.age.bootstrapKeys {
-    warnings = [
-      ''
-        Bootstrap SSH keys are loaded on this host. These keys are not supposed
-        to be permanent and are intended to be used only to setup agenix on new
-        hosts. Also note that only ED25519 SSH keys are loaded as bootstrap
-        keys.
-      ''
-    ];
+    warnings = [''
+      Bootstrap SSH keys are loaded on this host. These keys are not supposed
+      to be permanent and are intended to be used only to setup agenix on new
+      hosts. Also note that only ED25519 SSH keys are loaded as bootstrap
+      keys.
+    ''];
 
     tsrk.sshd = {
       customKeyPair = {
@@ -39,8 +35,6 @@
       };
     };
 
-    age.identityPaths = [
-      ./bootstrap-keys/ssh_host_ed25519_key
-    ];
+    age.identityPaths = [ ./bootstrap-keys/ssh_host_ed25519_key ];
   };
 }

@@ -1,13 +1,5 @@
-{ lib
-, makeDesktopItem
-, symlinkJoin
-, makeWrapper
-, fetchurl
-, callPackage
-, stdenvNoCC
-, unzip
-, zip
-}:
+{ lib, makeDesktopItem, symlinkJoin, makeWrapper, fetchurl, callPackage
+, stdenvNoCC, unzip, zip }:
 
 let
   info = builtins.fromJSON (builtins.readFile ./info.json);
@@ -72,13 +64,9 @@ let
     desktopName = "Paladium Launcher";
     categories = [ "Game" ];
   };
-in
-symlinkJoin {
+in symlinkJoin {
   name = pname;
-  paths = [
-    paladium-launcher
-    desktopItem
-  ];
+  paths = [ paladium-launcher desktopItem ];
 
   meta = with lib; {
     description = "Minecraft Launcher for the Paladium modded server.";

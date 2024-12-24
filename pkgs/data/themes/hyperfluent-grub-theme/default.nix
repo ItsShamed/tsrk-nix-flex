@@ -1,8 +1,4 @@
-{ lib
-, fetchFromGitHub
-, stdenv
-, theme ? "nixos"
-}:
+{ lib, fetchFromGitHub, stdenv, theme ? "nixos" }:
 
 assert builtins.any (s: theme == s) [
   "arch"
@@ -47,7 +43,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    description = "Boot your machine in style with a fluent, modern, and clean GRUB theme.";
+    description =
+      "Boot your machine in style with a fluent, modern, and clean GRUB theme.";
     homepage = "https://github.com/Coopydood/HyperFluent-GRUB-Theme";
     license = licenses.gpl3Only;
     platforms = platforms.linux;

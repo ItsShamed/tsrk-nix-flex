@@ -11,18 +11,15 @@ let
         args = self: super: { };
       };
 
-      pkgDecl =
-        if builtins.isAttrs pkgArgs then
-          (defaultArgs // pkgArgs)
-        else
-          defaultArgs // { path = pkgArgs; };
+      pkgDecl = if builtins.isAttrs pkgArgs then
+        (defaultArgs // pkgArgs)
+      else
+        defaultArgs // { path = pkgArgs; };
 
       overrideDecl = args: pkgDecl // { inherit args; };
-    in
-    {
+    in {
       "${name}" = (callPackage pkgDecl self super) // {
         override = args: callPackage (overrideDecl args) self super;
       };
     };
-in
-builtins.mapAttrs pkgToOverlay topLevelPackages
+in builtins.mapAttrs pkgToOverlay topLevelPackages
