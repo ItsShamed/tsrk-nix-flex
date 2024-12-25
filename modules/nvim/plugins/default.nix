@@ -13,6 +13,7 @@
     ./gitsigns.nix
     ./indentline.nix
     ./lsp.nix
+    ./luasnip.nix
     ./markdown-preview.nix
     ./markview.nix
     ./noice.nix
@@ -31,7 +32,6 @@
     bufferline.enable = true;
     hardtime.enable = true;
     lualine.enable = true;
-    luasnip.enable = true;
     vim-surround.enable = true;
     notify.enable = true;
     nui.enable = true;
