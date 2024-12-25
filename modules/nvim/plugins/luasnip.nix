@@ -143,6 +143,27 @@ let
         '' [ 2 ])
       ])
     ];
+    sh = [
+      (mkS "!license" [
+        (mkT "# Copyright (c) ")
+        (mkIText 1 "YEAR Author <email>")
+        (mkT [ "" "# This file is licensed under the " ])
+        (mkI 2)
+        (mkT " license")
+        (mkT [
+          ""
+          "# See the LICENSE file in the repository root for more info."
+          ""
+          "# SPDX-License-Identifier: "
+          ""
+        ])
+        (mkD 3 ''
+          return __sn(nil, {
+              __i(1, args[1])
+          })
+        '' [ 2 ])
+      ])
+    ];
   };
 
   mkFiletypeSnippets = filetype: snippets:
