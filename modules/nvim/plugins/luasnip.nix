@@ -134,13 +134,13 @@ let
           "# See the LICENSE file in the repository root for more info."
           ""
           "# SPDX-License-Identifier: "
-          ""
         ])
         (mkD 3 ''
           return __sn(nil, {
               __i(1, args[1])
           })
         '' [ 2 ])
+        (mkT [ "" "" ])
       ])
     ];
     sh = [
@@ -155,13 +155,13 @@ let
           "# See the LICENSE file in the repository root for more info."
           ""
           "# SPDX-License-Identifier: "
-          ""
         ])
         (mkD 3 ''
           return __sn(nil, {
               __i(1, args[1])
           })
         '' [ 2 ])
+        (mkT [ "" "" ])
       ])
     ];
   };
