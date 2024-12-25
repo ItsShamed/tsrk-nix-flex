@@ -48,6 +48,9 @@
                 (builtins.getFlake ("git+file://" + toString ./.)).lspHints.nixos or {}'';
               homeManager.expr = ''
                 (builtins.getFlake ("git+file://" + toString ./.)).lspHints.homeManager or {}'';
+              nixvim.expr = ''
+                (builtins.getFlake ("git+file://" + toString ./.)).packages.${pkgs.system}.nvim-cirno.options or {}
+              '';
             };
           };
         };
