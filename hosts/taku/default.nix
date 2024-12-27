@@ -37,6 +37,9 @@
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
 
+  # This is horrible for Minecraft PvP lmao
+  services.libinput.mouse.middleEmulation = false;
+
   services.hardware.openrgb = {
     enable = true;
     package = pkgs.openrgb-with-all-plugins;
