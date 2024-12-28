@@ -61,7 +61,12 @@
 
       security.rtkit.enable = true;
 
-      environment.systemPackages = with pkgs; [ pavucontrol pa_applet paprefs ];
+      environment.systemPackages = with pkgs; [
+        pavucontrol
+        pa_applet
+        paprefs
+        easyeffects
+      ];
     }
     (lib.mkIf config.tsrk.sound.focusriteSupport {
       # TODO: Remove this when NixOS will upgrade to Linux 6.7+
