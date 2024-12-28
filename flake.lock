@@ -1102,7 +1102,8 @@
         "nixpkgs": "nixpkgs_6",
         "nixpkgsUnstable": "nixpkgsUnstable",
         "nixvim": "nixvim",
-        "spotify-notifyx": "spotify-notifyx"
+        "spotify-notifyx": "spotify-notifyx",
+        "umu": "umu_2"
       }
     },
     "spotify-notifyx": {
@@ -1232,6 +1233,28 @@
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging/nix"
+      }
+    },
+    "umu_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1734207213,
+        "narHash": "sha256-djzWQaAnt2WHmioOlhuY46wabByEYePfO/ec1bBZI/o=",
+        "owner": "Open-Wine-Components",
+        "repo": "umu-launcher",
+        "rev": "6189d0d9fd062e89a375db20aeae1d1c009e9833",
+        "type": "github"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "owner": "Open-Wine-Components",
+        "repo": "umu-launcher",
+        "type": "github"
       }
     }
   },

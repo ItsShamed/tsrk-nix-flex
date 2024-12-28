@@ -8,7 +8,14 @@
 
 { lib, config, pkgs, ... }:
 
-{
+let
+  inherit (pkgs.stdenv.hostPlatform) system;
+  proton-osu-bin = inputs.nix-gaming.packages.${system}.proton-osu-bin;
+  umu = inputs.umu.packages.${system}.umu.override {
+    version = inputs.umu.shortRev;
+    truststore = true;
+  };
+in {
   imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
 
   options = {
@@ -22,12 +29,12 @@
 
   config = lib.mkIf config.tsrk.packages.pkgs.gaming.enable (lib.mkMerge [
     {
-      environment.systemPackages = with pkgs; [ gamemode protontricks ];
+      environment.systemPackages = with pkgs; [ gamemode protontricks umu ];
 
       hardware.steam-hardware.enable = lib.mkDefault true;
       programs.steam = {
         enable = lib.mkDefault true;
-        extraCompatPackages = with pkgs; [ proton-ge-bin ];
+        extraCompatPackages = with pkgs; [ proton-ge-bin proton-osu-bin ];
         remotePlay.openFirewall = lib.mkDefault true;
         localNetworkGameTransfers.openFirewall = lib.mkDefault true;
         platformOptimizations.enable = lib.mkDefault true;

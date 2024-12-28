@@ -49,6 +49,11 @@
     agenix.url = "github:ryantm/agenix";
 
     devenv.url = "github:cachix/devenv";
+
+    umu = {
+      url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgsUnstable
