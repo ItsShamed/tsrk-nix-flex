@@ -28,8 +28,6 @@
 
   time.hardwareClockInLocalTime = true;
 
-  tsrk.containers.docker.enable = true;
-
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
