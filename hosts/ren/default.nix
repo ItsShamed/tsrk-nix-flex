@@ -22,10 +22,6 @@
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
 
-  # Make /etc/hosts writable by root
-  # This is so that it's easy to temporarily set hostnames
-  environment.etc.hosts.mode = "0644";
-
   tsrk.libvirt.enable = true;
 
   services.libinput.touchpad.naturalScrolling = true;

@@ -31,6 +31,10 @@
     "/etc/ssh/ssh_host_rsa_key"
   ];
 
+  # Make /etc/hosts writable by root
+  # This is so that it's easy to temporarily set hostnames
+  environment.etc.hosts.mode = "0644";
+
   tsrk.packages.pkgs = {
     cDev.enable = true;
     java = {
