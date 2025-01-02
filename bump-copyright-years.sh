@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) 2024 tsrk. <tsrk@tsrk.me>
+# Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
 # This file is licensed under the MIT License.
 # See the LICENSE file in the repository root for more info.
 #
@@ -11,6 +11,6 @@
 
 find . -type f \( -not -path './.git*' \) \( \(\
     -exec grep -P 'Copyright \(c\) \d{4}' {} \; \
-    -exec sed -E -i 's/(Copyright \(c\) )\d{4}/\1'"$(date +%Y)"'/g' {} \; \
+    -exec sed -i 's/\(Copyright (c) \)[[:digit:]]\{4\}/\1'"$(date +%Y)"'/g' {} \; \
     -exec echo Modified date for {} \; \
     \) -o -exec echo {} not affected \; \)
