@@ -526,7 +526,7 @@ in {
       lockerBackground = lib.options.mkOption {
         description = "Path to the background image for the locker.";
         type = lib.types.path;
-        default = ./files/torekka.png;
+        default = ./files/tehfire.png;
       };
       background = lib.options.mkOption {
         description = "Path to the main wallpaper background.";
