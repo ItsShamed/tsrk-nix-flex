@@ -30,7 +30,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs;
-      [ cfg.package mono ]
+      [ cfg.package mono msbuild ]
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
     environment.variables = {
