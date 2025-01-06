@@ -56,7 +56,10 @@
         };
         jsonls.enable = true;
         texlab.enable = true;
-        tinymist.enable = true;
+        tinymist = {
+          enable = true;
+          settings.outputPath = "$root/out/$dir/$name";
+        };
         vala_ls.enable = true;
         yamlls.enable = true;
         rust_analyzer = {
