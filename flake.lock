@@ -1115,11 +1115,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1733997561,
-        "narHash": "sha256-mp11WqQmwscikxVx+ba1/dGhLbYyhZVz2XSZe/M3N60=",
+        "lastModified": 1736154796,
+        "narHash": "sha256-5hf/4OlxAXiOUq+44lVH9BnJ8H5qUsVYr7MM6ygt/wo=",
         "owner": "ItsShamed",
         "repo": "spotify-dbus-enhancer",
-        "rev": "2a81dd21ff1f58f845a87c1956c667d4beb620f1",
+        "rev": "860237031fe21854a3a2a52119fe48c07f96ef2a",
         "type": "github"
       },
       "original": {
