@@ -21,6 +21,8 @@
   tokyonight-extras = ./misc/tokyonight-extras;
 
   ### THEMES
+  dsfr-marianne = ./data/fonts/dsfr-marianne;
+
   sddm-slice-theme = {
     path = ./data/themes/sddm-slice-theme;
     callPackage = self: super: super.libsForQt5.callPackage;
