@@ -20,9 +20,11 @@
   polybar-mpris = ./applications/misc/polybar-mpris;
   tokyonight-extras = ./misc/tokyonight-extras;
 
-  ### THEMES
+  ### FONTS
   dsfr-marianne = ./data/fonts/dsfr-marianne;
+  spectral-font = ./data/fonts/spectral-font;
 
+  ### THEMES
   sddm-slice-theme = {
     path = ./data/themes/sddm-slice-theme;
     callPackage = self: super: super.libsForQt5.callPackage;
