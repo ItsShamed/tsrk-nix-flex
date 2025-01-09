@@ -58,7 +58,14 @@
         texlab.enable = true;
         tinymist = {
           enable = true;
-          settings.outputPath = "$root/out/$dir/$name";
+          extraOptions = {
+            # TODO: Remove this when NeoVim 0.10.3 is relased
+            offset_encoding = "utf-8";
+          };
+          settings = {
+            formatterMode = "typstyle";
+            formatterPrintWidth = "80";
+          };
         };
         vala_ls.enable = true;
         yamlls.enable = true;
