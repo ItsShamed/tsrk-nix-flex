@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   plugins = {
@@ -37,6 +37,16 @@
         helm_ls = {
           enable = true;
           cmd = [ "${pkgs.helm-ls}/bin/helm_ls" ];
+        };
+        ltex = {
+          enable = true;
+          settings = {
+            # NOTE: Docs say this only detects English or German but I think
+            # this is bullshit. Audited LT's source code and they seem to be
+            # doing fine at detecting languages based on spelling mistakes.
+            language = "auto";
+            additionalRules.motherTongue = lib.mkDefault "fr";
+          };
         };
         lua_ls.enable = true;
         nixd = {
