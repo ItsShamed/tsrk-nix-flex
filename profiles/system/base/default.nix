@@ -149,5 +149,7 @@
     } \033[0;36m image\033[0m\n"
   '';
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   system.stateVersion = "24.05";
 }

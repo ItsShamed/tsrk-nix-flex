@@ -69,36 +69,6 @@
       ];
     }
     (lib.mkIf config.tsrk.sound.focusriteSupport {
-      # TODO: Remove this when NixOS will upgrade to Linux 6.7+
-      boot.extraModprobeConfig = ''
-        ### FOCUSRITE SUPPORT
-
-        ## Scarlett Gen 2
-        # 6i6
-        options snd_usb_audio vid=0x1235 pid=0x8203 device_setup=1
-        # 18i8
-        options snd_usb_audio vid=0x1235 pid=0x8204 device_setup=1
-        # 18i20
-        options snd_usb_audio vid=0x1235 pid=0x8201 device_setup=1
-
-        ## Scarlett Gen 3
-        # Solo
-        options snd_usb_audio vid=0x1235 pid=0x8211 device_setup=1
-        # 2i2
-        options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1
-        # 4i4
-        options snd_usb_audio vid=0x1235 pid=0x8212 device_setup=1
-        # 8i6
-        options snd_usb_audio vid=0x1235 pid=0x8213 device_setup=1
-        # 18i8
-        options snd_usb_audio vid=0x1235 pid=0x8214 device_setup=1
-        # 18i20
-        options snd_usb_audio vid=0x1235 pid=0x8215 device_setup=1
-
-        ## Clarett+ 8 Pre
-        options snd_usb_audio vid=0x1235 pid=0x820c device_setup=1
-      '';
-
       environment.systemPackages = with pkgs; [ alsa-scarlett-gui ];
     })
   ]);
