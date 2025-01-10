@@ -23,8 +23,7 @@
       overskride
     ];
 
-    # Taken from https://github.com/Litarvan/legion/blob/main/modules/hardware/bluetooth.nix
-    services.pipewire.wireplumber.extraConfig = {
+    services.pipewire.wireplumber.extraConfig."10-bluez" = {
       "monitor.bluez.properties" = {
         "bluez5.enable-sbc-xq" = true;
         "bluez5.enable-msbc" = true;
