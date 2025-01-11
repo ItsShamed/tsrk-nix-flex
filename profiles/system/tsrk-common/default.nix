@@ -65,6 +65,12 @@
   services.tailscale.enable = true;
   services.tailscale.openFirewall = true;
 
-  # OBS WebSocket
-  networking.firewall.allowedTCPPorts = [ 4455 ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      4455 # OBS WebSocket
+      57621 # Spotify P2P
+    ];
+    # Spotify P2P
+    allowedUDPPorts = [ 57621 ];
+  };
 }
