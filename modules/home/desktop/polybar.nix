@@ -217,7 +217,7 @@ in {
             };
           };
 
-          label = "%date%%time%";
+          label = "%date% %time%";
         };
 
         "module/backlight-base" = {
