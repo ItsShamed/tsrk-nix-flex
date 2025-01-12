@@ -214,7 +214,7 @@ let
         window.commands = [
           # Enable border for "normal" windows
           {
-            command = "border pixel 3";
+            command = "border pixel 2";
             criteria = { class = "^.*"; };
           }
 
@@ -237,8 +237,8 @@ let
         ];
 
         gaps = {
-          outer = 10;
-          inner = 10;
+          outer = 5;
+          inner = 5;
         };
 
         colors.focused = {
