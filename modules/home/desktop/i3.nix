@@ -221,7 +221,7 @@ let
           # Floating only for Pavucontrol
           {
             command = "floating enable";
-            criteria = { class = "Pavucontrol"; };
+            criteria = { class = "pavucontrol"; };
           }
 
           # Floating only for lxappearance
