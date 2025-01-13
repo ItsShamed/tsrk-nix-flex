@@ -9,6 +9,7 @@
   spotify-adblock = ./applications/audio/spotify-adblock;
 
   ### DEVELOPMENT
+  ltex-ls-plus = ./development/languages-servers/ltext-ls-plus;
   realm-studio = ./development/misc/realm-studio;
 
   ### GAMES
