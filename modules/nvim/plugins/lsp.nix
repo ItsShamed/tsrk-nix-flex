@@ -40,6 +40,7 @@
         };
         ltex = {
           enable = true;
+          package = pkgs.ltex-ls-plus;
           settings = {
             # NOTE: Docs say this only detects English or German but I think
             # this is bullshit. Audited LT's source code and they seem to be
