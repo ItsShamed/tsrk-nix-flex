@@ -41,11 +41,32 @@
         ltex = {
           enable = true;
           package = pkgs.ltex-ls-plus;
+          filetypes = [
+            "bib"
+            "context"
+            "gitcommit"
+            "html"
+            "markdown"
+            "org"
+            "pandoc"
+            "plaintex"
+            "quarto"
+            "mail"
+            "mdx"
+            "rmd"
+            "rnoweb"
+            "rst"
+            "tex"
+            "text"
+            "typst"
+            "xhtml"
+          ];
           settings = {
             # NOTE: Docs say this only detects English or German but I think
             # this is bullshit. Audited LT's source code and they seem to be
             # doing fine at detecting languages based on spelling mistakes.
             language = "auto";
+            enabled = true;
             additionalRules.motherTongue = lib.mkDefault "fr";
           };
         };
