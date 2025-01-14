@@ -8,7 +8,8 @@
 
 {
   plugins.noice = {
-    enable = true;
+    # TODO: Disabling this for the time being because LSP don't render correctly
+    enable = false;
     # Suggested setup as shown in
     # https://github.com/folke/noice.nvim/?tab=readme-ov-file#-installation
     settings = {
