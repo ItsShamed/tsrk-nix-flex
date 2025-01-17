@@ -110,7 +110,7 @@ in {
           padding.right = 1;
 
           width = "100%";
-          height = 35;
+          height = 30;
           radius = 0;
           fixed.center = false;
 
