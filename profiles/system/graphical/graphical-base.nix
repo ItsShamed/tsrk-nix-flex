@@ -32,6 +32,8 @@
   programs.dconf.enable =
     lib.mkDefault true; # To allow GTK customisation in home-manager
 
+  services.gvfs.enable = lib.mkDefault true;
+
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [ dejavu_fonts ];
