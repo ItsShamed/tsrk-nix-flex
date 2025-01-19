@@ -11,6 +11,7 @@
 
   packages = with pkgs; [
     nix-output-monitor
+    eww
     inputs.agenix.packages.${pkgs.system}.default
   ];
 
