@@ -1,0 +1,9 @@
+; Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+; This file is licensed under the MIT license
+; See the LICENSE file in the repository root for more info.
+
+; SPDX-License-Identifier: MIT
+
+; vim: ft=lisp shiftwidth=2 tabstop=2 softtabstop=2
+
+(include './widgets/mpris-info.yuck')

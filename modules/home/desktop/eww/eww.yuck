@@ -1,0 +1,23 @@
+; Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+; This file is licensed under the MIT license
+; See the LICENSE file in the repository root for more info.
+
+; SPDX-License-Identifier: MIT
+
+; vim: ft=lisp
+
+(include './widgets/all.yuck')
+
+(defwindow mpris-info
+           :monitor '["<primary>", 0]'
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "50px"
+                               :height "30px"
+                               :anchor "bottom right")
+           :stacking "fg"
+           :reserve (struts :distance "30px" :side "bottom")
+           :windowtype "dock"
+           :wm-ignore false
+           :exclusive true
+  (mpris-info))

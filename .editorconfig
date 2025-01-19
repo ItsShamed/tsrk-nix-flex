@@ -4,3 +4,7 @@ end_of_line = lf
 [*.nix]
 indent_style = space
 indent_size = 2
+
+[*.lisp,*.yuck]
+indent_style = space
+indent_size = 2
