@@ -12,6 +12,8 @@
   packages = with pkgs; [
     nix-output-monitor
     eww
+    playerctl
+    imagemagick
     inputs.agenix.packages.${pkgs.system}.default
   ];
 
