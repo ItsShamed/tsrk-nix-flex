@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT license
+# See the LICENSE file in the repository root for more info.
+
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+source ./scripts/mpris-common.sh
+
+color_index=$1
+shift
+
+while read -r cover; do
+    if [ -z "$cover" ]; then
+        echo "No cover is available" >&2
+        echo ""
+        continue
+    fi
+
+    cache=$(get_cached "$cover")
+
+    if [ -z "$cache" ]; then
+        echo "Failed to get cached cover" >&2
+        echo ""
+        continue
+    fi
+
+    colours=$(magick "$cache" -geometry 16x16 "$@" -colors 5 -unique-colors \
+        -format %c histogram:info:- \
+    | cut -c 14- \
+    | cut -d ' ' -f 3 \
+    | xargs)
+
+    (
+        for colour in $colours; do
+            magick -size 1x1 canvas:"$colour" -format '%[mean]' info:-
+            echo " $colour"
+        done
+    ) | sort -n | cut -d ' ' -f 2 | xargs | cut -d ' ' -f "$color_index" | cut -c -7 | tee /dev/stderr
+done < <(playerctl --follow metadata mpris:artUrl)

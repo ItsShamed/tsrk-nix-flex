@@ -41,6 +41,11 @@ let
       # This service runs when the lock.target is reach and before sleeping
       systemctl --user stop i3lock &
     '')
+    (lib.strings.optionalString config.programs.eww.enable ''
+      # eww daemon
+      (systemctl --user stop eww-mpris-watcher
+      systemctl --user stop eww) &
+    '')
     ''
       # Stop i3
       i3-msg exit
@@ -97,6 +102,21 @@ let
       # i3lock service
       # This service runs when the lock.target is reached and before sleeping
       systemctl --user enable i3lock &
+    '')
+    (lib.strings.optionalString config.programs.eww.enable ''
+      # eww daemon
+      if systemctl -user is-active eww; then
+        (
+          systemctl --user stop eww-mpris-watcher
+          systemctl --user restart eww
+          systemctl --user start eww-mpris-watcher
+        ) &
+      else
+        (
+          systemctl --user enable --now eww
+          systemctl --user enable --now eww-mpris-watcher
+        ) &
+      fi
     '')
   ]);
 

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT license
+# See the LICENSE file in the repository root for more info.
+
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+source ./scripts/mpris-common.sh
+
+while read -r cover; do
+    if [ -z "$cover" ]; then
+        echo "No cover is available" >&2
+        echo ""
+        continue
+    fi
+    get_cached "$cover"
+done < <(playerctl --follow metadata mpris:artUrl)

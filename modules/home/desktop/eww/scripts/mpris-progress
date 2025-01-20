@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT license
+# See the LICENSE file in the repository root for more info.
+
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+position=$(playerctl position)
+length=$(playerctl metadata mpris:length)
+
+if [ -z "$position" -o -z "$length" ]; then
+    echo "Failed to get position" >&2
+    echo 0
+    exit 1
+fi
+
+awk -v position=$position \
+    -v l=$length \
+    'BEGIN {printf "%.*f\n", 6, position*100000000/l}'

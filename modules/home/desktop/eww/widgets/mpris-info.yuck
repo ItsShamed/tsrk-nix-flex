@@ -4,9 +4,90 @@
 
 ; SPDX-License-Identifier: MIT
 
-; vim: ft=lisp shiftwidth=2 tabstop=2 softtabstop=2
+(deflisten mpris-title :initial ""
+  `./scripts/mpris-info xesam:title`)
+
+(deflisten mpris-artist :initial ""
+  `./scripts/mpris-info xesam:artist`)
+
+(deflisten mpris-album :initial ""
+  `./scripts/mpris-info xesam:album`)
+
+(deflisten mpris-cached-cover :initial ""
+  `./scripts/mpris-cached-cover`)
+
+(deflisten mpris-bg-colour :initial ""
+  `./scripts/mpris-bg-colour`)
+
+(deflisten mpris-colour-background :initial ""
+  `./scripts/mpris-cover-colour 1 -fill black -colorize 50%`)
+
+(deflisten mpris-colour-secondary :initial ""
+  `./scripts/mpris-cover-colour 4`)
+
+(deflisten mpris-colour-primary :initial ""
+  `./scripts/mpris-cover-colour 5`)
+
+(defpoll mpris-progress :interval "0.1s"
+                        :initial "0"
+                        :run-while {mpris-title != ""}
+  `./scripts/mpris-progress`)
 
 (defwidget mpris-info []
   (box :orientation "horizontal"
-       :halign "center"
-       "hello"))
+       :halign "end"
+       :hexpand true
+       :space-evenly false
+       :visible {mpris-title != ""}
+       :class "mpris-info"
+       :style {mpris-colour-background != ""
+            ? "background-color: ${mpris-colour-background}"
+            : "background-color: #222"}
+    (box :style {mpris-cached-cover != ""
+                    ? "background-image: url('${mpris-cached-cover}')"
+                    : "background-image: url('./assets/no-cover.jpg')"}
+         :height 64
+         :width 64
+         :class "mpris-cover")
+    (box :orientation "vertical"
+         :class "mpris-right"
+         :space-evenly false
+      (box :orientation "vertical"
+           :class "mpris-metadata"
+           :space-evenly false
+      (label :text {mpris-title != "" ? "${mpris-title}"
+                        : "Nothing is playing"}
+             :xalign 0
+             :style {mpris-colour-primary != ""
+                        ? "color: ${mpris-colour-primary}"
+                        : "color: white" }
+             :class "mpris-metadata-title"
+             :limit-width 64
+             :show-truncated true
+             :justify "left")
+      (label :text "${mpris-artist}"
+             :xalign 0
+             :show-truncated true
+             :class "mpris-metadata-artist"
+             :limit-width 64
+             :justify "center"
+             :style {mpris-colour-secondary != ""
+                        ? "color: ${mpris-colour-secondary}"
+                        : "color: white" })
+      (label :text "${mpris-album}"
+             :xalign 0
+             :class "mpris-metadata-album"
+             :show-truncated true
+             :limit-width 64
+             :style {mpris-colour-secondary != ""
+                        ? "color: ${mpris-colour-secondary}"
+                        : "color: white" }
+             :justify "left"))
+      (scale :orientation "horizontal"
+             :min 0
+             :max 100
+             :active false
+             :css {mpris-colour-primary != ""
+                ? "trough highlight { background-color: ${mpris-colour-primary}; }"
+                : "trough highlight { background-color: white; }"}
+             :value mpris-progress))))

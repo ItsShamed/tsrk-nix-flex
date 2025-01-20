@@ -3,3 +3,53 @@
 // See the LICENSE file in the repository root for more info.
 
 // SPDX-License-Identifier: MIT
+
+* {
+  all: unset
+}
+
+.mpris-info {
+  margin: 0px 10px 7px 10px;
+  border-radius: 16px;
+  transition-duration: .25s;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, .5);
+
+  label {
+    font: 12px Iosevka NF;
+  }
+
+  .mpris-cover {
+    background-size: 64px;
+    border-radius: 16px 0px 0px 16px;
+    transition-duration: inherit;
+  }
+
+  .mpris-metadata {
+    margin: 6px 4px 0px 12px;
+
+    &-title, &-artist {
+      font-weight: bolder;
+      transition-duration: inherit;
+    }
+
+    &-album {
+      font-weight: normal;
+      transition-duration: inherit;
+    }
+  }
+
+  .mpris-right {
+    scale trough {
+      all: unset;
+      margin-top: 7px;
+      min-height: 3px;
+      min-width: 400px;
+
+      highlight {
+        all: unset;
+        transition-duration: .25s;
+        transition-timing-function: ease-in-out;
+      }
+    }
+  }
+}
