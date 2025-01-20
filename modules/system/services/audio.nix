@@ -8,7 +8,19 @@
 
 { config, lib, pkgs, ... }:
 
-{
+let
+  kernelVersion =
+    builtins.splitVersion config.boot.kernelPackages.kernel.verion;
+  kernelMajor = lib.strings.toInt (builtins.elemAt kernelVersion 0);
+  kernelMinor = lib.strings.toInt (builtins.elemAt kernelVersion 1);
+
+  fixedKernelVersion = builtins.splitVersion "6.7";
+  fixedKernelMajor = lib.strings.toInt (builtins.elemAt fixedKernelVersion 0);
+  fixedKernelMinor = lib.strings.toInt (builtins.elemAt fixedKernelVersion 1);
+
+  isAudioFixed = kernelMajor > fixedKernelMajor
+    || (kernelMajor == 6 && kernelMinor >= fixedKernelMinor);
+in {
   imports = [ inputs.nix-gaming.nixosModules.pipewireLowLatency ];
   options = {
     tsrk.sound = {
@@ -68,8 +80,38 @@
         easyeffects
       ];
     }
-    (lib.mkIf config.tsrk.sound.focusriteSupport {
-      environment.systemPackages = with pkgs; [ alsa-scarlett-gui ];
-    })
+    (lib.mkIf config.tsrk.sound.focusriteSupport (lib.mkMerge [
+      { environment.systemPackages = with pkgs; [ alsa-scarlett-gui ]; }
+      (lib.mkIf (!isAudioFixed) {
+        boot.extraModprobeConfig = ''
+          ### FOCUSRITE SUPPORT
+
+          ## Scarlett Gen 2
+          # 6i6
+          options snd_usb_audio vid=0x1235 pid=0x8203 device_setup=1
+          # 18i8
+          options snd_usb_audio vid=0x1235 pid=0x8204 device_setup=1
+          # 18i20
+          options snd_usb_audio vid=0x1235 pid=0x8201 device_setup=1
+
+          ## Scarlett Gen 3
+          # Solo
+          options snd_usb_audio vid=0x1235 pid=0x8211 device_setup=1
+          # 2i2
+          options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1
+          # 4i4
+          options snd_usb_audio vid=0x1235 pid=0x8212 device_setup=1
+          # 8i6
+          options snd_usb_audio vid=0x1235 pid=0x8213 device_setup=1
+          # 18i8
+          options snd_usb_audio vid=0x1235 pid=0x8214 device_setup=1
+          # 18i20
+          options snd_usb_audio vid=0x1235 pid=0x8215 device_setup=1
+
+          ## Clarett+ 8 Pre
+          options snd_usb_audio vid=0x1235 pid=0x820c device_setup=1
+        '';
+      })
+    ]))
   ]);
 }

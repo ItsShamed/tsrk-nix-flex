@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, config, ... }:
+{ self, pkgs, config, lib, ... }:
 
 {
   imports = [
@@ -35,4 +35,8 @@
   virtualisation.docker.daemon.settings = {
     insecure-registries = [ "reg.ren.libvirt.local" ];
   };
+
+  # This is using 6.6 for now because AD2P profiles are not working on 6.12
+  # TODO: Figure out why 6.12 is not detecting AD2P audio profiles
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
 }
