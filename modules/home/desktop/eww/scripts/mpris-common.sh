@@ -24,7 +24,7 @@ get_cached() {
     mkdir -p "$TEMP_DIR"
 
     cover_hash=$(echo "$cover" | md5sum | cut -d ' ' -f 1)
-    lock_file="$TEMP_DIR/.cover-''${cover_hash}.lock"
+    lock_file="$TEMP_DIR/.cover-${cover_hash}.lock"
     target="$CACHE_DIR/cover-$cover_hash.jpg"
     {
         flock -x 200
