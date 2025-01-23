@@ -26,18 +26,27 @@ get_cached() {
     cover_hash=$(echo "$cover" | md5sum | cut -d ' ' -f 1)
     lock_file="$TEMP_DIR/.cover-${cover_hash}.lock"
     target="$CACHE_DIR/cover-$cover_hash.jpg"
+
+    # First pass to avoid lock overhead if clready ached
+    if [ -f "$target" ]; then
+        echo "$target"
+        return 0
+    fi
+
     {
         flock -x 200
 
+        # Second pass to check if by the time we acquired the lock, another
+        # process might have cached the cover already
         if [ -f "$target" ]; then
           echo "$target"
           return 0
         fi
 
         if ! curl -fsSL "$cover" -o "$target"; then
-          echo "Failed to download cover at $cover" >&2
-          echo ""
-          return 1
+            echo "Failed to download cover at $cover" >&2
+            echo ""
+            return 1
         fi
 
         echo "$target"
