@@ -10,7 +10,7 @@
 
 let
   kernelVersion =
-    builtins.splitVersion config.boot.kernelPackages.kernel.verion;
+    builtins.splitVersion config.boot.kernelPackages.kernel.version;
   kernelMajor = lib.strings.toInt (builtins.elemAt kernelVersion 0);
   kernelMinor = lib.strings.toInt (builtins.elemAt kernelVersion 1);
 
