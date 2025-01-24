@@ -15,8 +15,10 @@
 
   config = lib.mkIf config.tsrk.packages.pkgs.rust.enable {
     environment.systemPackages = with pkgs; [
-      cargo
-      rustc
+      # NOTE: Using rustup as using nixpkgs-pinned rust is doing more harm
+      # than anything, especially for some libraries
+      # cargo
+      # rustc
       rustup
       rustfmt
       clippy
