@@ -13,6 +13,7 @@
     i3.lockerBackground = ../../modules/home/desktop/files/bg-no-logo.png;
     packages = {
       games.enable = true;
+      more-gaming.enable = true;
       media.enable = true;
     };
     darkman = {
