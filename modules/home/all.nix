@@ -14,7 +14,7 @@ args:
       if builtins.isAttrs file then
         assert lib.assertMsg (file ? path)
           "structrued module path does not contains `path' attribute";
-        lib.importApply file.path args
+        lib.modules.importApply file.path args
       else
         file;
     moduleList = import ./imports.nix;
