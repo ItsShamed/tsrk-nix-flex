@@ -8,6 +8,9 @@
   ### AUDIO
   spotify-adblock = ./applications/audio/spotify-adblock;
 
+  ### INSTANT MESSAGING
+  chatterino7 = ./applications/networking/instant-messengers/chatterino7;
+
   ### DEVELOPMENT
   ltex-ls-plus = ./development/languages-servers/ltext-ls-plus;
   realm-studio = ./development/misc/realm-studio;
