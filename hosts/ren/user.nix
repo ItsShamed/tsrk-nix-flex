@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = with self.homeManagerModules; [ profile-tsrk-private ];
@@ -33,4 +33,6 @@
     };
     nvim.wakatime.enable = true;
   };
+
+  home.packages = [ self.packages.${pkgs.system}.chatterino7 ];
 }
