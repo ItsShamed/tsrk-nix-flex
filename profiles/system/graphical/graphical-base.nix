@@ -36,7 +36,7 @@
 
   fonts = {
     enableDefaultPackages = true;
-    packages = with pkgs; [ dejavu_fonts ];
+    packages = with pkgs; [ dejavu_fonts noto-fonts-cjk-sans ];
     fontconfig = {
       enable = true;
       hinting.enable = true;
