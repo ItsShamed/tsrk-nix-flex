@@ -10,8 +10,30 @@ set -euo pipefail
 
 source ./scripts/mpris-common.sh
 
+reverse=false
+
+until [ "$#" -eq 1 ]; do
+    case "$1" in
+        -r|--reverse)
+            reverse=true
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
 color_index=$1
 shift
+
+optrev() {
+    if $reverse; then
+        rev
+    else
+        cat
+    fi
+}
 
 while read -r cover; do
     if [ -z "$cover" ]; then
@@ -44,8 +66,10 @@ while read -r cover; do
         | sort -n \
         | cut -d ' ' -f 2 \
         | xargs \
+        | optrev \
         | cut -d ' ' -f "$color_index" \
         | cut -c -7 \
+        | optrev \
         | tee /dev/stderr
     } || (echo "Failed to fetch color" >&2 && echo "") && continue
 done < <(playerctl --follow metadata mpris:artUrl)

@@ -23,10 +23,10 @@
   `./scripts/mpris-cover-colour 1 -fill black -colorize 50%`)
 
 (deflisten mpris-colour-secondary :initial ""
-  `./scripts/mpris-cover-colour 4`)
+  `./scripts/mpris-cover-colour -r 2`)
 
 (deflisten mpris-colour-primary :initial ""
-  `./scripts/mpris-cover-colour 5`)
+  `./scripts/mpris-cover-colour -r 1`)
 
 (defpoll mpris-progress :interval "0.1s"
                         :initial "0"
