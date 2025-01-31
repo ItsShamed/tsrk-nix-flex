@@ -39,7 +39,7 @@ let
     set -euo pipefail
 
     graceful_exit() {
-        ${config.programs.eww.package}/bin/eww --no-daemonize close mpris-info
+        ${config.programs.eww.package}/bin/eww --no-daemonize close bottom-dock
         trap - SIGTERM SIGINT
         exit 0
     }
@@ -48,12 +48,12 @@ let
 
     while read -r status; do
         if [ -z "$status" ]; then
-            ${config.programs.eww.package}/bin/eww --no-daemonize close mpris-info
+            ${config.programs.eww.package}/bin/eww --no-daemonize close bottom-dock
             continue
         fi
 
-        if ! (${config.programs.eww.package}/bin/eww --no-daemonize active-windows | grep mpris-info); then
-            ${config.programs.eww.package}/bin/eww --no-daemonize open mpris-info
+        if ! (${config.programs.eww.package}/bin/eww --no-daemonize active-windows | grep bottom-dock); then
+            ${config.programs.eww.package}/bin/eww --no-daemonize open bottom-dock
         fi
     done < <(${pkgs.playerctl}/bin/playerctl --follow status)
   '';

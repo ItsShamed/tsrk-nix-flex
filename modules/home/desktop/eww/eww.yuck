@@ -6,7 +6,7 @@
 
 (include './widgets/all.yuck')
 
-(defwindow mpris-info
+(defwindow bottom-dock
            :monitor '["<primary>", 0]'
            :geometry (geometry :x "0px"
                                :y "0px"
@@ -18,8 +18,9 @@
            :wm-ignore false
            :windowtype "dock"
            :exclusive true
-  (mpris-info :halign "end"
-              :width 128
-              :class "mpris-root"
-              :active false
-              :visible {mpris-title != ""}))
+  (box :orientation "horizontal"
+       :height 67
+       (mpris-info :halign "end"
+                   :width 128
+                   :active false
+                   :visible {mpris-title != ""})))

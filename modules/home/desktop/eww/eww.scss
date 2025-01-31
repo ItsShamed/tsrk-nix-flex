@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 * {
-  all: unset
+  all: unset;
 }
 
 .mpris-root {
@@ -16,7 +16,7 @@
   margin: 0px 10px 7px 10px;
   border-radius: 16px;
   transition-duration: .25s;
-  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, .5);
+  box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, .5);
 
   label {
     font: 12px Iosevka NF;
