@@ -20,7 +20,7 @@
   `./scripts/mpris-bg-colour`)
 
 (deflisten mpris-colour-background :initial ""
-  `./scripts/mpris-cover-colour 1 -fill black -colorize 50%`)
+  `./scripts/mpris-cover-colour 1 -fill black -colorize 35%`)
 
 (deflisten mpris-colour-secondary :initial ""
   `./scripts/mpris-cover-colour -r 2`)

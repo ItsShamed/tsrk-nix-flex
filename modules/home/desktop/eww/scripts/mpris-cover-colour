@@ -51,7 +51,7 @@ while read -r cover; do
     fi
 
     {
-        colours=$(magick "$cache" -geometry 16x16 "$@" -colors 5 -unique-colors \
+        colours=$(magick "$cache" -geometry 32x32 "$@" -colors 10 -unique-colors \
             -format %c histogram:info:- \
             | cut -c 14- \
             | cut -d ' ' -f 3 \
