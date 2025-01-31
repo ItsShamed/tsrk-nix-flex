@@ -42,18 +42,16 @@
     }
   }
 
-  .mpris-right {
-    scale trough {
-      all: unset;
-      margin-top: 7px;
-      min-height: 3px;
-      min-width: 400px;
+  .mpris-progress trough {
+    all: unset;
+    margin-top: 61px;
+    min-height: 3px;
+    /* min-width: 400px; */
 
-      highlight {
-        all: unset;
-        transition-duration: .25s;
-        transition-timing-function: ease-in-out;
-      }
+    highlight {
+      all: unset;
+      transition-duration: .25s;
+      transition-timing-function: ease-in-out;
     }
   }
 }
