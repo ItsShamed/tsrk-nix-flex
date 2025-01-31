@@ -28,16 +28,24 @@ while read -r cover; do
         continue
     fi
 
-    colours=$(magick "$cache" -geometry 16x16 "$@" -colors 5 -unique-colors \
-        -format %c histogram:info:- \
-    | cut -c 14- \
-    | cut -d ' ' -f 3 \
-    | xargs)
+    {
+        colours=$(magick "$cache" -geometry 16x16 "$@" -colors 5 -unique-colors \
+            -format %c histogram:info:- \
+            | cut -c 14- \
+            | cut -d ' ' -f 3 \
+            | xargs)
 
-    (
-        for colour in $colours; do
-            magick -size 1x1 canvas:"$colour" -format '%[mean]' info:-
-            echo " $colour"
-        done
-    ) | sort -n | cut -d ' ' -f 2 | xargs | cut -d ' ' -f "$color_index" | cut -c -7 | tee /dev/stderr
+        (
+            for colour in $colours; do
+                magick -size 1x1 canvas:"$colour" -format '%[mean]' info:-
+                echo " $colour"
+            done
+        ) \
+        | sort -n \
+        | cut -d ' ' -f 2 \
+        | xargs \
+        | cut -d ' ' -f "$color_index" \
+        | cut -c -7 \
+        | tee /dev/stderr
+    } || (echo "Failed to fetch color" >&2 && echo "") && continue
 done < <(playerctl --follow metadata mpris:artUrl)
