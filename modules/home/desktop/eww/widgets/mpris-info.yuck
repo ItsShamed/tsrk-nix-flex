@@ -39,6 +39,7 @@
        :hexpand true
        :space-evenly false
        :visible {mpris-title != ""}
+       :width 500
        :class "mpris-info"
        :style {mpris-colour-background != ""
             ? "background-color: ${mpris-colour-background}"
