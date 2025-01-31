@@ -86,12 +86,12 @@
                             : "color: white" }
                  :justify "left")))
           ;; TODO: If overflow ever gets implemented in eww, apply it
-          (scale :orientation "horizontal"
-                 :min 0
-                 :max 105.5
-                 :class "mpris-progress"
-                 :active false
-                 :css {mpris-colour-primary != ""
-                    ? "trough highlight { background-color: ${mpris-colour-primary}; }"
-                    : "trough highlight { background-color: white; }"}
-                 :value mpris-progress))))
+      (scale :orientation "horizontal"
+             :min 0
+             :max 105.5
+             :class "mpris-progress"
+             :active false
+             :css {mpris-colour-primary != ""
+                ? "trough highlight { background-color: ${mpris-colour-primary}; }"
+                : "trough highlight { background-color: white; }"}
+             :value mpris-progress))))
