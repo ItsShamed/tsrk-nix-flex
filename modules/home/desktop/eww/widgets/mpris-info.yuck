@@ -85,9 +85,10 @@
                             ? "color: ${mpris-colour-secondary}"
                             : "color: white" }
                  :justify "left")))
+          ;; TODO: If overflow ever gets implemented in eww, apply it
           (scale :orientation "horizontal"
                  :min 0
-                 :max 100
+                 :max 105.5
                  :class "mpris-progress"
                  :active false
                  :css {mpris-colour-primary != ""
