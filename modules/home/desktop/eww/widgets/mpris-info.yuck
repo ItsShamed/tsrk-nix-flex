@@ -56,39 +56,39 @@
       (box :orientation "vertical"
            :class "mpris-metadata"
            :space-evenly false
-      (label :text {mpris-title != "" ? "${mpris-title}"
-                        : "Nothing is playing"}
-             :xalign 0
-             :style {mpris-colour-primary != ""
-                        ? "color: ${mpris-colour-primary}"
-                        : "color: white" }
-             :class "mpris-metadata-title"
-             :limit-width 64
-             :show-truncated true
-             :justify "left")
-      (label :text "${mpris-artist}"
-             :xalign 0
-             :show-truncated true
-             :class "mpris-metadata-artist"
-             :limit-width 64
-             :justify "center"
-             :style {mpris-colour-secondary != ""
-                        ? "color: ${mpris-colour-secondary}"
-                        : "color: white" })
-      (label :text "${mpris-album}"
-             :xalign 0
-             :class "mpris-metadata-album"
-             :show-truncated true
-             :limit-width 64
-             :style {mpris-colour-secondary != ""
-                        ? "color: ${mpris-colour-secondary}"
-                        : "color: white" }
-             :justify "left"))
-      (scale :orientation "horizontal"
-             :min 0
-             :max 100
-             :active false
-             :css {mpris-colour-primary != ""
-                ? "trough highlight { background-color: ${mpris-colour-primary}; }"
-                : "trough highlight { background-color: white; }"}
-             :value mpris-progress))))
+        (label :text {mpris-title != "" ? "${mpris-title}"
+                          : "Nothing is playing"}
+               :xalign 0
+               :style {mpris-colour-primary != ""
+                          ? "color: ${mpris-colour-primary}"
+                          : "color: white" }
+               :class "mpris-metadata-title"
+               :limit-width 64
+               :show-truncated true
+               :justify "left")
+        (label :text "${mpris-artist}"
+               :xalign 0
+               :show-truncated true
+               :class "mpris-metadata-artist"
+               :limit-width 64
+               :justify "center"
+               :style {mpris-colour-secondary != ""
+                          ? "color: ${mpris-colour-secondary}"
+                          : "color: white" })
+        (label :text "${mpris-album}"
+               :xalign 0
+               :class "mpris-metadata-album"
+               :show-truncated true
+               :limit-width 64
+               :style {mpris-colour-secondary != ""
+                          ? "color: ${mpris-colour-secondary}"
+                          : "color: white" }
+               :justify "left"))
+        (scale :orientation "horizontal"
+               :min 0
+               :max 100
+               :active false
+               :css {mpris-colour-primary != ""
+                  ? "trough highlight { background-color: ${mpris-colour-primary}; }"
+                  : "trough highlight { background-color: white; }"}
+               :value mpris-progress))))
