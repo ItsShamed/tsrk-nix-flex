@@ -14,6 +14,7 @@
   };
 
   config = lib.mkIf config.tsrk.git.cli.enable {
+    programs.gh-dash.enable = lib.mkDefault true;
     programs.gh = {
       enable = lib.mkDefault true;
       extensions = [
