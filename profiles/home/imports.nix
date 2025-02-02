@@ -6,6 +6,7 @@
 
 [
   { path = ./base; }
+  { path = ./epita; }
   { path = ./x11; }
   { path = ./x11/x11-base.nix; }
   { path = ./tsrk-common; }
