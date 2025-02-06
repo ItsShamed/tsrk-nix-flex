@@ -17,10 +17,6 @@
   ];
 
   tsrk = {
-    shell.bat.themes = {
-      light = "TokyoNight Day";
-      dark = "TokyoNight Storm";
-    };
     premid.enable = true;
     packages.dev.enable = true;
   };
