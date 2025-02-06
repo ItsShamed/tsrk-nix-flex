@@ -26,7 +26,8 @@ let
     git config user.name ${gitCfg.userName}
     git config user.email ${gitCfg.userEmail}
     git config commit.gpgsign ${literalBool gitCfg.signing.signByDefault}
-    git config user.signingKey ${gitCfg.signing.key}
+    ${lib.strings.optionalString (gitCfg.signing.signByDefault)
+    "git config user.signingKey ${gitCfg.signing.key}"}
     set +x
   '';
 in {
