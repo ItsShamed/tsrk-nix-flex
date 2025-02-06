@@ -17,10 +17,6 @@
   ];
 
   tsrk = {
-    git.delta.themes = {
-      light = "TokyoNight Day";
-      dark = "TokyoNight Storm";
-    };
     shell.bat.themes = {
       light = "TokyoNight Day";
       dark = "TokyoNight Storm";

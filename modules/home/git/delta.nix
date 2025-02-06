@@ -15,12 +15,12 @@ in {
         light = lib.options.mkOption {
           type = lib.types.str;
           description = "Light theme name";
-          default = "TokyoNight";
+          default = "TokyoNight Day";
         };
         dark = lib.options.mkOption {
           type = lib.types.str;
           description = "Dark theme name";
-          default = "TokyoNight";
+          default = "TokyoNight Storm";
         };
       };
     };
