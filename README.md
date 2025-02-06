@@ -47,9 +47,8 @@ config to do by hand.
 ### Modules
 
 The `modules/` directory contains modules for NixOS, Nixvim and Home-Manager. 
-Cool thing about them is that you can use them without depending on my inputs!
 
-You can use them by using the `nixosModules` output:
+You can use them by using the `nixosModules`, or `homeManagerModules` outputs:
 
 ```nix
 {
@@ -58,23 +57,54 @@ You can use them by using the `nixosModules` output:
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
+    homeManager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     tsrk = "github:ItsShamed/tsrk-nix-flex";
+  };
     
-    outputs = { nixpkgs, tsrk } @ inputs:
-    {
-      nixosConfigurations.my-configuration = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          tsrk.nixosModules.packages
-          {
-            tsrk.packages.pkgs.base.enable = true;
-          }
-        ];
-      };
-    }
+  outputs = { nixpkgs, homeManager, tsrk } @ inputs:
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = [ tsrk.overlays.all ];
+      config.allowUnfree = true;
+    };
+  in
+  {
+    nixosConfigurations.my-configuration = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        tsrk.nixosModules.packages
+        {
+          tsrk.packages.pkgs.base.enable = true;
+          nixpkgs = { inherit pkgs; };
+        }
+      ];
+    };
+    homeConfigurations."my-home" = homeManager.lib.homeManagerConfiguration {
+      inherit pkgs;
+  
+      modules = [
+        tsrk.homeManagerModules.packages
+        {
+          tsrk.packages.core.enable = true;
+        }
+      ];
+    };
   };
 }
 ```
+
+> [!WARNING]
+> Most of the provided modules are in theory independent of my flake inputs,
+> but this does not include the usage of overlayed packages.
+>
+> To be able to use all modules without issues, apply the `overlays.all` overlay
+> output of this flake, to your `nixpkgs` input.
 
 ### Overlays
 
