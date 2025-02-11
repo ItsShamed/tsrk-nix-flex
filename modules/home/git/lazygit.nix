@@ -31,9 +31,10 @@
         };
 
         customCommands = [{
-          key = "<c-t>";
+          key = "S";
           command = "git push {{.Form.TagArg}}";
-          context = "global";
+          context = "localBranches";
+          description = "Submit (push tags)";
           loadingText = "Pushing tags...";
           prompts = [{
             type = "menu";
