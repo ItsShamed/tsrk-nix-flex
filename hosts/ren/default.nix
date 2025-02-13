@@ -23,6 +23,7 @@
   age.secrets.zpasswd.file = ./secrets/passwd.age;
 
   tsrk.libvirt.enable = true;
+  tsrk.libvirt.spice.enable = true;
 
   services.libinput.touchpad.naturalScrolling = true;
 

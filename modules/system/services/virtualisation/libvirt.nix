@@ -9,25 +9,33 @@
 let cfg = config.tsrk.libvirt;
 in {
   options = {
-    tsrk.libvirt = { enable = lib.options.mkEnableOption "libvirt"; };
+    tsrk.libvirt = {
+      enable = lib.options.mkEnableOption "libvirt";
+      spice.enable = lib.options.mkEnableOption "SPICE";
+    };
   };
 
-  config = lib.mkIf cfg.enable {
-    virtualisation.libvirtd = {
-      enable = true;
-      qemu = {
-        package = pkgs.qemu_kvm;
-        runAsRoot = true;
-        swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = with pkgs; [ OVMFFull.fd ];
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    {
+      virtualisation.libvirtd = {
+        enable = true;
+        qemu = {
+          package = pkgs.qemu_kvm;
+          runAsRoot = true;
+          swtpm.enable = true;
+          ovmf = {
+            enable = true;
+            packages = with pkgs; [ OVMFFull.fd ];
+          };
         };
       };
-    };
 
-    programs.virt-manager.enable = lib.mkDefault true;
+      programs.virt-manager.enable = lib.mkDefault true;
 
-    environment.systemPackages = with pkgs; [ libguestfs ];
-  };
+      environment.systemPackages = with pkgs; [ libguestfs ];
+    }
+    (lib.mkIf cfg.spice.enable {
+      environment.systemPackages = with pkgs; [ spice spice-gtk ];
+    })
+  ]);
 }
