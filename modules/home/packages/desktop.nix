@@ -32,6 +32,10 @@
       # The best password manager (real)
       bitwarden
       spotify-adblock
+
+      # PDF Readers
+      zathura # TODO: Make HM Module
+      evince
     ];
   };
 }
