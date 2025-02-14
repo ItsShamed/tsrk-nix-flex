@@ -18,6 +18,7 @@
     })
     ./disk.nix
     ./hardware-config.nix
+    ./wireguard.nix
   ];
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;

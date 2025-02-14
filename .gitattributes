@@ -11,5 +11,6 @@
 
 secrets.nix filter=git-crypt diff=git-crypt
 hosts/.tsrk-files/ssh_host_*_key filter=git-crypt diff=git-crypt
+hosts/ren/wireguard.nix filter=git-crypt diff=git-crypt
 profiles/home/tsrk-common/tsrk-private.nix filter=git-crypt diff=git-crypt
 profiles/system/agenix/bootstrap-keys/* filter=git-crypt diff=git-crypt
