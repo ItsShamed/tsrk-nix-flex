@@ -31,6 +31,7 @@
     web-devicons.enable = true;
     bufferline.enable = true;
     hardtime.enable = true;
+    image.enable = true;
     lualine.enable = true;
     vim-surround.enable = true;
     notify.enable = true;
