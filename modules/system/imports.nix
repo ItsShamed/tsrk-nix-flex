@@ -13,6 +13,7 @@
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
   ./services/networking/sshd
+  ./services/system/earlyoom
   ./services/virtualisation/containers
   ./services/virtualisation/libvirt.nix
   ./services/x11/dipslay-manager/sddm.nix

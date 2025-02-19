@@ -16,6 +16,7 @@
     self.nixosModules.disks
     self.nixosModules.sshd
     self.nixosModules.networkmanager
+    self.nixosModules.earlyoom
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -62,6 +63,7 @@
   tsrk = {
     disk-management.enable = lib.mkDefault true;
     sshd.enable = lib.mkDefault true;
+    earlyoom.enable = lib.mkDefault true;
   };
 
   tsrk.packages = {
