@@ -35,7 +35,7 @@ let
     };
   };
 
-  ewwMprisWatcherScript = pkgs.writeShellScriptBin "eww-mpris-watcher" ''
+  ewwStarter = pkgs.writeShellScriptBin "eww-starter" ''
     set -euo pipefail
 
     graceful_exit() {
@@ -46,16 +46,7 @@ let
 
     trap graceful_exit SIGTERM SIGINT
 
-    while read -r status; do
-        if [ -z "$status" ]; then
-            ${config.programs.eww.package}/bin/eww --no-daemonize close bottom-dock
-            continue
-        fi
-
-        if ! (${config.programs.eww.package}/bin/eww --no-daemonize active-windows | grep bottom-dock); then
-            ${config.programs.eww.package}/bin/eww --no-daemonize open bottom-dock
-        fi
-    done < <(${pkgs.playerctl}/bin/playerctl --follow status)
+    ${config.programs.eww.package}/bin/eww --no-daemonize open bottom-dock
   '';
 in {
   options = {
@@ -88,9 +79,9 @@ in {
         };
       };
 
-      eww-mpris-watcher = {
+      eww-starter = {
         Unit = {
-          Description = "Elkowar's Wacky Widgets daemon";
+          Description = "Elkowar's Wacky Widgets window starter";
           Documentation = "https://elkowar.github.io/eww/eww.html";
           Requires = "eww.service";
           After = "eww.service";
@@ -99,8 +90,8 @@ in {
         Install.WantedBy = [ "graphical-session.target" ];
 
         Service = {
-          Type = "exec";
-          ExecStart = "${ewwMprisWatcherScript}/bin/eww-mpris-watcher";
+          Type = "oneshot";
+          ExecStart = "${ewwStarter}/bin/eww-starter";
         };
       };
 
