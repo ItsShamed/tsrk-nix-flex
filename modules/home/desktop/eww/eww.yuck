@@ -22,5 +22,4 @@
        :height 67
        (mpris-info :halign "end"
                    :width 128
-                   :active false
-                   :visible {mpris-title != ""})))
+                   :active false)))
