@@ -17,7 +17,7 @@
     services.redshift = {
       enable = true;
       temperature.night = 3000;
-      brightness.night = "0.5";
+      brightness.night = "0.85";
     };
 
     # Used by redshift to determine sunrise and sunset.
