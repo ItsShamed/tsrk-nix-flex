@@ -15,6 +15,9 @@
   ltex-ls-plus = ./development/languages-servers/ltext-ls-plus;
   realm-studio = ./development/misc/realm-studio;
 
+  ## Editors
+  stm32cubeide = ./development/editors/stm32cubeide;
+
   ### GAMES
   paladium-launcher = ./games/paladium-launcher;
 
