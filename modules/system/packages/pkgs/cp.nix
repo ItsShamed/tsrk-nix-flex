@@ -59,6 +59,10 @@ in {
 
       # CSTR
       heptagon
+
+      # ELEC
+      arduino
+      arduino-ide
     ];
   };
 }
