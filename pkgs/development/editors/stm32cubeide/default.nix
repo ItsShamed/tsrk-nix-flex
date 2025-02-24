@@ -12,7 +12,7 @@
 let
   package = stdenv.mkDerivation rec {
     pname = "stm32cubeide";
-    version = "1.17.0";
+    version = "1.16.1";
 
     autoPatchelfIgnoreMissingDeps = [
       "libavcodec.so.54"
@@ -27,13 +27,13 @@ let
       "libavformat-ffmpeg.so.56"
     ];
 
-    fileTimestamps = "23558_20241125_2245";
+    fileTimestamps = "22882_20240916_0822";
     distName = "st-stm32cubeide_${version}_${fileTimestamps}_amd64";
 
     src = requireFile {
       name = "en.${distName}.sh.zip";
       url = "https://www.st.com/en/development-tools/stm32cubeide.html";
-      sha256 = "0cn7hd9gb38x8qimxslsjym9r6mi56lry54l0ajq9wfyjmk44g3q";
+      sha256 = "15l97abbihc4wkvg0l04w19yjckgf6w9752nn49hk6c2zdyanmd4";
     };
 
     nativeBuildInputs =
