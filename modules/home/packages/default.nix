@@ -10,6 +10,7 @@ args:
 
 {
   imports = [
+    ./compat.nix
     ./core.nix
     ./desktop.nix
     ./dev.nix

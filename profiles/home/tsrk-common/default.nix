@@ -19,6 +19,7 @@
   tsrk = {
     premid.enable = true;
     packages.dev.enable = true;
+    packages.compat.enable = true;
   };
 
   accounts.email.accounts = {
