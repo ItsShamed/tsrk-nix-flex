@@ -30,6 +30,8 @@
 
   time.hardwareClockInLocalTime = true;
 
+  tsrk.packages.pkgs.cp.enable = true;
+
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';

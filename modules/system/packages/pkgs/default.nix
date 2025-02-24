@@ -13,6 +13,7 @@ args:
     ./android.nix
     ./base.nix
     ./cDev.nix
+    ./cp.nix
     ./cpp.nix
     ./csharp.nix
     ./desktop.nix
