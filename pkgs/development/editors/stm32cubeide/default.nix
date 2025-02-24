@@ -5,9 +5,10 @@
 # SPDX-License-Identifier: MIT
 
 { autoPatchelfHook, qt6, makeWrapper, cairo, dbus, libglvnd, libGL, fontconfig
-, freetype, libgcc, glib, gtk3, gtk2-x11, pcsclite, pango, ncurses5, alsa-lib
-, ffmpeg_4-headless, ffmpeg_6-headless, imagemagick, libxkbcommon, swt, unzip
-, xorg, libz, xercesc, makeDesktopItem, requireFile, stdenv, symlinkJoin, lib }:
+, freetype, libgcc, glib, gtk4, gtk3, gtk3-x11, gtk2, gtk2-x11, pcsclite, pango
+, ncurses5, alsa-lib, ffmpeg_4-headless, ffmpeg_6-headless, imagemagick
+, libxkbcommon, swt, unzip, xorg, libz, xercesc, makeDesktopItem, requireFile
+, stdenv, symlinkJoin, lib }:
 
 let
   package = stdenv.mkDerivation rec {
@@ -50,7 +51,10 @@ let
       ffmpeg_6-headless
       libgcc
       glib
+      gtk4
       gtk3
+      gtk3-x11
+      gtk2
       gtk2-x11
       pcsclite
       pango
