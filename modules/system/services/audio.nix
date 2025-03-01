@@ -78,6 +78,7 @@ in {
         pa_applet
         paprefs
         easyeffects
+        qpwgraph
       ];
     }
     (lib.mkIf config.tsrk.sound.focusriteSupport (lib.mkMerge [
