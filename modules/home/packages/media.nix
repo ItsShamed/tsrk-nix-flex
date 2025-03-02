@@ -34,6 +34,7 @@
     home.packages = with pkgs; [
       inkscape-with-extensions
       gimp-with-plugins
+      kid3
       kdePackages.kdenlive
       tenacity
       vlc
