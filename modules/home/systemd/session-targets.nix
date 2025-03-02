@@ -105,7 +105,7 @@
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
       };
-      xautolock-session.PartOf = lib.mkForce [ "x11-session.target" ];
+      xautolock-session.Unit.PartOf = lib.mkForce [ "x11-session.target" ];
     };
   };
 }
