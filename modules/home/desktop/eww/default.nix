@@ -66,10 +66,15 @@ in {
         Unit = {
           Description = "Elkowar's Wacky Widgets daemon";
           Documentation = "https://elkowar.github.io/eww/eww.html";
-          PartOf = "graphical-session.target";
+          PartOf = [ "graphical-session.target" ];
         };
 
-        Install.WantedBy = [ "graphical-session.target" ];
+        Install = {
+          WantedBy = [ "graphical-session.target" ];
+          # For X11 sessions, ensure that picom is started first, otherwise
+          # it would show a black box
+          Wants = [ "picom.service" ];
+        };
 
         Service = {
           Type = "exec";
