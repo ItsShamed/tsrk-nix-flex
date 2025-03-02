@@ -87,7 +87,10 @@
         Install = { WantedBy = [ "default.target" ]; };
       };
 
-      dunst.Unit.PartOf = lib.mkForce [ "x11-session.target" ];
+      dunst.Unit = {
+        PartOf = lib.mkForce [ "x11-session.target" ];
+        ConditionEnvironment = [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+      };
       picom = {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
