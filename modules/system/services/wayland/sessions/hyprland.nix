@@ -12,6 +12,9 @@
       lib.options.mkEnableOption "Hyprland as a window manager";
   };
 
-  config =
-    lib.mkIf config.tsrk.hyprland.enable { programs.hyprland.enable = true; };
+  config = lib.mkIf config.tsrk.hyprland.enable {
+    programs.hyprland.enable = true;
+    # Do not run Autostarts because if used alongside i3, picom will be deadge
+    services.xserver.desktopManager.runXdgAutostartIfNone = lib.mkForce false;
+  };
 }
