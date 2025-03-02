@@ -37,6 +37,9 @@
         inetutils
         utillinux
         coreutils-full
+        ethtool
+
+        killall
 
         jq
 
