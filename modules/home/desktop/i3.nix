@@ -130,9 +130,9 @@ let
 
   startupTarget = pkgs.writeShellScript "startup-target" ''
     if systemctl --user is-active x11-session.target; then
-      systemctl --user restart x11-session.target & disown
+      systemctl --user restart x11-session.target
     else
-      systemctl --user enable --now x11-session.target & disown
+      systemctl --user enable --now x11-session.target
     fi
 
     if systemctl --user is-active tray.target; then
