@@ -16,6 +16,7 @@
   config = lib.mkIf config.tsrk.rofi.enable {
     programs.rofi = {
       enable = true;
+      package = pkgs.rofi-wayland;
       plugins = with pkgs; [ rofi-emoji ];
       theme = "${pkgs.rofi-themes-collection}/simple-tokyonight.rasi";
       terminal = (self.lib.mkIfElse (config.programs.kitty.enable) "kitty"

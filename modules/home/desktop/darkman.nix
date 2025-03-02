@@ -33,8 +33,8 @@ let
         lng = 2.28513;
       };
       lightModeScripts = {
-        dunst-notif = ''
-          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
+        notif = ''
+          ${pkgs.libnotify}/bin/notify-send -a "Darkman" "Theme Switching" "Shine bright like a diamond 🌅💎💅"
         '';
         activate-home-manager = ''
           export PATH="/nix/var/nix/profiles/default/bin:$PATH"
@@ -42,8 +42,8 @@ let
         '';
       };
       darkModeScripts = {
-        dunst-notif = ''
-          ${pkgs.dunst}/bin/dunstify -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
+        notif = ''
+          ${pkgs.libnotify}/bin/notify-send -a "Darkman" "Theme Switching" "Let tonight's dream begin 🌙✨"
         '';
         activate-home-manager = ''
           export PATH="/nix/var/nix/profiles/default/bin:$PATH"

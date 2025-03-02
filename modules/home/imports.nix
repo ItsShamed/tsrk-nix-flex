@@ -27,4 +27,5 @@
   { path = ./packages; }
   ./shell
   ./ssh.nix
+  ./systemd/session-targets.nix
 ]

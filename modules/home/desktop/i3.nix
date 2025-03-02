@@ -11,6 +11,8 @@
 let
   mod = config.xsession.windowManager.i3.config.modifier;
   cfg = config.xsession.windowManager.i3.config;
+  lockTargetsPresent = let targets = config.systemd.user.targets;
+  in targets ? lock && targets ? sleep && targets ? unlock;
   lockCommand = if config.tsrk.i3.epitaRestrictions then
     "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
   else
@@ -105,7 +107,7 @@ let
     '')
     (lib.strings.optionalString config.programs.eww.enable ''
       # eww daemon
-      if systemctl -user is-active eww; then
+      if systemctl --user is-active eww; then
         (
           systemctl --user stop eww-mpris-watcher
           systemctl --user restart eww
@@ -119,6 +121,45 @@ let
       fi
     '')
   ]);
+
+  teardownTarget = pkgs.writeShellScript "teardown-target" ''
+    systemctl --user stop tray.target & disown
+    systemctl --user stop x11-session.target & disown
+    i3-msg exit
+  '';
+
+  startupTarget = pkgs.writeShellScript "startup-target" ''
+    if systemctl --user is-active x11-session.target; then
+      systemctl --user restart x11-session.target & disown
+    else
+      systemctl --user enable --now x11-session.target & disown
+    fi
+
+    if systemctl --user is-active tray.target; then
+      systemctl --user restart tray.target & disown
+    else
+      systemctl --user enable --now tray.target & disown
+    fi
+
+    # Restart Darkman, because otherwise the GTK theme is not set
+    if systemctl --user is-active darkman; then
+      systemctl --user restart darkman & disown
+    else
+      systemctl --user enable --now darkman & disown
+    fi
+  '';
+
+  effectiveTeardown = if config.systemd.user.targets ? x11-session
+  && config.systemd.user.targets ? tray then
+    teardownTarget
+  else
+    teardown;
+
+  effectiveStartup = if config.systemd.user.targets ? x11-session
+  && config.systemd.user.targets ? tray then
+    startupTarget
+  else
+    startup;
 
   volumeControl = pkgs.writeShellScript "volume-control" ''
     notifyVolume_() {
@@ -226,8 +267,9 @@ let
           command = "feh --bg-scale ${config.tsrk.i3.background}";
           always = false;
         }) ++ [{
-          command = "sh ${startup}";
+          command = "sh ${effectiveStartup}";
           always = true;
+          notification = false;
         }];
 
         window.titlebar = false;
@@ -376,9 +418,10 @@ let
             ''exec --no-startup-id "${brightnessControl} decrease 2"'';
 
           # lock
-          "${mod}+i" = (self.lib.mkIfElse config.tsrk.i3.useLogind
-            "exec loginctl lock-session" ''exec "${lockCommand}"'');
-          "${mod}+Shift+e" = config.tsrk.i3.exitPromptCommand teardown;
+          "${mod}+i" =
+            (self.lib.mkIfElse lockTargetsPresent "exec loginctl lock-session"
+              ''exec "${lockCommand}"'');
+          "${mod}+Shift+e" = config.tsrk.i3.exitPromptCommand effectiveTeardown;
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
@@ -475,57 +518,16 @@ let
     };
   };
 
-  logindConfig = lib.mkIf config.tsrk.i3.useLogind {
-
-    home.packages = with pkgs; [ pkgs.systemd-lock-handler ];
-
-    systemd.user.targets = {
-      lock = {
-        Unit = {
-          Conflicts = "unlock.target";
-          Description = "Lock the current session";
-        };
-      };
-      unlock = {
-        Unit = {
-          Conflicts = "lock.target";
-          Description = "Unlocks the current session";
-        };
-      };
-      sleep = {
-        Unit = {
-          Description =
-            "User-level target triggered when the system is about to sleep.";
-          Requires = "lock.target";
-          After = "lock.target";
-        };
-      };
-    };
-
+  logindConfig = lib.mkIf lockTargetsPresent {
     systemd.user.services = {
-      systemd-lock-handler = {
-        Unit = {
-          Description = "Logind lock event to systemd target translation";
-          Documentation = "https://sr.ht/~whynothugo/systemd-lock-handler";
-        };
-
-        Service = {
-          Slice = "session.slice";
-          ExecStart = "${pkgs.systemd-lock-handler}/lib/systemd-lock-handler";
-          Type = "notify";
-          Restart = "on-failure";
-          RestartSec = "10s";
-        };
-
-        Install = { WantedBy = [ "default.target" ]; };
-      };
-
       i3lock = {
         Unit = {
-          Description = "Locks the current user session";
+          Description = "Screen locker for i3wm";
           PartOf = "lock.target";
           After = "lock.target";
-          Before = "sleep.target";
+          OnSuccess = "unlock.target";
+          ConditionEnvironment =
+            [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
         };
 
         Service = {
@@ -556,7 +558,6 @@ in {
       epitaRestrictions = lib.options.mkEnableOption ''
         compliance with EPITA
                 regulations by using stock i3lock as the locker'';
-      useLogind = lib.options.mkEnableOption "locking using logind";
       exitPromptCommand = lib.options.mkOption {
         description = "Command to execute when pressing the exit keybind.";
         type = lib.types.functionTo lib.types.str;

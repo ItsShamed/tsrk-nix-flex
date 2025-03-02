@@ -55,15 +55,19 @@ in {
 
     home.activation.xsettingsd-reload =
       lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
-        _i "Reloading xsettingsd"
+        if [ "''${XDG_SESSION_TYPE:-}" != "x11" ] || [ -n "''${WAYLAND_DISPLAY:-}" ]; then
+          _i "X11 is not running, not reloading xsettingsd"
+        else
+          _i "Reloading xsettingsd"
 
-        {
-          # This will crash if this is running at boot (no graphical environment)
-          ${config.systemd.user.systemctlPath} --user restart xsettingsd
-          ${lib.meta.getExe pkgs.lxappearance}&
-          sleep 1
-          ${lib.meta.getExe pkgs.killall} .lxappearance-wrapped
-        } || true
+          {
+            # This will crash if this is running at boot (no graphical environment)
+            ${config.systemd.user.systemctlPath} --user restart xsettingsd
+            ${lib.meta.getExe pkgs.lxappearance}&
+            sleep 1
+            ${lib.meta.getExe pkgs.killall} .lxappearance-wrapped
+          } || true
+        fi
       '';
   };
 }

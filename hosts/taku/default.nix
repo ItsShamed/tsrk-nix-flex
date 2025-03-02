@@ -10,6 +10,7 @@
   imports = [
     self.nixosModules.profile-tsrk-common
     self.nixosModules.gamescope
+    self.nixosModules.hyprland
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -23,6 +24,8 @@
   tsrk.programs.gamescope.enable = true;
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
+
+  tsrk.hyprland.enable = true;
 
   tsrk.sound = {
     bufferSize = 64;
