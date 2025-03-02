@@ -147,6 +147,12 @@ let
     else
       systemctl --user enable --now darkman & disown
     fi
+
+    # Restart eww because it won't pickup the compositor
+    (
+      systemctl --user restart eww
+      systemctl --user restart eww-starter
+    ) & disown
   '';
 
   effectiveTeardown = if config.systemd.user.targets ? x11-session
