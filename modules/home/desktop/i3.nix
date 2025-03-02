@@ -125,7 +125,7 @@ let
   teardownTarget = pkgs.writeShellScript "teardown-target" ''
     systemctl --user stop tray.target & disown
     systemctl --user stop x11-session.target & disown
-    i3-msg exit
+    (i3-msg exit; loginctl terminate-session) & disown
   '';
 
   startupTarget = pkgs.writeShellScript "startup-target" ''
