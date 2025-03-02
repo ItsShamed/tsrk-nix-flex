@@ -533,11 +533,13 @@ let
     (lib.mkIf config.tsrk.i3.epitaRestrictions {
       services.screen-locker.lockCmd =
         "${pkgs.i3lock}/bin/i3lock -i ${config.tsrk.i3.lockerBackground} -p win";
+      services.screen-locker.inactiveInterval = 1;
     })
     (lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
       services.betterlockscreen = {
         enable = lib.mkDefault true;
         arguments = [ "--" "-p" "win" ];
+        inactiveInterval = 1;
       };
     })
   ];
