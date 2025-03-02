@@ -507,7 +507,11 @@ let
 
     systemd.user.services = {
       setup-betterlockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
-        Install = { WantedBy = [ "graphical-session.target" ]; };
+        Install = {
+          WantedBy =
+            (self.lib.mkIfElse (config.systemd.user.targets ? x11-session)
+              [ "x11-session.target" ] [ "graphical-session.target" ]);
+        };
 
         Service = {
           Type = "oneshot";
@@ -518,29 +522,19 @@ let
     };
   };
 
-  logindConfig = lib.mkIf lockTargetsPresent {
-    systemd.user.services = {
-      i3lock = {
-        Unit = {
-          Description = "Screen locker for i3wm";
-          PartOf = "lock.target";
-          After = "lock.target";
-          OnSuccess = "unlock.target";
-          ConditionEnvironment =
-            [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
-        };
-
-        Service = {
-          ExecStart = lockCommand;
-          Type = "forking";
-          Restart = "on-failure";
-          RestartSec = "0s";
-        };
-
-        Install = { WantedBy = [ "lock.target" "sleep.target" ]; };
+  lockConfigs = [
+    { services.screen-locker.enable = lib.mkDefault true; }
+    (lib.mkIf config.tsrk.i3.epitaRestrictions {
+      services.screen-locker.lockCmd =
+        "${pkgs.i3lock}/bin/i3lock -i ${config.tsrk.i3.lockerBackground} -p win";
+    })
+    (lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
+      services.betterlockscreen = {
+        enable = lib.mkDefault true;
+        arguments = [ "--" "-p" "win" ];
       };
-    };
-  };
+    })
+  ];
 in {
   options = {
     tsrk.i3 = {
@@ -568,5 +562,5 @@ in {
     };
   };
 
-  config = lib.mkMerge [ i3Config logindConfig ];
+  config = lib.mkMerge ([ i3Config ] ++ lockConfigs);
 }

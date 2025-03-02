@@ -98,6 +98,10 @@
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
       };
+      xss-lock = {
+        Install.WantedBy = lib.mkForce [ "x11-session.target" ];
+        Unit.PartOf = lib.mkForce [ "x11-session.target" ];
+      };
     };
   };
 }
