@@ -15,6 +15,9 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.blacklistedKernelModules = [ "elan_i2c" ];
 
+  boot.kernelParams =
+    lib.mkIf config.boot.plymouth.enable [ "plymouth.use-simpledrm" ];
+
   networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
