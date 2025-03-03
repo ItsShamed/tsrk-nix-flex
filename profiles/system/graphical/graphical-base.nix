@@ -17,6 +17,7 @@
     self.nixosModules.sddm
     self.nixosModules.audio
     self.nixosModules.redshift
+    self.nixosModules.plymouth
   ];
 
   services.xserver.enable = lib.mkForce true;
@@ -45,6 +46,7 @@
 
   tsrk.packages.pkgs.desktop.enable = true;
   tsrk.redshift.enable = lib.mkDefault true;
+  tsrk.boot.plymouth.enable = lib.mkDefault true;
 
   hardware.opentabletdriver.enable = lib.mkDefault true;
 }
