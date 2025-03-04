@@ -130,9 +130,11 @@ let
 
   startupTarget = pkgs.writeShellScript "startup-target" ''
     if systemctl --user is-active x11-session.target; then
-      systemctl --user restart x11-session.target
+      systemctl --user restart x11-session.target & disown
+      session_pid="$!"
     else
-      systemctl --user enable --now x11-session.target
+      systemctl --user enable --now x11-session.target & disown
+      session_pid="$!"
     fi
 
     if systemctl --user is-active tray.target; then
@@ -140,19 +142,30 @@ let
     else
       systemctl --user enable --now tray.target & disown
     fi
+    ${lib.strings.optionalString config.services.darkman.enable ''
 
-    # Restart Darkman, because otherwise the GTK theme is not set
-    if systemctl --user is-active darkman; then
-      systemctl --user restart darkman & disown
-    else
-      systemctl --user enable --now darkman & disown
-    fi
+      # Restart Darkman, because otherwise the GTK theme is not set
+      if systemctl --user is-active darkman; then
+        systemctl --user restart darkman & disown
+      else
+        systemctl --user enable --now darkman & disown
+      fi
 
-    # Restart eww because it won't pickup the compositor
-    (
-      systemctl --user restart eww
-      systemctl --user restart eww-starter
-    ) & disown
+    ''}
+    waitpid $session_pid
+    ${lib.strings.optionalString (config.systemd.user.services ? eww) ''
+
+      # Restart eww because it won't pickup the compositor
+      (
+        systemctl --user restart eww${
+          lib.strings.optionalString
+          (config.systemd.user.services ? eww-starter) ''
+
+            systemctl --user restart eww-starter
+          ''
+        }
+      ) & disown
+    ''}
   '';
 
   effectiveTeardown = if config.systemd.user.targets ? x11-session
