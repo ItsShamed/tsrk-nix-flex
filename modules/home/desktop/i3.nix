@@ -547,7 +547,15 @@ let
   };
 
   lockConfigs = [
-    { services.screen-locker.enable = lib.mkDefault true; }
+    {
+      services.screen-locker = {
+        enable = lib.mkDefault true;
+        xautolock.extraOptions = [
+          "-notifier '${pkgs.libnotify}/bin/notify-send -a xautolock \"Auto-lock notice\" \"Computer will lock in 10 seconds\"'"
+          "-notify 10"
+        ];
+      };
+    }
     (lib.mkIf config.tsrk.i3.epitaRestrictions {
       services.screen-locker.lockCmd =
         "${pkgs.i3lock}/bin/i3lock -i ${config.tsrk.i3.lockerBackground} -p win";
