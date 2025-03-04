@@ -99,10 +99,18 @@ let
   fehConfig = {
     services.darkman = {
       lightModeScripts.feh = ''
-        ${pkgs.feh}/bin/feh --bg-scale ${cfg.feh.light}
+        if [ "''${XDG_SESSION_TYPE:-}" = "x11" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+          ${pkgs.feh}/bin/feh --bg-scale ${cfg.feh.light}
+        else
+          echo "Not running X11, skipping feh" >&2
+        fi
       '';
       darkModeScripts.feh = ''
-        ${pkgs.feh}/bin/feh --bg-scale ${cfg.feh.dark}
+        if [ "''${XDG_SESSION_TYPE:-}" = "x11" ] && [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+          ${pkgs.feh}/bin/feh --bg-scale ${cfg.feh.dark}
+        else
+          echo "Not running X11, skipping feh" >&2
+        fi
       '';
     };
   };
