@@ -391,6 +391,11 @@ let
           "${mod}+minus" = "scratchpad show";
           "${mod}+Shift+minus" = "move scratchpad";
 
+          # Autorandr
+
+          "${mod}+p" = lib.mkIf config.services.autorandr.enable
+            "exec systemctl --user restart autorandr";
+
           # Workspaces
 
           "${mod}+1" = "workspace number 1";
