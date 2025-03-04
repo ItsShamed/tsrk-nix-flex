@@ -63,3 +63,5 @@ if [ "$(darkman_ get)" = "light" ]; then
 else
     exec hm-dark-activate
 fi
+
+systemctl --user restart nm-applet
