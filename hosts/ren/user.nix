@@ -54,6 +54,31 @@
           };
         };
       };
+      doubleDocked1080p = horiMonitor: vertMonitor: {
+        fingerprint = {
+          ${horiMonitor} =
+            "00ffffffffffff0026cd41618f090000181c0104a5351e783aee35a656529d280b5054b30c00714f818081c081009500b300d1c00101023a801871382d40582c45000f282100001e000000fd00374c1e5311000a202020202020000000ff0031313634384d38363032343437000000fc00504c32343933480a202020202001e3020318f14b9002030411121305141f012309070183010000023a801871382d40582c45000f282100001e8c0ad08a20e02d10103e96000f2821000018011d007251d01e206e2855000f282100001e8c0ad090204031200c4055000f28210000180000000000000000000000000000000000000000000000000000000000000035";
+          ${vertMonitor} =
+            "00ffffffffffff0026cd4161f1020000181c0104a5351e783aee35a656529d280b5054b30c00714f818081c081009500b300d1c00101023a801871382d40582c45000f282100001e000000fd00374c1e5311000a202020202020000000ff0031313634384d38363030373533000000fc00504c32343933480a2020202020018a020318f14b9002030411121305141f012309070183010000023a801871382d40582c45000f282100001e8c0ad08a20e02d10103e96000f2821000018011d007251d01e206e2855000f282100001e8c0ad090204031200c4055000f28210000180000000000000000000000000000000000000000000000000000000000000035";
+        };
+        config = {
+          eDP-1 = {
+            enable = false;
+            primary = false;
+          };
+          "${horiMonitor}" = {
+            enable = true;
+            primary = true;
+            mode = "1920x1080";
+            position = "1920x540";
+          };
+          "${vertMonitor}" = {
+            enable = true;
+            mode = "1920x1080";
+            rotate = "left";
+          };
+        };
+      };
     in {
       default = {
         fingerprint = {
@@ -74,11 +99,20 @@
             enable = false;
             primary = false;
           };
+          DP-4 = {
+            enable = false;
+            primary = false;
+          };
+          DP-5 = {
+            enable = false;
+            primary = false;
+          };
         };
       };
       docked-HDMI-1 = dockedProfile1080p "HDMI-1";
       docked-DP-4 = dockedProfile1080p "DP-4";
       docked-DP-5 = dockedProfile1080p "DP-5";
+      double-docked-DP-5-DP-3 = doubleDocked1080p "DP-5" "DP-3";
     };
   };
 }
