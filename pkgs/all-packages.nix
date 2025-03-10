@@ -14,6 +14,7 @@
   ### DEVELOPMENT
   ltex-ls-plus = ./development/languages-servers/ltext-ls-plus;
   realm-studio = ./development/misc/realm-studio;
+  vunit-hdl = ./development/testing-frameworks/vunit-hdl;
 
   ## Editors
   stm32cubeide = ./development/editors/stm32cubeide;
