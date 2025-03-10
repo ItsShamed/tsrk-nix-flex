@@ -34,6 +34,36 @@ let
       '';
     };
 
+  vhdlMakefile = pkgs.writeText "Makefile" ''
+    COMP=${pkgs.ghdl-llvm}/bin/ghdl
+
+    %.linked: %.o %_tb.o
+        $(COMP) elaborate $(GHDLFLAGS) $*_tb
+
+    %.o: %.vhd
+        $(COMP) analyse $(GHDLFLAGS) $<
+
+    %.wave: %.linked
+        $(COMP) run $*_tb --vcd=$*_tb.vcd
+        ${pkgs.gtkwave}/bin/gtkwave $*_tb.vcd
+
+    %.check: %.linked
+        $(COMP) run $*_tb
+
+    clean:
+        $(COMP) clean
+        $(RM) *_tb *_tb.vcd
+
+    .PHONY: all *.check clean *.wave *.linked
+  '';
+
+  vhdlMake = pkgs.writeShellApplication {
+    name = "vhdl-make";
+    runtimeInputs = with pkgs; [ vunit-hdl zlib gtkwave ghdl-llvm ];
+    text = ''
+      make -f ${vhdlMakefile} "$@"
+    '';
+  };
 in {
   options = {
     tsrk.packages.pkgs.cp = {
@@ -63,6 +93,13 @@ in {
       # ELEC
       arduino
       arduino-ide
+
+      # VHDL
+      vunit-hdl
+      vhdlMake
+      ghdl-llvm
+      zlib
+      gtkwave
     ];
   };
 }
