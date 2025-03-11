@@ -37,15 +37,14 @@ let
   vhdlMakefile = pkgs.writeText "Makefile" ''
     COMP=${pkgs.ghdl-llvm}/bin/ghdl
 
-    %.linked: %.o %_tb.o
-    	$(COMP) elaborate $(GHDLFLAGS) $*_tb
+    %.linked: %.o
+    	$(COMP) elaborate $(GHDLFLAGS) $*
 
     %.o: %.vhd
     	$(COMP) analyse $(GHDLFLAGS) $<
 
-    %.wave: %.linked
+    %.vcd: %.linked
     	$(COMP) run $*_tb --vcd=$*_tb.vcd
-    	${pkgs.gtkwave}/bin/gtkwave $*_tb.vcd
 
     %.check: %.linked
     	$(COMP) run $*_tb
@@ -100,6 +99,7 @@ in {
       ghdl-llvm
       zlib
       gtkwave
+      surfer
     ];
   };
 }
