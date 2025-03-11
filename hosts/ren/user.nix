@@ -23,6 +23,7 @@
     };
     polybar = {
       wlanInterfaceName = "wlp1s0";
+      ethInterfaceName = "enp4s0f4u1u4";
       backlightCard = "amdgpu_bl1";
       battery = {
         enable = true;
@@ -69,7 +70,6 @@
             enable = true;
             primary = true;
             mode = "1920x1080";
-            position = "1920x540";
           };
           "${vertMonitor}" = {
             enable = true;
