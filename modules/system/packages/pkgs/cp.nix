@@ -38,21 +38,21 @@ let
     COMP=${pkgs.ghdl-llvm}/bin/ghdl
 
     %.linked: %.o %_tb.o
-        $(COMP) elaborate $(GHDLFLAGS) $*_tb
+    	$(COMP) elaborate $(GHDLFLAGS) $*_tb
 
     %.o: %.vhd
-        $(COMP) analyse $(GHDLFLAGS) $<
+    	$(COMP) analyse $(GHDLFLAGS) $<
 
     %.wave: %.linked
-        $(COMP) run $*_tb --vcd=$*_tb.vcd
-        ${pkgs.gtkwave}/bin/gtkwave $*_tb.vcd
+    	$(COMP) run $*_tb --vcd=$*_tb.vcd
+    	${pkgs.gtkwave}/bin/gtkwave $*_tb.vcd
 
     %.check: %.linked
-        $(COMP) run $*_tb
+    	$(COMP) run $*_tb
 
     clean:
-        $(COMP) clean
-        $(RM) *_tb *_tb.vcd
+    	$(COMP) clean
+    	$(RM) *_tb *_tb.vcd
 
     .PHONY: all *.check clean *.wave *.linked
   '';
