@@ -114,6 +114,7 @@
       docked-DP-5 = dockedProfile1080p "DP-5";
       double-docked-DP-5-DP-3 = doubleDocked1080p "DP-5" "DP-3";
       double-docked-DP-3-DP-4 = doubleDocked1080p "DP-4" "DP-3";
+      double-docked-DP-6-DP-5 = doubleDocked1080p "DP-6" "DP-5";
     };
   };
 }
