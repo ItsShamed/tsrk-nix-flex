@@ -13,7 +13,7 @@
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
-      moreGroups = [ "adbusers" "libvirtd" "dialout" "uucp" ];
+      moreGroups = [ "adbusers" "libvirtd" "dialout" "uucp" "plugdev" ];
       modules = [ ./user.nix ];
     })
     ./disk.nix
