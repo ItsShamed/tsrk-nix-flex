@@ -33,6 +33,8 @@
     focusriteSupport = true;
   };
 
+  tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
+
   time.hardwareClockInLocalTime = true;
 
   services.xserver.displayManager.setupCommands = ''
