@@ -129,6 +129,7 @@ let
   '';
 
   startupTarget = pkgs.writeShellScript "startup-target" ''
+    systemctl --user reset-failed
     if systemctl --user is-active x11-session.target; then
       systemctl --user restart x11-session.target & disown
       session_pid="$!"
