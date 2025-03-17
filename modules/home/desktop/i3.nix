@@ -284,7 +284,7 @@ let
         bars = [ ];
 
         startup = (lib.lists.optional (!config.services.darkman.enable) {
-          command = "feh --bg-scale ${config.tsrk.i3.background}";
+          command = "feh --bg-fill ${config.tsrk.i3.background}";
           always = false;
         }) ++ [{
           command = "sh ${effectiveStartup}";
