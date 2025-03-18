@@ -126,5 +126,6 @@ in symlinkJoin {
       "STM32CubeIDE is an all-in-one development tool, which is part of the STM32Cube software ecosystem.";
     platform = platforms.linux;
     mainProgram = "stm32cubeide";
+    broken = true;
   };
 }

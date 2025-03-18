@@ -80,5 +80,6 @@ in symlinkJoin {
     license = licenses.unfree;
     passthru.updateScript = ./update.sh;
     platforms = platforms.linux;
+    broken = true;
   };
 }
