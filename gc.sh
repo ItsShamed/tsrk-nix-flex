@@ -29,7 +29,7 @@ nom_() {
 echo "==> Running GC on 'user' store paths"
 
 nix-collect-garbage \
-    --delete-older-than 15d \
+    --delete-older-than 7d \
     -vv --log-format internal-json |& nom_ --json
 
 echo "==> Running GC on 'root' store paths"
