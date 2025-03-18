@@ -84,7 +84,7 @@ in {
       gapflash
 
       # STM32
-      stm32cubeide
+      stm32cubemx
 
       # CSTR
       heptagon
