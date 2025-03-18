@@ -18,25 +18,14 @@ sudo_() {
     fi
 }
 
-nom_() {
-    if command -v nom &>/dev/null; then
-        nom "$@"
-    else
-        nix run nixpkgs#nix-output-monitor -- "$@"
-    fi
-}
-
 echo "==> Running GC on 'user' store paths"
 
-nix-collect-garbage \
-    --delete-older-than 7d \
-    -vv --log-format internal-json |& nom_ --json
+nix-collect-garbage --delete-older-than 7d -vv
 
 echo "==> Running GC on 'root' store paths"
 
 sudo_ true
-sudo_ nix-collect-garbage \
-    -v --log-format internal-json |& nom_ --json
+sudo_ nix-collect-garbage -vv
 
 echo "==> Cleaning up boot entries"
 
@@ -45,4 +34,4 @@ sudo_ /run/current-system/bin/switch-to-configuration boot
 
 echo "==> Running Nix store optimisation with hard-links"
 
-nix store optimise -vv -L --log-format internal-json |& nom_ --json
+nix store optimise -vv -L
