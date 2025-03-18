@@ -4,17 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, ... }:
+{ inputs, pkgsSet, ... }:
 
 { lib, config, pkgs, ... }:
 
 let
   inherit (pkgs.stdenv.hostPlatform) system;
   proton-osu-bin = inputs.nix-gaming.packages.${system}.proton-osu-bin;
-  umu = inputs.umu.packages.${system}.umu.override {
-    version = inputs.umu.shortRev;
-    truststore = true;
-  };
 in {
   imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
 
@@ -29,7 +25,11 @@ in {
 
   config = lib.mkIf config.tsrk.packages.pkgs.gaming.enable (lib.mkMerge [
     {
-      environment.systemPackages = with pkgs; [ gamemode protontricks umu ];
+      environment.systemPackages = with pkgs; [
+        gamemode
+        protontricks
+        pkgsSet.pkgsUnstable.umu-launcher
+      ];
 
       hardware.steam-hardware.enable = lib.mkDefault true;
       programs.steam = {
