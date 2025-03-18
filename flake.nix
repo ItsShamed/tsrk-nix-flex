@@ -104,7 +104,10 @@
         allOverlays = self: super:
           builtins.attrValues
           (builtins.mapAttrs (_: overlay: overlay self super) baseOverlays);
-        commonArgs = { inherit lib self inputs; };
+        commonArgs = {
+          inherit lib self inputs;
+          pkgsSet = pkgSet system;
+        };
       in {
         nixosModules = (import ./modules/system commonArgs)
           // (import ./profiles/system commonArgs) // {
