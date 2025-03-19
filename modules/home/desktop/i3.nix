@@ -316,6 +316,12 @@ let
             command = "floating enable";
             criteria = { window_role = "alert"; };
           }
+
+          {
+            command = "floating enable";
+            criteria.window_role = "^Msgcompose$";
+          }
+
           {
             command = "sticky enable";
             criteria.window_role = "PictureInPicture";
