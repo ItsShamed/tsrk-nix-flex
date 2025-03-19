@@ -316,6 +316,10 @@ let
             command = "floating enable";
             criteria = { window_role = "alert"; };
           }
+          {
+            command = "sticky enable";
+            criteria.window_role = "PictureInPicture";
+          }
         ];
 
         gaps = {
