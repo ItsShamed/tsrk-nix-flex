@@ -28,6 +28,8 @@
 
   time.timeZone = "Europe/Paris";
 
+  programs.ssh.package = pkgs.openssh_gssapi;
+
   console.keyMap = "us";
 
   nix = {
