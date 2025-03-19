@@ -87,25 +87,33 @@
         Install = { WantedBy = [ "default.target" ]; };
       };
 
-      dunst.Unit = {
-        PartOf = lib.mkForce [ "x11-session.target" ];
-        ConditionEnvironment = [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+      dunst = lib.mkIf config.services.dunst.enable {
+        Unit = {
+          PartOf = lib.mkForce [ "x11-session.target" ];
+          ConditionEnvironment =
+            [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+        };
       };
-      picom = {
+      picom = lib.mkIf config.services.picom.enable {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
       };
-      polybar.Unit.ConditionEnvironment =
-        [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
-      xsettingsd = {
+      polybar = lib.mkIf config.services.polybar.enable {
+        Unit.ConditionEnvironment =
+          [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+      };
+      xsettingsd = lib.mkIf config.services.xsettingsd.enable {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
       };
-      xss-lock = {
+      xss-lock = lib.mkIf config.services.screen-locker.enable {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
       };
-      xautolock-session.Unit.PartOf = lib.mkForce [ "x11-session.target" ];
+      xautolock-session =
+        lib.mkIf config.services.screen-locker.xautolock.enable {
+          Unit.PartOf = lib.mkForce [ "x11-session.target" ];
+        };
     };
   };
 }
