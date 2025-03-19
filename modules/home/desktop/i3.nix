@@ -292,6 +292,11 @@ let
           notification = false;
         }];
 
+        assigns = {
+          "3: web" = [{ window_role = "^browser$"; }];
+          "4: coms" = [ { class = "^vesktop$"; } { class = "^thunderbird$"; } ];
+        };
+
         window.titlebar = false;
         window.commands = [
           # Enable border for "normal" windows
