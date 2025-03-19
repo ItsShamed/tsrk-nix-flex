@@ -428,10 +428,10 @@ let
 
           # Workspaces
 
-          "${mod}+1" = ''workspace "1: workdir"'';
-          "${mod}+2" = ''workspace "2: tooling"'';
-          "${mod}+3" = ''workspace "3: web"'';
-          "${mod}+4" = ''workspace "4: coms"'';
+          "${mod}+1" = ''workspace number "1: workdir"'';
+          "${mod}+2" = ''workspace number "2: tooling"'';
+          "${mod}+3" = ''workspace number "3: web"'';
+          "${mod}+4" = ''workspace number "4: coms"'';
           "${mod}+5" = "workspace number 5";
           "${mod}+6" = "workspace number 6";
           "${mod}+7" = "workspace number 7";
