@@ -62,8 +62,10 @@
             "00ffffffffffff0026cd4161f1020000181c0104a5351e783aee35a656529d280b5054b30c00714f818081c081009500b300d1c00101023a801871382d40582c45000f282100001e000000fd00374c1e5311000a202020202020000000ff0031313634384d38363030373533000000fc00504c32343933480a2020202020018a020318f14b9002030411121305141f012309070183010000023a801871382d40582c45000f282100001e8c0ad08a20e02d10103e96000f2821000018011d007251d01e206e2855000f282100001e8c0ad090204031200c4055000f28210000180000000000000000000000000000000000000000000000000000000000000035";
         };
         hooks.postswitch = ''
-          ${pkgs.i3}/bin/i3-msg '[workspace="4: coms"]' move workspace to output ${vertMonitor}
-          ${pkgs.i3}/bin/i3-msg move workspace "4: coms"
+          ${pkgs.i3}/bin/i3-msg 'workspace "4: coms"'
+          ${pkgs.i3}/bin/i3-msg 'move workspace to output ${vertMonitor}'
+          ${pkgs.i3}/bin/i3-msg '[class="thunderbird"] layout splitv'
+          ${pkgs.i3}/bin/i3-msg 'workspace back_and_forth'
         '';
         config = {
           eDP-1 = {
@@ -90,7 +92,10 @@
             "00ffffffffffff0006af3d6800000000001d0104a51f117803b81aa6544a9b260e525500000001010101010101010101010101010101143780b87038244010103e0035ae100000180000000f0000000000000000000000000020000000fe0041554f0a202020202020202020000000fe004231343048414e30362e38200a00c8";
         };
         hooks.postswitch = ''
-          ${pkgs.i3}/bin/i3-msg '[workspace="4: coms"]' move workspace to output eDP-1
+          ${pkgs.i3}/bin/i3-msg 'workspace "4: coms"'
+          ${pkgs.i3}/bin/i3-msg 'move workspace to output eDP-1'
+          ${pkgs.i3}/bin/i3-msg '[class="thunderbird"] layout splith'
+          ${pkgs.i3}/bin/i3-msg 'workspace back_and_forth'
         '';
         config = {
           HDMI-1 = {
