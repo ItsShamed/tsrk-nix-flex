@@ -18,6 +18,13 @@ let
   else
     "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
 
+  renameWorkspaces = pkgs.writeShellScript "i3-rename-workspaces" ''
+    i3-msg 'rename workspace 1 to "1: workdir"
+    i3-msg 'rename workspace 2 to "2: tooling"
+    i3-msg 'rename workspace 3 to "3: web"
+    i3-msg 'rename workspace 4 to "4: coms"
+  '';
+
   # TODO: figure how to disable services without them disappearing
   # I initially used `systemctl --user disable` so that if I ever need to run
   # other sessions, i3 user services would not pollute other window managers
@@ -286,11 +293,18 @@ let
         startup = (lib.lists.optional (!config.services.darkman.enable) {
           command = "feh --bg-fill ${config.tsrk.i3.background}";
           always = false;
-        }) ++ [{
-          command = "sh ${effectiveStartup}";
-          always = true;
-          notification = false;
-        }];
+        }) ++ [
+          {
+            command = "sh ${effectiveStartup}";
+            always = true;
+            notification = false;
+          }
+          {
+            command = "sh ${renameWorkspaces}";
+            always = true;
+            notification = false;
+          }
+        ];
 
         assigns = {
           "3: web" = [{ window_role = "^browser$"; }];
@@ -414,10 +428,10 @@ let
 
           # Workspaces
 
-          "${mod}+1" = "workspace number 1";
-          "${mod}+2" = "workspace number 2";
-          "${mod}+3" = "workspace number 3";
-          "${mod}+4" = "workspace number 4";
+          "${mod}+1" = ''workspace "1: workdir"'';
+          "${mod}+2" = ''workspace "2: tooling"'';
+          "${mod}+3" = ''workspace "3: web"'';
+          "${mod}+4" = ''workspace "4: coms"'';
           "${mod}+5" = "workspace number 5";
           "${mod}+6" = "workspace number 6";
           "${mod}+7" = "workspace number 7";
@@ -425,10 +439,10 @@ let
           "${mod}+9" = "workspace number 9";
           "${mod}+0" = "workspace number 10";
 
-          "${mod}+Shift+1" = "move container to workspace number 1";
-          "${mod}+Shift+2" = "move container to workspace number 2";
-          "${mod}+Shift+3" = "move container to workspace number 3";
-          "${mod}+Shift+4" = "move container to workspace number 4";
+          "${mod}+Shift+1" = ''move container to workspace "1: workdir"'';
+          "${mod}+Shift+2" = ''move container to workspace "2: tooling"'';
+          "${mod}+Shift+3" = ''move container to workspace "3: web"'';
+          "${mod}+Shift+4" = ''move container to workspace "4: coms"'';
           "${mod}+Shift+5" = "move container to workspace number 5";
           "${mod}+Shift+6" = "move container to workspace number 6";
           "${mod}+Shift+7" = "move container to workspace number 7";
