@@ -59,7 +59,7 @@
     podman.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ aria2 qbittorrent miru tailscale ];
+  environment.systemPackages = with pkgs; [ aria2 tailscale ];
 
   services.tailscale.enable = true;
   services.tailscale.openFirewall = true;

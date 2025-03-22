@@ -39,6 +39,8 @@
       tenacity
       vlc
       strawberry
+      qbittorrent
+      miru
     ];
   };
 }
