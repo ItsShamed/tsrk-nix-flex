@@ -16,6 +16,8 @@ in {
         default = [ "dotnet-sdk_8" ];
       };
 
+      msbuild.enable = lib.options.mkEnableOption "MSBuild";
+
       ide = {
         enable = (lib.options.mkEnableOption "the .NET IDE") // {
           default = true;
@@ -30,7 +32,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs;
-      [ cfg.package mono msbuild ]
+      [ cfg.package mono ] ++ (lib.lists.optional cfg.msbuild.enable msbuild)
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
     environment.variables = {
