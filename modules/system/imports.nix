@@ -13,6 +13,7 @@
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
   ./services/networking/sshd
+  ./services/networking/gns3.nix
   ./services/system/earlyoom
   ./services/virtualisation/containers
   ./services/virtualisation/libvirt.nix

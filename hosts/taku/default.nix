@@ -11,6 +11,7 @@
     self.nixosModules.profile-tsrk-common
     self.nixosModules.gamescope
     self.nixosModules.hyprland
+    self.nixosModules.gns3
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -32,6 +33,8 @@
     sampleRate = 44100;
     focusriteSupport = true;
   };
+
+  tsrk.gns3.enable = true;
 
   tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
 
