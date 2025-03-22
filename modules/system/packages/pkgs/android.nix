@@ -30,9 +30,7 @@ in {
     tsrk.packages.pkgs.android = {
       enable = lib.options.mkEnableOption "tsrk's Android bundle";
       ide = {
-        enable = (lib.options.mkEnableOption "Android Studio (IDE)") // {
-          default = true;
-        };
+        enable = lib.options.mkEnableOption "Android Studio (IDE)";
         package = lib.options.mkPackageOption pkgs "Android Studio" {
           default = [ "android-studio" ];
           example = "pkgs.androidStudioPackages.beta";
@@ -42,7 +40,27 @@ in {
         description = "The Android SDK composition";
         type = lib.types.attrs;
         default = androidComposition;
+        defaultText = ''
+          pkgs.androidenv.composeAndroidPackages {
+            cmdLineToolsVersion = "8.0";
+            toolsVersion = "26.1.1";
+            platformToolsVersion = "33.0.3";
+            buildToolsVersions = [ "33.0.3" ];
+            includeEmulator = false;
+            emulatorVersion = "30.3.4";
+            includeSources = false;
+            includeSystemImages = true;
+            systemImageTypes = [ "google_apis_playstore" "default" ];
+            abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+            cmakeVersions = [ "3.10.2" ];
+            includeNDK = true;
+            ndkVersions = [ "22.0.7026061" ];
+            useGoogleAPIs = true;
+            includeExtras = [ "extras;google;gcm" ];
+          };
+        '';
       };
+      flutter.enable = lib.options.mkEnableOption "Flutter SDK";
     };
   };
 
@@ -59,10 +77,10 @@ in {
       [
         apktool
         android-file-transfer
-        flutter
         scrcpy
         cfg.androidComposition.androidsdk
         cfg.androidComposition.platform-tools
-      ] ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
+      ] ++ lib.lists.optional cfg.flutter.enable flutter
+      ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
   };
 }
