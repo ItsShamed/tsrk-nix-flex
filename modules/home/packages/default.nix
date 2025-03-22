@@ -17,5 +17,6 @@ args:
     (lib.modules.importApply ./games.nix args)
     ./media.nix
     (lib.modules.importApply ./more-games.nix args)
+    ./ops.nix
   ];
 }

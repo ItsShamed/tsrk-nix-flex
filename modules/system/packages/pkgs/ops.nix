@@ -20,7 +20,6 @@ in {
       opentofu
       kubectl
       kustomize
-      k9s
       postgresql
       sqlfluff
       vault-bin
