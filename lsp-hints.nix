@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, self, inputs, ... }:
+{ lib, self, inputs, pkgSet, ... }:
 
 let system = "x86_64-linux";
 in {
@@ -12,7 +12,7 @@ in {
     inherit system;
     modules = [ self.nixosModules.all ];
     specialArgs = {
-      inherit inputs self;
+      inherit inputs self pkgSet;
       inherit (inputs) home-manager;
       vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" {
         inherit (inputs.nixpkgs) lib;
