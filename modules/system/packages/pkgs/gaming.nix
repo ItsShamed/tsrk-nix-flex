@@ -4,12 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, pkgsSet, ... }:
+{ inputs, pkgSet, ... }:
 
 { lib, config, pkgs, ... }:
 
 let
   inherit (pkgs.stdenv.hostPlatform) system;
+  inherit (pkgSet pkgs.system) pkgsUnstable;
   proton-osu-bin = inputs.nix-gaming.packages.${system}.proton-osu-bin;
 in {
   imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
@@ -28,7 +29,7 @@ in {
       environment.systemPackages = with pkgs; [
         gamemode
         protontricks
-        pkgsSet.pkgsUnstable.umu-launcher
+        pkgsUnstable.umu-launcher # TODO: at 25.05 use pkgs
       ];
 
       hardware.steam-hardware.enable = lib.mkDefault true;
