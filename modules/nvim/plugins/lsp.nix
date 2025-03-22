@@ -79,12 +79,12 @@ in {
           settings = {
             formatting.command = [ "nixfmt" ];
             options = {
-              nixos.expr = ''
-                (builtins.getFlake ("git+file://" + toString ./.)).lspHints.nixos or {}'';
+              nixos.expr =
+                ''(builtins.getFlake "${self.outPath}").lspHints.nixos or {}'';
               homeManager.expr = ''
-                (builtins.getFlake ("git+file://" + toString ./.)).lspHints.homeManager or {}'';
+                (builtins.getFlake "${self.outPath}").lspHints.homeManager or {}'';
               nixvim.expr = ''
-                (builtins.getFlake ("git+file://" + toString ./.)).packages.${pkgs.system}.nvim-cirno.options or {}
+                (builtins.getFlake "${self.outPath}").packages.${pkgs.system}.nvim-cirno.options or {}
               '';
             };
           };
