@@ -48,7 +48,6 @@
     android.enable = true;
     python.enable = true;
     gaming.enable = true;
-    go.enable = true;
     qmk.enable = true;
     ops.enable = true;
   };
