@@ -73,6 +73,7 @@ in {
   };
 
   config = lib.mkIf config.tsrk.packages.pkgs.cp.enable {
+    tsrk.packages.pkgs.cDev.enable = lib.mkDefault true;
     environment.systemPackages = with pkgs; [
       # ARM
       stlink
@@ -92,6 +93,7 @@ in {
       # ELEC
       arduino
       arduino-ide
+      kicad
 
       # VHDL
       vunit-hdl
