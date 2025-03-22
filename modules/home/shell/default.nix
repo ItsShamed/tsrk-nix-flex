@@ -4,6 +4,8 @@
 
 # SPDX-License-Identifier: MIT
 
+args:
+
 { lib, config, ... }:
 
 let
@@ -24,7 +26,7 @@ in {
   };
 
   imports = [
-    ./bat.nix
+    (lib.modules.importApply ./bat.nix args)
     ./bash.nix
     ./direnv.nix
     ./fastfetch.nix

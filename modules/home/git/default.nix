@@ -9,8 +9,11 @@ args:
 { config, lib, ... }:
 
 {
-  imports =
-    [ ./cli.nix ./delta.nix (lib.modules.importApply ./lazygit.nix args) ];
+  imports = [
+    ./cli.nix
+    (lib.modules.importApply ./delta.nix args)
+    (lib.modules.importApply ./lazygit.nix args)
+  ];
 
   options = {
     tsrk.git.enable = lib.options.mkEnableOption "tsrk's Git configuration";

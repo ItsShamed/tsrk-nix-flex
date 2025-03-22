@@ -121,7 +121,8 @@
             default = self.homeManagerModules.all;
           };
 
-        nixvimModules.default = import ./modules/nvim;
+        nixvimModules.default =
+          lib.modules.importApply ./modules/nvim commonArgs;
 
         lspHints = import ./lsp-hints.nix commonArgs;
 

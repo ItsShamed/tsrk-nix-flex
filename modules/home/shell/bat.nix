@@ -4,9 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { config, lib, pkgs, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   options = {
     tsrk.shell.bat = {
       enable = lib.options.mkEnableOption "tsrk's bat configuration";
@@ -34,15 +37,15 @@
       enable = true;
       themes = {
         "TokyoNight Day" = {
-          src = pkgs.tokyonight-extras;
+          src = tsrkPkgs.tokyonight-extras;
           file = "sublime/tokyonight_day.tmTheme";
         };
         "TokyoNight" = {
-          src = pkgs.tokyonight-extras;
+          src = tsrkPkgs.tokyonight-extras;
           file = "sublime/tokyonight_night.tmTheme";
         };
         "TokyoNight Storm" = {
-          src = pkgs.tokyonight-extras;
+          src = tsrkPkgs.tokyonight-extras;
           file = "sublime/tokyonight_storm.tmTheme";
         };
       };
@@ -54,14 +57,14 @@
       light.configuration = {
         programs.bat.config.theme = config.tsrk.shell.bat.themes.light;
         programs.bat.themes.tokyonight = {
-          src = pkgs.tokyonight-extras;
+          src = tsrkPkgs.tokyonight-extras;
           file = "sublime/tokyonight_day.tmTheme";
         };
       };
       dark.configuration = {
         programs.bat.config.theme = config.tsrk.shell.bat.themes.dark;
         programs.bat.themes.tokyonight = {
-          src = pkgs.tokyonight-extras;
+          src = tsrkPkgs.tokyonight-extras;
           file = "sublime/tokyonight_storm.tmTheme";
         };
       };

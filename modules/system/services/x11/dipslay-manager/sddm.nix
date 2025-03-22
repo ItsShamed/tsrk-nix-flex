@@ -4,9 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { config, lib, pkgs, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   options = {
     tsrk.sddm = {
       enable = lib.options.mkEnableOption "sddm as a display manager";
@@ -21,7 +24,7 @@
     };
 
     environment.systemPackages = [
-      (pkgs.sddm-slice-theme.withConfig {
+      (tsrkPkgs.sddm-slice-theme.withConfig {
         color_bg = "#24283b";
         color_contrast = "#1f2335";
         color_dimmed = "#a9b1d6";

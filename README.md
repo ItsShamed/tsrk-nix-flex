@@ -4,6 +4,8 @@ This file is licensed under the MIT License.
 See the LICENSE file in the repository root for more info
 -->
 
+<!-- SPDX-License-Identifier: MIT -->
+
 > [!NOTE]
 > ~~If you are viewing this on GitHub, this is a mirror of the real repo at
 > https://git.tsrk.me/tsrk/tsrk-nix-flex~~
@@ -70,7 +72,6 @@ You can use them by using the `nixosModules`, or `homeManagerModules` outputs:
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      overlays = [ tsrk.overlays.all ];
       config.allowUnfree = true;
     };
   in
@@ -98,13 +99,6 @@ You can use them by using the `nixosModules`, or `homeManagerModules` outputs:
   };
 }
 ```
-
-> [!WARNING]
-> Most of the provided modules are in theory independent of my flake inputs,
-> but this does not include the usage of overlayed packages.
->
-> To be able to use all modules without issues, apply the `overlays.all` overlay
-> output of this flake, to your `nixpkgs` input.
 
 ### Overlays
 

@@ -4,9 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { config, lib, pkgs, ... }:
 
 let
+  tsrkPkgs = self.packages.${pkgs.system};
   gapgdbserver = pkgs.writeShellApplication {
     name = "gapgdbserver";
     runtimeInputs = with pkgs; [ openocd ];
@@ -96,7 +99,7 @@ in {
       kicad
 
       # VHDL
-      vunit-hdl
+      tsrkPkgs.vunit-hdl
       vhdlMake
       ghdl-llvm
       zlib

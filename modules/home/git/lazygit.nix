@@ -8,7 +8,8 @@
 
 { config, lib, pkgs, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   options = {
     tsrk.git.lazygit.enable =
       lib.options.mkEnableOption "tsrk's Lazygit configuration";
@@ -60,11 +61,11 @@
     specialisation = {
       light.configuration = {
         programs.lazygit.settings = self.lib.fromYAML (builtins.readFile
-          "${pkgs.tokyonight-extras}/lazygit/tokyonight_day.yml");
+          "${tsrkPkgs.tokyonight-extras}/lazygit/tokyonight_day.yml");
       };
       dark.configuration = {
         programs.lazygit.settings = self.lib.fromYAML (builtins.readFile
-          "${pkgs.tokyonight-extras}/lazygit/tokyonight_storm.yml");
+          "${tsrkPkgs.tokyonight-extras}/lazygit/tokyonight_storm.yml");
       };
     };
   };

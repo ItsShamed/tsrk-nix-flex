@@ -4,8 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
+args:
+
+{ lib, ... }:
+
 {
-  imports = [ ./custom/plugins ./keymaps.nix ./options.nix ./plugins ];
+  imports = [
+    ./custom/plugins
+    ./keymaps.nix
+    ./options.nix
+    (lib.modules.importApply ./plugins args)
+  ];
 
   clipboard.register = "unnamedplus";
   clipboard.providers = {

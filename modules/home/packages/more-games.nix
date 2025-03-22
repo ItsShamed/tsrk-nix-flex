@@ -4,11 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, ... }:
+{ inputs, self, ... }:
 
 { lib, config, pkgs, ... }:
 
-let gaming = inputs.nix-gaming.packages.${pkgs.system};
+let
+  tsrkPkgs = self.packages.${pkgs.system};
+  gaming = inputs.nix-gaming.packages.${pkgs.system};
 in {
   options = {
     tsrk.packages.more-gaming = {
@@ -26,7 +28,7 @@ in {
       gaming.osu-lazer-bin
       gaming.osu-stable
       pkgs.prismlauncher
-      pkgs.rewind
+      tsrkPkgs.rewind
       pkgs.lunar-client
     ];
   };

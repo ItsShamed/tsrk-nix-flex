@@ -4,7 +4,9 @@
 
 # SPDX-License-Identifier: MIT
 
-{ ... }:
+args:
+
+{ lib, ... }:
 
 {
   imports = [
@@ -12,7 +14,7 @@
     ./treesitter.nix
     ./gitsigns.nix
     ./indentline.nix
-    ./lsp.nix
+    (lib.modules.importApply ./lsp.nix args)
     ./luasnip.nix
     ./markdown-preview.nix
     ./markview.nix

@@ -4,9 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { pkgs, lib, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   plugins = {
     none-ls.enable = true;
     lsp-format.enable = true;
@@ -40,7 +43,7 @@
         };
         ltex = {
           enable = true;
-          package = pkgs.ltex-ls-plus;
+          package = tsrkPkgs.ltex-ls-plus;
           filetypes = [
             "bib"
             "context"

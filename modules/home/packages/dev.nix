@@ -4,9 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { config, lib, pkgs, ... }:
 
-let cfg = config.tsrk.packages.dev;
+let
+  tsrkPkgs = self.packages.${pkgs.system};
+  cfg = config.tsrk.packages.dev;
 in {
   options = {
     tsrk.packages.dev = {
@@ -14,6 +18,7 @@ in {
     };
   };
 
-  config =
-    lib.mkIf cfg.enable { home.packages = with pkgs; [ realm-studio devenv ]; };
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [ tsrkPkgs.realm-studio devenv ];
+  };
 }

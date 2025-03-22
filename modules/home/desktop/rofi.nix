@@ -8,7 +8,8 @@
 
 { pkgs, lib, config, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   options = {
     tsrk.rofi = { enable = lib.options.mkEnableOption "Rofi configuration"; };
   };
@@ -18,7 +19,7 @@
       enable = true;
       package = pkgs.rofi-wayland;
       plugins = with pkgs; [ rofi-emoji ];
-      theme = "${pkgs.rofi-themes-collection}/simple-tokyonight.rasi";
+      theme = "${tsrkPkgs.rofi-themes-collection}/simple-tokyonight.rasi";
       terminal = (self.lib.mkIfElse (config.programs.kitty.enable) "kitty"
         "${pkgs.alacritty}/bin/alacritty");
       extraConfig = {

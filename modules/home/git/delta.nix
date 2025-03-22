@@ -4,9 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { pkgs, lib, config, ... }:
 
-let cfg = config.tsrk.git.delta;
+let
+  tsrkPkgs = self.packages.${pkgs.system};
+  cfg = config.tsrk.git.delta;
 in {
   options = {
     tsrk.git.delta = {
@@ -34,7 +38,7 @@ in {
     programs.bat = {
       enable = lib.mkDefault true;
       themes."TokyoNight" = lib.mkDefault {
-        src = pkgs.tokyonight-extras;
+        src = tsrkPkgs.tokyonight-extras;
         file = "sublime/tokyonight_night.tmTheme";
       };
     };
@@ -42,13 +46,14 @@ in {
     specialisation = {
       light.configuration = {
         programs.git.includes = [{
-          path = "${pkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig";
+          path = "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig";
         }];
         programs.git.delta.options.syntax-theme = cfg.themes.light;
       };
       dark.configuration = {
         programs.git.includes = [{
-          path = "${pkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig";
+          path =
+            "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig";
         }];
         programs.git.delta.options.syntax-theme = cfg.themes.dark;
       };

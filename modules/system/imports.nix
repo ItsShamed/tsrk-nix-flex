@@ -17,7 +17,7 @@
   ./services/virtualisation/containers
   ./services/virtualisation/libvirt.nix
   ./services/wayland/sessions/hyprland.nix
-  ./services/x11/dipslay-manager/sddm.nix
+  { path = ./services/x11/dipslay-manager/sddm.nix; }
   ./services/x11/keyboard/qwerty-fr.nix
   ./services/x11/redshift.nix
   ./services/x11/sessions/i3.nix

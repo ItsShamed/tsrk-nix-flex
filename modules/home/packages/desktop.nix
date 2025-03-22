@@ -4,9 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 { pkgs, lib, config, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   options = {
     tsrk.packages.desktop = {
       enable = lib.options.mkEnableOption "tsrk's desktop package bundle";
@@ -31,7 +34,7 @@
 
       # The best password manager (real)
       bitwarden
-      spotify-adblock
+      tsrkPkgs.spotify-adblock
 
       # PDF Readers
       zathura # TODO: Make HM Module

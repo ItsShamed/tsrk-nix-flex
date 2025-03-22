@@ -13,7 +13,7 @@ args:
     ./android.nix
     ./base.nix
     ./cDev.nix
-    ./cp.nix
+    (lib.modules.importApply ./cp.nix args)
     ./cpp.nix
     ./csharp.nix
     ./desktop.nix

@@ -25,7 +25,7 @@
   { path = ./git; }
   { path = ./nvim; }
   { path = ./packages; }
-  ./shell
+  { path = ./shell; }
   ./ssh.nix
   ./systemd/session-targets.nix
 ]

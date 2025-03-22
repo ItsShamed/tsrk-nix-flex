@@ -8,7 +8,8 @@
 
 { pkgs, lib, config, ... }:
 
-{
+let tsrkPkgs = self.packages.${pkgs.system};
+in {
   key = ./.;
 
   imports = [
@@ -130,8 +131,8 @@
   ];
 
   boot.loader.grub = lib.mkImageMediaOverride {
-    theme = "${pkgs.hyperfluent-grub-theme}";
-    splashImage = "${pkgs.hyperfluent-grub-theme}/background.png";
+    theme = "${tsrkPkgs.hyperfluent-grub-theme}";
+    splashImage = "${tsrkPkgs.hyperfluent-grub-theme}/background.png";
   };
 
   boot.initrd.postMountCommands = ''

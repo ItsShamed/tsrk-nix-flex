@@ -12,8 +12,8 @@ args:
   imports = [
     ./compat.nix
     ./core.nix
-    ./desktop.nix
-    ./dev.nix
+    (lib.modules.importApply ./desktop.nix args)
+    (lib.modules.importApply ./dev.nix args)
     (lib.modules.importApply ./games.nix args)
     ./media.nix
     (lib.modules.importApply ./more-games.nix args)
