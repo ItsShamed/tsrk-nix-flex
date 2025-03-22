@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, self, inputs }:
+{ lib, self, inputs, ... }:
 
 let system = "x86_64-linux";
 in {
