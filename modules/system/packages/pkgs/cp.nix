@@ -76,7 +76,9 @@ in {
   };
 
   config = lib.mkIf config.tsrk.packages.pkgs.cp.enable {
-    tsrk.packages.pkgs.cDev.enable = lib.mkDefault true;
+    tsrk.packages.pkgs.cDev.enable = lib.mkDefault true; # For basic toolchains
+    tsrk.packages.pkgs.cpp.enable = lib.mkDefault true; # For CLion
+
     environment.systemPackages = with pkgs; [
       # ARM
       stlink
