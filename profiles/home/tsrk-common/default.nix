@@ -8,7 +8,8 @@
 
 { pkgs, ... }:
 
-{
+let RPackages = with pkgs.rPackages; [ FactoMineR ];
+in {
   key = ./.;
 
   imports = with self.homeManagerModules; [
@@ -53,7 +54,12 @@
     userEmail = "tsrk@tsrk.me";
   };
 
-  home.packages = with pkgs; [ deadnix teams-for-linux ];
+  home.packages = with pkgs; [
+    deadnix
+    teams-for-linux
+    (rWrapper.override { packages = RPackages; })
+    (rstudioWrapper.override { packages = RPackages; })
+  ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" "$GOPATH/bin" "$HOME/go/bin" ];
 }
