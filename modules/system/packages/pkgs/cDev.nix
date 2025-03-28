@@ -40,6 +40,8 @@
       tk
       valgrind
 
+      bear
+
       perlPackages.JSON
       perlPackages.PerlIOgzip
     ];
