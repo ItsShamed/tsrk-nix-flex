@@ -4,12 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgSet, ... }:
 
 { config, lib, pkgs, ... }:
 
 let
   tsrkPkgs = self.packages.${pkgs.system};
+  inherit (pkgSet pkgs.system) pkgsUnstable;
   gapgdbserver = pkgs.writeShellApplication {
     name = "gapgdbserver";
     runtimeInputs = with pkgs; [ openocd ];
@@ -98,7 +99,7 @@ in {
       # ELEC
       arduino
       arduino-ide
-      kicad
+      pkgsUnstable.kicad
 
       # VHDL
       tsrkPkgs.vunit-hdl
