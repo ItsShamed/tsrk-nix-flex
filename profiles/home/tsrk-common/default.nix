@@ -8,7 +8,7 @@
 
 { pkgs, ... }:
 
-let RPackages = with pkgs.rPackages; [ FactoMineR ];
+let RPackages = with pkgs.rPackages; [ FactoMineR corrplot ];
 in {
   key = ./.;
 
