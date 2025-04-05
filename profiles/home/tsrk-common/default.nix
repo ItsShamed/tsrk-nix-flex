@@ -54,6 +54,14 @@ in {
     userEmail = "tsrk@tsrk.me";
   };
 
+  programs.rbw = {
+    enable = true;
+    settings = {
+      lock_timeout = 300;
+      pinentry = pkgs.pinentry-gnome3;
+    };
+  };
+
   home.packages = with pkgs; [
     deadnix
     teams-for-linux
