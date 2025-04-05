@@ -465,6 +465,18 @@ let
           XF86AudioNext =
             ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl next" '';
 
+          # Rofi
+
+          "${mod}+semicolon" = lib.mkIf (config.programs.rofi.enable
+            && lib.lists.any (pkg: pkg == pkgs.rofi-emoji-wayland)
+            config.programs.rofi.plugins)
+            "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji";
+
+          "${mod}+b" = lib.mkIf (config.programs.rofi.enable
+            && lib.lists.any (pkg: pkg == pkgs.rofi-emoji-wayland)
+            config.programs.rofi.plugins)
+            "exec --no-startup-id ${lib.getExe pkgs.rofi-rbw-x11} -r Bitwarden";
+
           # Brightness
           XF86MonBrightnessUp =
             ''exec --no-startup-id "${brightnessControl} increase 2"'';
