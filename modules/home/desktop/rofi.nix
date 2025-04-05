@@ -18,7 +18,7 @@ in {
     programs.rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
-      plugins = with pkgs; [ rofi-emoji-wayland rofi-rbw ];
+      plugins = with pkgs; [ rofi-emoji-wayland ];
       theme = "${tsrkPkgs.rofi-themes-collection}/simple-tokyonight.rasi";
       terminal = (self.lib.mkIfElse (config.programs.kitty.enable) "kitty"
         "${pkgs.alacritty}/bin/alacritty");
