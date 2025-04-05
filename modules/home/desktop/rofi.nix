@@ -22,9 +22,11 @@ in {
       theme = "${tsrkPkgs.rofi-themes-collection}/simple-tokyonight.rasi";
       terminal = (self.lib.mkIfElse (config.programs.kitty.enable) "kitty"
         "${pkgs.alacritty}/bin/alacritty");
+      location = "center";
       extraConfig = {
         modi = "drun,run";
         font = "Iosevka Nerd Font 12";
+        show-icons = true;
       };
     };
 
