@@ -57,7 +57,7 @@ let
     '')
     ''
       # Stop i3
-      i3-msg exit
+      loginctl kill-session $XDG_SESSION_ID
     ''
   ]);
 
@@ -132,7 +132,7 @@ let
   teardownTarget = pkgs.writeShellScript "teardown-target" ''
     systemctl --user stop tray.target & disown
     systemctl --user stop x11-session.target & disown
-    (loginctl terminate-session; i3-msg exit) & disown
+    (loginctl kill-session $XDG_SESSION_ID) & disown
   '';
 
   startupTarget = pkgs.writeShellScript "startup-target" ''
