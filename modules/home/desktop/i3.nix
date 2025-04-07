@@ -477,6 +477,16 @@ let
             config.programs.rofi.plugins)
             "exec --no-startup-id ${lib.getExe pkgs.rofi-rbw-x11} -r Bitwarden";
 
+          XF86Calculator = lib.mkIf (config.programs.rofi.enable
+            && lib.lists.any (pkg: pkg == pkgs.rofi-calc)
+            config.programs.rofi.plugins) ''
+              exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.xclip}/bin/xclip"'';
+
+          "${mod}+equal" = lib.mkIf (config.programs.rofi.enable
+            && lib.lists.any (pkg: pkg == pkgs.rofi-calc)
+            config.programs.rofi.plugins) ''
+              exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.xclip}/bin/xclip"'';
+
           # Brightness
           XF86MonBrightnessUp =
             ''exec --no-startup-id "${brightnessControl} increase 2"'';
