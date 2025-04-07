@@ -67,6 +67,7 @@ in {
     teams-for-linux
     (rWrapper.override { packages = RPackages; })
     (rstudioWrapper.override { packages = RPackages; })
+    ventoy-full
   ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" "$GOPATH/bin" "$HOME/go/bin" ];
