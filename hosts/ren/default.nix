@@ -43,4 +43,7 @@
   # This is using 6.6 for now because AD2P profiles are not working on 6.12
   # TODO: Figure out why 6.12 is not detecting AD2P audio profiles
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+
+  services.logind.lidSwitchExternalPower =
+    config.services.logind.lidSwitchDocked;
 }
