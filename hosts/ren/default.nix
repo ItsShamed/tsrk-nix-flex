@@ -46,4 +46,6 @@
 
   services.logind.lidSwitchExternalPower =
     config.services.logind.lidSwitchDocked;
+
+  services.printing.enable = true;
 }
