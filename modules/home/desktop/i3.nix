@@ -160,11 +160,11 @@ let
       fi
 
     ''}
-    waitpid $session_pid
     ${lib.strings.optionalString (config.systemd.user.services ? eww) ''
 
       # Restart eww because it won't pickup the compositor
       (
+        sleep 1
         systemctl --user restart eww${
           lib.strings.optionalString
           (config.systemd.user.services ? eww-starter) ''
