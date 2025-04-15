@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, ... }:
+{ self, pkgs, lib, ... }:
 
 {
   imports = with self.homeManagerModules; [ profile-tsrk-private ];
@@ -35,6 +35,13 @@
   };
 
   services.autorandr.enable = true;
+  systemd.user.services.autorandr = {
+    Unit = {
+      PartOf = lib.mkForce [ "x11-session.target" ];
+      ConditionEnvironment = [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+    };
+    Install.WantedBy = lib.mkForce [ "x11-session.target" ];
+  };
   programs.autorandr = {
     enable = true;
     hooks.postswitch = { notify-i3 = "${pkgs.i3}/bin/i3-msg restart"; };
