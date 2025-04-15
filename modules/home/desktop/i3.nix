@@ -519,6 +519,7 @@ let
             "j" = "resize shrink height 10 px or 10 ppt";
             "l" = "resize grow width 10 px or 10 ppt";
             "r" = "mode default";
+            "Escape" = "mode default";
           };
         };
       };
