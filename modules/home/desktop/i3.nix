@@ -423,8 +423,8 @@ let
 
           # Autorandr
 
-          "${mod}+p" = lib.mkIf config.services.autorandr.enable
-            "exec systemctl --user restart autorandr";
+          "${mod}+p" = lib.mkIf config.programs.autorandr.enable
+            "exec ${pkgs.autorandr}/bin/autorandr -c --default default";
 
           # Workspaces
 
