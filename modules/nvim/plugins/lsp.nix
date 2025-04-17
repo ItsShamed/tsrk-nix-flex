@@ -103,6 +103,7 @@ in {
           };
         };
         vala_ls.enable = true;
+        vhdl_ls.enable = true;
         yamlls.enable = true;
         rust_analyzer = {
           enable = true;
