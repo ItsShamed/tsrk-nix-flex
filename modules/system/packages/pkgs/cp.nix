@@ -108,6 +108,7 @@ in {
       zlib
       gtkwave
       surfer
+      quartus-prime-lite
     ];
   };
 }
