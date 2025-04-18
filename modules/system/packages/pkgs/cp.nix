@@ -80,6 +80,8 @@ in {
     tsrk.packages.pkgs.cDev.enable = lib.mkDefault true; # For basic toolchains
     tsrk.packages.pkgs.cpp.enable = lib.mkDefault true; # For CLion
 
+    services.udev.packages = with pkgs; [ usb-blaster-udev-rules ];
+
     environment.systemPackages = with pkgs; [
       # ARM
       stlink
