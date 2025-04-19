@@ -110,7 +110,10 @@ in {
       zlib
       gtkwave
       surfer
-      quartus-prime-lite
+      (quartus-prime-lite.override {
+        # We do not need the other qdz, this will make the build faster
+        supportedDevices = [ "Cyclone V" "MAX 10 FPGA" ];
+      })
     ];
   };
 }
