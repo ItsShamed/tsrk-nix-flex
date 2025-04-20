@@ -20,7 +20,7 @@ sudo_() {
 
 echo "==> Running GC on 'user' store paths"
 
-nix-collect-garbage --delete-older-than 7d -vv
+nix-collect-garbage --delete-older-than 5d -vv
 
 echo "==> Running GC on 'root' store paths"
 
