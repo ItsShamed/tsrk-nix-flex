@@ -11,15 +11,6 @@
 let
   kernelVersion =
     builtins.splitVersion config.boot.kernelPackages.kernel.version;
-  kernelMajor = lib.strings.toInt (builtins.elemAt kernelVersion 0);
-  kernelMinor = lib.strings.toInt (builtins.elemAt kernelVersion 1);
-
-  fixedKernelVersion = builtins.splitVersion "6.7";
-  fixedKernelMajor = lib.strings.toInt (builtins.elemAt fixedKernelVersion 0);
-  fixedKernelMinor = lib.strings.toInt (builtins.elemAt fixedKernelVersion 1);
-
-  isAudioFixed = kernelMajor > fixedKernelMajor
-    || (kernelMajor == 6 && kernelMinor >= fixedKernelMinor);
 in {
   imports = [ inputs.nix-gaming.nixosModules.pipewireLowLatency ];
   options = {
@@ -83,7 +74,7 @@ in {
     }
     (lib.mkIf config.tsrk.sound.focusriteSupport (lib.mkMerge [
       { environment.systemPackages = with pkgs; [ alsa-scarlett-gui ]; }
-      (lib.mkIf (!isAudioFixed) {
+      (lib.mkIf (lib.versionAtLeast kernelVersion "6.7") {
         boot.extraModprobeConfig = ''
           ### FOCUSRITE SUPPORT
 
