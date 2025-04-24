@@ -34,6 +34,8 @@
     nvim.wakatime.enable = true;
   };
 
+  services.poweralertd.enable = true;
+
   programs.autorandr = {
     enable = true;
     hooks.postswitch = { notify-i3 = "${pkgs.i3}/bin/i3-msg restart"; };

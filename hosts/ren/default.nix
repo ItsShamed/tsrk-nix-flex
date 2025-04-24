@@ -48,4 +48,34 @@
     config.services.logind.lidSwitchDocked;
 
   services.printing.enable = true;
+
+  services.tlp.settings = {
+    AMDGPU_ABM_LEVEL_ON_BAT = 2;
+
+    CPU_BOOST_ON_AC = 1;
+    CPU_BOOST_ON_BAT = 0;
+
+    CPU_DRIVER_OPMODE_ON_AC = "guided";
+    CPU_DRIVER_OPMODE_ON_BAT = "passive";
+
+    CPU_SCALING_GOVERNOR_ON_AC = "ondemand";
+    CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+
+    MEM_SLEEP_ON_AC = "s2idle";
+    MEM_SLEEP_ON_BAT = "deep";
+
+    PLATFORM_MOBILE_ON_AC = "performance";
+    PLATFORM_MOBILE_ON_BAT = "low-power";
+
+    SOUND_POWER_SAVE_ON_AC = 0;
+    SOUND_POWER_SAVE_ON_BAT = 10;
+
+    START_CHARGE_THRESH_BAT0 = 0; # Dummy value
+    STOP_CHARGE_THRESH_BAT0 = 1;
+
+    USB_AUTOSUSPEND = 0;
+    USB_ALLOWLIST = "";
+  };
+
+  services.upower.enable = true;
 }
