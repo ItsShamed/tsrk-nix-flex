@@ -7,13 +7,13 @@
 { autoPatchelfHook, qt6, makeWrapper, cairo, dbus, libglvnd, libGL, fontconfig
 , freetype, libgcc, glib, gtk4, gtk3, gtk3-x11, gtk2, gtk2-x11, pcsclite, pango
 , ncurses5, alsa-lib, ffmpeg_4-headless, ffmpeg_6-headless, imagemagick
-, libxkbcommon, swt, unzip, xorg, libz, xercesc, makeDesktopItem, requireFile
-, stdenv, symlinkJoin, lib }:
+, libxkbcommon, stm32cubemx, swt, unzip, xorg, libz, xercesc, makeDesktopItem
+, requireFile, stdenv, symlinkJoin, lib }:
 
 let
   package = stdenv.mkDerivation rec {
     pname = "stm32cubeide";
-    version = "1.16.1";
+    version = "1.16.1_22882_20240916_0822";
 
     autoPatchelfIgnoreMissingDeps = [
       "libavcodec.so.54"
@@ -28,8 +28,7 @@ let
       "libavformat-ffmpeg.so.56"
     ];
 
-    fileTimestamps = "22882_20240916_0822";
-    distName = "st-stm32cubeide_${version}_${fileTimestamps}_amd64";
+    distName = "st-stm32cubeide_${version}_amd64";
 
     src = requireFile {
       name = "en.${distName}.sh.zip";
@@ -74,6 +73,8 @@ let
       libz
       xercesc
       swt
+
+      stm32cubemx
     ];
 
     unpackCmd = ''
@@ -126,6 +127,5 @@ in symlinkJoin {
       "STM32CubeIDE is an all-in-one development tool, which is part of the STM32Cube software ecosystem.";
     platform = platforms.linux;
     mainProgram = "stm32cubeide";
-    broken = true;
   };
 }
