@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, pkgs, lib, inputs, modulesPath, ... }:
+{ config, lib, inputs, modulesPath, ... }:
 
 {
   imports = [
@@ -19,9 +19,6 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.blacklistedKernelModules = [ "elan_i2c" ];
-
-  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.7")
-    pkgs.linuxPackages_latest;
 
   boot.kernelParams =
     lib.mkIf config.boot.plymouth.enable [ "plymouth.use-simpledrm" ];

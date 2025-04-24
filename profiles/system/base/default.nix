@@ -154,7 +154,8 @@ in {
     } \033[0;36m image\033[0m\n"
   '';
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.7")
+    pkgs.linuxPackages_latest;
 
   system.stateVersion = "24.05";
 }
