@@ -94,6 +94,7 @@ in {
 
       # STM32
       stm32cubemx
+      tsrkPkgs.stm32cubeide
 
       # CSTR
       heptagon
