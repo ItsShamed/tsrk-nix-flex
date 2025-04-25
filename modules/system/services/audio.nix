@@ -8,9 +8,7 @@
 
 { config, lib, pkgs, ... }:
 
-let
-  kernelVersion =
-    builtins.splitVersion config.boot.kernelPackages.kernel.version;
+let kernelVersion = config.boot.kernelPackages.kernel.version;
 in {
   imports = [ inputs.nix-gaming.nixosModules.pipewireLowLatency ];
   options = {
