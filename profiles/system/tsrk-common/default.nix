@@ -72,4 +72,6 @@
     # Spotify P2P
     allowedUDPPorts = [ 57621 ];
   };
+
+  services.fwupd.enable = lib.mkDefault true;
 }
