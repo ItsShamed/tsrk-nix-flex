@@ -4,10 +4,25 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
-  imports = with self.homeManagerModules; [ profile-tsrk-private ];
+  imports = with self.homeManagerModules; [
+    profile-tsrk-private
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+  ];
+
+  services.flatpak = {
+    enable = true;
+    packages = [ "com.fightcade.Fightcade" ];
+    update = {
+      onActivation = true;
+      auto = {
+        enable = true;
+        onCalendar = "weekly";
+      };
+    };
+  };
 
   tsrk = {
     packages = {
