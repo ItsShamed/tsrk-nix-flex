@@ -81,6 +81,7 @@ in {
     tsrk.packages.pkgs.cpp.enable = lib.mkDefault true; # For CLion
 
     services.udev.packages = with pkgs; [ usb-blaster-udev-rules ];
+    hardware.saleae-logic.enable = true;
 
     environment.systemPackages = with pkgs; [
       # ARM
@@ -91,6 +92,7 @@ in {
       picocom
       gapgdbserver
       gapflash
+      saleae-logic-2
 
       # STM32
       stm32cubemx
