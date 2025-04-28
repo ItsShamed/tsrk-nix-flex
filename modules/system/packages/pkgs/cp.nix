@@ -94,6 +94,9 @@ in {
       gapflash
       saleae-logic-2
 
+      # UART
+      minicom
+
       # STM32
       stm32cubemx
       tsrkPkgs.stm32cubeide
