@@ -26,5 +26,6 @@ args:
     ./qmk.nix
     ./rust.nix
     ./sql.nix
+    ./web.nix
   ];
 }

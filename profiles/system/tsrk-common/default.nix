@@ -50,6 +50,7 @@
     gaming.enable = true;
     qmk.enable = true;
     ops.enable = true;
+    web.enable = true;
   };
 
   tsrk.networking.networkmanager.enable = true;
