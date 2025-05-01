@@ -74,5 +74,12 @@
     allowedUDPPorts = [ 57621 ];
   };
 
+  # TODO: Move this to home-manager once 25.05 is released
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
+  };
+
   services.fwupd.enable = lib.mkDefault true;
 }
