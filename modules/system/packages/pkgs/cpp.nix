@@ -12,9 +12,7 @@ in {
     tsrk.packages.pkgs.cpp = {
       enable = lib.options.mkEnableOption "tsrk's C++ development bundle";
       ide = {
-        enable = (lib.options.mkEnableOption "the C++ IDE") // {
-          default = true;
-        };
+        enable = lib.options.mkEnableOption "the C++ IDE";
         package = lib.options.mkPackageOption pkgs.jetbrains "C++ IDE" {
           default = [ "clion" ];
         };

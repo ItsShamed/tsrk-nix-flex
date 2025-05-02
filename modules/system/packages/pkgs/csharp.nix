@@ -19,9 +19,7 @@ in {
       msbuild.enable = lib.options.mkEnableOption "MSBuild";
 
       ide = {
-        enable = (lib.options.mkEnableOption "the .NET IDE") // {
-          default = true;
-        };
+        enable = lib.options.mkEnableOption "the .NET IDE";
 
         package = lib.options.mkPackageOption pkgs.jetbrains ".NET IDE" {
           default = [ "rider" ]; # Sorry not sorry, school free license is yummy

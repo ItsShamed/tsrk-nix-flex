@@ -43,7 +43,10 @@
       enable = true;
       jdk.extraPackages = with pkgs; [ jdk17 jdk11 jdk8 ];
     };
-    csharp.enable = true;
+    csharp = {
+      enable = true;
+      ide.enable = true;
+    };
     rust.enable = true;
     android.enable = true;
     python.enable = true;
