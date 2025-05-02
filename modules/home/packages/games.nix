@@ -26,9 +26,6 @@ in {
       # gaming.osu-lazer-bin
       typespeed
       tetrio-desktop
-      retroarch-assets
-      retroarch
-      retroarch-joypad-autoconfig
       gaming.wine-ge
     ];
   };
