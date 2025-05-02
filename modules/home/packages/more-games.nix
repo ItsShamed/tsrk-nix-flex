@@ -30,7 +30,7 @@ in {
       gaming.osu-stable
       pkgs.prismlauncher
       tsrkPkgs.rewind
-      pkgs.lunar-client
+      pkgsUnstable.lunar-client
       pkgsUnstable.etterna # TODO: at 25.05 use pkgs
     ];
   };
