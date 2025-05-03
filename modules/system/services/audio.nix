@@ -49,6 +49,15 @@ in {
         alsa.support32Bit = true;
         pulse.enable = true;
 
+        extraConfig = lib.attrsets.genAttrs [ "pipewire" "pipewire-pulse" ]
+          (_n: {
+            "10-clock-rate" = {
+              "context.properties" = {
+                "default.clock.rate" = config.tsrk.sound.sampleRate;
+              };
+            };
+          });
+
         lowLatency = {
           enable = true;
           quantum = config.tsrk.sound.bufferSize;
