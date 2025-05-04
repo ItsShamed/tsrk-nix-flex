@@ -12,6 +12,7 @@
     self.nixosModules.gamescope
     self.nixosModules.hyprland
     self.nixosModules.gns3
+    self.nixosModules.amdgpu
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -54,5 +55,13 @@
   services.hardware.openrgb = {
     enable = true;
     package = pkgs.openrgb-with-all-plugins;
+  };
+
+  tsrk.x11.amdgpu = {
+    enable = true;
+    freeSync = true;
+    # https://wiki.archlinux.org/title/AMDGPU#Reduce_output_latency
+    pageFlip = false;
+    tearFree = false;
   };
 }

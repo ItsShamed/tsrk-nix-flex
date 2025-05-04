@@ -20,6 +20,7 @@
   ./services/wayland/sessions/hyprland.nix
   { path = ./services/x11/dipslay-manager/sddm.nix; }
   ./services/x11/keyboard/qwerty-fr.nix
+  ./services/x11/amdgpu.nix
   ./services/x11/redshift.nix
   ./services/x11/sessions/i3.nix
   ./system/boot/plymouth
