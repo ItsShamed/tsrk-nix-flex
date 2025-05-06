@@ -8,7 +8,9 @@
 
 { config, lib, pkgs, ... }:
 
-let kernelVersion = config.boot.kernelPackages.kernel.version;
+let
+  cfg = config.tsrk.sound;
+  kernelVersion = config.boot.kernelPackages.kernel.version;
 in {
   imports = [ inputs.nix-gaming.nixosModules.pipewireLowLatency ];
   options = {
@@ -49,14 +51,28 @@ in {
         alsa.support32Bit = true;
         pulse.enable = true;
 
-        extraConfig = lib.attrsets.genAttrs [ "pipewire" "pipewire-pulse" ]
-          (_n: {
-            "10-clock-rate" = {
-              "context.properties" = {
-                "default.clock.rate" = config.tsrk.sound.sampleRate;
+        extraConfig = let
+          inherit (builtins) toString;
+          streamLatencyConfig =
+            lib.attrsets.genAttrs [ "pipewire-pulse" "client" ] (_n: {
+              "10-stream-latency" = {
+                "stream.properties" = {
+                  "node.latency" =
+                    "${toString cfg.bufferSize}/${toString cfg.sampleRate}";
+                };
               };
+            });
+        in {
+          pipewire."10-clock-rate" = {
+            "context.properties" = {
+              "default.clock.rate" = config.tsrk.sound.sampleRate;
             };
-          });
+          };
+
+          client."11-alsa-rate" = {
+            "alsa.properties"."alsa.rate" = cfg.sampleRate;
+          };
+        } // streamLatencyConfig;
 
         lowLatency = {
           enable = true;
