@@ -31,6 +31,10 @@
 
   tsrk.sound.focusriteSupport = true;
 
+  services.pipewire.extraConfig.pipewire."10-tsrk-issues" = {
+    "context.properties"."default.clock.max-quantum" = 128;
+  };
+
   tsrk.gns3.enable = true;
 
   tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
