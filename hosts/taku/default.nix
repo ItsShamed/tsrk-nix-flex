@@ -29,11 +29,7 @@
 
   tsrk.hyprland.enable = true;
 
-  tsrk.sound = {
-    bufferSize = 64;
-    sampleRate = 44100;
-    focusriteSupport = true;
-  };
+  tsrk.sound.focusriteSupport = true;
 
   tsrk.gns3.enable = true;
 
