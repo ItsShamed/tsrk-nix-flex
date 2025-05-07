@@ -599,6 +599,8 @@ let
       services.screen-locker = {
         enable = lib.mkDefault true;
         xautolock.extraOptions = [
+          "-corners 0-00"
+          "-cornersize 100"
           "-notifier '${pkgs.libnotify}/bin/notify-send -a xautolock \"Auto-lock notice\" \"Computer will lock in 10 seconds\"'"
           "-notify 10"
         ];
