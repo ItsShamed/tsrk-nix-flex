@@ -809,22 +809,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_11": {
-      "locked": {
-        "lastModified": 1740547748,
-        "narHash": "sha256-Ly2fBL1LscV+KyCqPRufUBuiw+zmWrlJzpWOWbahplg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3a05eebede89661660945da1f151959900903b6a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1733212471,
@@ -1015,8 +999,7 @@
         "nixpkgs": "nixpkgs_6",
         "nixpkgsUnstable": "nixpkgsUnstable",
         "nixvim": "nixvim",
-        "spotify-notifyx": "spotify-notifyx",
-        "umu": "umu"
+        "spotify-notifyx": "spotify-notifyx"
       }
     },
     "spotify-notifyx": {
@@ -1114,26 +1097,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "umu": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_11"
-      },
-      "locked": {
-        "dir": "packaging/nix",
-        "lastModified": 1747242981,
-        "narHash": "sha256-MFvG2fiPdmkNU88A7RzPjcHfexOiJxRwAX0SxeC0C5k=",
-        "owner": "Open-Wine-Components",
-        "repo": "umu-launcher",
-        "rev": "eff12416f0e8135031a62579910608e442d83d22",
-        "type": "github"
-      },
-      "original": {
-        "dir": "packaging/nix",
-        "owner": "Open-Wine-Components",
-        "repo": "umu-launcher",
         "type": "github"
       }
     }
