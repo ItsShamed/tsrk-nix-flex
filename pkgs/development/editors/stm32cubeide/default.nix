@@ -7,8 +7,8 @@
 { autoPatchelfHook, qt6, makeWrapper, cairo, dbus, libglvnd, libGL, fontconfig
 , freetype, libgcc, glib, gtk4, gtk3, gtk3-x11, gtk2, gtk2-x11, pcsclite, pango
 , ncurses5, alsa-lib, ffmpeg_4-headless, ffmpeg_6-headless, imagemagick
-, libxkbcommon, stm32cubemx, swt, unzip, xorg, libz, xercesc, makeDesktopItem
-, requireFile, stdenv, symlinkJoin, lib }:
+, libxkbcommon, stlink, stlink-gui, stm32cubemx, swt, unzip, xorg, libz, xercesc
+, makeDesktopItem, requireFile, stdenv, symlinkJoin, lib }:
 
 let
   package = stdenv.mkDerivation rec {
@@ -72,6 +72,8 @@ let
       xorg.libXxf86vm
       libz
       xercesc
+      stlink
+      stlink-gui
       swt
 
       stm32cubemx
@@ -88,9 +90,11 @@ let
       mkdir -p $out/bin
       tar xvf extract/${distName}.tar.gz -C $out
       wrapProgram "$out/stm32cubeide" \
-        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath buildInputs}
+        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath buildInputs} \
+        --prefix PATH : ${lib.makeBinPath buildInputs}
       wrapProgram "$out/stm32cubeide_wayland" \
-        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath buildInputs}
+        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath buildInputs} \
+        --prefix PATH : ${lib.makeBinPath buildInputs}
       ln -s "$out/stm32cubeide" "$out/bin/stm32cubeide"
       ln -s "$out/stm32cubeide_wayland" "$out/bin/stm32cubeide_wayland"
       magick $out/icon.xpm $out/icon.png
