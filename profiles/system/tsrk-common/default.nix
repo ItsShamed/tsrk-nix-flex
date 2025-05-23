@@ -85,4 +85,8 @@
   };
 
   services.fwupd.enable = lib.mkDefault true;
+
+  xdg.portal.enable = lib.mkDefault true;
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal ];
+  services.flatpak.enable = lib.mkDefault true;
 }

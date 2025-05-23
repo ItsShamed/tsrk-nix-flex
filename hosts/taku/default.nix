@@ -47,8 +47,6 @@
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
 
-  services.flatpak.enable = true;
-
   # This is horrible for Minecraft PvP lmao
   services.libinput.mouse.middleEmulation = false;
 

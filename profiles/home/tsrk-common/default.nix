@@ -15,6 +15,7 @@ in {
   imports = with self.homeManagerModules; [
     profile-x11
     inputs.spotify-notifyx.homeManagerModules.default
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   tsrk = {
@@ -22,6 +23,18 @@ in {
     packages.dev.enable = true;
     packages.compat.enable = true;
     packages.ops.enable = true;
+  };
+
+  services.flatpak = {
+    enable = true;
+    packages = [ "com.fightcade.Fightcade" ];
+    update = {
+      onActivation = true;
+      auto = {
+        enable = true;
+        onCalendar = "weekly";
+      };
+    };
   };
 
   accounts.email.accounts = {
