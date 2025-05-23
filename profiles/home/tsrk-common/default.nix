@@ -33,6 +33,14 @@ in {
         host = "zimbra002.pulseheberg.com";
         port = 993;
       };
+      smtp = {
+        host = "zimbra002.pulseheberg.com";
+        port = 587;
+        tls = {
+          enable = true;
+          useStartTls = true;
+        };
+      };
       signature = {
         showSignature = "append";
         text = ''
