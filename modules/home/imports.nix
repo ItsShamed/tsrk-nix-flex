@@ -7,6 +7,7 @@
 [
   ./desktop/darkman.nix
   ./desktop/dunst.nix
+  ./desktop/fcitx5.nix
   ./desktop/eww
   ./desktop/flameshot.nix
   { path = ./desktop/i3.nix; }

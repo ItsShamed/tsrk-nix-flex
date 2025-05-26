@@ -4,12 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, self, pkgSet, ... }:
+{ inputs, self, ... }:
 
 { lib, config, pkgs, ... }:
 
 let
-  inherit (pkgSet pkgs.system) pkgsUnstable;
   tsrkPkgs = self.packages.${pkgs.system};
   gaming = inputs.nix-gaming.packages.${pkgs.system};
 in {
@@ -30,8 +29,8 @@ in {
       gaming.osu-stable
       pkgs.prismlauncher
       tsrkPkgs.rewind
-      pkgsUnstable.lunar-client
-      pkgsUnstable.etterna # TODO: at 25.05 use pkgs
+      pkgs.lunar-client
+      pkgs.etterna
     ];
   };
 }

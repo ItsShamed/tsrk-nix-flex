@@ -39,14 +39,6 @@
           BindsTo = "graphical-session.target";
         };
       };
-      tray = {
-        Unit = {
-          Description = "Current System Tray display";
-          After = [ "graphical-session-pre.target" ];
-          PartOf = [ "graphical-session.target" ];
-          Bindsto = "graphical-session.target";
-        };
-      };
       lock = {
         Unit = {
           Conflicts = "unlock.target";

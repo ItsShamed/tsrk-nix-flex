@@ -46,9 +46,8 @@ let
       '';
     };
 
-in helpers.neovim-plugin.mkNeovimPlugin {
+in helpers.plugins.mkNeovimPlugin {
   name = "no-neck-pain";
-  originalName = "no-neck-pain.nvim";
   package = "no-neck-pain-nvim";
 
   maintainers = [ ];

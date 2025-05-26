@@ -8,11 +8,11 @@
 
 { pkgs, ... }:
 
-let RPackages = with pkgs.rPackages; [ FactoMineR corrplot ];
-in {
+{
   key = ./.;
 
   imports = with self.homeManagerModules; [
+    fcitx5
     profile-x11
     inputs.spotify-notifyx.homeManagerModules.default
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
@@ -20,6 +20,19 @@ in {
 
   tsrk = {
     premid.enable = true;
+    fcitx5 = {
+      enable = true;
+      groups = {
+        "FR-dev/JP" = {
+          defaultLayout = "us_qwerty-fr";
+          defaultInputMethod = "mozc";
+          items = {
+            keyboard-us_qwerty-fr = "";
+            mozc = "";
+          };
+        };
+      };
+    };
     packages.dev.enable = true;
     packages.compat.enable = true;
     packages.ops.enable = true;
@@ -78,9 +91,11 @@ in {
   home.packages = with pkgs; [
     deadnix
     teams-for-linux
-    (rWrapper.override { packages = RPackages; })
-    (rstudioWrapper.override { packages = RPackages; })
-    ventoy-full
+
+    # TODO: Bring back when they finish being silly
+    # https://github.com/ventoy/Ventoy/issues/3224
+    # https://github.com/NixOS/nixpkgs/issues/404663
+    # ventoy-full
   ];
 
   home.sessionPath = [ "$HOME/.cargo/bin" "$GOPATH/bin" "$HOME/go/bin" ];

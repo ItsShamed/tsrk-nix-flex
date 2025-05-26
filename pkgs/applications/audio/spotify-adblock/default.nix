@@ -27,7 +27,7 @@ rustPlatform.buildRustPackage rec {
     sed -i "s|@@out@@|$out|" src/lib.rs
   '';
 
-  cargoHash = "sha256-MiTLl/HH65JOVdEnqTIomobxD4aswT9azOjvJUpjBss=";
+  cargoHash = "sha256-oGpe+kBf6kBboyx/YfbQBt1vvjtXd1n2pOH6FNcbF8M=";
 
   nativeBuildInputs = [ makeBinaryWrapper lndir ];
 

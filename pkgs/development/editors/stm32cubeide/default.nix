@@ -26,6 +26,7 @@ let
       "libavformat.so.59"
       "libavcodec-ffmpeg.so.56"
       "libavformat-ffmpeg.so.56"
+      "libxerces-c-3.2.so"
     ];
 
     distName = "st-stm32cubeide_${version}_amd64";

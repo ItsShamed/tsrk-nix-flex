@@ -44,7 +44,7 @@ in {
       posixInitExtra
       cfg.initExtra
     ];
-    programs.zsh.initExtra =
+    programs.zsh.initContent =
       lib.strings.concatLines [ posixInitExtra cfg.initExtra ];
     programs.fish.shellInit = lib.strings.concatLines [
       (lib.strings.optionalString cfg.enableViKeybinds ''

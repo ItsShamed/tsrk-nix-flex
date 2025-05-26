@@ -6,11 +6,7 @@
 
 { config, pkgs, lib, ... }:
 
-let
-  fonts = pkgs.nerdfonts.override {
-    fonts = [ "Iosevka" "IosevkaTerm" "JetBrainsMono" "Meslo" ];
-  };
-  cfg = config.tsrk.kitty;
+let cfg = config.tsrk.kitty;
 in {
   options = {
     tsrk.kitty.enable = lib.options.mkEnableOption "kitty terminal emulator";
@@ -20,8 +16,8 @@ in {
     programs.kitty = {
       enable = true;
       font = lib.mkDefault {
-        package = fonts;
-        name = "Iosevka Nerd Font";
+        package = pkgs.nerd-fonts.iosevka-term;
+        name = "IosevkaTerm Nerd Font";
       };
 
       themeFile = lib.mkDefault "tokyo_night_moon";

@@ -8,7 +8,7 @@
 
 chatterino2.overrideAttrs (self: super: {
   pname = "chatterino7";
-  version = "7.5.2";
+  version = "7.5.3";
   src = fetchFromGitHub {
     owner = "SevenTV";
     repo = self.pname;
@@ -29,6 +29,7 @@ chatterino2.overrideAttrs (self: super: {
     changelog =
       "https://github.com/SevenTV/chatterino7/blob/master/CHANGELOG.md";
     license = licenses.mit;
+    broken = true;
     platforms = platforms.unix;
     maintainers = with maintainers; [ rexim supa ];
   };

@@ -173,13 +173,8 @@ let
       assert assertMsg (isList snippets) "snippets must be a list";
       "__ls.add_snippets(${toLuaObject filetype}, ${toLuaObject snippets})");
 
-  luasnipCommands = let
-    # TODO: This is backported from nixpkgs-master
-    # Use this when the actual function will be backported to 24.11
-    concatMapAttrsStringSep = sep: f: attrs:
-      concatStringsSep sep (lib.attrValues (lib.mapAttrs f attrs));
-  in addErrorContext "while converting LuaSnip snippets"
-  (concatMapAttrsStringSep "\n" mkFiletypeSnippets snippets);
+  luasnipCommands = addErrorContext "while converting LuaSnip snippets"
+    (lib.concatMapAttrsStringSep "\n" mkFiletypeSnippets snippets);
 in {
   plugins.luasnip = { enable = true; };
 

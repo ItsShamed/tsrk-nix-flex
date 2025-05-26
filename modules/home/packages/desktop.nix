@@ -23,9 +23,10 @@ in {
       legcord
 
       # Fonts
-      (nerdfonts.override {
-        fonts = [ "Iosevka" "IosevkaTerm" "JetBrainsMono" "Meslo" ];
-      })
+      nerd-fonts.iosevka
+      nerd-fonts.iosevka-term
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.meslo-lg
       iosevka
       meslo-lgs-nf
       libreoffice
