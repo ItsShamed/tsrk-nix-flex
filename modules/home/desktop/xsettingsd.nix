@@ -23,7 +23,7 @@ in {
     services.xsettingsd = {
       enable = true;
       settings = {
-        "Xft/Antialias" = 0;
+        "Xft/Antialias" = 1;
         "Xft/HintStyle" = "hintfull";
         "Xft/Hinting" = 1;
         "Xft/RGBA" = "rgb";
