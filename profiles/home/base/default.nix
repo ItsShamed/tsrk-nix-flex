@@ -33,5 +33,8 @@
       lazygit.enable = lib.mkDefault true;
     };
     tsrk.nvim.enable = lib.mkDefault true;
+
+    # This is very annoying with 'setup-betterlockscreen.service'
+    systemd.user.startServices = false;
   };
 }
