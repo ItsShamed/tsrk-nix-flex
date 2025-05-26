@@ -23,13 +23,13 @@ in {
     services.xsettingsd = {
       enable = true;
       settings = {
-        "Xft/Antialias" = 1;
+        "Xft/Antialias" = 0;
         "Xft/HintStyle" = "hintfull";
         "Xft/Hinting" = 1;
         "Xft/RGBA" = "rgb";
         "Gtk/CursorThemeName" = "macOS";
-        "Gtk/CursorThemeSize" = 32;
-        "Xcursor/size" = 32;
+        "Gtk/CursorThemeSize" = 64;
+        "Xcursor/size" = 64;
       };
     };
 
