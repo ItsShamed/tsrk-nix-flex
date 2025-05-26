@@ -32,4 +32,4 @@ else
     command=nix run nixpkgs#nixos-option --
 fi
 
-$command --config_expr "${CONFIG_PREFIX}.config" --options_expr "${CONFIG_PREFIX}.options" "$attrPath" $@
+$command --flake ".#$host" "$attrPath" $@
