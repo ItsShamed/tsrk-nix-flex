@@ -20,12 +20,12 @@ sudo_() {
 
 echo "==> Running GC on 'user' store paths"
 
-nix-collect-garbage --delete-older-than 5d -vv
+nix-collect-garbage -d --delete-older-than 5d -vv
 
 echo "==> Running GC on 'root' store paths"
 
 sudo_ true
-sudo_ nix-collect-garbage -vv
+sudo_ nix-collect-garbage -d -vv
 
 echo "==> Cleaning up boot entries"
 
