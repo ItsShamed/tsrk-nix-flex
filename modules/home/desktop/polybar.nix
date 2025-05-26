@@ -87,6 +87,11 @@ in {
           background = "\${colors.background}";
           background-alt = "\${colors.background-alt}";
 
+          dpi = {
+            x = 0;
+            y = 0;
+          };
+
           enable-ipc = true;
 
           line = {
