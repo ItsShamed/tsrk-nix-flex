@@ -13,5 +13,9 @@
 
   config = lib.mkIf config.tsrk.i3.enable {
     services.xserver.windowManager.i3 = { enable = true; };
+    security.pam.services = {
+      i3lock.enable = true;
+      i3lock-color.enable = true;
+    };
   };
 }
