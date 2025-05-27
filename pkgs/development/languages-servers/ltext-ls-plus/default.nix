@@ -8,7 +8,7 @@
 
 ltex-ls.overrideAttrs (self: super: {
   pname = super.pname + "-plus";
-  version = "18.4.0";
+  version = "18.5.1";
 
   src = fetchurl {
     url = if system == "x86_64-linux" then
@@ -18,9 +18,9 @@ ltex-ls.overrideAttrs (self: super: {
     else
       builtins.throw "Unsupported system ${system}";
     hash = if system == "x86_64-linux" then
-      "sha256-vKsvBJp7WFTFdO/4HrdHGCxoQQ18CvOlHh9YHFK4zSU="
+      "sha256-5uCFmLu7V130CcjUkdMFMyYzc3dCUVpcUIA9TGcct98="
     else if system == "aarch64-linux" then
-      "sha256-oEmfjWr9LGVw9uN9TuOyo2BQAVoLrYjEF2IX8Gj1TYQ="
+      "sha256-CGOYdzZRMDq5lqtweMv2Cc5sNF0e3aOS+sSebFgHadE="
     else
       builtins.throw "Unsupported system ${system}";
   };
