@@ -20,6 +20,7 @@
       buffers = { right.enabled = false; };
 
       mappings = { enabled = true; };
+      integrations.dashboard.enabled = true;
     };
   };
 }

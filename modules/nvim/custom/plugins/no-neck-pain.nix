@@ -268,11 +268,64 @@ in helpers.plugins.mkNeovimPlugin {
         (name: mkTreeOption name { position = "right"; });
     in mkSettingsOption {
       options = (leftTrees // rightTrees // {
-        # lmaoo NvimDAPUI is just built different
+        NvimTree = {
+          position =
+            mkEnum [ "left" "right" ] "left" "The position of the tree";
+          reopen = mkBool true ''
+            When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
+        NeoTree = {
+          position =
+            mkEnum [ "left" "right" ] "left" "The position of the tree";
+          reopen = mkBool true ''
+            When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
+        undotree = {
+          position =
+            mkEnum [ "left" "right" ] "left" "The position of the tree";
+        };
+        neotest = {
+          position = mkEnum [ "right" ] "right" "The position of the tree";
+          reopen = mkBool true ''
+            When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
+        TSPlayground = {
+          position =
+            mkEnum [ "left" "right" ] "right" "The position of the tree";
+          reopen = mkBool true ''
+            When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
         NvimDAPUI = {
           position = mkEnum [ "none" ] "none" "The position of the tree.";
           reopen = mkBool true ''
             When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
+        outline = {
+          position =
+            mkEnum [ "left" "right" ] "right" "The position of the tree";
+          reopen = mkBool true ''
+            When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
+        aerial = {
+          position =
+            mkEnum [ "left" "right" ] "right" "The position of the tree";
+          reopen = mkBool true ''
+            When `true`, if the tree was opened before enabling the plugin, we will reopen it.
+          '';
+        };
+        dashboard = {
+          enabled = mkBool false ''
+            When `true`, debounce will be applied to the init method, leaving time for the dashboard to open.
+          '';
+          filetypes = defaultNullOpts.mkListOf lib.types.str null ''
+            If a dashboard that you use isn't supported, you can use this field to set a matching filetype,
+            also don't hesitate to open a pull-request with the edited list (DASHBOARDS) found in lua/no-neck-pain/util/constants.lua.
           '';
         };
       });
