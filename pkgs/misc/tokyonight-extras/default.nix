@@ -6,15 +6,17 @@
 
 { fetchFromGitHub, stdenvNoCC, lib }:
 
-stdenvNoCC.mkDerivation {
+stdenvNoCC.mkDerivation rec {
   pname = "tokyonight-extras";
-  version = "4.7.0";
+  version = "4.11.0";
+
   src = fetchFromGitHub {
     owner = "folke";
     repo = "tokyonight.nvim";
-    rev = "1471dab694ad88351185758bb4275624d8b798ec";
-    hash = "sha256-NWbI9g1UoiN/h+8JPeFZLN+Uh261fjiZviDMHQWM2Ks=";
+    rev = "v${version}";
+    hash = "sha256-pMzk1gRQFA76BCnIEGBRjJ0bQ4YOf3qecaU6Fl/nqLE=";
   };
+
   installPhase = ''
     mkdir -p $out
     cp -r extras/* $out
