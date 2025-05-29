@@ -39,6 +39,7 @@
       readline
       tk
       valgrind
+      ncurses
 
       bear
 
