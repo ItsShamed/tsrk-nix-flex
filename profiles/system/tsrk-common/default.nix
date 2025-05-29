@@ -16,6 +16,7 @@
     profile-agenix
     hostname
     containers
+    libvirt
     # Little silly experiment
     (self.lib.generateSystemHome "root" {
       homeDir = "/root";
@@ -36,6 +37,9 @@
   environment.etc.hosts.mode = "0644";
 
   tsrk.containers.docker.enable = true;
+
+  tsrk.libvirt.enable = true;
+  tsrk.libvirt.spice.enable = true;
 
   tsrk.packages.pkgs = {
     cDev.enable = true;

@@ -9,7 +9,6 @@
 {
   imports = [
     self.nixosModules.profile-tsrk-common
-    self.nixosModules.libvirt
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       hashedPasswordFile = config.age.secrets.zpasswd.path;
@@ -22,9 +21,6 @@
   ];
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
-
-  tsrk.libvirt.enable = true;
-  tsrk.libvirt.spice.enable = true;
 
   services.libinput.touchpad.naturalScrolling = true;
 
