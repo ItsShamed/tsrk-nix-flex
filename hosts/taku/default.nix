@@ -23,6 +23,8 @@
     ./hardware-config.nix
   ];
 
+  environment.systemPackages = with pkgs; [ parsec-bin parse-cli-bin ];
+
   tsrk.programs.gamescope.enable = true;
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
