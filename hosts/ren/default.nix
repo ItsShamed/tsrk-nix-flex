@@ -15,6 +15,7 @@
       moreGroups = [ "adbusers" "libvirtd" "dialout" "uucp" "plugdev" ];
       modules = [ ./user.nix ];
     })
+    self.nixosModules.gamescope
     ./disk.nix
     ./hardware-config.nix
     ./wireguard.nix
@@ -27,6 +28,7 @@
   time.hardwareClockInLocalTime = true;
 
   tsrk.packages.pkgs.cp.enable = true;
+  tsrk.programs.gamescope.enable = true;
 
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
