@@ -25,6 +25,17 @@ args:
   colorschemes.tokyonight.enable = true;
   colorscheme = "tokyonight-storm";
 
+  files = {
+    "ftplugin/nix.lua" = {
+      opts = {
+        expandtab = true;
+        shiftwidth = 2;
+        tabstop = 2;
+        softtabstop = 2;
+      };
+    };
+  };
+
   extraConfigVim = ''
       augroup highlight_yank
       autocmd!
