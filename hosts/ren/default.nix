@@ -55,7 +55,7 @@
     CPU_SCALING_GOVERNOR_ON_AC = "performance";
     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-    MEM_SLEEP_ON_AC = "s2idle";
+    MEM_SLEEP_ON_AC = "deep";
     MEM_SLEEP_ON_BAT = "deep";
 
     PLATFORM_MOBILE_ON_AC = "performance";
