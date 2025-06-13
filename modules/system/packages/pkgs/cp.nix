@@ -121,5 +121,15 @@ in {
         supportedDevices = [ "Cyclone V" "MAX 10 FPGA" ];
       })
     ];
+
+    # IOT
+    services = {
+      node-red = {
+        enable = true;
+        openFirewall = true;
+      };
+
+      mosquitto.enable = true;
+    };
   };
 }
