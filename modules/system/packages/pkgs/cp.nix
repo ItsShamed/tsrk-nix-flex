@@ -127,6 +127,7 @@ in {
       node-red = {
         enable = true;
         openFirewall = true;
+        withNpmAndGcc = true;
       };
 
       mosquitto.enable = true;
