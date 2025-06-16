@@ -103,6 +103,7 @@ in {
 
       # CSTR
       heptagon
+      tsrkPkgs.aarch64-none-elf-gnu
 
       # ELEC
       arduino
