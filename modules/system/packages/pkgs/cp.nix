@@ -104,6 +104,7 @@ in {
       # CSTR
       heptagon
       tsrkPkgs.aarch64-none-elf-gnu
+      rpi-imager
 
       # ELEC
       arduino
