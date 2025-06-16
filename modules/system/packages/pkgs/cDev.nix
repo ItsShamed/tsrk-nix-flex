@@ -19,6 +19,7 @@
       automake
       cmake
       gnumake
+      makedepend
       meson
       ninja
 
