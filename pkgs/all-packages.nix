@@ -19,6 +19,9 @@
   ## Editors
   stm32cubeide = ./development/editors/stm32cubeide;
 
+  ## Compilers
+  aarch64-none-elf-gnu = ./development/compilers/aarch64-none-elf-gnu;
+
   ### GAMES
   paladium-launcher = ./games/paladium-launcher;
 
