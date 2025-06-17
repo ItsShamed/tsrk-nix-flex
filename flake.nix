@@ -24,6 +24,10 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    flake-programs-sqlite = {
+      url = "github:wamserma/flake-programs-sqlite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 

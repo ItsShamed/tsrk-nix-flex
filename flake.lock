@@ -294,6 +294,27 @@
         "type": "github"
       }
     },
+    "flake-programs-sqlite": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1750133367,
+        "narHash": "sha256-ZBUJNlFlxJcohUwHsT7LsNP7AphVL5d1YLq/UKVd/Qs=",
+        "owner": "wamserma",
+        "repo": "flake-programs-sqlite",
+        "rev": "620ea8e5b21eaaf58b586a0a9b159c6daedbab0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wamserma",
+        "repo": "flake-programs-sqlite",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -989,6 +1010,7 @@
         "agenix": "agenix",
         "devenv": "devenv",
         "flake-compat": "flake-compat_2",
+        "flake-programs-sqlite": "flake-programs-sqlite",
         "futils": "futils",
         "home-manager": "home-manager_2",
         "nix-flatpak": "nix-flatpak",
@@ -1097,6 +1119,21 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1678901627,
+        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     }

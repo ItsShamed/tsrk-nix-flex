@@ -18,6 +18,7 @@ in {
     self.nixosModules.sshd
     self.nixosModules.networkmanager
     self.nixosModules.earlyoom
+    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
