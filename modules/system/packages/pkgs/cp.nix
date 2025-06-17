@@ -122,7 +122,41 @@ in {
         # We do not need the other qdz, this will make the build faster
         supportedDevices = [ "Cyclone V" "MAX 10 FPGA" ];
       })
+
+      # BOOT
+      gcc
+      bc
+      bison
+      coccinelle
+      dtc
+      dfu-util
+      efitools
+      flex
+      gptfdisk
+      graphviz
+      imagemagick
+      gnutls
+      libguestfs
+      ncurses
+      subunit
+      swig
+      util-linux
+      virtualenv
     ];
+
+    tsrk.packages.pkgs.python.extraPackages.cp = ps:
+      with ps; [
+        asteval
+        coverage
+        filelock
+        pycryptodome
+        pyelftools
+        pytest
+        pytest-xdist
+        sphinxcontrib-apidoc
+        sphinx-rtd-theme
+        testtools
+      ];
 
     # IOT
     services = {
