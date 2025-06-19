@@ -11,8 +11,8 @@ let
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     cmdLineToolsVersion = "8.0";
     toolsVersion = "26.1.1";
-    platformToolsVersion = "33.0.3";
-    buildToolsVersions = [ "33.0.3" ];
+    platformToolsVersion = "34.0.5";
+    buildToolsVersions = [ "34.0.0" ];
     includeEmulator = false;
     emulatorVersion = "30.3.4";
     includeSources = false;
@@ -44,8 +44,8 @@ in {
           pkgs.androidenv.composeAndroidPackages {
             cmdLineToolsVersion = "8.0";
             toolsVersion = "26.1.1";
-            platformToolsVersion = "33.0.3";
-            buildToolsVersions = [ "33.0.3" ];
+            platformToolsVersion = "34.0.5";
+            buildToolsVersions = [ "34.0.0" ];
             includeEmulator = false;
             emulatorVersion = "30.3.4";
             includeSources = false;
