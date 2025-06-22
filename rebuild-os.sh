@@ -21,7 +21,7 @@ sudo_() {
     if [ "$UID" -eq 0 ]; then
         "$@"
     else
-        sudo "$@"
+        sudo --preserve-env=NIX_SSHOPTS "$@"
     fi
 }
 
@@ -50,6 +50,9 @@ shift 1
 
 nix_host="$1"
 shift 1
+
+NIX_SSHOPTS="-i $HOME/.ssh/id_ed25519"
+export NIX_SSHOPTS
 
 # Ensure user is logged in as root as sudo prompt will not be available
 # afterwards, because we are also piping stderr to nom
