@@ -4,11 +4,9 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ ... }:
 
 {
-  imports = with self.homeManagerModules; [ profile-tsrk-private ];
-
   tsrk = {
     packages = {
       games.enable = true;
