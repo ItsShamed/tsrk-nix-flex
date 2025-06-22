@@ -22,6 +22,8 @@
   ];
 
   age.secrets.zpasswd.file = ./secrets/passwd.age;
+  age.secrets.wgHomePkey.file = ./secrets/wg-home-pkey.age;
+  age.secrets.wgPulse1Pkey.file = ./secrets/wg-tsrk-small1-pkey.age;
 
   services.libinput.touchpad.naturalScrolling = true;
 

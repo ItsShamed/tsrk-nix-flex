@@ -13,7 +13,6 @@
 
   imports = with self.nixosModules; [
     profile-graphical-x11
-    profile-agenix
     hostname
     containers
     libvirt
