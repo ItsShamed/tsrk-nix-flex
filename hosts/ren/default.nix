@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, config, lib, ... }:
+{ self, pkgs, config, ... }:
 
 {
   imports = [
@@ -34,6 +34,8 @@
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
+
+  services.avahi.enable = true;
 
   virtualisation.docker.daemon.settings = {
     insecure-registries = [ "reg.ren.libvirt.local" ];
