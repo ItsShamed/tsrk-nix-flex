@@ -35,7 +35,10 @@
     ${pkgs.xorg.xset}/bin/xset r rate 230 40
   '';
 
-  services.avahi.enable = true;
+  services.avahi = {
+    enable = true;
+    publish.enable = true;
+  };
 
   virtualisation.docker.daemon.settings = {
     insecure-registries = [ "reg.ren.libvirt.local" ];
