@@ -18,5 +18,6 @@
       ethInterfaceName = "enp16s0";
       wlanInterfaceName = "wlp15s0";
     };
+    xsettingsd.withDConf = true;
   };
 }
