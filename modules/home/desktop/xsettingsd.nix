@@ -89,13 +89,13 @@ in {
         light.configuration = {
           dconf.settings."org/gnome/desktop/interface" = {
             color-scheme = "prefer-light";
-            gtk-theme = "Tokyonight-Light-Storm";
+            gtk-theme = "TokyoNight-storm-Light";
           };
         };
         dark.configuration = {
           dconf.settings."org/gnome/desktop/interface" = {
             color-scheme = "prefer-dark";
-            gtk-theme = "Tokyonight-Dark-Storm";
+            gtk-theme = "TokyoNight-storm-Dark";
           };
         };
       };
