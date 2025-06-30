@@ -11,7 +11,7 @@
     self.nixosModules.profile-tsrk-common
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
-      hashedPasswordFile = config.age.secrets.zpasswd.path;
+      initialPassword = "changeme";
       moreGroups = [ "adbusers" "libvirtd" "dialout" "uucp" "plugdev" ];
       modules = [ ./user.nix ];
     })
@@ -20,7 +20,6 @@
     ./hardware-config.nix
   ];
 
-  age.secrets.zpasswd.file = ./secrets/passwd.age;
   age.secrets.wgHomePkey.file = ./secrets/wg-home-pkey.age;
   age.secrets.wgPulse1Pkey.file = ./secrets/wg-tsrk-small1-pkey.age;
 

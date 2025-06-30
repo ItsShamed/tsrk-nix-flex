@@ -15,7 +15,7 @@
     self.nixosModules.amdgpu
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
-      hashedPasswordFile = config.age.secrets.zpasswd.path;
+      initialPassword = "changeme";
       moreGroups = [ "adbusers" "libvirtd" ];
       modules = [ ./user.nix ];
     })
@@ -26,8 +26,6 @@
   environment.systemPackages = with pkgs; [ parsec-bin parse-cli-bin ];
 
   tsrk.programs.gamescope.enable = true;
-
-  age.secrets.zpasswd.file = ./secrets/passwd.age;
 
   tsrk.hyprland.enable = true;
 

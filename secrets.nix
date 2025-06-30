@@ -1,7 +1,5 @@
 let
   files = [
-    "hosts/ren/secrets/passwd.age"
-    "hosts/taku/secrets/passwd.age"
     "hosts/ren/secrets/wg-home-pkey.age"
     "hosts/ren/secrets/wg-tsrk-small1-pkey.age"
   ];
