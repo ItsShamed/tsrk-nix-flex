@@ -10,6 +10,7 @@
   ./desktop/fcitx5.nix
   ./desktop/eww
   ./desktop/flameshot.nix
+  { path = ./desktop/hyprland.nix; }
   { path = ./desktop/i3.nix; }
   ./desktop/kitty.nix
   ./desktop/mopidy.nix
