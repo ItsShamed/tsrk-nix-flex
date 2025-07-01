@@ -51,5 +51,8 @@
       thunderbird.enable = lib.mkDefault true;
       xdg.enable = lib.mkDefault true;
     };
+
+    # Set GTK as QT platform theme to unify theming
+    home.sessionVariables.QT_QPA_PLATFORMTHEME = "gtk3";
   };
 }
