@@ -12,7 +12,7 @@
                                :y "0px"
                                :width "600px"
                                :height 67
-                               :anchor "bottom right")
+                               :anchor "bottom center")
            :stacking "fg"
            :reserve (struts :distance "64px" :side "bottom")
            :wm-ignore false
