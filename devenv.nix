@@ -21,7 +21,8 @@
   scripts.gc.exec = ''exec ${./gc.sh} "$@"'';
   scripts.get-option.exec = ''exec ${./get_option.sh} "$@"'';
   scripts.rotate-bootstrap-keys.exec =
-    ''exec ${./rotate_bootstrap_keys.sh}"$@"'';
+    ''exec ${./rotate_bootstrap_keys.sh} "$@"'';
+  scripts.run-vm.exec = ''exec ${./run-vm.sh} "$@"'';
 
   git-hooks = {
     hooks = {
