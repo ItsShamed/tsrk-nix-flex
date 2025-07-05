@@ -16,6 +16,9 @@
 
   config = lib.mkIf config.tsrk.sessionTargets.enable {
     home.packages = with pkgs; [ systemd-lock-handler ];
+
+    wayland.systemd.target = "wayland-session.target";
+
     systemd.user.targets = {
       x11-session = {
         Unit = {
@@ -91,8 +94,11 @@
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
       };
       polybar = lib.mkIf config.services.polybar.enable {
-        Unit.ConditionEnvironment =
-          [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+        Unit = {
+          ConditionEnvironment =
+            [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
+          Requires = [ "x11-session.target" ];
+        };
       };
       xsettingsd = lib.mkIf config.services.xsettingsd.enable {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
