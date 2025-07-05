@@ -16,5 +16,6 @@
     programs.hyprland.enable = true;
     # Do not run Autostarts because if used alongside i3, picom will be deadge
     services.xserver.desktopManager.runXdgAutostartIfNone = lib.mkForce false;
+    security.pam.services.hyprlock.enable = lib.mkDefault true;
   };
 }
