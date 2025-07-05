@@ -11,16 +11,10 @@
 {
   key = ./graphical-wayland.nix;
 
-  imports = [
-    self.nixosModules.profile-graphical-base
-    self.nixosModules.hyprland
-    self.nixosModules.qwerty-fr
-  ];
+  imports =
+    [ self.nixosModules.profile-graphical-base self.nixosModules.hyprland ];
 
-  tsrk = {
-    hyprland.enable = lib.mkDefault true;
-    qwerty-fr.enable = lib.mkDefault true;
-  };
+  tsrk.hyprland.enable = lib.mkDefault true;
 
   security.soteria.enable = false;
 }

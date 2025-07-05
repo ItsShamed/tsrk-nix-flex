@@ -18,6 +18,7 @@
     self.nixosModules.audio
     self.nixosModules.redshift
     self.nixosModules.plymouth
+    self.nixosModules.qwerty-fr
   ];
 
   services.xserver.enable = lib.mkForce true;
@@ -26,6 +27,7 @@
     bluetooth.enable = lib.mkDefault true;
     sddm.enable = lib.mkDefault true;
     sound.enable = lib.mkDefault true;
+    qwerty-fr.enable = lib.mkDefault true;
   };
 
   environment.variables = { TERMINAL = "${pkgs.kitty}/bin/kitty"; };
