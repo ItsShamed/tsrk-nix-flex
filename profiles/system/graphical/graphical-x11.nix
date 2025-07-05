@@ -11,16 +11,9 @@
 {
   key = ./graphical-x11.nix;
 
-  imports = [
-    self.nixosModules.profile-graphical-base
-    self.nixosModules.i3
-    self.nixosModules.qwerty-fr
-  ];
+  imports = [ self.nixosModules.profile-graphical-base self.nixosModules.i3 ];
 
-  tsrk = {
-    i3.enable = lib.mkDefault true;
-    qwerty-fr.enable = lib.mkDefault true;
-  };
+  tsrk.i3.enable = lib.mkDefault true;
 
   security.soteria.enable = lib.mkDefault true;
 }
