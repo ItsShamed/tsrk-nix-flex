@@ -61,6 +61,11 @@ sudo_ true
 (sudo_ nixos-rebuild $rebuild_command --fast -L -v --log-format internal-json \
     --flake .#"$nix_host" "$@") |& nom_ --json
 
+if [ "$rebuild_command" != "switch" ]; then
+  # Return early if not switching
+  exit 0
+fi
+
 if [ "$(darkman_ get)" = "light" ]; then
     exec hm-light-activate
 else
