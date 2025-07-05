@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, lib, ... }:
+{ self, lib, pkgs, ... }:
 
 {
   imports = [
@@ -20,8 +20,11 @@
       modules = [
         self.homeManagerModules.profile-x11
         self.homeManagerModules.profile-wayland
+        ./user.nix
       ];
     })
   ];
 
+  users.users.test.shell = pkgs.zsh;
+  programs.zsh.enable = true;
 }
