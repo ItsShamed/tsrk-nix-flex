@@ -63,7 +63,14 @@ in {
   config = lib.mkIf cfg.enable {
     services.polybar = {
       enable = lib.mkDefault true;
-      script = "polybar bar &";
+      script = ''
+        if [ "$XDG_SESSION_TYPE" = "x11" -a -z "$WAYLAND_DISPLAY" ]; then
+          polybar bar & disown
+        else
+          echo "Polybar must be run under X11 for it to work properly" >&2
+          exit 1
+        fi
+      '';
 
       package = pkgs.polybarFull;
 
