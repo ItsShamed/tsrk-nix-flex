@@ -115,6 +115,10 @@
           appname = "tsrk-cirnos-nix-i3";
           format = ''<span font_size="11pt">%s%b %p</span>'';
         };
+        tsrk-cirnos-nix-hypr = {
+          appname = "tsrk-cirnos-nix-hypr";
+          format = ''<span font_size="11pt">%s%b %p</span>'';
+        };
         scrot = {
           summary = "scrot";
           format = "<b>  %s</b>\\n%b";
