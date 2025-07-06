@@ -6,7 +6,8 @@
 
 { config, lib, pkgs, ... }:
 
-{
+let hyprlandCfg = config.wayland.windowManager.hyprland;
+in {
   key = ./.;
 
   options = {
@@ -42,6 +43,14 @@
           BindsTo = "graphical-session.target";
         };
       };
+      hyprland-session =
+        lib.mkIf (hyprlandCfg.enable && hyprlandCfg.systemd.enable) {
+          Unit = {
+            BindsTo = lib.mkForce [ "wayland-session.target" ];
+            Wants = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+        };
       lock = {
         Unit = {
           Conflicts = "unlock.target";
@@ -82,13 +91,6 @@
         Install = { WantedBy = [ "default.target" ]; };
       };
 
-      dunst = lib.mkIf config.services.dunst.enable {
-        Unit = {
-          PartOf = lib.mkForce [ "x11-session.target" ];
-          ConditionEnvironment =
-            [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
-        };
-      };
       picom = lib.mkIf config.services.picom.enable {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
@@ -98,6 +100,7 @@
           ConditionEnvironment =
             [ "|XDG_SESSION_TYPE=x11" "|!WAYLAND_DISPLAY=" ];
           Requires = [ "x11-session.target" ];
+          After = [ "x11-session.target" ];
         };
       };
       xsettingsd = lib.mkIf config.services.xsettingsd.enable {
@@ -110,6 +113,7 @@
       };
       xautolock-session =
         lib.mkIf config.services.screen-locker.xautolock.enable {
+          Install.WantedBy = lib.mkForce [ "x11-session.target" ];
           Unit.PartOf = lib.mkForce [ "x11-session.target" ];
         };
     };
