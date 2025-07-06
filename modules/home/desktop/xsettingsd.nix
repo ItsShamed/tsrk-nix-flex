@@ -63,7 +63,8 @@ in {
       home.activation.xsettingsd-reload =
         lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
           if [ "''${XDG_SESSION_TYPE:-}" != "x11" ] || [ -n "''${WAYLAND_DISPLAY:-}" ]; then
-            _i "X11 is not running, not reloading xsettingsd"
+            ${config.systemd.user.systemctlPath} --user restart xsettingsd || true
+            _i "X11 is not running, not applying theme with LXAppearance"
           else
             _i "Reloading xsettingsd"
 

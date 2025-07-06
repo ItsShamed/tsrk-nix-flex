@@ -103,10 +103,6 @@ in {
           After = [ "x11-session.target" ];
         };
       };
-      xsettingsd = lib.mkIf config.services.xsettingsd.enable {
-        Install.WantedBy = lib.mkForce [ "x11-session.target" ];
-        Unit.PartOf = lib.mkForce [ "x11-session.target" ];
-      };
       xss-lock = lib.mkIf config.services.screen-locker.enable {
         Install.WantedBy = lib.mkForce [ "x11-session.target" ];
         Unit.PartOf = lib.mkForce [ "x11-session.target" ];
