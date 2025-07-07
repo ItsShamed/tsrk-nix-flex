@@ -77,6 +77,8 @@ in {
     };
   };
 
+  services.logind.killUserProcesses = lib.mkDefault true;
+
   documentation = {
     enable = true;
     dev.enable = true;
