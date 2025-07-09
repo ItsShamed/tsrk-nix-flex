@@ -26,5 +26,6 @@
   ];
 
   users.users.test.shell = pkgs.zsh;
+  tsrk.sddm.babysit = true;
   programs.zsh.enable = true;
 }
