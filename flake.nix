@@ -54,6 +54,11 @@
       url = "github:ItsShamed/spotify-dbus-enhancer/master";
     };
 
+    sddm-babysitter = {
+      url = "github:ItsShamed/sddm-babysitter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix.url = "github:ryantm/agenix";
 
     devenv.url = "github:cachix/devenv";

@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, inputs, ... }:
 
 { config, lib, pkgs, ... }:
 
@@ -45,6 +45,8 @@ let
     '';
   };
 in {
+  imports = [ inputs.sddm-babysitter.nixosModules.default ];
+
   options = {
     tsrk.sddm = {
       enable = lib.options.mkEnableOption "sddm as a display manager";
@@ -60,19 +62,21 @@ in {
       theme = "slice";
     };
 
-    systemd.services.sddm-babysitter = {
-      enable = lib.mkDefault cfg.babysit;
-      description = "Daemon to babysit SDDM";
+    services.sddm-babysitter.enable = lib.mkDefault cfg.babysit;
 
-      wantedBy = [ "multi-user.target" ];
-      after = [ "display-manager.service" ];
-
-      serviceConfig = {
-        ExecStart = "${babysitter}/bin/sddm-babysitter";
-        Type = "exec";
-        Restart = "on-failure";
-      };
-    };
+    # systemd.services.sddm-babysitter = {
+    #   enable = lib.mkDefault cfg.babysit;
+    #   description = "Daemon to babysit SDDM";
+    #
+    #   wantedBy = [ "multi-user.target" ];
+    #   after = [ "display-manager.service" ];
+    #
+    #   serviceConfig = {
+    #     ExecStart = "${babysitter}/bin/sddm-babysitter";
+    #     Type = "exec";
+    #     Restart = "on-failure";
+    #   };
+    # };
 
     environment.systemPackages = [
       (tsrkPkgs.sddm-slice-theme.withConfig {
