@@ -72,6 +72,7 @@
     let
       inherit (nixpkgs) lib;
       inherit (futils.lib) eachDefaultSystem;
+      commonArgs = { inherit lib self inputs pkgSet; };
 
       importPkgs = pkgs: system: withOverlays:
         import pkgs {
@@ -97,7 +98,7 @@
               "all"
               "default"
             ])) ++ (lib.lists.optionals withOverlays
-              (builtins.attrValues (import ./overlays { inherit lib; })));
+              (builtins.attrValues (import ./overlays commonArgs)));
         };
 
       pkgSet = system: {
@@ -109,11 +110,10 @@
       linuxOutputs = let
         system = "x86_64-linux";
         baseOverlays = (import ./pkgs/as-overlays.nix)
-          // (import ./overlays { inherit lib; });
+          // (import ./overlays commonArgs);
         allOverlays = self: super:
           builtins.attrValues
           (builtins.mapAttrs (_: overlay: overlay self super) baseOverlays);
-        commonArgs = { inherit lib self inputs pkgSet; };
       in {
         nixosModules = (import ./modules/system commonArgs)
           // (import ./profiles/system commonArgs) // {

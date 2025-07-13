@@ -1,0 +1,36 @@
+From 58529cef63b8793e2e05445c4189febfd38b552a Mon Sep 17 00:00:00 2001
+From: "tsrk." <tsrk@tsrk.me>
+Date: Sun, 13 Jul 2025 19:42:40 +0200
+Subject: [PATCH] fix(helper): do not badly exit on SIGHUP
+
+Signed-off-by: tsrk. <tsrk@tsrk.me>
+---
+ src/helper/HelperApp.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/helper/HelperApp.cpp b/src/helper/HelperApp.cpp
+index 32da42d..e96183d 100644
+--- a/src/helper/HelperApp.cpp
++++ b/src/helper/HelperApp.cpp
+@@ -53,10 +53,18 @@ namespace SDDM {
+             , m_socket(new QLocalSocket(this)) {
+         qInstallMessageHandler(HelperMessageHandler);
+         SignalHandler *s = new SignalHandler(this);
++        s->addCustomSignal(SIGHUP);
+         QObject::connect(s, &SignalHandler::sigtermReceived, m_session, [] {
+             QCoreApplication::instance()->exit(-1);
+         });
+ 
++        QObject::connect(s, &SignalHandler::customSignalReceived, m_session, [](int signal) {
++            if (signal == SIGHUP)
++                QCoreApplication::instance()->exit(0);
++            else
++                QCoreApplication::instance()->exit(128 + signal);
++        });
++
+         QTimer::singleShot(0, this, SLOT(setUp()));
+     }
+ 
+-- 
+2.49.0
+
