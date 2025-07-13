@@ -43,4 +43,7 @@
   hyperfluent-grub-theme = ./data/themes/hyperfluent-grub-theme;
 
   rofi-themes-collection = ./data/themes/rofi-themes-collection;
+
+  ### SYSTEM
+  sddm-babysitter = ./applications/system/sddm-babysitter;
 }

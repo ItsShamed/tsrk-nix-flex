@@ -1041,11 +1041,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1752368258,
-        "narHash": "sha256-1Alc3KVbrypwSF2bkSSvtw5VmCslp72qgh0IQEKU2Is=",
+        "lastModified": 1752426833,
+        "narHash": "sha256-ZVqtLyx6ypD/YU7bTbZsi+vBZ7i9IxmqpCOCdBk+hck=",
         "owner": "ItsShamed",
         "repo": "sddm-babysitter",
-        "rev": "679db1557582f951d708f7d7c995af6c4a19b8f7",
+        "rev": "cf71171d3d871f3671fa3dc26027996c8eec561c",
         "type": "github"
       },
       "original": {
