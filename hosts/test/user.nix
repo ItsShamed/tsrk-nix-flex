@@ -4,10 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ ... }:
+{ lib, ... }:
 
 {
   wayland.windowManager.hyprland.settings = {
     monitor = [ "Virtual-1,1800x900@60.000Hz,0x0,1" ];
   };
+
+  tsrk.picom.enable = lib.mkImageMediaOverride false;
 }
