@@ -14,5 +14,10 @@
 
   imports = with self.homeManagerModules; [ profile-wayland-base ];
 
-  config = { };
+  config = {
+    tsrk.xsettingsd = {
+      enable = lib.mkDefault true;
+      withDConf = lib.mkDefault true;
+    };
+  };
 }
