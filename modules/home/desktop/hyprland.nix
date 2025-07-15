@@ -130,8 +130,12 @@ let
   else
     "${lib.meta.getExe pkgs.grim} - | ${pkgs.wl-clipboard}/bin/wl-copy";
 
-  logout = pkgs.writeShellScript "logind-terminate-session-wrapper" ''
-    exec loginctl terminate-session "$XDG_SESSION_ID"
+  logout = pkgs.writeShellScript "terminate-session-wrapper" ''
+    if command -v uwsm >/dev/null; then
+      uwsm stop
+    else
+      loginctl terminate-session "$XDG_SESSION_ID"
+    fi
   '';
 in {
   key = ./hyprland.nix;
