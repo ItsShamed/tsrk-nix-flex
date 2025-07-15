@@ -205,36 +205,53 @@ in {
       settings = {
         general = { ignore_empty_input = true; };
 
-        background = {
-          path = "${cfg.backgrounds.lockscreen}";
-          blur_passes = 2;
+        background.path = "${cfg.backgrounds.lockscreen}";
+
+        shape = {
+          color = "rgba(0, 0, 0, 0.75)";
+          rounding = 0;
+          size = "350, 110";
+          position = "30, 30";
+          halign = "bottom";
+          valign = "left";
         };
 
         label = [
           {
-            text = "$TIME";
-            font_size = 90;
+            text = "cmd[update:500] date +'%H:%M:%S'";
+            font_size = 24;
             font_family = "$font";
 
-            position = "-30, 0";
-            halign = "right";
-            valign = "top";
+            position = "50, 87";
+            halign = "left";
+            valign = "bottom";
           }
           {
             text = "cmd[update:60000] date +'%A, %d %B %Y'";
-            font_size = 25;
+            font_size = 14;
             font_family = "$font";
 
-            position = "-30, -150";
-            halign = "right";
-            valign = "top";
+            position = "50, 63";
+            halign = "bottom";
+            valign = "left";
           }
         ];
 
         input-field = {
-          position = "14, 14";
-          halign = "right";
+          position = "30, 30";
+          size = "350, 33";
+          rounding = 0;
+          outline_thickness = 0;
+          fade_on_empty = 0;
+          dots_center = false;
+          halign = "left";
+          fail_color = "rgba(00000000)";
+          check_color = "rgba(00000000)";
           valign = "bottom";
+          outer_color = "rgba(00000000)";
+          inner_color = "rgba(00000000)";
+          font_color = "rgba(ffffffff)";
+          placeholder_text = "Type password to unlock...";
         };
       };
     };
