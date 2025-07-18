@@ -551,9 +551,8 @@ in {
           ", H, Shrink width of active window,  resizeactive, -10 0"
           ", K, Grow height of active window,   resizeactive, 0 10"
           ", J, Shrink height of active window, resizeactive, 0 -10"
+          ", catchall, Exit resize submap, submap, reset"
         ];
-
-        bindd = [ ", catchall, Exit resize submap, submap, reset" ];
       };
     };
   };
