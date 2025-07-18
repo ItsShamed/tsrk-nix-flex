@@ -481,8 +481,12 @@ in {
           "tag +browser, class:^(librewolf)$"
           "tag +browser, class:^(firefox)$"
           "tag +browser, class:^(Chromium-browser)$"
+          "tag +pip, initialtitle:^(Picture-in-Picture)$"
+          "tag +pip, initialtitle:^(Picture in pIcture)$"
 
           "float, class:org\\.pulseaudio\\.pavucontrol"
+          "float, tag:pip"
+          "pin, tag:pip"
           "workspace 3 silent, tag:browser"
           "workspace 4 silent, tag:coms"
         ];
