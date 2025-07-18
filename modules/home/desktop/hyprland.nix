@@ -361,9 +361,16 @@ in {
           touchpad.natural_scroll = true;
         };
 
+        binds.drag_threshold = 5;
+
         # Needed to propagate necessary envvars to darkman
         execr-once = (lib.lists.optional cfg.darkman.enable
           "systemctl --user restart darkman");
+
+        bindmd = [
+          "$mainMod, mouse:272, Move active window by dragging, movewindow"
+          "$mainMod, mouse:273, Resize active window by dragging, resizewindow"
+        ];
 
         bindd = [
           "$mainMod, Return, Open terminal emulator, exec, $terminal"
