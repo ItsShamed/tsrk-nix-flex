@@ -482,6 +482,13 @@ in {
 
         layerrule = [ "animation slide right, notifications" ];
 
+        workspace = [
+          "1, defaultName:workdir"
+          "2, defaultName:tooling"
+          "3, defaultName:web"
+          "4, defaultName:coms"
+        ];
+
         windowrule = [
           "tag +coms, class:^(vesktop)$"
           "tag +coms, class:^(thunderbird)$"
