@@ -23,6 +23,7 @@
   ./desktop/thunderbird.nix
   ./desktop/xdg.nix
   ./desktop/xsettingsd.nix
+  ./desktop/waybar
   ./epita
   { path = ./git; }
   { path = ./nvim; }

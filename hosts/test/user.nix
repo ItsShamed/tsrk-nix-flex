@@ -12,4 +12,5 @@
   };
 
   tsrk.picom.enable = lib.mkImageMediaOverride false;
+  programs.waybar.systemd.enableInspect = lib.mkDefault true;
 }

@@ -11,13 +11,12 @@
 {
   key = ./wayland-base.nix;
 
-  imports = with self.homeManagerModules; [ profile-desktop hyprland ];
+  imports = with self.homeManagerModules; [ profile-desktop hyprland waybar ];
 
   config = {
-    # a
     tsrk = {
-      # a
       hyprland.enable = lib.mkDefault true;
+      waybar.enable = lib.mkDefault true;
     };
   };
 }

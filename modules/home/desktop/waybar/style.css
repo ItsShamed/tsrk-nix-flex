@@ -1,0 +1,149 @@
+/*
+ * Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+ * This file is licensed under the MIT license
+ * See the LICENSE file in the repository root for more info.
+ */
+
+/* SPDX-License-Identifier: MIT */
+
+* {
+  font-family: "Iosevka Nerd Font", "MesloLG Nerd Font", "JetBrains Mono Nerd Font";
+  font-size: 13px;
+  color: #c0caf5;
+}
+
+window#waybar {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+}
+
+window#waybar > box {
+  margin: 0 6px;
+}
+
+.module {
+  background-color: #1b1e2d;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 4px 4px;
+  border-radius: 8px;
+  border-width: 0px;
+}
+
+#workspaces {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#workspaces button {
+  padding: 0 6px;
+  border-radius: 0px;
+}
+
+#workspaces button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+#workspaces button:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+#workspaces button:only-child {
+  border-radius: 8px;
+}
+
+#workspaces button.empty {
+  color: #3b4261;
+}
+
+#workspaces button.active {
+  background-color: #292e42;
+  color: #9ece6a;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+@keyframes flash-red {
+  to {
+    background-color: #f7768e;
+    color: #1b1e2d;
+  }
+}
+
+@keyframes flash-yellow {
+  to {
+    background-color: #e0af68;
+    color: #1b1e2d;
+  }
+}
+
+@keyframes flash-yellow-fg {
+  to {
+    color: #e0af68;
+  }
+}
+
+@keyframes flash-green {
+  to {
+    background-color: #9ece6a;
+    color: #1b1e2d;
+  }
+}
+
+@keyframes flash-blue {
+  to {
+    background-color: #7aa2f7;
+    color: #1b1e2d;
+  }
+}
+
+@keyframes flash-red-bg {
+  to {
+    background-color: #f7768e;
+  }
+}
+
+@keyframes flash-red-fg {
+  to {
+    color: #f7768e;
+  }
+}
+
+#workspaces button.urgent {
+  animation: 0.5s ease-in 0s infinite alternate flash-red;
+}
+
+#submap.resize {
+  animation: 1s ease-in 0s infinite alternate flash-red;
+}
+
+#tray > .needs-attention {
+  animation: 0.5s ease-in 0s infinite alternate flash-red-bg;
+}
+
+#pulseaudio.bluetooth {
+  animation: 0.25s ease-in 0s 4 alternate flash-blue;
+}
+
+#network.linked {
+  animation: 1s ease-in 0s infinite alternate flash-yellow;
+}
+
+#network.ethernet, #network.wifi {
+  animation: 0.75s ease-out 0s 1 reverse flash-green;
+}
+
+#battery.warning:not(.charging) {
+  animation: 0.5s ease-in 0s infinite alternate flash-red-fg;
+}
+
+#battery.critical:not(.charging) {
+  animation: 0.25s ease-in 0s infinite alternate flash-red;
+}
+
+#battery.charging {
+  animation: 1s ease-in 0s infinite alternate flash-yellow-fg;
+}
