@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   options = { tsrk.flameshot.enable = lib.options.mkEnableOption "flameshot"; };
@@ -12,7 +12,8 @@
   config = lib.mkIf config.tsrk.flameshot.enable {
     services.flameshot = {
       enable = lib.mkDefault true;
-      settings = { General.useJpgForClipboard = true; };
+      package = pkgs.flameshot.override { enableWlrSupport = true; };
+      settings.General.useJpgForClipboard = true;
     };
   };
 }
