@@ -53,6 +53,12 @@
     };
 
     # Set GTK as QT platform theme to unify theming
-    home.sessionVariables.QT_QPA_PLATFORMTHEME = "gtk3";
+    home.sessionVariables = {
+      GDK_BACKEND = "wayland,x11,*";
+      QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+      QT_QPA_PLATFORM = "wayland;xcb";
+      QT_QPA_PLATFORMTHEME = "gtk3";
+      XCURSOR_SIZE = 48;
+    };
   };
 }

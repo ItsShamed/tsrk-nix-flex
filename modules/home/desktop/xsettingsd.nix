@@ -33,8 +33,8 @@ in {
           "Xft/Hinting" = 1;
           "Xft/RGBA" = "rgb";
           "Gtk/CursorThemeName" = "macOS";
-          "Gtk/CursorThemeSize" = 64;
-          "Xcursor/size" = 64;
+          "Gtk/CursorThemeSize" = 48;
+          "Xcursor/size" = 48;
         };
       };
 
@@ -81,7 +81,7 @@ in {
     (lib.mkIf cfg.withDConf {
       dconf.settings = {
         "org/gnome/desktop/interface" = {
-          cursor-size = 32;
+          cursor-size = 48;
           cursor-theme = "macOS-BigSur";
         };
       };

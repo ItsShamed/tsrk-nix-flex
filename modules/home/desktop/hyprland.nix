@@ -324,6 +324,14 @@ in {
       };
     };
 
+    xdg.configFile."uwsm/env" = {
+      text = ''
+        export USE_WAYLAND_GRIM=1
+        export SDL_VIDEODRIVER=wayland
+        export CLUTTER_BACKEND=wayland
+      '';
+    };
+
     wayland.windowManager.hyprland = {
       enable = lib.mkDefault true;
       systemd.enable = lib.mkDefault true;
