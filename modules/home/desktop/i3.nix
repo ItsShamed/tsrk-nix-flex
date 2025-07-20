@@ -57,7 +57,7 @@ let
     '')
     ''
       # Stop i3
-      loginctl kill-session $XDG_SESSION_ID
+      loginctl terminate-session $XDG_SESSION_ID
     ''
   ]);
 
@@ -132,7 +132,9 @@ let
   teardownTarget = pkgs.writeShellScript "teardown-target" ''
     systemctl --user stop tray.target & disown
     systemctl --user stop x11-session.target & disown
-    (loginctl kill-session $XDG_SESSION_ID) & disown
+    # Ensure that it is not active when going back to the display manager
+    systemctl --user stop graphical-session.target
+    (loginctl terminate-session $XDG_SESSION_ID) & disown
   '';
 
   startupTarget = pkgs.writeShellScript "startup-target" ''
