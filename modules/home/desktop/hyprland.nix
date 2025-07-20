@@ -332,25 +332,16 @@ in {
       };
     };
 
-    xdg.configFile = {
-      "uwsm/env" = {
-        text = ''
-          export USE_WAYLAND_GRIM=1
-          export SDL_VIDEODRIVER=wayland
-          export CLUTTER_BACKEND=wayland
-        '';
-      };
-      "uwsm/env-Hyprland" = {
-        text = ''
-          if [ "$XDG_SESSION_DESKTOP" != "Hyprland" ]; then
-            export XDG_SESSION_DESKTOP=Hyprland
-          fi
+    xdg.configFile."uwsm/env-Hyprland" = {
+      text = ''
+        if [ "$XDG_SESSION_DESKTOP" != "Hyprland" ]; then
+          export XDG_SESSION_DESKTOP=Hyprland
+        fi
 
-          if [ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]; then
-            export XDG_CURRENT_DESKTOP=Hyprland
-          fi
-        '';
-      };
+        if [ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]; then
+          export XDG_CURRENT_DESKTOP=Hyprland
+        fi
+      '';
     };
 
     wayland.windowManager.hyprland = {

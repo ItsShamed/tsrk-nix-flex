@@ -18,5 +18,12 @@
       hyprland.enable = lib.mkDefault true;
       waybar.enable = lib.mkDefault true;
     };
+    xdg.configFile."uwsm/env" = {
+      text = ''
+        export USE_WAYLAND_GRIM=1
+        export SDL_VIDEODRIVER=wayland
+        export CLUTTER_BACKEND=wayland
+      '';
+    };
   };
 }
