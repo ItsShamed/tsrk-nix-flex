@@ -137,6 +137,14 @@ let
       loginctl terminate-session "$XDG_SESSION_ID"
     fi
   '';
+
+  launch = pkgs.writeShellScript "launch-app" ''
+    if command -v uwsm >/dev/null; then
+      uwsm app -- "$@"
+    else
+      exec "$@"
+    fi
+  '';
 in {
   key = ./hyprland.nix;
 
@@ -324,12 +332,25 @@ in {
       };
     };
 
-    xdg.configFile."uwsm/env" = {
-      text = ''
-        export USE_WAYLAND_GRIM=1
-        export SDL_VIDEODRIVER=wayland
-        export CLUTTER_BACKEND=wayland
-      '';
+    xdg.configFile = {
+      "uwsm/env" = {
+        text = ''
+          export USE_WAYLAND_GRIM=1
+          export SDL_VIDEODRIVER=wayland
+          export CLUTTER_BACKEND=wayland
+        '';
+      };
+      "uwsm/env-Hyprland" = {
+        text = ''
+          if [ "$XDG_SESSION_DESKTOP" != "Hyprland" ]; then
+            export XDG_SESSION_DESKTOP=Hyprland
+          fi
+
+          if [ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]; then
+            export XDG_CURRENT_DESKTOP=Hyprland
+          fi
+        '';
+      };
     };
 
     wayland.windowManager.hyprland = {
@@ -381,7 +402,7 @@ in {
         ];
 
         bindd = [
-          "$mainMod, Return, Open terminal emulator, exec, $terminal"
+          "$mainMod, Return, Open terminal emulator, exec, ${launch} $terminal"
           "$mainMod SHIFT, Q, Kill active window, killactive"
           "$mainMod, D, Open Menu, exec, $menu"
 
