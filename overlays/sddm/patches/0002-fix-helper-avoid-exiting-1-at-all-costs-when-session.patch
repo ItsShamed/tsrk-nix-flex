@@ -1,0 +1,40 @@
+From 8090dc0f4fb8b281b87840f026630d6e9d57057b Mon Sep 17 00:00:00 2001
+From: "tsrk." <tsrk@tsrk.me>
+Date: Sun, 20 Jul 2025 17:15:54 +0200
+Subject: [PATCH 2/3] fix(helper): avoid exiting 1 at all costs when session
+ finishes
+
+Signed-off-by: tsrk. <tsrk@tsrk.me>
+---
+ src/helper/HelperApp.cpp | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/helper/HelperApp.cpp b/src/helper/HelperApp.cpp
+index e96183d..b04696c 100644
+--- a/src/helper/HelperApp.cpp
++++ b/src/helper/HelperApp.cpp
+@@ -34,6 +34,7 @@
+ #include <QtNetwork/QLocalSocket>
+ 
+ #include <iostream>
++#include <qobject.h>
+ #include <unistd.h>
+ #include <sys/socket.h>
+ #include <sys/time.h>
+@@ -202,7 +203,12 @@ namespace SDDM {
+     }
+ 
+     void HelperApp::sessionFinished(int status) {
+-        exit(status);
++        if (status != 0) {
++            qWarning("Session crashed (exit code %d).", status);
++            exit(Auth::HELPER_SESSION_ERROR);
++        }
++        else
++            exit(Auth::HELPER_SUCCESS);
+     }
+ 
+     void HelperApp::info(const QString& message, Auth::Info type) {
+-- 
+2.49.0
+

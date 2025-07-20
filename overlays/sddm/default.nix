@@ -17,8 +17,11 @@ super.lib.genAttrs [ "libsForQt5" "kdePackages" ] (p:
     in {
       sddm = psuper.sddm.override {
         unwrapped = unwrapped.overrideAttrs (final: old: {
-          patches = (old.patches or [ ])
-            ++ [ ./patches/0001-fix-helper-do-not-badly-exit-on-SIGHUP.patch ];
+          patches = (old.patches or [ ]) ++ [
+            ./patches/0001-fix-helper-do-not-badly-exit-on-SIGHUP.patch
+            ./patches/0002-fix-helper-avoid-exiting-1-at-all-costs-when-session.patch
+            ./patches/0003-feat-helper-log-session-stdout-and-stderr.patch
+          ];
         });
       };
     }))
