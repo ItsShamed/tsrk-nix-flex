@@ -17,6 +17,7 @@
            :reserve (struts :distance "64px" :side "bottom")
            :wm-ignore false
            :windowtype "dock"
+           :namespace "eww-bottom-dock"
            :exclusive true
   (box :orientation "horizontal"
        :height 67

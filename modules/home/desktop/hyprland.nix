@@ -488,7 +488,11 @@ in {
           no_donation_nag = true;
         };
 
-        layerrule = [ "animation slide right, notifications" ];
+        layerrule = [
+          "animation slide right, notifications"
+          "animation slide up, waybar"
+          "animation slide down, eww-bottom-dock"
+        ];
 
         workspace = [
           "1, defaultName:workdir"
