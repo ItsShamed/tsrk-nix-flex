@@ -30,6 +30,11 @@ let
 
   volumeControl = pkgs.writeShellScript "volume-control" ''
     notifyVolume_() {
+      # Cancel launching notification if syshud is launched
+      if pgrep syshud; then
+        return 0
+      fi
+
       volume="$(${pkgs.pamixer}/bin/pamixer --get-volume)"
       if [ "$(${pkgs.pamixer}/bin/pamixer --get-mute)" = "true" ]; then
         ${pkgs.libnotify}/bin/notify-send -a "tsrk-cirnos-nix-hypr" "Volume" -h "int:value:$volume" -h string:synchronous:volume -u low " [Muted]"
@@ -82,6 +87,11 @@ let
     }
 
     notifyBrightness_() {
+      # Cancel launching notification if syshud is launched
+      if pgrep syshud; then
+        return 0
+      fi
+
       ${pkgs.libnotify}/bin/notify-send -a "tsrk-cirnos-nix-hypr" "Brightness" -h "int:value:$(getBrightness_)" -h string:synchronous:brightness -u low
     }
 
@@ -140,9 +150,50 @@ let
 
   launch = pkgs.writeShellScript "launch-app" ''
     if command -v uwsm >/dev/null; then
-      uwsm app -- "$@"
+      exec uwsm app -- "$@"
     else
       exec "$@"
+    fi
+  '';
+
+  menu = pkgs.writeShellScript "menu-wrapper" ''
+    echo "Supplied menu:" "$@"
+
+    if [ "$#" -lt 1 ]; then
+      exit 1;
+    fi
+
+    if [[ "$1" =~ (.*/)?rofi$ ]]; then
+      if command -v uwsm >/dev/null; then
+        exec "$@" -run-command 'uwsm app -- {cmd}'
+      else
+        exec "$@"
+      fi
+      exit
+    fi
+
+    if [[ "$1" =~ (.*/)?bemenu-run$ ]]; then
+      if command -v uwsm >/dev/null; then
+        exec uwsm app -- "$("$@" --no-exec)"
+      else
+        exec "$@"
+      fi
+    fi
+
+    if [[ "$1" =~ (.*/)?fuzzel$ ]]; then
+      if command -v uwsm >/dev/null; then
+        exec "$@" --launch-prefix='uwsm app -- '
+      else
+        exec "$@"
+      fi
+    fi
+
+    if [[ "$1" =~ (.*/)?tofi-drun$ && "$#" -eq 1 ]]; then
+      if command -v uwsm >/dev/null; then
+        exec uwsm app -- "$("$@")"
+      else
+        exec "$@"
+      fi
     fi
   '';
 in {
@@ -395,7 +446,7 @@ in {
         bindd = [
           "$mainMod, Return, Open terminal emulator, exec, ${launch} $terminal"
           "$mainMod SHIFT, Q, Kill active window, killactive"
-          "$mainMod, D, Open Menu, exec, $menu"
+          "$mainMod, D, Open Menu, exec, ${menu} $menu"
 
           "$mainMod, F, Toggle fullscreen on active window, fullscreen, 0"
           "$mainMod SHIFT, F, Toggle maximizing active window, fullscreen, 1"
@@ -452,7 +503,7 @@ in {
             if config.programs.rofi.enable then
               "${config.programs.rofi.finalPackage}/bin/rofi -show p -modi p:'rofi-power-menu --logout ${logout}'"
             else
-              "loginctl terminate-session"
+              "${logout}"
           }"
         ] ++ (lib.lists.optionals (config.programs.rofi.enable
           && lib.lists.any (pkg: pkg == pkgs.rofi-calc)
@@ -476,18 +527,18 @@ in {
 
         bindrd = [
           # Secreenshots
-          "$mainMod SHIFT, S, Snip screen (partial screenshot), exec, ${snipTool}"
-          "$mainMod, Print, Screenshot everything, exec, ${scTool}"
+          "$mainMod SHIFT, S, Snip screen (partial screenshot), exec, ${launch} ${snipTool}"
+          "$mainMod, Print, Screenshot everything, exec, ${launch} ${scTool}"
         ];
 
         bindedl = [
           # Media keys
-          ", XF86AudioRaiseVolume, Incrase volume,  exec, ${volumeControl} increase 5"
-          ", XF86AudioLowerVolume, Decrease volume, exec, ${volumeControl} decrease 5"
+          ", XF86AudioRaiseVolume, Incrase volume,  exec, ${launch} ${volumeControl} increase 5"
+          ", XF86AudioLowerVolume, Decrease volume, exec, ${launch} ${volumeControl} decrease 5"
 
           # Brightness
-          ", XF86MonBrightnessUp,   Increase screen brightness, exec, ${brightnessControl} increase 2"
-          ", XF86MonBrightnessDown, Decrease screen brightness, exec, ${brightnessControl} decrease 2"
+          ", XF86MonBrightnessUp,   Increase screen brightness, exec, ${launch} ${brightnessControl} increase 2"
+          ", XF86MonBrightnessDown, Decrease screen brightness, exec, ${launch} ${brightnessControl} decrease 2"
         ];
 
         misc = {
