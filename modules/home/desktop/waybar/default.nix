@@ -55,7 +55,7 @@ in {
             format = " {ifname}";
             format-ethernet = "{icon} {ipaddr}";
             format-wifi = "{icon} {essid}";
-            format-linked = "{icon} {ifname}のIPが待ち受けます";
+            format-linked = "{icon} {ifname}のIPを待ち受けている";
             format-disconnected = "";
             format-icons = {
               linked = "󱖣 ";
