@@ -8,6 +8,7 @@
 
 let cfg = config.tsrk.xsettingsd;
 in {
+  key = ./xsettingsd.nix;
   options = {
     tsrk.xsettingsd = {
       enable = lib.options.mkEnableOption "xsettingsd";

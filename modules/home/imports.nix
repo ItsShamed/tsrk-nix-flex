@@ -20,6 +20,7 @@
   ./desktop/premid.nix
   { path = ./desktop/rofi.nix; }
   ./desktop/screenkey.nix
+  ./desktop/syshud.nix
   ./desktop/thunderbird.nix
   ./desktop/xdg.nix
   ./desktop/xsettingsd.nix

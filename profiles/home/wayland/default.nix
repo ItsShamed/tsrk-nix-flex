@@ -12,12 +12,19 @@
 {
   key = ./.;
 
-  imports = with self.homeManagerModules; [ profile-wayland-base ];
+  imports = with self.homeManagerModules; [
+    profile-wayland-base
+    xsettingsd
+    syshud
+  ];
 
   config = {
-    tsrk.xsettingsd = {
-      enable = lib.mkDefault true;
-      withDConf = lib.mkDefault true;
+    tsrk = {
+      syshud.enable = lib.mkDefault true;
+      xsettingsd = {
+        enable = lib.mkDefault true;
+        withDConf = lib.mkDefault true;
+      };
     };
   };
 }
