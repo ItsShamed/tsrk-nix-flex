@@ -21,6 +21,12 @@
   config = {
     tsrk = {
       syshud.enable = lib.mkDefault true;
+      hyprland = {
+        backgrounds = {
+          light = ./files/cirnix-bg-light.png;
+          dark = ./files/cirnix-bg-dark.png;
+        };
+      };
       xsettingsd = {
         enable = lib.mkDefault true;
         withDConf = lib.mkDefault true;
