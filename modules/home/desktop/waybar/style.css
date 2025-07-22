@@ -26,7 +26,7 @@ window#waybar > box {
   background-color: #1b1e2d;
   padding-left: 12px;
   padding-right: 12px;
-  margin: 4px 4px;
+  margin: 4px 4px 2px;
   border-radius: 8px;
   border-width: 0px;
 }
