@@ -82,7 +82,7 @@ in {
       enable = lib.mkDefault true;
       type = lib.mkDefault "fcitx5";
       fcitx5 = {
-        addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
+        addons = with pkgs; [ fcitx5-mozc-ut fcitx5-gtk ];
         settings = {
           globalOptions = {
             Behavior = {
