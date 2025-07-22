@@ -93,6 +93,7 @@
     teams-for-linux
 
     furnace
+    yt-dlp
 
     # TODO: Bring back when they finish being silly
     # https://github.com/ventoy/Ventoy/issues/3224
