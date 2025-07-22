@@ -42,10 +42,12 @@ in {
 
           cava = {
             method = "pipewire";
+            autosens = 0;
+            sensitivity = 11;
             stereo = false;
-            higher_cutoff_freq = 5000;
+            higher_cutoff_freq = 7000;
             hide_on_silence = true;
-            bars = 12;
+            bars = 18;
             bar_delimiter = 0;
             noise_reduction = 0.65;
             format-icons = [ " " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
