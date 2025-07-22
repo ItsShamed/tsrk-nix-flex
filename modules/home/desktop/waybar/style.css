@@ -124,6 +124,15 @@ window#waybar.empty #window {
   animation: 0.5s ease-in 0s infinite alternate flash-red-bg;
 }
 
+#tray menu {
+  background: @theme_base_color;
+  color: @theme_text_color;
+}
+
+#tray menu label, #tray menu image, #tray menu arrow {
+  color: @theme_text_color;
+}
+
 #pulseaudio.bluetooth {
   animation: 0.25s ease-in 0s 4 alternate flash-blue;
 }
