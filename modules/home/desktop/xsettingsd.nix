@@ -92,6 +92,7 @@ in {
           dconf.settings."org/gnome/desktop/interface" = {
             color-scheme = "prefer-light";
             gtk-theme = "Tokyonight-Light-Storm";
+            icon-theme = "Tokyonight-Light";
           };
 
           home.activation.dconfSettings-lightfix =
@@ -116,6 +117,7 @@ in {
           dconf.settings."org/gnome/desktop/interface" = {
             color-scheme = "prefer-dark";
             gtk-theme = "Tokyonight-Dark-Storm";
+            icon-theme = "Tokyonight-Dark";
           };
         };
       };
