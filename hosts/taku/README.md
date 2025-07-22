@@ -40,9 +40,3 @@ stripped Windows 11 installation to do just that.
  - Boot drive (`/dev/nvme0n1`): Crucial P3 1 TB
  - Data drive (`/dev/nvme1n1`): Kingston NV2 2 TB
 
-## TODOs
-
-- [~] Finish tuning my i3 environment
-- [-] Move to hyprland
-- [ ] Remove dual-boot and do GPU-passthrough (with second GPU) to run
-      virtualised Windows 11.

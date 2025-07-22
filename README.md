@@ -118,19 +118,10 @@ defaults configurations.
 Like modules, you can use them via the `nixosModules` output. To use them you
 just have to prefix the name of the profile you want to use with `profile-`.
 
-> [!WARNING]
-> There are some profiles (like `profile-tsrk-private`) that are encrypted with
-> Git-Crypt (for privacy reasons) and you cannot use them.
-
 ### Secrets management
 
 I use [agenix](https://github.com/ryantm/agenix) to manage secrets needed for
 my NixOS configurations.
-
-### TODOs
-
-- [~] Finish polishing i3 environment
-- [-] Create hyprland environment
 
 ## Licensing
 
