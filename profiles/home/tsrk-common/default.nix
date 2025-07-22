@@ -92,6 +92,8 @@
     deadnix
     teams-for-linux
 
+    furnace
+
     # TODO: Bring back when they finish being silly
     # https://github.com/ventoy/Ventoy/issues/3224
     # https://github.com/NixOS/nixpkgs/issues/404663
