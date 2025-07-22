@@ -217,6 +217,13 @@ in {
           attrsOf
           ((attrsOf (listOf str)) // { description = "Hyprland binds"; });
       };
+      uwsm = {
+        extraEnv = lib.options.mkOption {
+          description = "Extra options to pass to UWSM";
+          type = lib.types.lines;
+          default = "";
+        };
+      };
       backgrounds = {
         lockscreen = lib.options.mkOption {
           description = "Image to use as the lockscreen background";
@@ -385,6 +392,7 @@ in {
 
     xdg.configFile."uwsm/env-Hyprland" = {
       text = ''
+        # Base environment variables
         if [ "$XDG_SESSION_DESKTOP" != "Hyprland" ]; then
           export XDG_SESSION_DESKTOP=Hyprland
         fi
@@ -392,6 +400,9 @@ in {
         if [ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]; then
           export XDG_CURRENT_DESKTOP=Hyprland
         fi
+
+        # Extra environment variables
+        ${cfg.uwsm.extraEnv}
       '';
     };
 
