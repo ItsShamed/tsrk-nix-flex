@@ -20,7 +20,13 @@
     };
     xdg.configFile."uwsm/env" = {
       text = ''
+        # Unset GTK_IM_MODULE for Fcitx to work optimally
+        if printenv GTK_IM_MODULE >/dev/null; then
+          unset GTK_IM_MODULE
+        fi
+
         export USE_WAYLAND_GRIM=1
+        export QT_IM_MODULES='wayland;fcitx;ibus'
         export SDL_VIDEODRIVER=wayland
         export CLUTTER_BACKEND=wayland
       '';
