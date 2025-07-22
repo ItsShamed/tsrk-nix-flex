@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, config, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = [
@@ -49,7 +49,6 @@
   tsrk.gns3.enable = true;
 
   tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
-  tsrk.packages.pkgs.cp.enable = true;
 
   time.hardwareClockInLocalTime = true;
 

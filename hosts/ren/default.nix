@@ -27,7 +27,6 @@
 
   time.hardwareClockInLocalTime = true;
 
-  tsrk.packages.pkgs.cp.enable = true;
   tsrk.programs.gamescope.enable = true;
 
   services.xserver.displayManager.setupCommands = ''
