@@ -14,6 +14,7 @@ in {
     };
   };
 
-  config =
-    lib.mkIf cfg.enable { home.packages = with pkgs; [ lazydocker k9s ]; };
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [ lazydocker k9s openstackclient-full ];
+  };
 }
