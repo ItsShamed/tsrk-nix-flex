@@ -551,6 +551,8 @@ in {
           no_donation_nag = true;
         };
 
+        animation = [ "global, 1, 3, default" ];
+
         layerrule = [
           "animation slide right, notifications"
           "animation slide up, waybar"
