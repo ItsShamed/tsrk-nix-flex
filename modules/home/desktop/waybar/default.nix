@@ -45,6 +45,7 @@ in {
             stereo = false;
             higher_cutoff_freq = 5000;
             hide_on_silence = true;
+            format-icons = [ " " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
           };
 
           "hyprland/submap".tooltip = false;
