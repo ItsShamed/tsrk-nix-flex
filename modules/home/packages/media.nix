@@ -41,6 +41,8 @@
       strawberry
       qbittorrent
       miru
+      ffmpeg-full
+      imagemagick
     ];
   };
 }
