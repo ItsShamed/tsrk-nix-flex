@@ -46,6 +46,8 @@ in {
             higher_cutoff_freq = 5000;
             hide_on_silence = true;
             bars = 12;
+            bar_delimiter = 0;
+            noise_reduction = 0.65;
             format-icons = [ " " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
           };
 
