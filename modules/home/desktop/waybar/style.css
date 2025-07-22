@@ -37,7 +37,7 @@ window#waybar > box {
 }
 
 #workspaces button {
-  padding: 0 6px;
+  padding: 0 8px;
   border-radius: 0px;
 }
 
