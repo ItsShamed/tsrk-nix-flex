@@ -6,7 +6,7 @@
 
 { self, inputs, ... }:
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   key = ./.;
@@ -97,6 +97,24 @@
     # https://github.com/NixOS/nixpkgs/issues/404663
     # ventoy-full
   ];
+
+  programs.cava = {
+    enable = lib.mkDefault true;
+    settings = {
+      general = {
+        framerate = 60;
+        autosens = 1;
+        sensitivity = 11;
+        bars = 18;
+      };
+      input.method = "pipewire";
+      output = {
+        channels = "mono";
+        mono_option = "average";
+      };
+      smoothing.noise_reduction = 65;
+    };
+  };
 
   home.sessionPath = [ "$HOME/.cargo/bin" "$GOPATH/bin" "$HOME/go/bin" ];
 }
