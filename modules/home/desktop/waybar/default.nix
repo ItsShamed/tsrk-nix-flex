@@ -127,8 +127,8 @@ in {
           };
 
           clock = {
-            format = "  {:%I:%M:%S %p}";
-            format-alt = "  {:%Y-%m-%d %I:%M:%S %p}";
+            format = "  {:%H:%M:%S}";
+            format-alt = "  {:%Y-%m-%d %H:%M:%S}";
             tooltip = true;
             tooltip-format = "<tt><small>{calendar}</small></tt>";
             interval = 1;
