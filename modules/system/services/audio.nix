@@ -93,6 +93,8 @@ in {
         paprefs
         easyeffects
         qpwgraph
+        pwvucontrol
+        sonusmix
       ];
     }
     (lib.mkIf config.tsrk.sound.focusriteSupport (lib.mkMerge [
