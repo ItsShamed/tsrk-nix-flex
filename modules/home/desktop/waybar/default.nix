@@ -50,7 +50,7 @@ in {
           };
 
           "hyprland/submap".tooltip = false;
-          "hyprland/submap".max-length = 32;
+          "hyprland/window".max-length = 32;
 
           network = {
             interval = 1;
