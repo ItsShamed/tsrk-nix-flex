@@ -4,9 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ ... }:
+{ self, ... }:
 
 {
+
+  imports = with self.homeManagerModules; [ profile-wayland ];
+
   tsrk = {
     packages = {
       games.enable = true;
