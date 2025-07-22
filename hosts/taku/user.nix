@@ -22,6 +22,9 @@
       media.enable = true;
     };
     nvim.wakatime.enable = true;
+    hyprland.uwsm.extraEnv = ''
+      export AQ_DRM_DEVICES='/dev/dri/card0:/dev/dri/card1'
+    '';
     polybar = {
       ethInterfaceName = "enp16s0";
       wlanInterfaceName = "wlp15s0";
