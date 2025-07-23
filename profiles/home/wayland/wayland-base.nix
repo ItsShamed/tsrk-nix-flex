@@ -27,7 +27,7 @@
 
         export USE_WAYLAND_GRIM=1
         export QT_IM_MODULES='wayland;fcitx;ibus'
-        export SDL_VIDEODRIVER=wayland
+        export SDL_VIDEODRIVER='wayland,x11,*'
         export CLUTTER_BACKEND=wayland
       '';
     };
