@@ -57,6 +57,10 @@
 
         # Basic editor
         vim
+
+        # i18n lib
+        icu
+        icu.dev
       ];
     })
   ];

@@ -124,6 +124,8 @@ in {
   programs.nix-ld.enable = lib.mkDefault true;
   programs.nix-ld.libraries = with pkgs; [
     ffmpeg
+    icu
+    icu.dev
     alsa-lib
     SDL2
     lttng-ust
