@@ -18,6 +18,7 @@ args:
 
   clipboard.register = "unnamedplus";
   clipboard.providers = {
+    wl-copy.enable = true;
     xclip.enable = true;
     xsel.enable = true;
   };
