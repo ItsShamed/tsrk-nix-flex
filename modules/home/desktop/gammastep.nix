@@ -19,6 +19,7 @@ in {
       enable = lib.mkDefault true;
       enableVerboseLogging = lib.mkDefault true;
       settings.general.brightness-night = 0.85;
+      temperature.day = 6500;
       temperature.night = 3000;
       latitude = 48.87951;
       longitude = 2.28513;
