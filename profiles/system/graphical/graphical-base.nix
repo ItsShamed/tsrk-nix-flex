@@ -16,7 +16,6 @@
     self.nixosModules.bluetooth
     self.nixosModules.sddm
     self.nixosModules.audio
-    self.nixosModules.redshift
     self.nixosModules.plymouth
     self.nixosModules.qwerty-fr
   ];
@@ -47,7 +46,6 @@
   };
 
   tsrk.packages.pkgs.desktop.enable = true;
-  tsrk.redshift.enable = lib.mkDefault true;
   tsrk.boot.plymouth.enable = lib.mkDefault true;
 
   hardware.opentabletdriver.enable = lib.mkDefault true;
