@@ -39,6 +39,9 @@
       xsel
       x11vnc
       lxappearance
+
+      # Wayland
+      wl-clipboard
     ];
 
     xdg.mime.defaultApplications = {
