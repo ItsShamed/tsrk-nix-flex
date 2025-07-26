@@ -17,6 +17,7 @@
     darkman
     eww
     flameshot
+    gammastep
     kitty
     music-player
     premid
@@ -33,6 +34,7 @@
         enable = lib.mkDefault true;
         nvim.enable = lib.mkDefault true;
       };
+      gammastep.enable = lib.mkDefault true;
       kitty.enable = lib.mkDefault true;
       screenkey = {
         enable = lib.mkDefault true;
