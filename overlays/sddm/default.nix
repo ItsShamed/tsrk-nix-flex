@@ -9,12 +9,17 @@ self: super:
 super.lib.genAttrs [ "libsForQt5" "kdePackages" ] (p:
   super.${p}.overrideScope (pself: psuper: {
     sddm = psuper.sddm.override {
-      unwrapped = psuper.sddm.unwrapped.overrideAttrs (old: {
+      unwrapped = (psuper.sddm.unwrapped.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
-          ./patches/0001-fix-helper-do-not-badly-exit-on-SIGHUP.patch
-          ./patches/0002-fix-helper-avoid-exiting-1-at-all-costs-when-session.patch
-          ./patches/0003-feat-helper-log-session-stdout-and-stderr.patch
+          (super.fetchpatch {
+            url =
+              "https://patch-diff.githubusercontent.com/raw/sddm/sddm/pull/2103.patch";
+            hash = "sha256-HxsurSuGJjkGnC8fAiwipadAgcTUhs7n6fQ1SmvMMGc=";
+          })
         ];
-      });
+
+        cmakeFlags = (old.cmakeFlags or [ ])
+          ++ [ (super.lib.cmakeBool "QT_FORCE_ASSERTS" true) ];
+      }));
     };
   }))
