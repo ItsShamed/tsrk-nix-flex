@@ -229,3 +229,4 @@ fabric.properties
 .direnv/**/*
 .devenv/
 .pre-commit-config.yaml
+*.qcow2
