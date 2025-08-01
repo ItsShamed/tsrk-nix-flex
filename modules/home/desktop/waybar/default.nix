@@ -80,7 +80,7 @@ in {
             tooltip-format-wifi = ''
               {icon} {ifname} on {essid}
               {ipaddr}/{cidr} via {gwaddr}
-              Signal: {signaldBm} ({signalStrength}%)
+              Signal: {signaldBm}dBm ({signalStrength}%)
 
               ネットマスク: {netmask}
 
