@@ -58,7 +58,7 @@ in {
 
           network = {
             interval = 1;
-            family = "ipv4_6";
+            family = "ipv4";
             format = " {ifname}";
             format-ethernet = "{icon} {ipaddr}";
             format-wifi = "{icon} {essid}";
