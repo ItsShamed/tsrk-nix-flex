@@ -61,8 +61,8 @@ sudo_ true
 (sudo_ nixos-rebuild $rebuild_command --fast -L -v --log-format internal-json \
     --flake .#"$nix_host" "$@") |& nom_ --json
 
-if [ "$rebuild_command" != "switch" ]; then
-  # Return early if not switching
+if [ "$rebuild_command" != "switch" ] && [ "$rebuild_command" != "test" ]; then
+  # Return early if not switching nor testing
   exit 0
 fi
 
