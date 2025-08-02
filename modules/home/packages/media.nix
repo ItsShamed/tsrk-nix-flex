@@ -39,6 +39,7 @@
       tenacity
       vlc
       strawberry
+      lollypop
       qbittorrent
       miru
       ffmpeg-full
