@@ -126,19 +126,15 @@ let
     esac
   '';
 
-  snipTool = if config.services.flameshot.enable then
-    "flameshot gui"
-  else
-    with lib.meta;
-    ''
+  snipTool = with lib.meta;
+    pkgs.writeShellScript "snip-tool" ''
       ${getExe pkgs.grim} -g "$(${
         getExe pkgs.slurp
-      })" - | ${pkgs.wl-clipboard}/bin/wl-copy'';
+      } -o -r -c '#ff0000ff')" -t ppm - | ${
+        getExe pkgs.satty
+      } --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png'';
 
-  scTool = if config.services.flameshot.enable then
-    "flameshot full"
-  else
-    "${lib.meta.getExe pkgs.grim} - | ${pkgs.wl-clipboard}/bin/wl-copy";
+  scTool = "${lib.meta.getExe pkgs.grim} $(date '+%Y%m%d-%H:%M:%S').png";
 
   logout = pkgs.writeShellScript "terminate-session-wrapper" ''
     if command -v uwsm >/dev/null; then
@@ -587,6 +583,7 @@ in {
           "4, defaultName:coms"
         ];
 
+        # TODO: Add animation rule for satty
         windowrule = [
           "tag +coms, class:^(vesktop)$"
           "tag +coms, class:^(thunderbird)$"
