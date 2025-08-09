@@ -15,6 +15,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ lazydocker k9s openstackclient-full ];
+    home.packages = with pkgs; [ dig ldns lazydocker k9s openstackclient-full ];
   };
 }
