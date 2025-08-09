@@ -13,7 +13,7 @@ let
   mkNumberBinds = mod: keywordFn:
     (builtins.foldl' (c: e: c ++ [ "${mod}, ${e}, ${keywordFn e}" ]) [ ]
       (builtins.genList (x: builtins.toString (x + 1)) 9))
-    ++ [ "${mod}, 0, ${keywordFn "0"}" ];
+    ++ [ "${mod}, 0, ${keywordFn "10"}" ];
   lockTargetsPresent = let targets = config.systemd.user.targets;
   in targets ? lock && targets ? sleep && targets ? unlock;
 
