@@ -27,6 +27,7 @@ in {
       nerd-fonts.iosevka-term
       nerd-fonts.jetbrains-mono
       nerd-fonts.meslo-lg
+      corefonts
       iosevka
       meslo-lgs-nf
       libreoffice
