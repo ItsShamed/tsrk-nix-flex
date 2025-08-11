@@ -4,11 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, ... }:
+{ inputs, self, ... }:
 
 { pkgs, lib, config, ... }:
 
-let gaming = inputs.nix-gaming.packages.${pkgs.system};
+let
+  gaming = inputs.nix-gaming.packages.${pkgs.system};
+  tsrkPkgs = self.packages.${pkgs.system};
 in {
   options = {
     tsrk.packages.games = {
@@ -27,6 +29,7 @@ in {
       typespeed
       tetrio-desktop
       gaming.wine-ge
+      tsrkPkgs.unofficial-homestuck-collection
     ];
   };
 }
