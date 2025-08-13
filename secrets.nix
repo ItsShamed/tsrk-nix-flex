@@ -6,7 +6,10 @@ let
 
   keys = [
     # Me
+    # TODO: 2026-08-13: Can be removed, or even better, migrate to agenix-rekey
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqKG1hRtbiN+ChXAwKqpHxlyCdFQdOSo8IfsUgi8Qh6"
+    # Akemi Homura
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPL8iPsWQkF5FLBzr6q5MlLWkUCTskIhelkSkKeTJC16 cardno:33_753_805"
     # EPITA
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhh6BD0ihbMfWodFYBr5GBo/B/ZvDp5QqWQPAzGozM3"
 
