@@ -13,7 +13,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services.ssh-agent.enable = lib.mkDefault true;
     programs.ssh = {
       enable = true;
       controlMaster = "yes";
