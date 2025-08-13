@@ -20,6 +20,7 @@ in {
       # Settings are taken from https://github.com/drduh/YubiKey-Guide/blob/master/config/gpg.conf
       scdaemonSettings.disable-ccid = true;
       settings = {
+        keyserver = "keys.openpgp.org";
         personal-cipher-preferences = [ "AES256" "AES192" "AES" ];
         personal-digest-preferences = [ "SHA512" "SHA384" "SHA256" ];
         personal-compress-preferences = [ "ZLIB" "BZIP2" "ZIP" "Uncompressed" ];
