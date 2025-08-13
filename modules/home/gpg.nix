@@ -37,7 +37,7 @@ in {
         ];
         cert-digest-algo = "SHA512";
         s2k-digest-algo = "SHA512";
-        s2k-cipher-alog = "AES256";
+        s2k-cipher-algo = "AES256";
         charset = "utf-8";
         no-comments = true;
         no-emit-version = true;
@@ -46,7 +46,7 @@ in {
         list-options = [ "show-uid-validity" ];
         verify-options = [ "show-uid-validity" ];
         with-fingerprint = true;
-        require-cross-verification = true;
+        require-cross-certification = true;
         require-secmem = true;
         no-symkey-cache = true;
         armor = true;
