@@ -9,6 +9,7 @@
   ./network/networkmanager.nix
   { path = ./packages; }
   ./programs/gamescope.nix
+  ./programs/yubikey.nix
   { path = ./services/audio.nix; }
   ./services/hardware/bluetooth.nix
   ./services/hardware/disks.nix
