@@ -25,7 +25,6 @@
       starship.enable = lib.mkDefault true;
       zoxide.enable = lib.mkDefault true;
       zsh.enable = lib.mkDefault true;
-      gpg.enable = lib.mkDefault true;
     };
     tsrk.git = {
       enable = lib.mkDefault true;
@@ -34,6 +33,7 @@
       lazygit.enable = lib.mkDefault true;
     };
     tsrk.nvim.enable = lib.mkDefault true;
+    tsrk.gpg.enable = lib.mkDefault true;
 
     # This is very annoying with 'setup-betterlockscreen.service'
     systemd.user.startServices = false;
