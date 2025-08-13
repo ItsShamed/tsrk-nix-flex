@@ -4,10 +4,10 @@
 
 # SPDX-License-Identifier: MIT
 
-{ ... }:
+{ lib, ... }:
 
 {
-  services.ssh-agent.enable = true;
+  services.ssh-agent.enable = lib.mkDefault true;
   programs.ssh = {
     enable = true;
     addKeysToAgent = "yes";

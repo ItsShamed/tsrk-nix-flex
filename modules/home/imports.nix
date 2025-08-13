@@ -28,6 +28,7 @@
   ./desktop/waybar
   ./epita
   { path = ./git; }
+  ./gpg.nix
   { path = ./nvim; }
   { path = ./packages; }
   { path = ./shell; }
