@@ -16,6 +16,7 @@ in {
     self.nixosModules.packages
     self.nixosModules.disks
     self.nixosModules.sshd
+    self.nixosModules.yubikey
     self.nixosModules.networkmanager
     self.nixosModules.earlyoom
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
