@@ -119,6 +119,7 @@ in {
   programs.gnupg.agent = {
     enable = true;
     enableBrowserSocket = true;
+    enableSSHSupport = true;
   };
 
   # Sometimes it's a little bit of a pain to run some programs so i'll just use
