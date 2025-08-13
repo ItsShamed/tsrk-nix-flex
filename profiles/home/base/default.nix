@@ -11,7 +11,7 @@
 {
   key = ./.;
 
-  imports = with self.homeManagerModules; [ packages nvim git gpg shell ];
+  imports = with self.homeManagerModules; [ packages nvim git ssh gpg shell ];
 
   config = {
     tsrk.packages.core.enable = lib.mkDefault true;
@@ -34,6 +34,7 @@
     };
     tsrk.nvim.enable = lib.mkDefault true;
     tsrk.gpg.enable = lib.mkDefault true;
+    tsrk.ssh.enable = lib.mkDefault true;
 
     # This is very annoying with 'setup-betterlockscreen.service'
     systemd.user.startServices = false;

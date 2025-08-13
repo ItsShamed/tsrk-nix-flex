@@ -4,12 +4,20 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, ... }:
+{ config, lib, ... }:
 
-{
-  services.ssh-agent.enable = lib.mkDefault true;
-  programs.ssh = {
-    enable = true;
-    addKeysToAgent = "yes";
+let cfg = config.tsrk.ssh;
+in {
+  options = {
+    tsrk.ssh.enable = lib.options.mkEnableOption "tsrk's SSH config";
+  };
+
+  config = lib.mkIf cfg.enable {
+    services.ssh-agent.enable = lib.mkDefault true;
+    programs.ssh = {
+      enable = true;
+      controlMaster = "yes";
+      controlPersist = "10m";
+    };
   };
 }

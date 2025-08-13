@@ -88,6 +88,53 @@
     userEmail = "tsrk@tsrk.me";
   };
 
+  programs.ssh.matchBlocks = let
+    forgeHost = extraConfig:
+      {
+        user = "root";
+        identityFile = "~/.ssh/id_ed25519_forge";
+      } // extraConfig;
+    forgeBastion = hostname: extraConfig:
+      forgeHost ({ inherit hostname; } // extraConfig);
+    proxiedForgeHost = proxyJump: extraConfig:
+      lib.hm.dag.entryAfter [ proxyJump ]
+      (forgeHost ({ inherit proxyJump; } // extraConfig));
+  in {
+    # Forge Config
+    ## Bastions and firewalls
+    "3ie-bastion" = forgeBastion "bastion.iaas.3ie.epita.fr" { };
+    "fw-cri" = forgeBastion "91.243.117.1" { };
+    "lre-bastion" = forgeBastion "admin-svc.lre.iaas.epita.fr" { };
+    "os-bastion" = forgeBastion "bastion.iaas.cri.epita.fr" { port = 2222; };
+    "play-bastion" = forgeBastion "bastion.cri-playground.iaas.epita.fr" { };
+
+    ## Specifc host configuration
+    "gitlab.cri.epita.fr" = lib.hm.dag.entryBefore [ "*.cri.epita.fr" ] {
+      proxyJump = "none";
+      extraOptions.GSSAPIAuthentication = "yes";
+    };
+    "ssh.cri.epita.fr" = lib.hm.dag.entryBefore [ "*.cri.epita.fr" ] {
+      proxyJump = "none";
+      extraOptions = {
+        GSSAPIAuthentication = "yes";
+        GSSAPIDelegateCredentials = "yes";
+      };
+    };
+    "git.forge.epita.fr" = lib.hm.dag.entryBefore [ "*.forge.epita.fr" ] {
+      proxyJump = "none";
+      extraOptions.GSSAPIAuthentication = "yes";
+    };
+
+    ## Proxied hosts
+    "*.3ie.fr" = proxiedForgeHost "fw-cri" { };
+    "*.3ie.openstack.epita.fr" = proxiedForgeHost "3ie-bastion" { };
+    "*.cri.epita.fr" = proxiedForgeHost "fw-cri" { };
+    "*.forge.epita.fr" = proxiedForgeHost "fw-cri" { };
+    "*.cri.openstack.epita.fr" = proxiedForgeHost "os-bastion" { };
+    "*.cri_playground.openstack.epita.fr" = proxiedForgeHost "play-bastion" { };
+    "*.lre.openstack.epita.fr" = proxiedForgeHost "lre-bastion" { };
+  };
+
   home.packages = with pkgs; [
     deadnix
     teams-for-linux
