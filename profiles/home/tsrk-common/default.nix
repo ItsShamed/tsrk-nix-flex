@@ -83,7 +83,7 @@
     userName = "tsrk.";
     signing = {
       signByDefault = true;
-      key = "D1C2AD054267D54D248A4F43EBD46BB3049B56D6";
+      key = "72F6EF68BE1CF6A6";
     };
     userEmail = "tsrk@tsrk.me";
   };
