@@ -68,6 +68,7 @@ in {
     disk-management.enable = lib.mkDefault true;
     sshd.enable = lib.mkDefault true;
     earlyoom.enable = lib.mkDefault true;
+    yubikey.enable = lib.mkDefault true;
   };
 
   tsrk.packages = {
@@ -117,6 +118,7 @@ in {
   programs.gnupg.agent = {
     enable = true;
     enableBrowserSocket = true;
+    enableSSHSupport = true;
   };
 
   # Sometimes it's a little bit of a pain to run some programs so i'll just use
