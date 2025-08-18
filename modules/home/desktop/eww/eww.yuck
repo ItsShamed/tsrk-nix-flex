@@ -13,7 +13,7 @@
                                :width "100%"
                                :height 67
                                :anchor "bottom center")
-           :stacking "fg"
+           :stacking "bottom"
            :reserve (struts :distance "64px" :side "bottom")
            :wm-ignore false
            :windowtype "dock"
