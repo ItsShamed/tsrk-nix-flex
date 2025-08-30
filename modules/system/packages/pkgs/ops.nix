@@ -15,16 +15,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      ansible
-      opentofu
-      kubectl
-      kustomize
-      postgresql
-      sqlfluff
-      vault-bin
-      kubernetes-helm
-    ];
+    environment.systemPackages = with pkgs; [ postgresql ];
 
     environment.pathsToLink = [ "/share/postgresql" ];
   };

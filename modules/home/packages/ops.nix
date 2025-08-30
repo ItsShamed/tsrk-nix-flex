@@ -15,6 +15,20 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ dig ldns lazydocker k9s openstackclient-full ];
+    home.packages = with pkgs; [
+      dig
+      ldns
+      lazydocker
+      k9s
+      openstackclient-full
+      kubeswitch
+      ansible
+      opentofu
+      kubectl
+      kustomize
+      sqlfluff
+      vault-bin
+      kubernetes-helm
+    ];
   };
 }
