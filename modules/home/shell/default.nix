@@ -30,6 +30,7 @@ in {
     ./bash.nix
     ./direnv.nix
     ./fastfetch.nix
+    ./kubeswitch.nix
     ./lsd.nix
     ./starship.nix
     ./zoxide.nix
