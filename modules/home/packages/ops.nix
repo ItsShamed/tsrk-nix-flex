@@ -29,6 +29,12 @@ in {
       sqlfluff
       vault-bin
       kubernetes-helm
+      kubectl-doctor
+      kubectl-tree
+      krew
+      kubent
+      kubespy
+      stern
     ];
   };
 }
