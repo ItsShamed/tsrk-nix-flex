@@ -21,6 +21,7 @@ in {
       lazydocker
       k9s
       openstackclient-full
+      manilaclient
       kubeswitch
       ansible
       opentofu
