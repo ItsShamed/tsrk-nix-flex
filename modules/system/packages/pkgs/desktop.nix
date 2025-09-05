@@ -51,6 +51,14 @@
       "text/html" = [ "librewolf.desktop" "firefox.desktop" ];
       "application/xhtml+xml" = [ "librewolf.desktop" "firefox.desktop" ];
       "application/xhtml_xml" = [ "librewolf.desktop" "firefox.desktop" ];
+      "application/x-extension-htm" = [ "librewolf.desktop" "firefox.desktop" ];
+      "application/x-extension-html" =
+        [ "librewolf.desktop" "firefox.desktop" ];
+      "application/x-extension-shtml" =
+        [ "librewolf.desktop" "firefox.desktop" ];
+      "application/x-extension-xhtml" =
+        [ "librewolf.desktop" "firefox.desktop" ];
+      "application/x-extension-xht" = [ "librewolf.desktop" "firefox.desktop" ];
     };
   };
 }
