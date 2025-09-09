@@ -85,4 +85,12 @@
   xdg.portal.enable = lib.mkDefault true;
   xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal ];
   services.flatpak.enable = lib.mkDefault true;
+
+  # EPITA Kerberos config
+  security.krb5 = {
+    enable = true;
+    settings = {
+      realms."CRI.EPITA.FR".admin_server = "kerberos.pie.cri.epita.fr";
+    };
+  };
 }
