@@ -20,7 +20,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       eval "$(${lib.meta.getExe cfg.package} init zsh)"
       eval "$(${lib.meta.getExe cfg.package} completion zsh)"
     '';
