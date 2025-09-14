@@ -8,4 +8,5 @@
 
 {
   imports = with self.homeManagerModules; [ profile-base ];
+  programs.rbw.enable = false;
 }

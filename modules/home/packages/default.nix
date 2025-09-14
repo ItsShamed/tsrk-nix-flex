@@ -18,5 +18,6 @@ args:
     ./media.nix
     (lib.modules.importApply ./more-games.nix args)
     ./ops.nix
+    ./security.nix
   ];
 }

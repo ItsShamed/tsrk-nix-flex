@@ -14,7 +14,10 @@
   imports = with self.homeManagerModules; [ packages nvim git ssh gpg shell ];
 
   config = {
-    tsrk.packages.core.enable = lib.mkDefault true;
+    tsrk.packages = {
+      core.enable = lib.mkDefault true;
+      security.enable = lib.mkDefault true;
+    };
     tsrk.shell = {
       bash.enable = lib.mkDefault true;
       bat.enable = lib.mkDefault true;
