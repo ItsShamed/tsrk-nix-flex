@@ -33,7 +33,11 @@ in {
 
   programs.ssh.package = pkgs.openssh_gssapi;
 
-  console.keyMap = "us";
+  console = {
+    packages = with pkgs; [ terminus_font termsyn tamsyn spleen mno16 ];
+    font = "spleen-12x24";
+    keyMap = "us";
+  };
 
   nix = {
     # pkgs.nixFlakes was just an alias to pkgs.nixVersions.stable, and has
