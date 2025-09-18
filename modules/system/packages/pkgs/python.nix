@@ -33,10 +33,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [
-        ((python3.withPackages resultingPythonPackages).override
-          (_: { ignoreCollisions = true; }))
-      ];
+    environment.systemPackages = with pkgs; [
+      uv
+      poetry
+      ((python3.withPackages resultingPythonPackages).override
+        (_: { ignoreCollisions = true; }))
+    ];
   };
 }
