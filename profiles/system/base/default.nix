@@ -37,6 +37,7 @@ in {
     packages = with pkgs; [ terminus_font termsyn tamsyn spleen mno16 ];
     font = "spleen-12x24";
     keyMap = "us";
+    earlySetup = lib.mkDefault true;
   };
 
   nix = {
