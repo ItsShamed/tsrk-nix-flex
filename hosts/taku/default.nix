@@ -23,7 +23,7 @@
     ./hardware-config.nix
   ];
 
-  environment.systemPackages = with pkgs; [ parsec-bin parse-cli-bin ];
+  environment.systemPackages = with pkgs; [ mouse_m908 ];
 
   tsrk.programs.gamescope.enable = true;
 
