@@ -17,6 +17,7 @@ args:
     (lib.modules.importApply ./games.nix args)
     ./media.nix
     (lib.modules.importApply ./more-games.nix args)
+    ./music-production.nix
     ./ops.nix
     ./security.nix
   ];

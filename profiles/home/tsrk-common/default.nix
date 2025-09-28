@@ -36,6 +36,7 @@
     packages.dev.enable = true;
     packages.compat.enable = true;
     packages.ops.enable = true;
+    packages.music-production.enable = true;
 
     shell.kubeswitch.enable = true;
   };
