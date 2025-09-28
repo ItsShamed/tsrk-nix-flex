@@ -443,6 +443,8 @@ in {
           };
         };
 
+        dwindle.force_split = 2;
+
         input = {
           repeat_rate = 45;
           repeat_delay = 244;
