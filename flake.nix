@@ -62,6 +62,11 @@
     agenix.url = "github:ryantm/agenix";
 
     devenv.url = "github:cachix/devenv";
+
+    winapps = {
+      url = "github:winapps-org/winapps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgsUnstable

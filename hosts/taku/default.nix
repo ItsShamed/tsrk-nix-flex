@@ -4,9 +4,10 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, ... }:
+{ self, inputs, pkgs, ... }:
 
-{
+let winappsPkgs = inputs.winapps.packages."${pkgs.system}";
+in {
   imports = [
     self.nixosModules.profile-tsrk-common
     self.nixosModules.gamescope
@@ -23,7 +24,11 @@
     ./hardware-config.nix
   ];
 
-  environment.systemPackages = with pkgs; [ mouse_m908 ];
+  environment.systemPackages = with pkgs; [
+    mouse_m908
+    winappsPkgs.winapps
+    winappsPkgs.winapps-launcher
+  ];
 
   tsrk.programs.gamescope.enable = true;
 
