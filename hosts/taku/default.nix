@@ -17,7 +17,7 @@ in {
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       initialPassword = "changeme";
-      moreGroups = [ "adbusers" "libvirtd" ];
+      moreGroups = [ "adbusers" "libvirtd" "libvirt" "kvm" ];
       modules = [ ./user.nix ];
     })
     ./disk.nix
