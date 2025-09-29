@@ -45,6 +45,7 @@
       miru
       ffmpeg-full
       imagemagick
+      lrcget
     ];
   };
 }
