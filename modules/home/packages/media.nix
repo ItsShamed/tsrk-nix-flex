@@ -19,6 +19,7 @@
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
         waveform
+        wlrobs
         droidcam-obs
         obs-websocket
         obs-webkitgtk
