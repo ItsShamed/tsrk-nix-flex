@@ -16,6 +16,7 @@
     hostname
     containers
     libvirt
+    v4l2loopback
     # Little silly experiment
     (self.lib.generateSystemHome "root" {
       homeDir = "/root";
@@ -64,6 +65,16 @@
   tsrk.containers = {
     enable = true;
     podman.enable = true;
+  };
+
+  tsrk.kernel.v4l2loopback = {
+    enable = true;
+    moduleOptions = {
+      devices = 1;
+      video_nr = 1;
+      card_label = "OBS Virtual Cam";
+      exclusive_caps = 1;
+    };
   };
 
   environment.systemPackages = with pkgs; [ aria2 tailscale ];
