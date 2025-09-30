@@ -15,7 +15,6 @@
   { path = ./desktop/i3.nix; }
   ./desktop/kitty.nix
   ./desktop/mopidy.nix
-  ./desktop/music-player.nix
   { path = ./desktop/picom.nix; }
   { path = ./desktop/polybar.nix; }
   ./desktop/premid.nix

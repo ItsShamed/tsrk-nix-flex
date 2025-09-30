@@ -19,7 +19,6 @@
     flameshot
     gammastep
     kitty
-    music-player
     premid
     rofi
     screenkey
