@@ -6,6 +6,7 @@
 
 { lib, fetchurl, corefonts, appimageTools, stdenvNoCC, makeWrapper, writeText }:
 
+# TODO: Remove this when 25.11
 let
   pname = "unofficial-homestuck-collection";
   version = "2.7.0";

@@ -4,13 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, self, ... }:
+{ inputs, pkgSet, ... }:
 
 { pkgs, lib, config, ... }:
 
 let
+  inherit (pkgSet pkgs.system) pkgsUnstable;
   gaming = inputs.nix-gaming.packages.${pkgs.system};
-  tsrkPkgs = self.packages.${pkgs.system};
 in {
   options = {
     tsrk.packages.games = {
@@ -25,11 +25,12 @@ in {
     ''];
 
     home.packages = with pkgs; [
-      # gaming.osu-lazer-bin
+      gaming.osu-lazer-bin
       typespeed
       tetrio-desktop
       gaming.wine-ge
-      tsrkPkgs.unofficial-homestuck-collection
+      # TODO: nixpkgs-unstable package: switch to upstream nixpkgs when 25.11
+      pkgsUnstable.unofficial-homestuck-collection
     ];
   };
 }
