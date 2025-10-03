@@ -25,7 +25,6 @@
   ### GAMES
   paladium-launcher = ./games/paladium-launcher;
   rewind = ./games/rewind;
-  unofficial-homestuck-collection = ./games/unofficial-homestuck-collection;
 
   ### MISC
   polybar-mpris = ./applications/misc/polybar-mpris;
