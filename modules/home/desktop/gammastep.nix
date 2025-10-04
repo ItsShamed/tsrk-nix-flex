@@ -18,7 +18,7 @@ in {
     services.gammastep = {
       enable = lib.mkDefault true;
       enableVerboseLogging = lib.mkDefault true;
-      settings.general.brightness-night = 0.65;
+      settings.general.brightness-night = 0.45;
       temperature.day = 6500;
       temperature.night = 3000;
       latitude = 48.87951;
