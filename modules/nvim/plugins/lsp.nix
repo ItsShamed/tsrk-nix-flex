@@ -98,6 +98,7 @@ in {
             formatterPrintWidth = 80;
           };
         };
+        qmlls.enable = true;
         vala_ls.enable = true;
         vhdl_ls.enable = true;
         yamlls.enable = true;
