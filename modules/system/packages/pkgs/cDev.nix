@@ -46,6 +46,7 @@
 
       perlPackages.JSON
       perlPackages.PerlIOgzip
+      linuxHeaders
     ];
   };
 }
