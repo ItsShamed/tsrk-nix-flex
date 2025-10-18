@@ -149,6 +149,8 @@
     # https://github.com/ventoy/Ventoy/issues/3224
     # https://github.com/NixOS/nixpkgs/issues/404663
     # ventoy-full
+    tor
+    tor-browser
   ];
 
   programs.cava = {
