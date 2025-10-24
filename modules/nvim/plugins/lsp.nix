@@ -25,10 +25,6 @@ in {
 
       servers = {
         autotools_ls.enable = true;
-        ada_ls = {
-          enable = true;
-          package = null;
-        };
         clangd = {
           enable = true;
           package = pkgs.clang-tools_16;
