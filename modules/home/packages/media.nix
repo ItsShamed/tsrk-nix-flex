@@ -46,6 +46,7 @@
       ffmpeg-full
       imagemagick
       lrcget
+      nicotine-plus
     ];
   };
 }
