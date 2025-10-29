@@ -86,9 +86,12 @@
     allowedTCPPorts = [
       4455 # OBS WebSocket
       57621 # Spotify P2P
+      2413 # Soulseek P2P
     ];
-    # Spotify P2P
-    allowedUDPPorts = [ 57621 ];
+    allowedUDPPorts = [
+      57621 # Spotify P2P
+      2413 # Soulseek P2P
+    ];
   };
 
   services.fwupd.enable = lib.mkDefault true;
