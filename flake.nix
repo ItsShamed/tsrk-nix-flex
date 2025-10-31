@@ -85,18 +85,8 @@
           config = {
             allowUnfree = true;
             android_sdk.accept_license = true;
-            # TODO: Rider is currently fucking up things, remove on new releases
-            permittedInsecurePackages = [
-              "dotnet-sdk-wrapped-7.0.410"
-              "dotnet-sdk-7.0.410"
-              "dotnet-runtime-6.0.36"
-              "dotnet-sdk-6.0.36"
-              "dotnet-sdk-wrapped-6.0.36"
-              "dotnet-sdk-wrapped-6.0.428"
-              "dotnet-sdk-6.0.428"
-              "dotnet-runtime-6.0.428"
-              "dotnet-runtime-wrapped-6.0.36"
-            ];
+            # TODO: OpenRGB wake the fuck up
+            permittedInsecurePackages = [ "mbedtls-2.28.10" ];
           };
           overlays = [ nixgl.overlay ] ++ (builtins.attrValues
             (builtins.removeAttrs (import ./pkgs/as-overlays.nix) [
