@@ -47,6 +47,7 @@
       imagemagick
       lrcget
       nicotine-plus
+      yt-dlp
     ];
   };
 }
