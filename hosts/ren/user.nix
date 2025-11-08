@@ -34,6 +34,8 @@
 
   services.poweralertd.enable = true;
 
+  home.packages = with pkgs; [ moonlight-qt ];
+
   programs.autorandr = {
     enable = true;
     hooks.postswitch = { notify-i3 = "${pkgs.i3}/bin/i3-msg restart"; };
