@@ -41,11 +41,11 @@ in {
 
       home.packages = with pkgs;
         [
-          (tokyonight-gtk-theme.override {
+          ((tokyonight-gtk-theme.override {
             colorVariants = [ "dark" "light" ];
             tweakVariants = [ "storm" ];
             iconVariants = [ "Dark" "Light" ];
-          })
+          }).overrideAttrs { dontFixup = true; })
         ];
 
       specialisation = {
