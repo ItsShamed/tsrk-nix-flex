@@ -78,5 +78,22 @@
     USB_ALLOWLIST = "";
   };
 
+  programs.ssh.matchBlocks = {
+    "tsrk-taku" = {
+      hostname = "192.168.0.200";
+      extraOptions.StreamLocalBindUnlink = "yes";
+      remoteForwards = [
+        {
+          host.address = "/run/user/1000/gnupg/S.gpg-agent.extra";
+          bind.address = "/run/user/1000/gnupg/S.gpg-agent";
+        }
+        {
+          host.address = "/run/user/1000/gnupg/S.gpg-agent.ssh";
+          bind.address = "/run/user/1000/gnupg/S.gpg-agent.ssh";
+        }
+      ];
+    };
+  };
+
   services.upower.enable = true;
 }

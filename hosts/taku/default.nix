@@ -65,6 +65,8 @@ in {
   # This is horrible for Minecraft PvP lmao
   services.libinput.mouse.middleEmulation = false;
 
+  services.openssh.settings.StreamLocalBindUnlink = true;
+
   services.hardware.openrgb = {
     enable = true;
     package = pkgs.openrgb-with-all-plugins;
