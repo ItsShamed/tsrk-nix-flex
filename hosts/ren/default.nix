@@ -20,9 +20,6 @@
     ./hardware-config.nix
   ];
 
-  age.secrets.wgHomePkey.file = ./secrets/wg-home-pkey.age;
-  age.secrets.wgPulse1Pkey.file = ./secrets/wg-tsrk-small1-pkey.age;
-
   services.libinput.touchpad.naturalScrolling = true;
 
   time.hardwareClockInLocalTime = true;
