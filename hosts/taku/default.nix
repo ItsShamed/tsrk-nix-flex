@@ -79,4 +79,18 @@ in {
     pageFlip = false;
     tearFree = false;
   };
+
+  boot.initrd.network = {
+    enable = true;
+    ssh = {
+      enable = true;
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPL8iPsWQkF5FLBzr6q5MlLWkUCTskIhelkSkKeTJC16 cardno:33_753_805"
+      ];
+      hostKeys = [
+        "/etc/secrets/initrd/ssh_host_rsa_key"
+        "/etc/secrets/initrd/ssh_host_ed25519_key"
+      ];
+    };
+  };
 }
