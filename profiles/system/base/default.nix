@@ -123,6 +123,7 @@ in {
 
   programs.gnupg.agent = {
     enable = true;
+    enableExtraSocket = true;
     enableBrowserSocket = true;
     enableSSHSupport = true;
   };
