@@ -269,6 +269,8 @@ in {
 
         background.path = "${cfg.backgrounds.lockscreen}";
 
+        debug.disable_logs = lib.mkDefault false;
+
         shape = {
           color = "rgba(0, 0, 0, 0.75)";
           rounding = 0;
