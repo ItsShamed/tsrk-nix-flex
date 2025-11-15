@@ -139,4 +139,21 @@
       double-docked-DP-6-DP-5 = doubleDockedMaxxing "DP-6" "DP-5";
     };
   };
+
+  programs.ssh.matchBlocks = {
+    "tsrk-taku" = {
+      hostname = "192.168.0.200";
+      extraOptions.StreamLocalBindUnlink = "yes";
+      remoteForwards = [
+        {
+          host.address = "/run/user/1000/gnupg/S.gpg-agent.extra";
+          bind.address = "/run/user/1000/gnupg/S.gpg-agent";
+        }
+        {
+          host.address = "/run/user/1000/gnupg/S.gpg-agent.ssh";
+          bind.address = "/run/user/1000/gnupg/S.gpg-agent.ssh";
+        }
+      ];
+    };
+  };
 }
