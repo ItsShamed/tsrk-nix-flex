@@ -32,11 +32,15 @@ in {
     environment.systemPackages = [ steamGamescopeDesktop ];
     programs.steam.gamescopeSession = {
       enable = lib.mkDefault true;
-      env = {
-        PATH = ''"${mockSessionSelect}/bin:$PATH"'';
-        _tsrk_dummy = ''
-          true; shopt -s expand_aliases; alias steam="steam -steamos3"; gamescope --steam --output-width 1920 --output-height 1080 --nested-width 1920 --nested-height 1080 --fullscreen -- steam -steamos3 -tenfoot -pipewire-dmabuf; exit 0'';
-      };
+      args = [
+        "--output-width 1920"
+        "--output-height 1080"
+        "--nested-width 1920"
+        "--nested-height 1080"
+        "--fullscreen"
+      ];
+      steamArgs = [ "-steamos3" "-tenfoot" "-pipewire-dmabuf" ];
+      env.PATH = ''"${mockSessionSelect}/bin:$PATH"'';
     };
   };
 }
