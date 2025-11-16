@@ -138,6 +138,7 @@ let
 
   logout = pkgs.writeShellScript "terminate-session-wrapper" ''
     if command -v uwsm >/dev/null; then
+      systemctl --user stop hyprland-session.target
       uwsm stop
     else
       loginctl terminate-session "$XDG_SESSION_ID"
