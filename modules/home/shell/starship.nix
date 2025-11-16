@@ -72,11 +72,12 @@ in {
         "$jobs"
         "$os "
         "$nix_shell"
+        "$kubernetes"
         "$shell"
         "$character"
       ]);
 
-      right_format = lib.concatStrings [ "$status" ];
+      right_format = lib.concatStrings [ "$status" "$cmd_duration" ];
 
       directory = {
         style = "fg:#e3e5e5 bg:#769ff0";
@@ -142,6 +143,18 @@ in {
         symbol = "";
         impure_msg = "i";
         pure_msg = "p";
+      };
+
+      cmd_duration = {
+        format = "in [$duration]($style)";
+        show_notifications = true;
+      };
+
+      kubernetes = {
+        disabled = false;
+        symbol = "󱃾  ";
+        format = "[$symbol$context( \\($namespace\\))]($style) ";
+        detect_env_vars = [ "KUBECONFIG" ];
       };
 
       status.disabled = false;
