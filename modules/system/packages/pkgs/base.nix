@@ -35,6 +35,7 @@
         diffutils
 
         inetutils
+        iw
         utillinux
         coreutils-full
         ethtool
