@@ -118,8 +118,9 @@ in {
 
       hostname = {
         style = "bg:#a3aed2 fg:#090c0c";
+        ssh_symbol = "  ";
         ssh_only = false;
-        format = "[$ssh_symbol$hostname]($style)";
+        format = "[$hostname$ssh_symbol]($style)";
       };
 
       status = {
