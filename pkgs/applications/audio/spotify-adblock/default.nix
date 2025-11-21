@@ -13,18 +13,17 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "abba23";
     repo = pname;
-    rev = "5a3281dee9f889afdeea7263558e7a715dcf5aab";
-    hash = "sha256-UzpHAHpQx2MlmBNKm2turjeVmgp5zXKWm3nZbEo0mYE=";
+    rev = "8e0312d6085a6e4f9afeb7c2457517a75e8b8f9d";
+    hash = "sha256-nwiX2wCZBKRTNPhmrurWQWISQdxgomdNwcIKG2kSQsE=";
   };
 
   patches = [
-    ./patches/dealer-fix.patch # https://github.com/abba23/spotify-adblock/pull/178
     ./patches/allow-login-fix.patch # https://github.com/abba23/spotify-adblock/pull/173
     ./patches/nix-packaging.patch
   ];
 
   postPatch = ''
-    sed -i "s|@@out@@|$out|" src/lib.rs
+    substituteAllInPlace src/lib.rs
   '';
 
   cargoHash = "sha256-oGpe+kBf6kBboyx/YfbQBt1vvjtXd1n2pOH6FNcbF8M=";
@@ -45,7 +44,6 @@ rustPlatform.buildRustPackage rec {
       "Adblocker for Spotify. Patched with some bugs fixes and quality of life improvements.";
     longDescription = ''
       Included patches:
-        - Fix "dealer" regex match to allow Spotify Connect and Discord presence to work: https://github.com/abba23/spotify-adblock/pull/178
         - Allow domains used for logging in, signing up, and account modification: https://github.com/abba23/spotify-adblock/pull/173
     '';
     homepage = "https://github.com/abba23/spotify-adblock";
