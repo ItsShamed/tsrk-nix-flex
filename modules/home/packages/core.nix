@@ -21,6 +21,7 @@
         package = pkgs.ripgrep;
       };
       fd.enable = true;
+      nh.enable = lib.mkDefault true;
     };
 
     home.packages = with pkgs; [ tldr ];
