@@ -10,22 +10,9 @@
 
 set -euo pipefail
 
-sudo_() {
-    if [ "$UID" -eq 0 ]; then
-        "$@"
-    else
-        sudo "$@"
-    fi
-}
+echo "==> Running NH clean"
 
-echo "==> Running GC on 'user' store paths"
-
-nix-collect-garbage -d --delete-older-than 5d -vv
-
-echo "==> Running GC on 'root' store paths"
-
-sudo_ true
-sudo_ nix-collect-garbage -d -vv
+nh clean all -K 5d
 
 echo "==> Cleaning up boot entries"
 
