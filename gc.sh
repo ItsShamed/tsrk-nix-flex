@@ -10,6 +10,19 @@
 
 set -euo pipefail
 
+sudo_() {
+    if [ "$(id -u)" = 0 ]; then
+        "$@"
+    elif command -v sudo >/dev/null; then
+        sudo "$@"
+    elif command -v doas >/dev/null; then
+        doas "$@"
+    else
+        echo "wtf are u" >&2
+        exit 1
+    fi
+}
+
 echo "==> Running NH clean"
 
 nh clean all -K 5d
