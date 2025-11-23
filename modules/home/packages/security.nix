@@ -29,6 +29,8 @@ in {
 
       # 2FA
       ente-auth
+
+      keepassxc
     ];
 
     programs.rbw = {
