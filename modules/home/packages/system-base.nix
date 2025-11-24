@@ -37,7 +37,7 @@
         inetutils
         iw
         utillinux
-        coreutils-full
+        (lib.meta.hiPrio coreutils-full)
         ethtool
 
         killall
