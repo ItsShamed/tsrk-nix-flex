@@ -4,10 +4,16 @@
 
 # SPDX-License-Identifier: MIT
 
+{ pkgs, ... }:
+
 {
   tsrk.packages = {
     system-base.enable = true;
     ops.enable = true;
   };
   tsrk.shell.kubeswitch.enable = true;
+
+  home.packages = with pkgs; [ magic-wormhole ];
+
+  home.stateVersion = "24.05";
 }
