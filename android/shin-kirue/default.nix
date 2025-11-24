@@ -1,0 +1,17 @@
+# Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT license
+# See the LICENSE file in the repository root for more info.
+
+# SPDX-License-Identifier: MIT
+
+{ self, ... }:
+
+{
+  system.stateVersion = "24.05";
+  user.userName = "tsrk";
+
+  home-manager = {
+    config = ./home.nix;
+    sharedModules = [ self.homeManagerModules.profile-base ];
+  };
+}

@@ -67,6 +67,12 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgsUnstable
@@ -134,6 +140,13 @@
         };
 
         homeConfigurations = import ./homes { inherit lib self; };
+
+        nixOnDroidConfigurations = import ./android
+          (lib.recursiveUpdate inputs {
+            inherit lib inputs;
+            system = "aarch64-linux";
+            pkgSet = pkgSet "aarch64-linux";
+          });
 
         nixosConfigurations = import ./hosts (lib.recursiveUpdate inputs {
           inherit lib system;
