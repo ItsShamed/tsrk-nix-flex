@@ -4,11 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgs, ... }:
 
 {
   system.stateVersion = "24.05";
   user.userName = "tsrk";
+  user.shell = "${pkgs.zsh}/bin/zsh";
 
   home-manager = {
     config = ./home.nix;
