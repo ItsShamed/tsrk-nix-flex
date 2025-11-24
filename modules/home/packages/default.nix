@@ -20,5 +20,6 @@ args:
     ./music-production.nix
     ./ops.nix
     ./security.nix
+    ./system-base.nix
   ];
 }
