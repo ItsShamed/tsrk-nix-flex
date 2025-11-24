@@ -15,7 +15,7 @@
 
   config = lib.mkMerge [
     (lib.mkIf config.tsrk.packages.pkgs.system-base.enable {
-      environment.systemPackages = with pkgs; [
+      home.packages = with pkgs; [
         # Filesystem/file management
         file
         ncdu
