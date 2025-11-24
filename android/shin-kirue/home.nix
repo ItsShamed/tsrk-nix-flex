@@ -12,6 +12,7 @@
     ops.enable = true;
   };
   tsrk.shell.kubeswitch.enable = true;
+  programs.rbw.enable = false;
 
   home.packages = with pkgs; [ magic-wormhole ];
 
