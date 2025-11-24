@@ -60,11 +60,11 @@ in {
 
     specialisation = {
       light.configuration = {
-        programs.lazygit.settings = self.lib.fromYAML (builtins.readFile
+        programs.lazygit.settings = self.lib.fromYAML pkgs (builtins.readFile
           "${tsrkPkgs.tokyonight-extras}/lazygit/tokyonight_day.yml");
       };
       dark.configuration = {
-        programs.lazygit.settings = self.lib.fromYAML (builtins.readFile
+        programs.lazygit.settings = self.lib.fromYAML pkgs (builtins.readFile
           "${tsrkPkgs.tokyonight-extras}/lazygit/tokyonight_storm.yml");
       };
     };

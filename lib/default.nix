@@ -18,7 +18,7 @@ rec {
   generateSystemHome = import ./generateSystemHome.nix args;
   generateFullUser = import ./generateFullUser.nix
     (args // { inherit generateUser generateSystemHome; });
-  fromYAML = import ./fromYAML.nix args;
+  fromYAML = import ./fromYAML.nix;
   mkGL = import ./mkGL.nix args;
 
   profileNeedsPkg = name: config: {
