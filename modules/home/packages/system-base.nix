@@ -14,7 +14,7 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.tsrk.packages.pkgs.system-base.enable {
+    (lib.mkIf config.tsrk.packages.system-base.enable {
       home.packages = with pkgs; [
         # Filesystem/file management
         file
