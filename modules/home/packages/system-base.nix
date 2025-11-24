@@ -8,7 +8,7 @@
 
 {
   options = {
-    tsrk.packages.pkgs.system-base = {
+    tsrk.packages.system-base = {
       enable = lib.options.mkEnableOption "tsrk's system base package bundle";
     };
   };
