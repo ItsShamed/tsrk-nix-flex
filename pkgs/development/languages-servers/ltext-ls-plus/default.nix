@@ -20,7 +20,7 @@ ltex-ls.overrideAttrs (self: super: {
     hash = if system == "x86_64-linux" then
       "sha256-5uCFmLu7V130CcjUkdMFMyYzc3dCUVpcUIA9TGcct98="
     else if system == "aarch64-linux" then
-      "sha256-CGOYdzZRMDq5lqtweMv2Cc5sNF0e3aOS+sSebFgHadE="
+      "sha256-Y6T/2+Q7/DxJRnMGYGBBj2yYHbNEgVLuB0UqfpQw/vM="
     else
       builtins.throw "Unsupported system ${system}";
   };
