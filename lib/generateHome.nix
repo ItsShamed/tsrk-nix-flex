@@ -23,8 +23,7 @@ let
   configuration = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = pkgSet.pkgs;
 
-    modules = modules
-      ++ [ homeManagerBase inputs.nixvim.homeManagerModules.nixvim ];
+    modules = modules ++ [ homeManagerBase ];
 
     extraSpecialArgs = {
       inherit self;

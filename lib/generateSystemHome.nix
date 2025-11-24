@@ -17,7 +17,7 @@ name:
   home-manager.useGlobalPkgs = true;
 
   home-manager.users."${name}" = {
-    imports = modules ++ [ inputs.nixvim.homeManagerModules.nixvim ];
+    imports = modules;
     home.username = name;
     home.homeDirectory = homeDir;
     home.stateVersion = "24.05";

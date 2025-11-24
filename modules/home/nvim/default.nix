@@ -4,11 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, inputs, ... }:
 
 { config, lib, pkgs, ... }:
 
 {
+  imports = [ inputs.nixvim.homeManagerModules.nixvim ];
+
   options = {
     tsrk.nvim = {
       enable = lib.options.mkEnableOption "tsrk's nvim configuration";
