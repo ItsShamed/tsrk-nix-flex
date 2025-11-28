@@ -24,39 +24,6 @@
     "cachix": {
       "inputs": {
         "devenv": [
-          "devenv"
-        ],
-        "flake-compat": [
-          "devenv",
-          "flake-compat"
-        ],
-        "git-hooks": [
-          "devenv",
-          "git-hooks"
-        ],
-        "nixpkgs": [
-          "devenv",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1760971495,
-        "narHash": "sha256-IwnNtbNVrlZIHh7h4Wz6VP0Furxg9Hh0ycighvL5cZc=",
-        "owner": "cachix",
-        "repo": "cachix",
-        "rev": "c5bfd933d1033672f51a863c47303fc0e093c2d2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cachix",
-        "ref": "latest",
-        "repo": "cachix",
-        "type": "github"
-      }
-    },
-    "cachix_2": {
-      "inputs": {
-        "devenv": [
           "spotify-notifyx",
           "devenv"
         ],
@@ -110,32 +77,9 @@
     "devenv": {
       "inputs": {
         "cachix": "cachix",
-        "flake-compat": "flake-compat",
-        "flake-parts": "flake-parts",
-        "git-hooks": "git-hooks",
-        "nix": "nix",
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1763659964,
-        "narHash": "sha256-rSHf01ileP1lOfeAkLrnNK1v4Wx4Yx7A2NwzfDhZD8w=",
-        "owner": "cachix",
-        "repo": "devenv",
-        "rev": "a79cc5b53ef8639c74c48d95eae703e2c0c2ec27",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cachix",
-        "repo": "devenv",
-        "type": "github"
-      }
-    },
-    "devenv_2": {
-      "inputs": {
-        "cachix": "cachix_2",
         "flake-compat": "flake-compat_3",
         "git-hooks": "git-hooks_2",
-        "nix": "nix_2",
+        "nix": "nix",
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
@@ -232,27 +176,6 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": [
-          "devenv",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1760948891,
-        "narHash": "sha256-TmWcdiUUaWk8J4lpjzu4gCGxWY6/Ok7mOK4fIFfBuU4=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "864599284fc7c0ba6357ed89ed5e2cd5040f0c04",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_2": {
-      "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
@@ -269,7 +192,7 @@
         "type": "github"
       }
     },
-    "flake-parts_3": {
+    "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
           "nixvim",
@@ -290,7 +213,7 @@
         "type": "github"
       }
     },
-    "flake-parts_4": {
+    "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
           "spotify-notifyx",
@@ -429,22 +352,16 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": [
-          "devenv",
-          "flake-compat"
-        ],
+        "flake-compat": "flake-compat_2",
         "gitignore": "gitignore",
-        "nixpkgs": [
-          "devenv",
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1760663237,
-        "narHash": "sha256-BflA6U4AM1bzuRMR8QqzPXqh8sWVCNDzOdsxXEguJIc=",
+        "lastModified": 1763988335,
+        "narHash": "sha256-QlcnByMc8KBjpU37rbq5iP7Cp97HvjRP0ucfdh+M4Qc=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "ca5b894d3e3e151ffc1db040b6ce4dcc75d31c37",
+        "rev": "50b9238891e388c9fdc6a5c49e49c42533a1b5ce",
         "type": "github"
       },
       "original": {
@@ -487,7 +404,6 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "devenv",
           "git-hooks",
           "nixpkgs"
         ]
@@ -637,39 +553,36 @@
     "nix": {
       "inputs": {
         "flake-compat": [
-          "devenv",
-          "flake-compat"
+          "spotify-notifyx",
+          "devenv"
         ],
-        "flake-parts": [
-          "devenv",
-          "flake-parts"
-        ],
-        "git-hooks-nix": [
-          "devenv",
-          "git-hooks"
-        ],
-        "nixpkgs": [
-          "devenv",
-          "nixpkgs"
-        ],
+        "flake-parts": "flake-parts_3",
+        "libgit2": "libgit2",
+        "nixpkgs": "nixpkgs_7",
         "nixpkgs-23-11": [
+          "spotify-notifyx",
           "devenv"
         ],
         "nixpkgs-regression": [
+          "spotify-notifyx",
+          "devenv"
+        ],
+        "pre-commit-hooks": [
+          "spotify-notifyx",
           "devenv"
         ]
       },
       "locked": {
-        "lastModified": 1761648602,
-        "narHash": "sha256-H97KSB/luq/aGobKRuHahOvT1r7C03BgB6D5HBZsbN8=",
-        "owner": "cachix",
+        "lastModified": 1727438425,
+        "narHash": "sha256-X8ES7I1cfNhR9oKp06F6ir4Np70WGZU5sfCOuNBEwMg=",
+        "owner": "domenkozar",
         "repo": "nix",
-        "rev": "3e5644da6830ef65f0a2f7ec22830c46285bfff6",
+        "rev": "f6c5ae4c1b2e411e6b1e6a8181cc84363d6a7546",
         "type": "github"
       },
       "original": {
-        "owner": "cachix",
-        "ref": "devenv-2.30.6",
+        "owner": "domenkozar",
+        "ref": "devenv-2.24",
         "repo": "nix",
         "type": "github"
       }
@@ -733,7 +646,7 @@
     },
     "nix-gaming": {
       "inputs": {
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
@@ -774,43 +687,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-on-droid",
-        "type": "github"
-      }
-    },
-    "nix_2": {
-      "inputs": {
-        "flake-compat": [
-          "spotify-notifyx",
-          "devenv"
-        ],
-        "flake-parts": "flake-parts_4",
-        "libgit2": "libgit2",
-        "nixpkgs": "nixpkgs_7",
-        "nixpkgs-23-11": [
-          "spotify-notifyx",
-          "devenv"
-        ],
-        "nixpkgs-regression": [
-          "spotify-notifyx",
-          "devenv"
-        ],
-        "pre-commit-hooks": [
-          "spotify-notifyx",
-          "devenv"
-        ]
-      },
-      "locked": {
-        "lastModified": 1727438425,
-        "narHash": "sha256-X8ES7I1cfNhR9oKp06F6ir4Np70WGZU5sfCOuNBEwMg=",
-        "owner": "domenkozar",
-        "repo": "nix",
-        "rev": "f6c5ae4c1b2e411e6b1e6a8181cc84363d6a7546",
-        "type": "github"
-      },
-      "original": {
-        "owner": "domenkozar",
-        "ref": "devenv-2.24",
-        "repo": "nix",
         "type": "github"
       }
     },
@@ -967,17 +843,17 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1761313199,
-        "narHash": "sha256-wCIACXbNtXAlwvQUo1Ed++loFALPjYUA3dpcUJiXO44=",
-        "owner": "cachix",
-        "repo": "devenv-nixpkgs",
-        "rev": "d1c30452ebecfc55185ae6d1c983c09da0c274ff",
+        "lastModified": 1759417375,
+        "narHash": "sha256-O7eHcgkQXJNygY6AypkF9tFhsoDQjpNEojw3eFs73Ow=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dc704e6102e76aad573f63b74c742cd96f8f1e6c",
         "type": "github"
       },
       "original": {
-        "owner": "cachix",
-        "ref": "rolling",
-        "repo": "devenv-nixpkgs",
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -1095,7 +971,7 @@
     },
     "nixvim": {
       "inputs": {
-        "flake-parts": "flake-parts_3",
+        "flake-parts": "flake-parts_2",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -1181,10 +1057,10 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "devenv": "devenv",
-        "flake-compat": "flake-compat_2",
+        "flake-compat": "flake-compat",
         "flake-programs-sqlite": "flake-programs-sqlite",
         "futils": "futils",
+        "git-hooks": "git-hooks",
         "home-manager": "home-manager_2",
         "nix-flatpak": "nix-flatpak",
         "nix-gaming": "nix-gaming",
@@ -1240,7 +1116,7 @@
     },
     "spotify-notifyx": {
       "inputs": {
-        "devenv": "devenv_2",
+        "devenv": "devenv",
         "flake-compat": "flake-compat_4",
         "futils": "futils_2",
         "nixpkgs": "nixpkgs_9",
