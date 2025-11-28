@@ -8,21 +8,28 @@
 
 let
   cfg = config.tsrk.kernel.v4l2loopback;
-  render = v:
+  render =
+    v:
     if lib.isString v then
       ''"${v}"''
     else if lib.isList v then
       lib.concatMapStringsSep "," render v
     else
       builtins.toString v;
-in {
+in
+{
   options = {
     tsrk.kernel = {
       v4l2loopback = {
         enable = lib.options.mkEnableOption "the v4l2loopback kernel module";
         moduleOptions = lib.options.mkOption {
-          type = with lib.types;
-            attrsOf (oneOf [ int str (listOf (either int str)) ]);
+          type =
+            with lib.types;
+            attrsOf (oneOf [
+              int
+              str
+              (listOf (either int str))
+            ]);
           description = "Additionnal options to pass to the module";
           default = { };
         };
@@ -36,8 +43,7 @@ in {
       extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
       extraModprobeConfig = lib.mkIf (cfg.moduleOptions != { }) ''
         options v4l2loopback ${
-          lib.concatMapAttrsStringSep " " (n: v: "${n}=${render v}")
-          cfg.moduleOptions
+          lib.concatMapAttrsStringSep " " (n: v: "${n}=${render v}") cfg.moduleOptions
         }
       '';
     };

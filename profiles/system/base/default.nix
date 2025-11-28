@@ -6,10 +6,17 @@
 
 { self, inputs, ... }:
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
-let tsrkPkgs = self.packages.${pkgs.system};
-in {
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   key = ./.;
 
   imports = [
@@ -21,6 +28,8 @@ in {
     self.nixosModules.earlyoom
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
+
+  programs.command-not-found.enable = lib.mkDefault true;
 
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -34,7 +43,13 @@ in {
   programs.ssh.package = pkgs.openssh_gssapi;
 
   console = {
-    packages = with pkgs; [ terminus_font termsyn tamsyn spleen mno16 ];
+    packages = with pkgs; [
+      terminus_font
+      termsyn
+      tamsyn
+      spleen
+      mno16
+    ];
     font = "spleen-12x24";
     keyMap = "us";
     earlySetup = lib.mkDefault true;
@@ -43,12 +58,19 @@ in {
   nix = {
     # pkgs.nixFlakes was just an alias to pkgs.nixVersions.stable, and has
     # been removed in 24.11
-    # Rather just use the pkgs.nixStable alias directly at that point.
-    package = pkgs.nixStable;
+    # And funny enough pkgs.nixStable was also removed circa 25.11
+    # So we are just left with the unaliased version now lmao
+    package = pkgs.nixVersions.stable;
 
     settings = {
-      trusted-users = [ "root" "@wheel" ];
-      system-features = [ "kvm" "big-parrallel" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
+      system-features = [
+        "kvm"
+        "big-parrallel"
+      ];
       substituters = [
         "https://s3.cri.epita.fr/cri-nix-cache.s3.cri.epita.fr"
         "https://nix-community.cachix.org"
@@ -84,7 +106,7 @@ in {
     };
   };
 
-  services.logind.killUserProcesses = lib.mkDefault true;
+  services.logind.settings.Login.KillUserProcesses = lib.mkDefault true;
 
   documentation = {
     enable = true;
@@ -103,13 +125,22 @@ in {
 
   # HACK: see https://gitlab.cri.epita.fr/cri/infrastructure/nixpie/-/blob/master/profiles/core/default.nix#L108-123
   # I need this for school dev
-  environment.pathsToLink = [ "/include" "/lib" "/share" "/share/zsh" ];
-  environment.extraOutputsToInstall = [ "out" "lib" "bin" "dev" ];
+  environment.pathsToLink = [
+    "/include"
+    "/lib"
+    "/share"
+    "/share/zsh"
+  ];
+  environment.extraOutputsToInstall = [
+    "out"
+    "lib"
+    "bin"
+    "dev"
+  ];
   environment.variables = {
     NIXPKGS_ALLOW_UNFREE = "1";
 
-    NIX_CFLAGS_COMPILE_x86_64_unknown_linux_gnu =
-      "-isystem /run/current-system/sw/include";
+    NIX_CFLAGS_COMPILE_x86_64_unknown_linux_gnu = "-isystem /run/current-system/sw/include";
     NIX_CFLAGS_LINK_x86_64_unknown_linux_gnu = "-L/run/current-system/sw/lib";
 
     CMAKE_INCLUDE_PATH = "/run/current-system/sw/include";
@@ -119,7 +150,9 @@ in {
     PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
   };
 
-  environment.systemPackages = [ inputs.agenix.packages.${pkgs.system}.agenix ];
+  environment.systemPackages = [
+    inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.agenix
+  ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -168,8 +201,7 @@ in {
     } \033[0;36m image\033[0m\n"
   '';
 
-  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.7")
-    pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.7") pkgs.linuxPackages_latest;
 
   system.stateVersion = "24.05";
 }

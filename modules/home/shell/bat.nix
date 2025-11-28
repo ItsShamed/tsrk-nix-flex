@@ -6,10 +6,17 @@
 
 { self, ... }:
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let tsrkPkgs = self.packages.${pkgs.system};
-in {
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   options = {
     tsrk.shell.bat = {
       enable = lib.options.mkEnableOption "tsrk's bat configuration";
@@ -28,10 +35,11 @@ in {
     };
   };
   config = lib.mkIf config.tsrk.shell.bat.enable {
-    /* Because of how the theme is generated upstream (name being the same
-       regardless of the variant), we cannot guarantee at this time that there
-       will be no conflicts internally w.r.t bat. So we provide one theme at a
-       time, depending on the specialisation.
+    /*
+      Because of how the theme is generated upstream (name being the same
+      regardless of the variant), we cannot guarantee at this time that there
+      will be no conflicts internally w.r.t bat. So we provide one theme at a
+      time, depending on the specialisation.
     */
     programs.bat = {
       enable = true;

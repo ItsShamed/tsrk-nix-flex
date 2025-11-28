@@ -37,5 +37,5 @@
     };
   };
 
-  swapDevices = [{ label = "trenswap"; }];
+  swapDevices = [ { label = "trenswap"; } ];
 }

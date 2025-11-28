@@ -4,6 +4,8 @@ python3Packages.buildPythonPackage rec {
   pname = "vunit_hdl";
   version = "4.7.0";
   doCheck = false;
+  pyproject = true;
+  build-system = with python3Packages; [ setuptools ];
 
   propagatedBuildInputs = with python3Packages; [ colorama ];
 
@@ -14,8 +16,7 @@ python3Packages.buildPythonPackage rec {
 
   meta = with lib; {
     homepage = "https://vunit.github.io/";
-    description =
-      "VUnit is an open source unit testing framework for VHDL/SystemVerilog";
+    description = "VUnit is an open source unit testing framework for VHDL/SystemVerilog";
     license = licenses.mpl20;
   };
 }

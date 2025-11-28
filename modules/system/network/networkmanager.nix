@@ -6,8 +6,10 @@
 
 { config, lib, ... }:
 
-let cfg = config.tsrk.networking.networkmanager;
-in {
+let
+  cfg = config.tsrk.networking.networkmanager;
+in
+{
   options = {
     tsrk.networking.networkmanager = {
       enable = lib.options.mkEnableOption "NetworkManager";
@@ -15,7 +17,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.networkmanager = { enable = lib.mkDefault true; };
+    networking.networkmanager = {
+      enable = lib.mkDefault true;
+    };
 
     programs.nm-applet.enable = lib.mkDefault true;
   };

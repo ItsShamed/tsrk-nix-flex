@@ -8,10 +8,16 @@
 
 name:
 
-{ modules ? [ ], homeDir ? "/home/${name}"
+{
+  modules ? [ ],
+  homeDir ? "/home/${name}",
 
-, password ? null, hashedPasswordFile ? null, initialPassword ? null
-, canSudo ? false, moreGroups ? [ ] }:
+  password ? null,
+  hashedPasswordFile ? null,
+  initialPassword ? null,
+  canSudo ? false,
+  moreGroups ? [ ],
+}:
 
 {
   _file = ./generateFullUser.nix;
@@ -20,7 +26,13 @@ name:
   imports = [
     (generateSystemHome name { inherit modules homeDir; })
     (generateUser name {
-      inherit password hashedPasswordFile initialPassword canSudo moreGroups;
+      inherit
+        password
+        hashedPasswordFile
+        initialPassword
+        canSudo
+        moreGroups
+        ;
     })
   ];
 }

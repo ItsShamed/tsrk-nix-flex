@@ -4,17 +4,21 @@
 
 # SPDX-License-Identifier: MIT
 
-{ fetchFromGitHub, stdenvNoCC, lib }:
+{
+  fetchFromGitHub,
+  stdenvNoCC,
+  lib,
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "tokyonight-extras";
-  version = "4.11.0";
+  version = "4.14.1";
 
   src = fetchFromGitHub {
     owner = "folke";
     repo = "tokyonight.nvim";
     rev = "v${version}";
-    hash = "sha256-pMzk1gRQFA76BCnIEGBRjJ0bQ4YOf3qecaU6Fl/nqLE=";
+    hash = "sha256-4zfkv3egdWJ/GCWUehV0MAIXxsrGT82Wd1Qqj1SCGOk=";
   };
 
   installPhase = ''

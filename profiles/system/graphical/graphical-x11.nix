@@ -11,7 +11,10 @@
 {
   key = ./graphical-x11.nix;
 
-  imports = [ self.nixosModules.profile-graphical-base self.nixosModules.i3 ];
+  imports = [
+    self.nixosModules.profile-graphical-base
+    self.nixosModules.i3
+  ];
 
   tsrk.i3.enable = lib.mkDefault true;
 

@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-let cfg = config.tsrk.kitty;
-in {
+let
+  cfg = config.tsrk.kitty;
+in
+{
   options = {
     tsrk.kitty.enable = lib.options.mkEnableOption "kitty terminal emulator";
   };

@@ -10,7 +10,6 @@ args:
 
 {
   imports = [
-    ./custom/plugins
     ./keymaps.nix
     ./options.nix
     (lib.modules.importApply ./plugins args)

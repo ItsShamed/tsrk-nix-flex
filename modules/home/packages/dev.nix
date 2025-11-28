@@ -6,12 +6,18 @@
 
 { self, ... }:
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  tsrkPkgs = self.packages.${pkgs.system};
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.tsrk.packages.dev;
-in {
+in
+{
   options = {
     tsrk.packages.dev = {
       enable = lib.options.mkEnableOption "tsrk's development bundle";
@@ -19,6 +25,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ tsrkPkgs.realm-studio devenv ];
+    home.packages = with pkgs; [
+      tsrkPkgs.realm-studio
+      devenv
+    ];
   };
 }

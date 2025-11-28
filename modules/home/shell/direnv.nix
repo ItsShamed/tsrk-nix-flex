@@ -6,8 +6,10 @@
 
 { lib, config, ... }:
 
-let cfg = config.tsrk.shell.direnv;
-in {
+let
+  cfg = config.tsrk.shell.direnv;
+in
+{
   options = {
     tsrk.shell.direnv = {
       enable = lib.options.mkEnableOption "tsrk's direnv configuration";

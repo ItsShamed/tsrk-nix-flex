@@ -1,14 +1,22 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.x11.amdgpu;
-  renderOption = optionName: value:
+  renderOption =
+    optionName: value:
     let
-      confValue = if builtins.isBool value then
-        if value then "on" else "off"
-      else
-        builtins.toString value;
-    in if builtins.isNull value then
+      confValue =
+        if builtins.isBool value then
+          if value then "on" else "off"
+        else
+          builtins.toString value;
+    in
+    if builtins.isNull value then
       "        # Option \"${optionName}\" is left out"
     else
       "        Option \"${optionName}\" \"${confValue}\"";
@@ -16,25 +24,34 @@ let
   confOptions = {
     SWCursor = cfg.softwareCursor;
     Accel = cfg.hardwareAcceleration.enable;
-    ZaphodHeads = if builtins.isList cfg.zaphodHeads then
-      lib.strings.concatStringsSep "," cfg.zaphodHeads
-    else
-      cfg.zaphodHeads;
+    ZaphodHeads =
+      if builtins.isList cfg.zaphodHeads then
+        lib.strings.concatStringsSep "," cfg.zaphodHeads
+      else
+        cfg.zaphodHeads;
     DRI = cfg.maximumDRILevel;
     EnablePageFlip = cfg.pageFlip;
     TearFree = cfg.tearFree;
     VariableRefresh = cfg.freeSync;
     AsyncFlipSecondaries = cfg.asyncFlips;
     AccelMethod = cfg.hardwareAcceleration.method;
-  } // cfg.extraConfig;
+  }
+  // cfg.extraConfig;
 
   optionStrings = lib.attrsets.mapAttrsToList renderOption confOptions;
-in {
+in
+{
   options = {
     tsrk.x11.amdgpu = {
       enable = lib.options.mkEnableOption "X11 config for AMD GPUs";
       extraConfig = lib.options.mkOption {
-        type = with lib.types; attrsOf (oneOf [ number bool str ]);
+        type =
+          with lib.types;
+          attrsOf (oneOf [
+            number
+            bool
+            str
+          ]);
         description = ''
           Additionnal options to set for the amdgpu Xorg Device. Please refer to
           amdgpu(4) for available options to set.
@@ -47,7 +64,12 @@ in {
           default = true;
         };
         method = lib.options.mkOption {
-          type = with lib.types; enum [ "none" "glamor" ];
+          type =
+            with lib.types;
+            enum [
+              "none"
+              "glamor"
+            ];
           description = "Hardware acceleration architecture to use.";
           default = "glamor";
         };
@@ -58,14 +80,16 @@ in {
         default = null;
       };
       maximumDRILevel = lib.options.mkOption {
-        type = with lib.types; enum [ 2 3 ];
+        type =
+          with lib.types;
+          enum [
+            2
+            3
+          ];
         description = "The maximum DRI Level to enable.";
         defaultText = "3 if Xorg Server version is >= 18.3, else 2";
         default =
-          if (lib.versionAtLeast pkgs.xorg.xorgserver.version "18.3") then
-            3
-          else
-            2;
+          if (lib.versionAtLeast pkgs.xorg.xorgserver.version "18.3") then 3 else 2;
       };
       pageFlip = lib.options.mkEnableOption "DRI2 page flipping" // {
         default = true;
@@ -82,8 +106,7 @@ in {
         default = null;
       };
       freeSync = lib.options.mkEnableOption "AMD FreeSync";
-      asyncFlips =
-        lib.options.mkEnableOption "async flips for secondary video outputs";
+      asyncFlips = lib.options.mkEnableOption "async flips for secondary video outputs";
     };
   };
 

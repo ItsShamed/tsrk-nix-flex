@@ -10,7 +10,7 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
@@ -43,23 +43,11 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spotify-notifyx = {
-      url = "github:ItsShamed/spotify-dbus-enhancer/master";
-    };
-
-    sddm-babysitter = {
-      url = "github:ItsShamed/sddm-babysitter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
 
     agenix.url = "github:ryantm/agenix";
     git-hooks.url = "github:cachix/git-hooks.nix";
@@ -210,7 +198,13 @@
           checks.pre-commit-check = git-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
-              deadnix.enable = true;
+              deadnix = {
+                enable = true;
+                settings = {
+                  edit = true;
+                  noUnderscore = true;
+                };
+              };
               nixfmt = {
                 enable = true;
                 settings.width = 80;

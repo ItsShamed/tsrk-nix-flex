@@ -11,7 +11,10 @@
     backup = false;
     cmdheight = 1;
     colorcolumn = "80";
-    completeopt = [ "menuone" "noselect" ];
+    completeopt = [
+      "menuone"
+      "noselect"
+    ];
     conceallevel = 0;
     fileencoding = "utf-8";
     foldmethod = "manual";

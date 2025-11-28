@@ -4,8 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, makeDesktopItem, symlinkJoin, makeWrapper, fetchurl, callPackage
-, stdenvNoCC, unzip, zip }:
+{
+  lib,
+  makeDesktopItem,
+  symlinkJoin,
+  makeWrapper,
+  fetchurl,
+  callPackage,
+  stdenvNoCC,
+  unzip,
+  zip,
+}:
 
 let
   info = builtins.fromJSON (builtins.readFile ./info.json);
@@ -18,7 +27,11 @@ let
     inherit (info) version;
     inherit pname;
 
-    nativeBuildInputs = [ makeWrapper unzip zip ];
+    nativeBuildInputs = [
+      makeWrapper
+      unzip
+      zip
+    ];
 
     src = fetchurl {
       inherit (info) url;
@@ -36,7 +49,10 @@ let
 
     sourceRoot = "launcher";
 
-    outputs = [ "out" "packed" ];
+    outputs = [
+      "out"
+      "packed"
+    ];
 
     buildPhase = ''
       mkdir $packed
@@ -70,9 +86,13 @@ let
     desktopName = "Paladium Launcher";
     categories = [ "Game" ];
   };
-in symlinkJoin {
+in
+symlinkJoin {
   name = pname;
-  paths = [ paladium-launcher desktopItem ];
+  paths = [
+    paladium-launcher
+    desktopItem
+  ];
 
   meta = with lib; {
     description = "Minecraft Launcher for the Paladium modded server.";

@@ -4,7 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ stdenvNoCC, fetchFromGitHub, lib }:
+{
+  stdenvNoCC,
+  fetchFromGitHub,
+  lib,
+}:
 
 stdenvNoCC.mkDerivation {
   pname = "spectral-font";
@@ -28,8 +32,7 @@ stdenvNoCC.mkDerivation {
   '';
 
   meta = with lib; {
-    description =
-      "Original typeface, primarily intended for use inside Google's Docs and Slides";
+    description = "Original typeface, primarily intended for use inside Google's Docs and Slides";
     homepage = "https://productiontype.com/font/spectral";
     license = licenses.ofl;
   };

@@ -4,4 +4,10 @@
 
 # SPDX-License-Identifier: MIT
 
-[ ./retroarch ./rofi-power-menu ./sound-theme-freedesktop ./sddm ./sshfs ]
+[
+  ./retroarch
+  ./rofi-power-menu
+  ./sound-theme-freedesktop
+  ./sddm
+  ./sshfs
+]

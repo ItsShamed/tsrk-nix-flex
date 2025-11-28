@@ -20,8 +20,9 @@
 
   config = {
     tsrk = {
-      i3.exitPromptCommand = lib.mkDefault (teardown:
-        "exec rofi -show p -modi p:'rofi-power-menu --logout ${teardown}'");
+      i3.exitPromptCommand = lib.mkDefault (
+        teardown: "exec rofi -show p -modi p:'rofi-power-menu --logout ${teardown}'"
+      );
       packages.desktop.enable = lib.mkDefault true;
       darkman = {
         feh = {

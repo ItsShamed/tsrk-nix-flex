@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.shell.kubeswitch;
-in {
+let
+  cfg = config.tsrk.shell.kubeswitch;
+in
+{
   options = {
     tsrk.shell.kubeswitch = {
       enable = lib.options.mkEnableOption "Kubeswitch shell integration";

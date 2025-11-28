@@ -4,15 +4,22 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, stdenv, fetchFromGitHub, qtgraphicaleffects, callPackage
-, themeConfig ? { } }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  qtgraphicaleffects,
+  callPackage,
+  themeConfig ? { },
+}:
 let
   configureTheme = ''
     cat <<EOF > theme.conf.user
     ${lib.generators.toINI { } { General = themeConfig; }}
     EOF
   '';
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   pname = "sddm-slice-theme";
   version = "1.5.1";
 
@@ -47,6 +54,7 @@ in stdenv.mkDerivation {
     description = "Simple dark SDDM theme with many customization options.";
     platforms = platforms.linux;
   };
-} // {
+}
+// {
   withConfig = config: callPackage ./. { themeConfig = themeConfig // config; };
 }

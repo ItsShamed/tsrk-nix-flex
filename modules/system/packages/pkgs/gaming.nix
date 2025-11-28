@@ -6,12 +6,18 @@
 
 { inputs, ... }:
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   inherit (pkgs.stdenv.hostPlatform) system;
   proton-osu-bin = inputs.nix-gaming.packages.${system}.proton-osu-bin;
-in {
+in
+{
   imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
 
   options = {
@@ -23,30 +29,35 @@ in {
     };
   };
 
-  config = lib.mkIf config.tsrk.packages.pkgs.gaming.enable (lib.mkMerge [
-    {
-      environment.systemPackages = with pkgs; [
-        gamemode
-        protontricks
-        umu-launcher
-      ];
+  config = lib.mkIf config.tsrk.packages.pkgs.gaming.enable (
+    lib.mkMerge [
+      {
+        environment.systemPackages = with pkgs; [
+          gamemode
+          protontricks
+          umu-launcher
+        ];
 
-      hardware.steam-hardware.enable = lib.mkDefault true;
-      programs.steam = {
-        enable = lib.mkDefault true;
-        extraCompatPackages = with pkgs; [ proton-ge-bin proton-osu-bin ];
-        remotePlay.openFirewall = lib.mkDefault true;
-        localNetworkGameTransfers.openFirewall = lib.mkDefault true;
-        platformOptimizations.enable = lib.mkDefault true;
-      };
+        hardware.steam-hardware.enable = lib.mkDefault true;
+        programs.steam = {
+          enable = lib.mkDefault true;
+          extraCompatPackages = with pkgs; [
+            proton-ge-bin
+            proton-osu-bin
+          ];
+          remotePlay.openFirewall = lib.mkDefault true;
+          localNetworkGameTransfers.openFirewall = lib.mkDefault true;
+          platformOptimizations.enable = lib.mkDefault true;
+        };
 
-      services.joycond.enable = lib.mkDefault true;
-    }
-    (lib.mkIf (config.tsrk.packages.pkgs.gaming.amdSupport) {
-      hardware.opengl = {
-        extraPackages = [ pkgs.amdvlk ];
-        extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
-      };
-    })
-  ]);
+        services.joycond.enable = lib.mkDefault true;
+      }
+      (lib.mkIf (config.tsrk.packages.pkgs.gaming.amdSupport) {
+        hardware.opengl = {
+          extraPackages = [ pkgs.amdvlk ];
+          extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+        };
+      })
+    ]
+  );
 }

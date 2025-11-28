@@ -8,7 +8,10 @@
 
 name:
 
-{ modules ? [ ], homeDir ? "/home/${name}" }:
+{
+  modules ? [ ],
+  homeDir ? "/home/${name}",
+}:
 
 {
   _file = ./generateSystemHome.nix;

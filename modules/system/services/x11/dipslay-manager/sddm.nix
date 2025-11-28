@@ -6,12 +6,18 @@
 
 { self, ... }:
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.sddm;
-  tsrkPkgs = self.packages.${pkgs.system};
-in {
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   options = {
     tsrk.sddm = {
       enable = lib.options.mkEnableOption "sddm as a display manager";

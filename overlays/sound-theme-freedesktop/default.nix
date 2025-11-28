@@ -4,13 +4,14 @@
 
 # SPDX-License-Identifier: MIT
 
-self: super:
+_self: super:
 
 {
-  sound-theme-freedesktop = super.sound-theme-freedesktop.overrideAttrs
-    (selfAttrs: superAttrs: {
+  sound-theme-freedesktop = super.sound-theme-freedesktop.overrideAttrs (
+    _selfAttrs: _superAttrs: {
       fixupPhase = ''
         cp -f ${./bell.oga} $out/share/sounds/freedesktop/stereo/bell.oga
       '';
-    });
+    }
+  );
 }

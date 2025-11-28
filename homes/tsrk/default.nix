@@ -4,15 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, inputs, ... }:
+{ self, ... }:
 
 {
   imports = with self.homeManagerModules; [
     packages
     profile-tsrk-common
-    profile-tsrk-private
     ./extra-packages.nix
-    (inputs.spotify-notifyx.homeManagerModules.default)
   ];
 
   tsrk = {

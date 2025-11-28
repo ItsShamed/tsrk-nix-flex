@@ -4,15 +4,21 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.syshud;
-in {
+let
+  cfg = config.tsrk.syshud;
+in
+{
   options = {
     tsrk.syshud = {
       enable = lib.options.mkEnableOption "syshud as an OSD system";
-      package =
-        lib.options.mkPackageOption pkgs "syshud" { default = [ "syshud" ]; };
+      package = lib.options.mkPackageOption pkgs "syshud" { default = [ "syshud" ]; };
     };
   };
 

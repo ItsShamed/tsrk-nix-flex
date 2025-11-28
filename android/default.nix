@@ -4,7 +4,14 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, inputs, self, pkgSet, nix-on-droid, ... }:
+{
+  lib,
+  inputs,
+  self,
+  pkgSet,
+  nix-on-droid,
+  ...
+}:
 let
   importModule = file: {
     name = lib.strings.removeSuffix ".nix" (builtins.baseNameOf file);
@@ -17,4 +24,5 @@ let
       };
     };
   };
-in builtins.listToAttrs (builtins.map importModule (import ./imports.nix))
+in
+builtins.listToAttrs (builtins.map importModule (import ./imports.nix))

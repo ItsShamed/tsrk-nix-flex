@@ -4,7 +4,14 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, rustPlatform, fetchFromGitHub, lndir, makeBinaryWrapper, spotify }:
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  lndir,
+  makeBinaryWrapper,
+  spotify,
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "spotify-adblock";
@@ -28,7 +35,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-oGpe+kBf6kBboyx/YfbQBt1vvjtXd1n2pOH6FNcbF8M=";
 
-  nativeBuildInputs = [ makeBinaryWrapper lndir ];
+  nativeBuildInputs = [
+    makeBinaryWrapper
+    lndir
+  ];
 
   postInstall = ''
     install -Dm644 config.toml $out/etc/spotify-adblock/config.toml
@@ -40,8 +50,7 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description =
-      "Adblocker for Spotify. Patched with some bugs fixes and quality of life improvements.";
+    description = "Adblocker for Spotify. Patched with some bugs fixes and quality of life improvements.";
     longDescription = ''
       Included patches:
         - Allow domains used for logging in, signing up, and account modification: https://github.com/abba23/spotify-adblock/pull/173

@@ -11,7 +11,11 @@
 {
   key = ./wayland-base.nix;
 
-  imports = with self.homeManagerModules; [ profile-desktop hyprland waybar ];
+  imports = with self.homeManagerModules; [
+    profile-desktop
+    hyprland
+    waybar
+  ];
 
   config = {
     tsrk = {

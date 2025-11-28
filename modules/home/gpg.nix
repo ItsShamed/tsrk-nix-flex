@@ -6,8 +6,10 @@
 
 { config, lib, ... }:
 
-let cfg = config.tsrk.gpg;
-in {
+let
+  cfg = config.tsrk.gpg;
+in
+{
   options = {
     tsrk.gpg = {
       enable = lib.options.mkEnableOption "tsrk's GPG configuration";
@@ -21,9 +23,22 @@ in {
       scdaemonSettings.disable-ccid = true;
       settings = {
         keyserver = "keys.openpgp.org";
-        personal-cipher-preferences = [ "AES256" "AES192" "AES" ];
-        personal-digest-preferences = [ "SHA512" "SHA384" "SHA256" ];
-        personal-compress-preferences = [ "ZLIB" "BZIP2" "ZIP" "Uncompressed" ];
+        personal-cipher-preferences = [
+          "AES256"
+          "AES192"
+          "AES"
+        ];
+        personal-digest-preferences = [
+          "SHA512"
+          "SHA384"
+          "SHA256"
+        ];
+        personal-compress-preferences = [
+          "ZLIB"
+          "BZIP2"
+          "ZIP"
+          "Uncompressed"
+        ];
         default-preference-list = [
           "SHA512"
           "SHA384"

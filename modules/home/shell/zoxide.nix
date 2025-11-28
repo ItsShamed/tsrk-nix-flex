@@ -15,7 +15,9 @@
 
   config = lib.mkIf config.tsrk.shell.zoxide.enable {
 
-    home.shellAliases = { cd = "z"; };
+    home.shellAliases = {
+      cd = "z";
+    };
 
     programs.zoxide = {
       enable = true;

@@ -6,11 +6,16 @@
 
 { self, pkgSet, ... }:
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  tsrkPkgs = self.packages.${pkgs.system};
-  inherit (pkgSet pkgs.system) pkgsUnstable;
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
   gapgdbserver = pkgs.writeShellApplication {
     name = "gapgdbserver";
     runtimeInputs = with pkgs; [ openocd ];
@@ -19,10 +24,14 @@ let
     '';
   };
 
-  gapflash = with pkgs;
+  gapflash =
+    with pkgs;
     writeShellApplication {
       name = "gapflash";
-      runtimeInputs = [ gcc-arm-embedded stlink ];
+      runtimeInputs = [
+        gcc-arm-embedded
+        stlink
+      ];
       text = ''
         if [ $# -ne 1 ] || [ ! -f "$1" ]; then
             echo "Usage: $0 <elf>" >&2
@@ -62,12 +71,18 @@ let
 
   vhdlMake = pkgs.writeShellApplication {
     name = "vhdl-make";
-    runtimeInputs = with pkgs; [ vunit-hdl zlib gtkwave ghdl-llvm ];
+    runtimeInputs = with pkgs; [
+      vunit-hdl
+      zlib
+      gtkwave
+      ghdl-llvm
+    ];
     text = ''
       make -f ${vhdlMakefile} "$@"
     '';
   };
-in {
+in
+{
   options = {
     tsrk.packages.pkgs.cp = {
       # WARN: IT'S ABSOLUTELY NOT WHAT YOU THINK IT MEANS
@@ -120,7 +135,10 @@ in {
       surfer
       (quartus-prime-lite.override {
         # We do not need the other qdz, this will make the build faster
-        supportedDevices = [ "Cyclone V" "MAX 10 FPGA" ];
+        supportedDevices = [
+          "Cyclone V"
+          "MAX 10 FPGA"
+        ];
       })
 
       # BOOT
@@ -144,8 +162,8 @@ in {
       virtualenv
     ];
 
-    tsrk.packages.pkgs.python.extraPackages.cp = ps:
-      with ps; [
+    tsrk.packages.pkgs.python.extraPackages.cp =
+      ps: with ps; [
         asteval
         coverage
         filelock

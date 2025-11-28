@@ -4,13 +4,22 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.packages.ops;
-in {
+let
+  cfg = config.tsrk.packages.ops;
+in
+{
   options = {
     tsrk.packages = {
-      ops = { enable = lib.options.mkEnableOption "tsrk's ops bundle"; };
+      ops = {
+        enable = lib.options.mkEnableOption "tsrk's ops bundle";
+      };
     };
   };
 

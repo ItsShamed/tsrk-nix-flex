@@ -8,8 +8,7 @@
 
 { pkgs, lib, ... }:
 
-let tsrkPkgs = self.packages.${pkgs.system};
-in {
+{
   plugins = {
     none-ls.enable = true;
     lsp-format.enable = true;
@@ -25,10 +24,7 @@ in {
 
       servers = {
         autotools_ls.enable = true;
-        clangd = {
-          enable = true;
-          package = pkgs.clang-tools_16;
-        };
+        clangd.enable = true;
         cmake.enable = true;
         dockerls = {
           enable = true;
@@ -43,7 +39,7 @@ in {
         };
         ltex = {
           enable = true;
-          package = tsrkPkgs.ltex-ls-plus;
+          package = pkgs.ltex-ls-plus;
           filetypes = [
             "bib"
             "context"
@@ -79,12 +75,10 @@ in {
           settings = {
             formatting.command = [ "nixfmt" ];
             options = {
-              nixos.expr =
-                ''(builtins.getFlake "${self.outPath}").lspHints.nixos or {}'';
-              homeManager.expr = ''
-                (builtins.getFlake "${self.outPath}").lspHints.homeManager or {}'';
+              nixos.expr = ''(builtins.getFlake "${self.outPath}").lspHints.nixos or {}'';
+              homeManager.expr = ''(builtins.getFlake "${self.outPath}").lspHints.homeManager or {}'';
               nixvim.expr = ''
-                (builtins.getFlake "${self.outPath}").packages.${pkgs.system}.nvim-cirno.options or {}
+                (builtins.getFlake "${self.outPath}").packages.${pkgs.stdenv.hostPlatform.system}.nvim-cirno.options or {}
               '';
             };
           };

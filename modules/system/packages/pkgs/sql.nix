@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.packages.pkgs.sql;
-in {
+let
+  cfg = config.tsrk.packages.pkgs.sql;
+in
+{
   options = {
     tsrk.packages.pkgs.sql = {
       enable = lib.options.mkEnableOption "tsrk's PostgreSQL bundle";
@@ -22,8 +29,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [ postgresql sqlfluff ]
+    environment.systemPackages =
+      with pkgs;
+      [
+        postgresql
+        sqlfluff
+      ]
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
     environment.pathsToLink = [ "/share/postgresql" ];

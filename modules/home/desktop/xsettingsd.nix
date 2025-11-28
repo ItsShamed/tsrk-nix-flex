@@ -4,65 +4,77 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.xsettingsd;
-in {
+let
+  cfg = config.tsrk.xsettingsd;
+in
+{
   key = ./xsettingsd.nix;
   options = {
     tsrk.xsettingsd = {
       enable = lib.options.mkEnableOption "xsettingsd";
-      withDConf =
-        lib.options.mkEnableOption "configuring DConf alongside xsettingsd";
+      withDConf = lib.options.mkEnableOption "configuring DConf alongside xsettingsd";
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.mkMerge [
-    {
-      home.pointerCursor = {
-        gtk.enable = lib.mkDefault true;
-        x11.enable = lib.mkDefault true;
-        package = pkgs.apple-cursor;
-        name = "macOS";
-      };
-
-      services.xsettingsd = {
-        enable = true;
-        settings = {
-          "Xft/Antialias" = 1;
-          "Xft/HintStyle" = "hintfull";
-          "Xft/Hinting" = 1;
-          "Xft/RGBA" = "rgb";
-          "Gtk/CursorThemeName" = "macOS";
-          "Gtk/CursorThemeSize" = 48;
-          "Xcursor/size" = 48;
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        home.pointerCursor = {
+          gtk.enable = lib.mkDefault true;
+          x11.enable = lib.mkDefault true;
+          package = pkgs.apple-cursor;
+          name = "macOS";
         };
-      };
 
-      home.packages = with pkgs;
-        [
-          ((tokyonight-gtk-theme.override {
-            colorVariants = [ "dark" "light" ];
-            tweakVariants = [ "storm" ];
-            iconVariants = [ "Dark" "Light" ];
-          }).overrideAttrs { dontFixup = true; })
+        services.xsettingsd = {
+          enable = true;
+          settings = {
+            "Xft/Antialias" = 1;
+            "Xft/HintStyle" = "hintfull";
+            "Xft/Hinting" = 1;
+            "Xft/RGBA" = "rgb";
+            "Gtk/CursorThemeName" = "macOS";
+            "Gtk/CursorThemeSize" = 48;
+            "Xcursor/size" = 48;
+          };
+        };
+
+        home.packages = with pkgs; [
+          (
+            (tokyonight-gtk-theme.override {
+              colorVariants = [
+                "dark"
+                "light"
+              ];
+              tweakVariants = [ "storm" ];
+              iconVariants = [
+                "Dark"
+                "Light"
+              ];
+            }).overrideAttrs
+            { dontFixup = true; }
+          )
         ];
 
-      specialisation = {
-        light.configuration = {
-          services.xsettingsd.settings."Net/ThemeName" =
-            "Tokyonight-Light-Storm";
-          services.xsettingsd.settings."Net/IconThemeName" = "Tokyonight-Light";
+        specialisation = {
+          light.configuration = {
+            services.xsettingsd.settings."Net/ThemeName" = "Tokyonight-Light-Storm";
+            services.xsettingsd.settings."Net/IconThemeName" = "Tokyonight-Light";
+          };
+          dark.configuration = {
+            services.xsettingsd.settings."Net/ThemeName" = "Tokyonight-Dark-Storm";
+            services.xsettingsd.settings."Net/IconThemeName" = "Tokyonight-Dark";
+          };
         };
-        dark.configuration = {
-          services.xsettingsd.settings."Net/ThemeName" =
-            "Tokyonight-Dark-Storm";
-          services.xsettingsd.settings."Net/IconThemeName" = "Tokyonight-Dark";
-        };
-      };
 
-      home.activation.xsettingsd-reload =
-        lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
+        home.activation.xsettingsd-reload = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
           if [ "''${XDG_SESSION_TYPE:-}" != "x11" ] || [ -n "''${WAYLAND_DISPLAY:-}" ]; then
             ${config.systemd.user.systemctlPath} --user restart xsettingsd || true
             _i "X11 is not running, not applying theme with LXAppearance"
@@ -78,49 +90,47 @@ in {
             } || true
           fi
         '';
-    }
-    (lib.mkIf cfg.withDConf {
-      dconf.settings = {
-        "org/gnome/desktop/interface" = {
-          cursor-size = 48;
-          cursor-theme = "macOS-BigSur";
-        };
-      };
-
-      specialisation = {
-        light.configuration = {
-          dconf.settings."org/gnome/desktop/interface" = {
-            color-scheme = "prefer-light";
-            gtk-theme = "Tokyonight-Light-Storm";
-            icon-theme = "Tokyonight-Light";
-          };
-
-          home.activation.dconfSettings-lightfix =
-            lib.hm.dag.entryAfter [ "xsettingsd-reload" ] ''
-              if [[ -v DBUS_SESSION_BUS_ADDRESS ]]; then
-                export DCONF_DBUS_RUN_SESSION=""
-              else
-                export DCONF_DBUS_RUN_SESSION="${pkgs.dbus}/bin/dbus-run-session --dbus-daemon=${pkgs.dbus}/bin/dbus-daemon"
-              fi
-
-              run $DCONF_DBUS_RUN_SESSION ${
-                lib.meta.getExe pkgs.dconf
-              } write /org/gnome/desktop/interface/gtk-theme "'bogus'"
-              run $DCONF_DBUS_RUN_SESSION ${
-                lib.meta.getExe pkgs.dconf
-              } write /org/gnome/desktop/interface/gtk-theme "'Tokyonight-Light-Storm'"
-
-              unset DCONF_DBUS_RUN_SESSION
-            '';
-        };
-        dark.configuration = {
-          dconf.settings."org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-            gtk-theme = "Tokyonight-Dark-Storm";
-            icon-theme = "Tokyonight-Dark";
+      }
+      (lib.mkIf cfg.withDConf {
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            cursor-size = 48;
+            cursor-theme = "macOS-BigSur";
           };
         };
-      };
-    })
-  ]);
+
+        specialisation = {
+          light.configuration = {
+            dconf.settings."org/gnome/desktop/interface" = {
+              color-scheme = "prefer-light";
+              gtk-theme = "Tokyonight-Light-Storm";
+              icon-theme = "Tokyonight-Light";
+            };
+
+            home.activation.dconfSettings-lightfix =
+              lib.hm.dag.entryAfter [ "xsettingsd-reload" ]
+                ''
+                  if [[ -v DBUS_SESSION_BUS_ADDRESS ]]; then
+                    export DCONF_DBUS_RUN_SESSION=""
+                  else
+                    export DCONF_DBUS_RUN_SESSION="${pkgs.dbus}/bin/dbus-run-session --dbus-daemon=${pkgs.dbus}/bin/dbus-daemon"
+                  fi
+
+                  run $DCONF_DBUS_RUN_SESSION ${lib.meta.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme "'bogus'"
+                  run $DCONF_DBUS_RUN_SESSION ${lib.meta.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme "'Tokyonight-Light-Storm'"
+
+                  unset DCONF_DBUS_RUN_SESSION
+                '';
+          };
+          dark.configuration = {
+            dconf.settings."org/gnome/desktop/interface" = {
+              color-scheme = "prefer-dark";
+              gtk-theme = "Tokyonight-Dark-Storm";
+              icon-theme = "Tokyonight-Dark";
+            };
+          };
+        };
+      })
+    ]
+  );
 }

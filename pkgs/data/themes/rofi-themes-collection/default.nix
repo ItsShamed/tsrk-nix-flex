@@ -4,7 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ fetchFromGitHub, stdenv, lib }:
+{
+  fetchFromGitHub,
+  stdenv,
+  lib,
+}:
 
 stdenv.mkDerivation {
   pname = "rofi-themes-collection";

@@ -6,12 +6,18 @@
 
 { inputs, pkgSet, ... }:
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
-  inherit (pkgSet pkgs.system) pkgsUnstable;
-  gaming = inputs.nix-gaming.packages.${pkgs.system};
-in {
+  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
+  gaming = inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   options = {
     tsrk.packages.games = {
       enable = lib.options.mkEnableOption "tsrk's gaming bundle";
@@ -19,10 +25,12 @@ in {
   };
 
   config = lib.mkIf config.tsrk.packages.games.enable {
-    warnings = [''
-      This module (packages/games.nix) installs a package from fufexan/nix-gaming, which is
-      known to cause issues with nixos-install.
-    ''];
+    warnings = [
+      ''
+        This module (packages/games.nix) installs a package from fufexan/nix-gaming, which is
+        known to cause issues with nixos-install.
+      ''
+    ];
 
     home.packages = with pkgs; [
       gaming.osu-lazer-bin

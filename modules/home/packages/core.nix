@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   options = {

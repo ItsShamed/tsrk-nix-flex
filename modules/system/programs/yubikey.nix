@@ -4,14 +4,20 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.yubikey;
-in {
+let
+  cfg = config.tsrk.yubikey;
+in
+{
   options = {
     tsrk.yubikey = {
-      enable =
-        lib.options.mkEnableOption "YubiKey management programs and services";
+      enable = lib.options.mkEnableOption "YubiKey management programs and services";
     };
   };
 
@@ -33,7 +39,6 @@ in {
     environment.systemPackages = with pkgs; [
       yubikey-manager
       yubikey-personalization
-      yubikey-personalization-gui
       yubico-piv-tool
       yubioath-flutter
     ];

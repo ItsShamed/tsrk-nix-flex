@@ -4,28 +4,36 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.packages.pkgs.android;
   androidComposition = pkgs.androidenv.composeAndroidPackages {
-    cmdLineToolsVersion = "8.0";
-    toolsVersion = "26.1.1";
-    platformToolsVersion = "34.0.5";
-    buildToolsVersions = [ "34.0.0" ];
     includeEmulator = false;
-    emulatorVersion = "30.3.4";
     includeSources = false;
     includeSystemImages = true;
-    systemImageTypes = [ "google_apis_playstore" "default" ];
-    abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
-    cmakeVersions = [ "3.10.2" ];
+    systemImageTypes = [
+      "google_apis_playstore"
+      "default"
+    ];
+    abiVersions = [
+      "armeabi-v7a"
+      "arm64-v8a"
+    ];
     includeNDK = true;
-    ndkVersions = [ "22.0.7026061" ];
     useGoogleAPIs = true;
-    includeExtras = [ "extras;google;gcm" ];
+    includeExtras = [
+      "extras;google;gcm"
+      "extras;google;auto"
+    ];
   };
-in {
+in
+{
   options = {
     tsrk.packages.pkgs.android = {
       enable = lib.options.mkEnableOption "tsrk's Android bundle";
@@ -42,21 +50,14 @@ in {
         default = androidComposition;
         defaultText = ''
           pkgs.androidenv.composeAndroidPackages {
-            cmdLineToolsVersion = "8.0";
-            toolsVersion = "26.1.1";
-            platformToolsVersion = "34.0.5";
-            buildToolsVersions = [ "34.0.0" ];
             includeEmulator = false;
-            emulatorVersion = "30.3.4";
             includeSources = false;
             includeSystemImages = true;
             systemImageTypes = [ "google_apis_playstore" "default" ];
             abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
-            cmakeVersions = [ "3.10.2" ];
             includeNDK = true;
-            ndkVersions = [ "22.0.7026061" ];
             useGoogleAPIs = true;
-            includeExtras = [ "extras;google;gcm" ];
+            includeExtras = [ "extras;google;gcm;auto" ];
           };
         '';
       };
@@ -69,18 +70,19 @@ in {
     programs.adb.enable = true;
 
     environment.variables = {
-      ANDROID_SDK_ROOT =
-        "${cfg.androidComposition.androidsdk}/libexec/android-sdk";
+      ANDROID_SDK_ROOT = "${cfg.androidComposition.androidsdk}/libexec/android-sdk";
     };
 
-    environment.systemPackages = with pkgs;
+    environment.systemPackages =
+      with pkgs;
       [
         apktool
         android-file-transfer
         scrcpy
         cfg.androidComposition.androidsdk
         cfg.androidComposition.platform-tools
-      ] ++ lib.lists.optional cfg.flutter.enable flutter
+      ]
+      ++ lib.lists.optional cfg.flutter.enable flutter
       ++ lib.lists.optional cfg.ide.enable cfg.ide.package;
   };
 }

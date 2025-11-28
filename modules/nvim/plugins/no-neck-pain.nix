@@ -17,9 +17,13 @@
         skipEnteringNoNeckPainBuffer = true;
       };
 
-      buffers = { right.enabled = false; };
+      buffers = {
+        right.enabled = false;
+      };
 
-      mappings = { enabled = true; };
+      mappings = {
+        enabled = true;
+      };
       integrations.dashboard.enabled = true;
     };
   };

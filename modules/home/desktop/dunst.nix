@@ -54,8 +54,7 @@
           line_height = 0;
 
           markup = "full";
-          format = ''
-            <b><u><span font_size="12.5pt">%a</span></u> - %s</b>\n<span font_size="10.5pt">%b %p</span>'';
+          format = ''<b><u><span font_size="12.5pt">%a</span></u> - %s</b>\n<span font_size="10.5pt">%b %p</span>'';
 
           alignment = "left";
           vertical_alignment = "center";

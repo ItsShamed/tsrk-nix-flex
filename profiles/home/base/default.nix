@@ -11,7 +11,14 @@
 {
   key = ./.;
 
-  imports = with self.homeManagerModules; [ packages nvim git ssh gpg shell ];
+  imports = with self.homeManagerModules; [
+    packages
+    nvim
+    git
+    ssh
+    gpg
+    shell
+  ];
 
   config = {
     tsrk.packages = {

@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.packages.pkgs.csharp;
-in {
+let
+  cfg = config.tsrk.packages.pkgs.csharp;
+in
+{
   options = {
     tsrk.packages.pkgs.csharp = {
       enable = lib.options.mkEnableOption "tsrk's C# development bundle";
@@ -29,8 +36,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [ cfg.package mono ] ++ (lib.lists.optional cfg.msbuild.enable msbuild)
+    environment.systemPackages =
+      with pkgs;
+      [
+        cfg.package
+        mono
+      ]
+      ++ (lib.lists.optional cfg.msbuild.enable msbuild)
       ++ (lib.lists.optional cfg.ide.enable cfg.ide.package);
 
     environment.variables = {

@@ -4,10 +4,31 @@
 
 # SPDX-License-Identifier: MIT
 
-{ swingSupport ? true, lib, stdenv, requireFile, makeWrapper, unzip, file
-, xorg ? null, pluginSupport ? true, glib, libxml2, ffmpeg, libxslt, libGL
-, freetype, fontconfig, gtk2, pango, cairo, alsa-lib, atk, gdk-pixbuf
-, setJavaClassPath }:
+{
+  swingSupport ? true,
+  lib,
+  stdenv,
+  requireFile,
+  makeWrapper,
+  unzip,
+  file,
+  xorg ? null,
+  pluginSupport ? true,
+  glib,
+  libxml2,
+  ffmpeg,
+  libxslt,
+  libGL,
+  freetype,
+  fontconfig,
+  gtk2,
+  pango,
+  cairo,
+  alsa-lib,
+  atk,
+  gdk-pixbuf,
+  setJavaClassPath,
+}:
 
 assert swingSupport -> xorg != null;
 
@@ -28,8 +49,7 @@ let
     name = "java-linux.tar.gz";
     src = requireFile {
       name = "java-linux.zip";
-      url =
-        "https://download.paladium-pvp.fr/games/bootstrap/java/java-linux.zip";
+      url = "https://download.paladium-pvp.fr/games/bootstrap/java/java-linux.zip";
       sha256 = "sha256-kV/6QO6m1XKtQigdEyA8+adm9XsLu+oqsN3/+bVR6Vc=";
     };
 
@@ -55,14 +75,19 @@ let
 
   };
 
-in let
+in
+let
   result = stdenv.mkDerivation rec {
     pname = "paladium-jre";
     version = "1.8.0_202";
 
     src = java-source;
 
-    nativeBuildInputs = [ file makeWrapper unzip ];
+    nativeBuildInputs = [
+      file
+      makeWrapper
+      unzip
+    ];
 
     # See: https://github.com/NixOS/patchelf/issues/10
     dontStrip = 1;
@@ -127,7 +152,8 @@ in let
       cairo
       gdk-pixbuf
       atk
-    ] ++ lib.optionals swingSupport [
+    ]
+    ++ lib.optionals swingSupport [
       xorg.libX11
       xorg.libXext
       xorg.libXtst
@@ -142,8 +168,7 @@ in let
 
     passthru.mozillaPlugin = "/lib/${architecture}/plugins";
 
-    passthru.jre =
-      result; # FIXME: use multiple outputs or return actual JRE package
+    passthru.jre = result; # FIXME: use multiple outputs or return actual JRE package
 
     passthru.home = result;
 
@@ -161,4 +186,5 @@ in let
     };
 
   };
-in result
+in
+result

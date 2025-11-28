@@ -4,12 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.packages.pkgs.python;
-  tsrkPythonPackages = pythonPackages:
-    with pythonPackages; [
+  tsrkPythonPackages =
+    pythonPackages: with pythonPackages; [
       pip
       virtualenv
       ipython
@@ -17,10 +22,15 @@ let
       pyyaml
     ];
   extraPythonPackages = lib.attrsets.attrValues cfg.extraPackages;
-  resultingPythonPackages = ps:
-    lib.lists.flatten (builtins.map (pkgList: pkgList ps)
-      ([ tsrkPythonPackages ] ++ extraPythonPackages));
-in {
+  resultingPythonPackages =
+    ps:
+    lib.lists.flatten (
+      builtins.map (pkgList: pkgList ps) (
+        [ tsrkPythonPackages ] ++ extraPythonPackages
+      )
+    );
+in
+{
   options = {
     tsrk.packages.pkgs.python = {
       enable = lib.options.mkEnableOption "tsrk's Python bundle";
@@ -36,8 +46,9 @@ in {
     environment.systemPackages = with pkgs; [
       uv
       poetry
-      ((python3.withPackages resultingPythonPackages).override
-        (_: { ignoreCollisions = true; }))
+      ((python3.withPackages resultingPythonPackages).override (_: {
+        ignoreCollisions = true;
+      }))
     ];
   };
 }

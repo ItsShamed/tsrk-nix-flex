@@ -19,16 +19,24 @@ let
 
   keymapNoD = action: mode: keymap action null mode;
 
-  newSettingsConvert = attr:
-    lib.lists.flatten (builtins.map (val:
-      lib.attrsets.attrValues
-      (lib.attrsets.mapAttrs (key: opts: opts // { inherit key; }) val))
-      (lib.attrsets.attrValues attr));
-in {
+  newSettingsConvert =
+    attr:
+    lib.lists.flatten (
+      builtins.map (
+        val:
+        lib.attrsets.attrValues (
+          lib.attrsets.mapAttrs (key: opts: opts // { inherit key; }) val
+        )
+      ) (lib.attrsets.attrValues attr)
+    );
+in
+{
   globals.mapleader = " ";
 
   keymaps = newSettingsConvert {
-    normalVisualOp = { "<Space>" = keymapNoD "<Nop>" ""; };
+    normalVisualOp = {
+      "<Space>" = keymapNoD "<Nop>" "";
+    };
 
     normal = {
       # Window nav

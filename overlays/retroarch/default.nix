@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-self: super:
+_self: super:
 
 {
   retroarch = super.retroarch.override {

@@ -45,7 +45,11 @@
     cDev.enable = true;
     java = {
       enable = true;
-      jdk.extraPackages = with pkgs; [ jdk17 jdk11 jdk8 ];
+      jdk.extraPackages = with pkgs; [
+        jdk17
+        jdk11
+        jdk8
+      ];
     };
     csharp = {
       enable = true;
@@ -77,7 +81,10 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ aria2 tailscale ];
+  environment.systemPackages = with pkgs; [
+    aria2
+    tailscale
+  ];
 
   services.tailscale.enable = true;
   services.tailscale.openFirewall = true;

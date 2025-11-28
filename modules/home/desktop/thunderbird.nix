@@ -14,7 +14,9 @@
   config = lib.mkIf config.tsrk.thunderbird.enable {
     programs.thunderbird = {
       enable = lib.mkDefault true;
-      profiles."${config.home.username}" = { isDefault = true; };
+      profiles."${config.home.username}" = {
+        isDefault = true;
+      };
     };
   };
 }

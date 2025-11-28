@@ -37,5 +37,5 @@
     };
   };
 
-  swapDevices = [{ label = "ttakuswap"; }];
+  swapDevices = [ { label = "ttakuswap"; } ];
 }

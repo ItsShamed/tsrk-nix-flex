@@ -4,12 +4,19 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser)
-    (builtins.attrNames config.users.users);
-in {
+  normalUsers = builtins.filter (user: config.users.users.${user}.isNormalUser) (
+    builtins.attrNames config.users.users
+  );
+in
+{
   options = {
     tsrk.containers.docker.enable = lib.options.mkEnableOption "Docker";
   };

@@ -6,8 +6,10 @@
 
 { config, lib, ... }:
 
-let cfg = config.tsrk.gammastep;
-in {
+let
+  cfg = config.tsrk.gammastep;
+in
+{
   options = {
     tsrk.gammastep = {
       enable = lib.options.mkEnableOption "tsrk's Gamma Step configuration";

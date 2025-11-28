@@ -4,20 +4,33 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.fcitx5;
-  mkSectionList = list:
+  mkSectionList =
+    list:
     let
-      foldedAttr = lib.lists.foldl' (self: current: {
-        _count = self._count + 1;
-        final = self.final // { "${builtins.toString self._count}" = current; };
-      }) {
-        _count = 0;
-        final = { };
-      } list;
-    in foldedAttr.final;
+      foldedAttr =
+        lib.lists.foldl'
+          (self: current: {
+            _count = self._count + 1;
+            final = self.final // {
+              "${builtins.toString self._count}" = current;
+            };
+          })
+          {
+            _count = 0;
+            final = { };
+          }
+          list;
+    in
+    foldedAttr.final;
 
   inputGroupsModule = {
     options = {
@@ -46,7 +59,8 @@ let
       };
     };
   };
-in {
+in
+{
   options = {
     tsrk.fcitx5 = {
       enable = lib.options.mkEnableOption "tsrk's Fcitx5 configuration";
@@ -82,7 +96,10 @@ in {
       enable = lib.mkDefault true;
       type = lib.mkDefault "fcitx5";
       fcitx5 = {
-        addons = with pkgs; [ fcitx5-mozc-ut fcitx5-gtk ];
+        addons = with pkgs; [
+          fcitx5-mozc-ut
+          fcitx5-gtk
+        ];
         settings = {
           globalOptions = {
             Behavior = {
@@ -135,14 +152,15 @@ in {
               EnumerateSkipFirst = false;
             };
 
-            "Hotkey/TriggerKeys" =
-              mkSectionList [ "Control+space" "Zenkaku_Hankaku" "Hangul" ];
+            "Hotkey/TriggerKeys" = mkSectionList [
+              "Control+space"
+              "Zenkaku_Hankaku"
+              "Hangul"
+            ];
 
-            "Hotkey/EnumerateGroupForwardKeys" =
-              mkSectionList [ "Control+space" ];
+            "Hotkey/EnumerateGroupForwardKeys" = mkSectionList [ "Control+space" ];
 
-            "Hotkey/EnumerateGroupBackwardKeys" =
-              mkSectionList [ "Shift+Super+space" ];
+            "Hotkey/EnumerateGroupBackwardKeys" = mkSectionList [ "Shift+Super+space" ];
 
             "Hotkey/ActivateKeys" = mkSectionList [ "Hangul_Hanja" ];
             "Hotkey/DeactivateKeys" = mkSectionList [ "Hangul_Romaja" ];
@@ -153,44 +171,59 @@ in {
             "Hotkey/TogglePreedit" = mkSectionList [ "Control+Alt+P" ];
           };
 
-          inputMethod = let
-            mkGroupItems = index: items:
-              let
-                foldedAttr = lib.lists.foldl' (self: current: {
-                  _count = self._count + 1;
-                  final = self.final // {
-                    "Groups/${builtins.toString index}/Items/${
-                      builtins.toString self._count
-                    }" = {
-                      Name = current.name;
-                      Layout = current.value;
-                    };
-                  };
-                }) {
-                  _count = 0;
-                  final = { };
-                } items;
-              in foldedAttr.final;
-            mkGroupList = items:
-              let
-                foldedAttr = lib.lists.foldl' (self: current: {
-                  _count = self._count + 1;
-                  final = self.final // {
-                    "Groups/${builtins.toString self._count}" = {
-                      Name = current.name;
-                      "Default Layout" = current.value.defaultLayout;
-                      DefaultIM = current.value.defaultInputMethod;
-                    };
-                  } // mkGroupItems self._count
-                    (lib.attrsets.attrsToList current.value.items);
-                }) {
-                  _count = 0;
-                  final = { };
-                } items;
-              in foldedAttr.final;
-          in mkGroupList (lib.attrsets.attrsToList cfg.groups) // {
-            GroupOrder = mkSectionList (builtins.attrNames cfg.groups);
-          };
+          inputMethod =
+            let
+              mkGroupItems =
+                index: items:
+                let
+                  foldedAttr =
+                    lib.lists.foldl'
+                      (self: current: {
+                        _count = self._count + 1;
+                        final = self.final // {
+                          "Groups/${builtins.toString index}/Items/${builtins.toString self._count}" = {
+                            Name = current.name;
+                            Layout = current.value;
+                          };
+                        };
+                      })
+                      {
+                        _count = 0;
+                        final = { };
+                      }
+                      items;
+                in
+                foldedAttr.final;
+              mkGroupList =
+                items:
+                let
+                  foldedAttr =
+                    lib.lists.foldl'
+                      (self: current: {
+                        _count = self._count + 1;
+                        final =
+                          self.final
+                          // {
+                            "Groups/${builtins.toString self._count}" = {
+                              Name = current.name;
+                              "Default Layout" = current.value.defaultLayout;
+                              DefaultIM = current.value.defaultInputMethod;
+                            };
+                          }
+                          // mkGroupItems self._count (lib.attrsets.attrsToList current.value.items);
+                      })
+                      {
+                        _count = 0;
+                        final = { };
+                      }
+                      items;
+                in
+                foldedAttr.final;
+            in
+            mkGroupList (lib.attrsets.attrsToList cfg.groups)
+            // {
+              GroupOrder = mkSectionList (builtins.attrNames cfg.groups);
+            };
 
           addons = {
             clipboard = {

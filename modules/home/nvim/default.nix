@@ -6,10 +6,15 @@
 
 { self, inputs, ... }:
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports = [ inputs.nixvim.homeManagerModules.nixvim ];
+  imports = [ inputs.nixvim.homeModules.nixvim ];
 
   options = {
     tsrk.nvim = {
@@ -19,15 +24,16 @@
   };
 
   config = lib.mkIf config.tsrk.nvim.enable {
-    programs.nixvim = { ... }: {
-      _module.args.helpers = config.lib.nixvim;
-      enable = true;
-      defaultEditor = true;
+    programs.nixvim =
+      { ... }:
+      {
+        enable = true;
+        defaultEditor = true;
 
-      imports = [ self.nixvimModules.default ];
+        imports = [ self.nixvimModules.default ];
 
-      plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
-    };
+        plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
+      };
 
     home.file.".ideavimrc".source = ./ideavimrc;
     home.packages = with pkgs; [ fzf ];

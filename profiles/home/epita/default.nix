@@ -11,7 +11,10 @@
 {
   key = ./.;
 
-  imports = with self.homeManagerModules; [ epita profile-x11 ];
+  imports = with self.homeManagerModules; [
+    epita
+    profile-x11
+  ];
 
   tsrk.epita.cunix.enable = lib.mkDefault true;
 }

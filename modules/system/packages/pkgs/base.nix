@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = {
@@ -36,7 +41,7 @@
 
         inetutils
         iw
-        utillinux
+        util-linux
         coreutils-full
         ethtool
 

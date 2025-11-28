@@ -4,9 +4,10 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, helpers, ... }:
+{ lib, ... }:
 
 let
+  helpers = lib.nixvim;
   icons = import ../utils/icons.nix;
 
   sourceNames = {
@@ -31,26 +32,37 @@ let
   # Migrates the obsoleted mapping syntax to the raw one
   # Basically https://github.com/nix-community/nixvim/blob/nixos-23.11/plugins/completion/nvim-cmp/default.nix#L502C19-L535C33
   # Idk why they changed that for 24.05, it used to work well like it was
-  migrateMappings = with lib;
+  migrateMappings =
+    with lib;
     mapping:
     let
-      mappings = helpers.ifNonNull' mapping (mapAttrs (key: action:
-        helpers.mkRaw (if isString action then
-          action
-        else
-          let
-            modes = if action ? modes then action.modes else null;
-            modesString =
-              optionalString ((modes != null) && ((length modes) >= 1))
-              ("," + (helpers.toLuaObject modes));
-          in "cmp.mapping(${action.action}${modesString})")) mapping);
+      mappings = helpers.ifNonNull' mapping (
+        mapAttrs (
+          _key: action:
+          helpers.mkRaw (
+            if isString action then
+              action
+            else
+              let
+                modes = if action ? modes then action.modes else null;
+                modesString = optionalString ((modes != null) && ((length modes) >= 1)) (
+                  "," + (helpers.toLuaObject modes)
+                );
+              in
+              "cmp.mapping(${action.action}${modesString})"
+          )
+        ) mapping
+      );
 
       luaMappings = helpers.toLuaObject mappings;
 
-      wrapped = lists.fold (presetName: prevString:
-        "cmp.mapping.preset.${presetName}(${prevString})") luaMappings [ ];
-    in helpers.mkRaw wrapped;
-in {
+      wrapped = lists.fold (
+        presetName: prevString: "cmp.mapping.preset.${presetName}(${prevString})"
+      ) luaMappings [ ];
+    in
+    helpers.mkRaw wrapped;
+in
+{
   plugins.cmp.enable = true;
   plugins.cmp.settings.mapping = migrateMappings {
     "<CR>" = {
@@ -77,11 +89,17 @@ in {
     };
     "<C-k>" = {
       action = "cmp.mapping.select_prev_item()";
-      modes = [ "i" "c" ];
+      modes = [
+        "i"
+        "c"
+      ];
     };
     "<C-j>" = {
       action = "cmp.mapping.select_next_item()";
-      modes = [ "i" "c" ];
+      modes = [
+        "i"
+        "c"
+      ];
     };
     "<Tab>" = {
       action = ''
@@ -110,7 +128,10 @@ in {
           end
         end
       '';
-      modes = [ "i" "s" ];
+      modes = [
+        "i"
+        "s"
+      ];
     };
     "<S-Tab>" = {
       action = ''
@@ -125,7 +146,10 @@ in {
           end
         end
       '';
-      modes = [ "i" "s" ];
+      modes = [
+        "i"
+        "s"
+      ];
     };
     "<C-Space>" = "cmp.mapping.complete()";
   };

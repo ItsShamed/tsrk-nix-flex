@@ -6,8 +6,10 @@
 
 { config, lib, ... }:
 
-let cfg = config.tsrk.waybar;
-in {
+let
+  cfg = config.tsrk.waybar;
+in
+{
   options = {
     tsrk.waybar = {
       # style: keep unwrapped
@@ -23,11 +25,20 @@ in {
         main = {
           layer = "top";
           height = 40;
-          modules-left =
-            [ "hyprland/workspaces" "hyprland/submap" "hyprland/window" ];
+          modules-left = [
+            "hyprland/workspaces"
+            "hyprland/submap"
+            "hyprland/window"
+          ];
           modules-center = [ "cava" ];
-          modules-right =
-            [ "network" "battery" "backlight" "pulseaudio" "clock" "tray" ];
+          modules-right = [
+            "network"
+            "battery"
+            "backlight"
+            "pulseaudio"
+            "clock"
+            "tray"
+          ];
 
           "hyprland/workspaces" = {
             format = "{icon}{id}";
@@ -50,7 +61,17 @@ in {
             bars = 18;
             bar_delimiter = 0;
             noise_reduction = 0.65;
-            format-icons = [ " " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+            format-icons = [
+              " "
+              "▁"
+              "▂"
+              "▃"
+              "▄"
+              "▅"
+              "▆"
+              "▇"
+              "█"
+            ];
           };
 
           "hyprland/submap".tooltip = false;
@@ -67,7 +88,13 @@ in {
             format-icons = {
               linked = "󱖣 ";
               ethernet = "󰈁";
-              wifi = [ "󰤯 " "󰤟 " "󰤢 " "󰤥 " "󰤨 " ];
+              wifi = [
+                "󰤯 "
+                "󰤟 "
+                "󰤢 "
+                "󰤥 "
+                "󰤨 "
+              ];
             };
             tooltip-format-ethernet = ''
               {icon} Interface {ifname}
@@ -99,15 +126,45 @@ in {
             format-icons = {
               warning = "󱃍 ";
               critical = "󱉞 ";
-              default-charging =
-                [ "󰢜 " "󰢜 " "󰂇 " "󰂈 " "󰢝 " "󰂉 " "󰢞 " "󰂊 " "󰂋 " "󰂅 " ];
-              default = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+              default-charging = [
+                "󰢜 "
+                "󰢜 "
+                "󰂇 "
+                "󰂈 "
+                "󰢝 "
+                "󰂉 "
+                "󰢞 "
+                "󰂊 "
+                "󰂋 "
+                "󰂅 "
+              ];
+              default = [
+                "󰂎"
+                "󰁺"
+                "󰁻"
+                "󰁼"
+                "󰁽"
+                "󰁾"
+                "󰁿"
+                "󰂀"
+                "󰂁"
+                "󰂂"
+                "󰁹"
+              ];
             };
           };
 
           backlight = {
             format = "{icon} {percent}%";
-            format-icons = [ "󰃚 " "󰃛 " "󰃜" "󰃝 " "󰃞 " "󰃟 " "󰃠 " ];
+            format-icons = [
+              "󰃚 "
+              "󰃛 "
+              "󰃜"
+              "󰃝 "
+              "󰃞 "
+              "󰃟 "
+              "󰃠 "
+            ];
           };
 
           pulseaudio = {
@@ -122,7 +179,11 @@ in {
               hdmi-muted = "󰠻 ";
               hdmi = "󰔂 ";
               default-muted = "󰝟 ";
-              default = [ "󰕿" "󰖀" "󰕾 " ];
+              default = [
+                "󰕿"
+                "󰖀"
+                "󰕾 "
+              ];
             };
           };
 

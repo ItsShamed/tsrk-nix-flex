@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.packages.pkgs.qmk;
-in {
+let
+  cfg = config.tsrk.packages.pkgs.qmk;
+in
+{
   options = {
     tsrk.packages.pkgs.qmk = {
       enable = lib.options.mkEnableOption "tsrk's QMK package bundle";

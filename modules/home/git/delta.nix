@@ -6,12 +6,18 @@
 
 { self, ... }:
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
-  tsrkPkgs = self.packages.${pkgs.system};
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.tsrk.git.delta;
-in {
+in
+{
   options = {
     tsrk.git.delta = {
       enable = lib.options.mkEnableOption "delta";
@@ -31,7 +37,10 @@ in {
   };
 
   config = lib.mkIf config.tsrk.git.delta.enable {
-    programs.git.delta.enable = true;
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
+    };
 
     # Setting low-prio config in case the bat module is not imported
     # In which case will be enventually overriden if it is imported
@@ -45,16 +54,19 @@ in {
 
     specialisation = {
       light.configuration = {
-        programs.git.includes = [{
-          path = "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig";
-        }];
+        programs.git.includes = [
+          {
+            path = "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig";
+          }
+        ];
         programs.git.delta.options.syntax-theme = cfg.themes.light;
       };
       dark.configuration = {
-        programs.git.includes = [{
-          path =
-            "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig";
-        }];
+        programs.git.includes = [
+          {
+            path = "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig";
+          }
+        ];
         programs.git.delta.options.syntax-theme = cfg.themes.dark;
       };
     };

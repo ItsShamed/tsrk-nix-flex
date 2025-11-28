@@ -4,20 +4,30 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.packages.music-production;
-in {
+let
+  cfg = config.tsrk.packages.music-production;
+in
+{
   options = {
     tsrk.packages = {
       music-production = {
-        enable =
-          lib.options.mkEnableOption "the music production package bundle";
+        enable = lib.options.mkEnableOption "the music production package bundle";
       };
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ furnace reaper reaper-reapack-extension ];
+    home.packages = with pkgs; [
+      furnace
+      reaper
+      reaper-reapack-extension
+    ];
   };
 }

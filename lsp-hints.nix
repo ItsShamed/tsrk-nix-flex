@@ -4,26 +4,33 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, self, inputs, pkgSet, ... }:
+{
+  lib,
+  self,
+  inputs,
+  pkgSet,
+  ...
+}:
 
-let system = "x86_64-linux";
-in {
-  nixos = (lib.nixosSystem {
-    inherit system;
-    modules = [ self.nixosModules.all ];
-    specialArgs = {
-      inherit inputs self pkgSet;
-      inherit (inputs) home-manager;
-      vimHelpers = import "${inputs.nixvim}/lib/helpers.nix" {
-        inherit (inputs.nixpkgs) lib;
+let
+  system = "x86_64-linux";
+in
+{
+  nixos =
+    (lib.nixosSystem {
+      inherit system;
+      modules = [ self.nixosModules.all ];
+      specialArgs = {
+        inherit inputs self pkgSet;
+        inherit (inputs) home-manager;
+        gaming = inputs.nix-gaming.packages.${system};
+        host = "lspHints";
+        agenix = inputs.agenix.packages.${system};
       };
-      gaming = inputs.nix-gaming.packages.${system};
-      host = "lspHints";
-      agenix = inputs.agenix.packages.${system};
-    };
-  }).options;
+    }).options;
 
-  homeManager = (self.lib.generateHome "lspHints" {
-    modules = [ self.homeManagerModules.all ];
-  }).options;
+  homeManager =
+    (self.lib.generateHome "lspHints" {
+      modules = [ self.homeManagerModules.all ];
+    }).options;
 }

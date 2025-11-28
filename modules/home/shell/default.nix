@@ -10,10 +10,13 @@ args:
 
 let
   cfg = config.tsrk.shell;
-  posixInitExtra = lib.strings.concatLines [''
-    export GPG_TTY=$(tty)
-  ''];
-in {
+  posixInitExtra = lib.strings.concatLines [
+    ''
+      export GPG_TTY=$(tty)
+    ''
+  ];
+in
+{
   options = {
     tsrk.shell = {
       initExtra = lib.options.mkOption {
@@ -45,8 +48,10 @@ in {
       posixInitExtra
       cfg.initExtra
     ];
-    programs.zsh.initContent =
-      lib.strings.concatLines [ posixInitExtra cfg.initExtra ];
+    programs.zsh.initContent = lib.strings.concatLines [
+      posixInitExtra
+      cfg.initExtra
+    ];
     programs.fish.shellInit = lib.strings.concatLines [
       (lib.strings.optionalString cfg.enableViKeybinds ''
         fish_vi_key_bindings
@@ -54,6 +59,8 @@ in {
       cfg.initExtra
     ];
 
-    programs.zsh = { defaultKeymap = lib.mkIf cfg.enableViKeybinds "viins"; };
+    programs.zsh = {
+      defaultKeymap = lib.mkIf cfg.enableViKeybinds "viins";
+    };
   };
 }

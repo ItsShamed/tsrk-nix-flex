@@ -4,20 +4,29 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, helpers, ... }:
+{ lib, ... }:
 
 with lib;
-with helpers;
+with lib.nixvim;
 with builtins;
 let
-  mkSnippet = trig: children:
+  mkSnippet =
+    trig: children:
     let
-      isSpecAttr = v: attr: spec:
+      isSpecAttr =
+        v: attr: spec:
         elem v (attrNames spec) && spec.${v} attr.${v};
-      isSpec = attr: spec:
-        isAttrs attr && (all (isSpecAttr attr spec) (attrNames attr));
-      trigEngineOptsSpec = { max_len = isInt; };
-      trigEngines = [ "plain" "pattern" "ecma" "vim" ];
+      isSpec =
+        attr: spec: isAttrs attr && (all (isSpecAttr attr spec) (attrNames attr));
+      trigEngineOptsSpec = {
+        max_len = isInt;
+      };
+      trigEngines = [
+        "plain"
+        "pattern"
+        "ecma"
+        "vim"
+      ];
       triggerSpec = {
         trig = isString;
         name = isString;
@@ -25,8 +34,7 @@ let
         dscr = isString;
         wordTrig = isBool;
         regTrig = isBool;
-        trigEngine = x:
-          (isString x && elem x trigEngines) || (isAttrs x && x ? __raw);
+        trigEngine = x: (isString x && elem x trigEngines) || (isAttrs x && x ? __raw);
         trigEngineOpts = flip isSpec trigEngineOptsSpec;
         docstring = isString;
         docTrig = isString;
@@ -37,86 +45,108 @@ let
         condition = x: isAttrs x && x ? __raw;
         show_condition = x: isAttrs x && x ? __raw;
       };
-    in addErrorContext "while constructing LuaSnip Snippet call"
-    (assert assertMsg (isString trig || isSpec trig triggerSpec)
-      "first argument is not a valid trigger";
+    in
+    addErrorContext "while constructing LuaSnip Snippet call" (
+      assert assertMsg (
+        isString trig || isSpec trig triggerSpec
+      ) "first argument is not a valid trigger";
       assert assertMsg (isList children)
         "second argument must be a list of LuaSnip nodes";
-      mkRaw "__s(${toLuaObject trig}, ${toLuaObject children})");
+      mkRaw "__s(${toLuaObject trig}, ${toLuaObject children})"
+    );
 
   mkS = mkSnippet;
 
-  mkSnippetNode = i: children:
-    addErrorContext "while constructing LuaSnip SnippetNode call"
-    (assert assertMsg (isInt i || isNull i)
-      "first argument must be an integer (index) or null";
+  mkSnippetNode =
+    i: children:
+    addErrorContext "while constructing LuaSnip SnippetNode call" (
+      assert assertMsg (
+        isInt i || isNull i
+      ) "first argument must be an integer (index) or null";
       assert assertMsg (isList children)
         "second argument must be a list of LuaSnip nodes";
-      mkRaw "__sn(${toLuaObject i}, ${toLuaObject children})");
+      mkRaw "__sn(${toLuaObject i}, ${toLuaObject children})"
+    );
 
   # deadnix: skip
   mkSn = mkSnippetNode;
 
   # deadnix: skip
-  mkIndentSnippetNode = i: children: indent:
-    addErrorContext "while constructing LuaSnip IndentSnippetNode call"
-    (assert assertMsg (isInt i) "first argument must be an integer (index)";
-      assert assertMsg (isList children || isAttrs children && children ? __raw)
-        "second argument must be a list of LuaSnip nodes";
+  mkIndentSnippetNode =
+    i: children: indent:
+    addErrorContext "while constructing LuaSnip IndentSnippetNode call" (
+      assert assertMsg (isInt i) "first argument must be an integer (index)";
+      assert assertMsg (
+        isList children || isAttrs children && children ? __raw
+      ) "second argument must be a list of LuaSnip nodes";
       assert assertMsg (isString indent) "third argument must be a string";
-      mkRaw "__isn(${toLuaObject i}, ${toLuaObject children}, ${
-        toLuaObject indent
-      })");
+      mkRaw "__isn(${toLuaObject i}, ${toLuaObject children}, ${toLuaObject indent})"
+    );
 
-  mkDynamic = i: funBody: references:
-    addErrorContext "while constructing LuaSnip DynamicNode call" (let
-      function = ''
-        function(args, parent)
-            ${funBody}
-        end
-      '';
-    in assert assertMsg (isInt i) "first argument must be an integer (index)";
-    assert assertMsg (isString funBody)
-      "second argument must be a string (namely a lua function body)";
-    assert assertMsg (isList references && all (v: isInt v) references)
-      "third argument must be a list of integers (index references)";
-    mkRaw "__d(${toLuaObject i}, ${function}, ${toLuaObject references})");
+  mkDynamic =
+    i: funBody: references:
+    addErrorContext "while constructing LuaSnip DynamicNode call" (
+      let
+        function = ''
+          function(args, parent)
+              ${funBody}
+          end
+        '';
+      in
+      assert assertMsg (isInt i) "first argument must be an integer (index)";
+      assert assertMsg (isString funBody)
+        "second argument must be a string (namely a lua function body)";
+      assert assertMsg (
+        isList references && all (v: isInt v) references
+      ) "third argument must be a list of integers (index references)";
+      mkRaw "__d(${toLuaObject i}, ${function}, ${toLuaObject references})"
+    );
 
   mkD = mkDynamic;
 
   # deadnix: skip
   mkIsn = mkIndentSnippetNode;
 
-  mkText = content:
-    addErrorContext "while constructing LuaSnip TextNode call" (assert assertMsg
-      (isString content || (isList content && (all (v: isString v) content)))
-      "content must be a list of strings";
-      mkRaw "__t(${toLuaObject content})");
+  mkText =
+    content:
+    addErrorContext "while constructing LuaSnip TextNode call" (
+      assert assertMsg (
+        isString content || (isList content && (all (v: isString v) content))
+      ) "content must be a list of strings";
+      mkRaw "__t(${toLuaObject content})"
+    );
 
   mkT = mkText;
 
-  mkInsert = i:
-    addErrorContext "while constructing LuaSnip InsertNode call"
-    (assert assertMsg (isInt i) "argument must be an integer (index)";
-      mkRaw "__i(${toLuaObject i})");
+  mkInsert =
+    i:
+    addErrorContext "while constructing LuaSnip InsertNode call" (
+      assert assertMsg (isInt i) "argument must be an integer (index)";
+      mkRaw "__i(${toLuaObject i})"
+    );
 
   mkI = mkInsert;
 
-  mkInsertWithText = i: text:
-    addErrorContext "while constructing LuaSnip InsertNode call (with text)"
-    (assert assertMsg (isInt i) "argument must be an integer (index)";
-      assert assertMsg (isString text || islist text && all isString text)
-        "argument must be an string or list of strings";
-      mkRaw "__i(${toLuaObject i}, ${toLuaObject text})");
+  mkInsertWithText =
+    i: text:
+    addErrorContext "while constructing LuaSnip InsertNode call (with text)" (
+      assert assertMsg (isInt i) "argument must be an integer (index)";
+      assert assertMsg (
+        isString text || islist text && all isString text
+      ) "argument must be an string or list of strings";
+      mkRaw "__i(${toLuaObject i}, ${toLuaObject text})"
+    );
 
   mkIText = mkInsertWithText;
 
-  mkChoice = i: choices:
-    addErrorContext "while constructing LuaSnip ChoiceNode call"
-    (assert assertMsg (isInt i) "first argument must be an integer (index)";
+  mkChoice =
+    i: _choices:
+    addErrorContext "while constructing LuaSnip ChoiceNode call" (
+      assert assertMsg (isInt i) "first argument must be an integer (index)";
       assert assertMsg (isList children)
         "second argument must be a list of LuaSnip nodes";
-      mkRaw "__c(${toLuaObject i}, ${toLuaObject children})");
+      mkRaw "__c(${toLuaObject i}, ${toLuaObject children})"
+    );
 
   # deadnix: skip
   mkC = mkChoice;
@@ -126,7 +156,10 @@ let
       (mkS "!license" [
         (mkT "# Copyright (c) ")
         (mkIText 1 "YEAR Author <email>")
-        (mkT [ "" "# This file is licensed under the " ])
+        (mkT [
+          ""
+          "# This file is licensed under the "
+        ])
         (mkI 2)
         (mkT " license")
         (mkT [
@@ -140,14 +173,20 @@ let
               __i(1, args[1])
           })
         '' [ 2 ])
-        (mkT [ "" "" ])
+        (mkT [
+          ""
+          ""
+        ])
       ])
     ];
     sh = [
       (mkS "!license" [
         (mkT "# Copyright (c) ")
         (mkIText 1 "YEAR Author <email>")
-        (mkT [ "" "# This file is licensed under the " ])
+        (mkT [
+          ""
+          "# This file is licensed under the "
+        ])
         (mkI 2)
         (mkT " license")
         (mkT [
@@ -161,22 +200,30 @@ let
               __i(1, args[1])
           })
         '' [ 2 ])
-        (mkT [ "" "" ])
+        (mkT [
+          ""
+          ""
+        ])
       ])
     ];
   };
 
-  mkFiletypeSnippets = filetype: snippets:
-    addErrorContext
-    "while converting LuaSnip snippets for filetype '${filetype}'"
-    (assert assertMsg (isString filetype) "filetype must be a string";
+  mkFiletypeSnippets =
+    filetype: snippets:
+    addErrorContext "while converting LuaSnip snippets for filetype '${filetype}'" (
+      assert assertMsg (isString filetype) "filetype must be a string";
       assert assertMsg (isList snippets) "snippets must be a list";
-      "__ls.add_snippets(${toLuaObject filetype}, ${toLuaObject snippets})");
+      "__ls.add_snippets(${toLuaObject filetype}, ${toLuaObject snippets})"
+    );
 
-  luasnipCommands = addErrorContext "while converting LuaSnip snippets"
-    (lib.concatMapAttrsStringSep "\n" mkFiletypeSnippets snippets);
-in {
-  plugins.luasnip = { enable = true; };
+  luasnipCommands = addErrorContext "while converting LuaSnip snippets" (
+    lib.concatMapAttrsStringSep "\n" mkFiletypeSnippets snippets
+  );
+in
+{
+  plugins.luasnip = {
+    enable = true;
+  };
 
   extraConfigLuaPost = ''
     -- LuaSnip snippets registration

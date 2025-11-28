@@ -4,16 +4,22 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.premid;
-in {
+let
+  cfg = config.tsrk.premid;
+in
+{
   options = {
     tsrk.premid = {
       enable = lib.options.mkEnableOption "PreMiD";
       sandbox = lib.options.mkEnableOption "Electron's sandbox";
-      package =
-        lib.options.mkPackageOption pkgs "PreMiD" { default = [ "premid" ]; };
+      package = lib.options.mkPackageOption pkgs "PreMiD" { default = [ "premid" ]; };
     };
   };
 
@@ -31,8 +37,8 @@ in {
 
         Service = {
           ExecStart = "${lib.meta.getExe cfg.package}${
-              lib.strings.optionalString (!cfg.sandbox) " --no-sandbox"
-            }";
+            lib.strings.optionalString (!cfg.sandbox) " --no-sandbox"
+          }";
         };
 
         Install.WantedBy = [ "graphical-session.target" ];

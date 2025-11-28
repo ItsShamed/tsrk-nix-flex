@@ -4,7 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, lib, pkgs, ... }:
+{
+  self,
+  pkgs,
+  ...
+}:
 
 {
   imports = [

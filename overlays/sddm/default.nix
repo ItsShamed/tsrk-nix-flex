@@ -4,22 +4,28 @@
 
 # SPDX-License-Identifier: MIT
 
-self: super:
+_self: super:
 
-super.lib.genAttrs [ "libsForQt5" "kdePackages" ] (p:
-  super.${p}.overrideScope (pself: psuper: {
-    sddm = psuper.sddm.override {
-      unwrapped = (psuper.sddm.unwrapped.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
-          (super.fetchpatch {
-            url =
-              "https://patch-diff.githubusercontent.com/raw/sddm/sddm/pull/2103.patch";
-            hash = "sha256-HxsurSuGJjkGnC8fAiwipadAgcTUhs7n6fQ1SmvMMGc=";
+super.lib.genAttrs [ "libsForQt5" "kdePackages" ] (
+  p:
+  super.${p}.overrideScope (
+    _pself: psuper: {
+      sddm = psuper.sddm.override {
+        unwrapped = (
+          psuper.sddm.unwrapped.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [
+              (super.fetchpatch {
+                url = "https://patch-diff.githubusercontent.com/raw/sddm/sddm/pull/2103.patch";
+                hash = "sha256-HxsurSuGJjkGnC8fAiwipadAgcTUhs7n6fQ1SmvMMGc=";
+              })
+            ];
+
+            cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+              (super.lib.cmakeBool "QT_FORCE_ASSERTS" true)
+            ];
           })
-        ];
-
-        cmakeFlags = (old.cmakeFlags or [ ])
-          ++ [ (super.lib.cmakeBool "QT_FORCE_ASSERTS" true) ];
-      }));
-    };
-  }))
+        );
+      };
+    }
+  )
+)

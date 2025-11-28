@@ -6,16 +6,26 @@
 
 { self, ... }:
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.hyprland;
-  mkNumberBinds = mod: keywordFn:
-    (builtins.foldl' (c: e: c ++ [ "${mod}, ${e}, ${keywordFn e}" ]) [ ]
-      (builtins.genList (x: builtins.toString (x + 1)) 9))
+  mkNumberBinds =
+    mod: keywordFn:
+    (builtins.foldl' (c: e: c ++ [ "${mod}, ${e}, ${keywordFn e}" ]) [ ] (
+      builtins.genList (x: builtins.toString (x + 1)) 9
+    ))
     ++ [ "${mod}, 0, ${keywordFn "10"}" ];
-  lockTargetsPresent = let targets = config.systemd.user.targets;
-  in targets ? lock && targets ? sleep && targets ? unlock;
+  lockTargetsPresent =
+    let
+      targets = config.systemd.user.targets;
+    in
+    targets ? lock && targets ? sleep && targets ? unlock;
 
   mkSubMap = name: attrs: ''
     submap = ${name}
@@ -126,13 +136,9 @@ let
     esac
   '';
 
-  snipTool = with lib.meta;
-    pkgs.writeShellScript "snip-tool" ''
-      ${getExe pkgs.grim} -g "$(${
-        getExe pkgs.slurp
-      } -o -r -c '#ff0000ff')" -t ppm - | ${
-        getExe pkgs.satty
-      } --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png'';
+  snipTool =
+    with lib.meta;
+    pkgs.writeShellScript "snip-tool" ''${getExe pkgs.grim} -g "$(${getExe pkgs.slurp} -o -r -c '#ff0000ff')" -t ppm - | ${getExe pkgs.satty} --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png'';
 
   scTool = "${lib.meta.getExe pkgs.grim} $(date '+%Y%m%d-%H:%M:%S').png";
 
@@ -193,7 +199,8 @@ let
       fi
     fi
   '';
-in {
+in
+{
   key = ./hyprland.nix;
 
   imports = with self.homeManagerModules; [ session-targets ];
@@ -210,9 +217,9 @@ in {
           See <https://wiki.hypr.land/Configuring/Binds#submaps> to learn about submaps
         '';
         default = { };
-        type = with lib.types;
-          attrsOf
-          ((attrsOf (listOf str)) // { description = "Hyprland binds"; });
+        type =
+          with lib.types;
+          attrsOf ((attrsOf (listOf str)) // { description = "Hyprland binds"; });
       };
       uwsm = {
         extraEnv = lib.options.mkOption {
@@ -228,20 +235,17 @@ in {
           default = ./files/tehfire.png;
         };
         default = lib.options.mkOption {
-          description =
-            "Image to use as the default backgroud (when Darkman is disabled)";
+          description = "Image to use as the default backgroud (when Darkman is disabled)";
           type = lib.types.path;
           default = ./files/bg-no-logo.png;
         };
         light = lib.options.mkOption {
-          description =
-            "Image to use as a light-theme background (needs Darkman)";
+          description = "Image to use as a light-theme background (needs Darkman)";
           type = lib.types.path;
           default = ./files/torekka.png;
         };
         dark = lib.options.mkOption {
-          description =
-            "Image to use as a dark-themed background (needs Darkman)";
+          description = "Image to use as a dark-themed background (needs Darkman)";
           type = lib.types.path;
           default = ./files/bg-no-logo.png;
         };
@@ -255,10 +259,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [{
-      assertion = !builtins.hasAttr "reset" cfg.submaps;
-      message = "Submaps can't be named 'reset'.";
-    }];
+    assertions = [
+      {
+        assertion = !builtins.hasAttr "reset" cfg.submaps;
+        message = "Submaps can't be named 'reset'.";
+      }
+    ];
 
     tsrk.sessionTargets.enable = lib.mkDefault true;
     wayland.systemd.target = lib.mkDefault "hyprland-session.target";
@@ -266,7 +272,9 @@ in {
     programs.hyprlock = {
       enable = lib.mkDefault true;
       settings = {
-        general = { ignore_empty_input = true; };
+        general = {
+          ignore_empty_input = true;
+        };
 
         background.path = "${cfg.backgrounds.lockscreen}";
 
@@ -378,8 +386,7 @@ in {
           }
           {
             timeout = 290;
-            on-timeout =
-              "${pkgs.libnotify}/bin/notify-send -a hypridle 'Auto-lock notice' 'Computer will lock in 10 seconds'";
+            on-timeout = "${pkgs.libnotify}/bin/notify-send -a hypridle 'Auto-lock notice' 'Computer will lock in 10 seconds'";
           }
           {
             timeout = 300;
@@ -428,14 +435,16 @@ in {
         };
 
         "$mainMod" = "SUPER";
-        "$terminal" = (self.lib.mkIfElse (config.programs.kitty.enable)
-          (self.lib.mkGL config "kitty")
-          # This is for the EPITA die-hards that never bothered to change their
-          # default terminal emulator for their session lol
-          (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty"));
-        "$menu" =
-          (self.lib.mkIfElse (config.programs.rofi.enable) "rofi -show drun"
-            "${pkgs.bemenu}/bin/bemenu-run");
+        "$terminal" = (
+          self.lib.mkIfElse (config.programs.kitty.enable) (self.lib.mkGL config "kitty")
+            # This is for the EPITA die-hards that never bothered to change their
+            # default terminal emulator for their session lol
+            (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")
+        );
+        "$menu" = (
+          self.lib.mkIfElse (config.programs.rofi.enable
+          ) "rofi -show drun" "${pkgs.bemenu}/bin/bemenu-run"
+        );
 
         decoration = {
           rounding = 10;
@@ -457,8 +466,9 @@ in {
         binds.drag_threshold = 5;
 
         # Needed to propagate necessary envvars to darkman
-        execr-once = (lib.lists.optional cfg.darkman.enable
-          "systemctl --user restart darkman");
+        execr-once = (
+          lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman"
+        );
 
         bindmd = [
           "$mainMod, mouse:272, Move active window by dragging, movewindow"
@@ -527,25 +537,37 @@ in {
             else
               "${logout}"
           }"
-        ] ++ (lib.lists.optionals (config.programs.rofi.enable
-          && lib.lists.any (pkg: pkg == pkgs.rofi-calc)
-          config.programs.rofi.plugins) [
+        ]
+        ++ (lib.lists.optionals
+          (
+            config.programs.rofi.enable
+            && lib.lists.any (pkg: pkg == pkgs.rofi-calc) config.programs.rofi.plugins
+          )
+          [
             ''
               $mainMod, equal, Show quick calculator, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"
             ''
             ''
               , XF86Calculator, Show quick calculator (media key), exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"
             ''
-          ]) ++ (lib.lists.optional (config.programs.rofi.enable
-            && lib.lists.any (pkg: pkg == pkgs.rofi-emoji-wayland)
-            config.programs.rofi.plugins) ''
-              $mainMod, semicolon, Show emoji picker, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji
-            '') ++ (mkNumberBinds "$mainMod"
-              (i: "Go to workspace ${i}, workspace, ${i}"))
-          ++ (mkNumberBinds "$mainMod SHIFT" (i:
-            "Move active window to workspace ${i}, movetoworkspacesilent, ${i}"))
-          ++ (mkNumberBinds "$mainMod CTRL" (i:
-            "Move active window and go to workspace ${i}, movetoworkspace, ${i}"));
+          ]
+        )
+        ++ (lib.lists.optional
+          (
+            config.programs.rofi.enable
+            && lib.lists.any (pkg: pkg == pkgs.rofi-emoji) config.programs.rofi.plugins
+          )
+          ''
+            $mainMod, semicolon, Show emoji picker, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji
+          ''
+        )
+        ++ (mkNumberBinds "$mainMod" (i: "Go to workspace ${i}, workspace, ${i}"))
+        ++ (mkNumberBinds "$mainMod SHIFT" (
+          i: "Move active window to workspace ${i}, movetoworkspacesilent, ${i}"
+        ))
+        ++ (mkNumberBinds "$mainMod CTRL" (
+          i: "Move active window and go to workspace ${i}, movetoworkspace, ${i}"
+        ));
 
         bindrd = [
           # Secreenshots
@@ -607,8 +629,9 @@ in {
       };
 
       extraConfig = ''
-        ${lib.strings.optionalString (cfg.submaps != { })
-        (submapsToHyprConf cfg.submaps)}
+        ${lib.strings.optionalString (cfg.submaps != { }) (
+          submapsToHyprConf cfg.submaps
+        )}
       '';
     };
 

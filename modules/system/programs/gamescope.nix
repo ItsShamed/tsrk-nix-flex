@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.tsrk.programs.gamescope;
@@ -18,10 +23,15 @@ let
     exec = "steam-gamescope %U";
     icon = "steam";
     terminal = false;
-    categories = [ "Network" "FileTransfer" "Game" ];
+    categories = [
+      "Network"
+      "FileTransfer"
+      "Game"
+    ];
     prefersNonDefaultGPU = true;
   };
-in {
+in
+{
   options = {
     tsrk.programs.gamescope = {
       enable = lib.options.mkEnableOption "Valve gamescope";
@@ -39,7 +49,11 @@ in {
         "--nested-height 1080"
         "--fullscreen"
       ];
-      steamArgs = [ "-steamos3" "-tenfoot" "-pipewire-dmabuf" ];
+      steamArgs = [
+        "-steamos3"
+        "-tenfoot"
+        "-pipewire-dmabuf"
+      ];
       env.PATH = ''"${mockSessionSelect}/bin:$PATH"'';
     };
   };

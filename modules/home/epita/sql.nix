@@ -4,21 +4,24 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options = {
     tsrk.epita.sql = {
-      enable =
-        lib.options.mkEnableOption "tsrk's EPITA SQL Workshop Environment";
+      enable = lib.options.mkEnableOption "tsrk's EPITA SQL Workshop Environment";
       dataDir = lib.options.mkOption {
         description = "Path to PostgreSQL data directory.";
         type = lib.types.path;
         default = "${config.home.homeDirectory}/postgres_data";
       };
       socketDir = lib.option.mkOption {
-        description =
-          "Path to the directory where the PostgreSQL socket will be stored.";
+        description = "Path to the directory where the PostgreSQL socket will be stored.";
         type = lib.types.path;
         default = /tmp;
       };
@@ -27,13 +30,14 @@
 
   config = lib.mkIf config.tsrk.epita.sql.enable {
     systemd.user.services.initdb = {
-      Unit = { Description = "initdb"; };
+      Unit = {
+        Description = "initdb";
+      };
 
       Service = {
         Type = "oneshot";
         Environment = "PGDATA=${config.tsrk.epita.sql.dataDir}";
-        ExecStart =
-          ''/run/current-system/sw/bin/initdb --locale "$LANG" -E UTF-8'';
+        ExecStart = ''/run/current-system/sw/bin/initdb --locale "$LANG" -E UTF-8'';
         RemainAfterExit = "true";
       };
     };
@@ -48,8 +52,7 @@
       Service = {
         Type = "simple";
         Environment = "PGDATA=${config.tsrk.epita.sql.dataDir}";
-        ExecStart =
-          "/run/current-system/sw/bin/postgres -k ${config.home.sessionVariables.PGHOST}";
+        ExecStart = "/run/current-system/sw/bin/postgres -k ${config.home.sessionVariables.PGHOST}";
         Restart = "on-failure";
       };
     };

@@ -11,7 +11,11 @@
 {
   key = ./x11-base.nix;
 
-  imports = with self.homeManagerModules; [ profile-desktop i3 polybar ];
+  imports = with self.homeManagerModules; [
+    profile-desktop
+    i3
+    polybar
+  ];
 
   config = {
     tsrk = {

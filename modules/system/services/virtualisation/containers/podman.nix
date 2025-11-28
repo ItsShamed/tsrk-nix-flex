@@ -4,10 +4,16 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  options = { tsrk.containers.podman.enable = lib.mkEnableOption "Podman"; };
+  options = {
+    tsrk.containers.podman.enable = lib.mkEnableOption "Podman";
+  };
 
   config = {
     tsrk.containers.enable = lib.mkDefault true;

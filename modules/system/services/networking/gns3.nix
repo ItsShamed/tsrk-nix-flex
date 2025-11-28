@@ -4,16 +4,28 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.gns3;
-in {
+let
+  cfg = config.tsrk.gns3;
+in
+{
   options = {
-    tsrk.gns3 = { enable = lib.options.mkEnableOption "tsrk's GNS3 setup"; };
+    tsrk.gns3 = {
+      enable = lib.options.mkEnableOption "tsrk's GNS3 setup";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ gns3-gui vpcs ];
+    environment.systemPackages = with pkgs; [
+      gns3-gui
+      vpcs
+    ];
 
     services.gns3-server = {
       enable = true;

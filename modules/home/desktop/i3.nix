@@ -6,17 +6,26 @@
 
 { self, ... }:
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   mod = config.xsession.windowManager.i3.config.modifier;
   cfg = config.xsession.windowManager.i3.config;
-  lockTargetsPresent = let targets = config.systemd.user.targets;
-  in targets ? lock && targets ? sleep && targets ? unlock;
-  lockCommand = if config.tsrk.i3.epitaRestrictions then
-    "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
-  else
-    "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
+  lockTargetsPresent =
+    let
+      targets = config.systemd.user.targets;
+    in
+    targets ? lock && targets ? sleep && targets ? unlock;
+  lockCommand =
+    if config.tsrk.i3.epitaRestrictions then
+      "i3lock -i ${config.tsrk.i3.lockerBackground} -p win"
+    else
+      "${pkgs.betterlockscreen}/bin/betterlockscreen -l -- -p win";
 
   renameWorkspaces = pkgs.writeShellScript "i3-rename-workspaces" ''
     i3-msg 'rename workspace 1 to "1: workdir"
@@ -28,106 +37,110 @@ let
   # TODO: figure how to disable services without them disappearing
   # I initially used `systemctl --user disable` so that if I ever need to run
   # other sessions, i3 user services would not pollute other window managers
-  teardown = pkgs.writeShellScript "i3-teardown" (lib.strings.concatLines [
-    ''
-      # This script is responsible for stopping all services started with i3
-      # and to stop i3
-    ''
-    (lib.strings.optionalString config.services.polybar.enable ''
-      # Polybar
-      systemctl --user stop polybar &
-    '')
-    (lib.strings.optionalString config.services.xsettingsd.enable ''
-      # xsettingsd
-      systemctl --user stop xsettingsd &
-    '')
-    (lib.strings.optionalString config.services.darkman.enable ''
-      # darkman
-      systemctl --user stop darkman &
-    '')
-    (lib.strings.optionalString config.tsrk.i3.useLogind ''
-      # i3lock service
-      # This service runs when the lock.target is reach and before sleeping
-      systemctl --user stop i3lock &
-    '')
-    (lib.strings.optionalString config.programs.eww.enable ''
-      # eww daemon
-      (systemctl --user stop eww-mpris-watcher
-      systemctl --user stop eww) &
-    '')
-    ''
-      # Stop i3
-      loginctl terminate-session $XDG_SESSION_ID
-    ''
-  ]);
+  teardown = pkgs.writeShellScript "i3-teardown" (
+    lib.strings.concatLines [
+      ''
+        # This script is responsible for stopping all services started with i3
+        # and to stop i3
+      ''
+      (lib.strings.optionalString config.services.polybar.enable ''
+        # Polybar
+        systemctl --user stop polybar &
+      '')
+      (lib.strings.optionalString config.services.xsettingsd.enable ''
+        # xsettingsd
+        systemctl --user stop xsettingsd &
+      '')
+      (lib.strings.optionalString config.services.darkman.enable ''
+        # darkman
+        systemctl --user stop darkman &
+      '')
+      (lib.strings.optionalString config.tsrk.i3.useLogind ''
+        # i3lock service
+        # This service runs when the lock.target is reach and before sleeping
+        systemctl --user stop i3lock &
+      '')
+      (lib.strings.optionalString config.programs.eww.enable ''
+        # eww daemon
+        (systemctl --user stop eww-mpris-watcher
+        systemctl --user stop eww) &
+      '')
+      ''
+        # Stop i3
+        loginctl terminate-session $XDG_SESSION_ID
+      ''
+    ]
+  );
 
-  startup = pkgs.writeShellScript "i3-startup" (lib.strings.concatLines [
-    ''
-      ##
-      # This script is responsible for (re)starting all services to be used with i3
-      ##
+  startup = pkgs.writeShellScript "i3-startup" (
+    lib.strings.concatLines [
+      ''
+        ##
+        # This script is responsible for (re)starting all services to be used with i3
+        ##
 
-    ''
-    ''
-      # Run the stored fehbg, so that we always have a background between
-      # Sessions
-      if [ -x "${config.home.homeDirectory}/.fehbg" ]; then
-        "${config.home.homeDirectory}/.fehbg"
-      fi
-    ''
-    ''
-      ## Launch betterlockscreen setup
-      systemctl --user start setup-betterlockscreen &
-    ''
-    (lib.strings.optionalString config.services.polybar.enable ''
-      # Polybar
-      if systemctl --user is-active polybar; then
-        systemctl --user restart polybar &
-      else
-        systemctl --user enable --now polybar &
-      fi
-    '')
-    (lib.strings.optionalString config.services.xsettingsd.enable ''
-      # xsettingsd
-      if systemctl --user is-active xsettingsd; then
-        systemctl --user restart xsettingsd &
-      else
-        systemctl --user enable --now xsettingsd &
-      fi
+      ''
+      ''
+        # Run the stored fehbg, so that we always have a background between
+        # Sessions
+        if [ -x "${config.home.homeDirectory}/.fehbg" ]; then
+          "${config.home.homeDirectory}/.fehbg"
+        fi
+      ''
+      ''
+        ## Launch betterlockscreen setup
+        systemctl --user start setup-betterlockscreen &
+      ''
+      (lib.strings.optionalString config.services.polybar.enable ''
+        # Polybar
+        if systemctl --user is-active polybar; then
+          systemctl --user restart polybar &
+        else
+          systemctl --user enable --now polybar &
+        fi
+      '')
+      (lib.strings.optionalString config.services.xsettingsd.enable ''
+        # xsettingsd
+        if systemctl --user is-active xsettingsd; then
+          systemctl --user restart xsettingsd &
+        else
+          systemctl --user enable --now xsettingsd &
+        fi
 
-      (${pkgs.lxappearance}/bin/lxappearance &
-      sleep 2
-      ${pkgs.killall}/bin/killall .lxappearance-wrapped)&
-    '')
-    (lib.strings.optionalString config.services.darkman.enable ''
-      # darkman
-      if systemctl --user is-active darkman; then
-        systemctl --user restart darkman &
-      else
-        systemctl --user enable --now darkman &
-      fi
-    '')
-    (lib.strings.optionalString config.tsrk.i3.useLogind ''
-      # i3lock service
-      # This service runs when the lock.target is reached and before sleeping
-      systemctl --user enable i3lock &
-    '')
-    (lib.strings.optionalString config.programs.eww.enable ''
-      # eww daemon
-      if systemctl --user is-active eww; then
-        (
-          systemctl --user stop eww-mpris-watcher
-          systemctl --user restart eww
-          systemctl --user start eww-mpris-watcher
-        ) &
-      else
-        (
-          systemctl --user enable --now eww
-          systemctl --user enable --now eww-mpris-watcher
-        ) &
-      fi
-    '')
-  ]);
+        (${pkgs.lxappearance}/bin/lxappearance &
+        sleep 2
+        ${pkgs.killall}/bin/killall .lxappearance-wrapped)&
+      '')
+      (lib.strings.optionalString config.services.darkman.enable ''
+        # darkman
+        if systemctl --user is-active darkman; then
+          systemctl --user restart darkman &
+        else
+          systemctl --user enable --now darkman &
+        fi
+      '')
+      (lib.strings.optionalString config.tsrk.i3.useLogind ''
+        # i3lock service
+        # This service runs when the lock.target is reached and before sleeping
+        systemctl --user enable i3lock &
+      '')
+      (lib.strings.optionalString config.programs.eww.enable ''
+        # eww daemon
+        if systemctl --user is-active eww; then
+          (
+            systemctl --user stop eww-mpris-watcher
+            systemctl --user restart eww
+            systemctl --user start eww-mpris-watcher
+          ) &
+        else
+          (
+            systemctl --user enable --now eww
+            systemctl --user enable --now eww-mpris-watcher
+          ) &
+        fi
+      '')
+    ]
+  );
 
   teardownTarget = pkgs.writeShellScript "teardown-target" ''
     systemctl --user stop tray.target & disown
@@ -168,8 +181,7 @@ let
       (
         sleep 1
         systemctl --user restart eww${
-          lib.strings.optionalString
-          (config.systemd.user.services ? eww-starter) ''
+          lib.strings.optionalString (config.systemd.user.services ? eww-starter) ''
 
             systemctl --user restart eww-starter
           ''
@@ -178,17 +190,21 @@ let
     ''}
   '';
 
-  effectiveTeardown = if config.systemd.user.targets ? x11-session
-  && config.systemd.user.targets ? tray then
-    teardownTarget
-  else
-    teardown;
+  effectiveTeardown =
+    if
+      config.systemd.user.targets ? x11-session && config.systemd.user.targets ? tray
+    then
+      teardownTarget
+    else
+      teardown;
 
-  effectiveStartup = if config.systemd.user.targets ? x11-session
-  && config.systemd.user.targets ? tray then
-    startupTarget
-  else
-    startup;
+  effectiveStartup =
+    if
+      config.systemd.user.targets ? x11-session && config.systemd.user.targets ? tray
+    then
+      startupTarget
+    else
+      startup;
 
   volumeControl = pkgs.writeShellScript "volume-control" ''
     notifyVolume_() {
@@ -283,34 +299,42 @@ let
       enable = true;
       config = {
         modifier = "Mod4";
-        terminal = (self.lib.mkIfElse (config.programs.kitty.enable)
-          (self.lib.mkGL config "kitty")
-          # This is for the EPITA die-hards that never bothered to change their
-          # default terminal emulator for their session lol
-          (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty"));
-        menu = (self.lib.mkIfElse (config.programs.rofi.enable)
-          ''sh -c "rofi -show drun"'' "${pkgs.dmenu}/bin/dmenu_run");
+        terminal = (
+          self.lib.mkIfElse (config.programs.kitty.enable) (self.lib.mkGL config "kitty")
+            # This is for the EPITA die-hards that never bothered to change their
+            # default terminal emulator for their session lol
+            (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")
+        );
+        menu = (
+          self.lib.mkIfElse (config.programs.rofi.enable
+          ) ''sh -c "rofi -show drun"'' "${pkgs.dmenu}/bin/dmenu_run"
+        );
         bars = [ ];
 
-        startup = (lib.lists.optional (!config.services.darkman.enable) {
-          command = "feh --bg-fill ${config.tsrk.i3.background}";
-          always = false;
-        }) ++ [
-          {
-            command = "sh ${effectiveStartup}";
-            always = true;
-            notification = false;
-          }
-          {
-            command = "sh ${renameWorkspaces}";
-            always = true;
-            notification = false;
-          }
-        ];
+        startup =
+          (lib.lists.optional (!config.services.darkman.enable) {
+            command = "feh --bg-fill ${config.tsrk.i3.background}";
+            always = false;
+          })
+          ++ [
+            {
+              command = "sh ${effectiveStartup}";
+              always = true;
+              notification = false;
+            }
+            {
+              command = "sh ${renameWorkspaces}";
+              always = true;
+              notification = false;
+            }
+          ];
 
         assigns = {
-          "3: web" = [{ window_role = "^browser$"; }];
-          "4: coms" = [ { class = "^vesktop$"; } { class = "^thunderbird$"; } ];
+          "3: web" = [ { window_role = "^browser$"; } ];
+          "4: coms" = [
+            { class = "^vesktop$"; }
+            { class = "^thunderbird$"; }
+          ];
         };
 
         window.titlebar = false;
@@ -318,24 +342,32 @@ let
           # Enable border for "normal" windows
           {
             command = "border pixel 2";
-            criteria = { class = "^.*"; };
+            criteria = {
+              class = "^.*";
+            };
           }
 
           # Floating only for Pavucontrol
           {
             command = "floating enable";
-            criteria = { class = "pavucontrol"; };
+            criteria = {
+              class = "pavucontrol";
+            };
           }
 
           # Floating only for lxappearance
           {
             command = "floating enable";
-            criteria = { class = ".xappearance"; };
+            criteria = {
+              class = ".xappearance";
+            };
           }
 
           {
             command = "floating enable";
-            criteria = { window_role = "alert"; };
+            criteria = {
+              window_role = "alert";
+            };
           }
 
           {
@@ -425,8 +457,8 @@ let
 
           # Autorandr
 
-          "${mod}+p" = lib.mkIf config.programs.autorandr.enable
-            "exec ${pkgs.autorandr}/bin/autorandr -c --default default";
+          "${mod}+p" =
+            lib.mkIf config.programs.autorandr.enable "exec ${pkgs.autorandr}/bin/autorandr -c --default default";
 
           # Workspaces
 
@@ -453,60 +485,64 @@ let
           "${mod}+Shift+0" = "move container to workspace number 10";
 
           # Media keys
-          XF86AudioRaiseVolume =
-            ''exec --no-startup-id "${volumeControl} increase 5"'';
-          XF86AudioLowerVolume =
-            ''exec --no-startup-id "${volumeControl} decrease 5"'';
+          XF86AudioRaiseVolume = ''exec --no-startup-id "${volumeControl} increase 5"'';
+          XF86AudioLowerVolume = ''exec --no-startup-id "${volumeControl} decrease 5"'';
           XF86AudioMute = ''exec --no-startup-id "${volumeControl} tmute"'';
-          XF86AudioPlay = ''
-            exec --no-startup-id "${pkgs.playerctl}/bin/playerctl play-pause"'';
-          XF86AudioPause = ''
-            exec --no-startup-id "${pkgs.playerctl}/bin/playerctl play-pause"'';
-          XF86AudioPrev = ''
-            exec --no-startup-id "${pkgs.playerctl}/bin/playerctl previous" '';
-          XF86AudioNext =
-            ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl next" '';
+          XF86AudioPlay = ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl play-pause"'';
+          XF86AudioPause = ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl play-pause"'';
+          XF86AudioPrev = ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl previous" '';
+          XF86AudioNext = ''exec --no-startup-id "${pkgs.playerctl}/bin/playerctl next" '';
 
           # Rofi
 
-          "${mod}+semicolon" = lib.mkIf (config.programs.rofi.enable
-            && lib.lists.any (pkg: pkg == pkgs.rofi-emoji-wayland)
-            config.programs.rofi.plugins)
-            "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji";
+          "${mod}+semicolon" =
+            lib.mkIf
+              (
+                config.programs.rofi.enable
+                && lib.lists.any (pkg: pkg == pkgs.rofi-emoji) config.programs.rofi.plugins
+              )
+              "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji";
 
-          XF86Calculator = lib.mkIf (config.programs.rofi.enable
-            && lib.lists.any (pkg: pkg == pkgs.rofi-calc)
-            config.programs.rofi.plugins) ''
-              exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.xclip}/bin/xclip"'';
+          XF86Calculator =
+            lib.mkIf
+              (
+                config.programs.rofi.enable
+                && lib.lists.any (pkg: pkg == pkgs.rofi-calc) config.programs.rofi.plugins
+              )
+              ''exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.xclip}/bin/xclip"'';
 
-          "${mod}+equal" = lib.mkIf (config.programs.rofi.enable
-            && lib.lists.any (pkg: pkg == pkgs.rofi-calc)
-            config.programs.rofi.plugins) ''
-              exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.xclip}/bin/xclip"'';
+          "${mod}+equal" =
+            lib.mkIf
+              (
+                config.programs.rofi.enable
+                && lib.lists.any (pkg: pkg == pkgs.rofi-calc) config.programs.rofi.plugins
+              )
+              ''exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.xclip}/bin/xclip"'';
 
           # Brightness
-          XF86MonBrightnessUp =
-            ''exec --no-startup-id "${brightnessControl} increase 2"'';
-          XF86MonBrightnessDown =
-            ''exec --no-startup-id "${brightnessControl} decrease 2"'';
+          XF86MonBrightnessUp = ''exec --no-startup-id "${brightnessControl} increase 2"'';
+          XF86MonBrightnessDown = ''exec --no-startup-id "${brightnessControl} decrease 2"'';
 
           # lock
-          "${mod}+i" =
-            (self.lib.mkIfElse lockTargetsPresent "exec loginctl lock-session"
-              ''exec "${lockCommand}"'');
+          "${mod}+i" = (
+            self.lib.mkIfElse lockTargetsPresent "exec loginctl lock-session"
+              ''exec "${lockCommand}"''
+          );
           "${mod}+Shift+e" = config.tsrk.i3.exitPromptCommand effectiveTeardown;
 
           "${mod}+Shift+r" = "restart";
           "${mod}+Shift+c" = "reload";
           "${mod}+r" = ''mode "resize"'';
-          "--release ${mod}+Shift+s" =
-            (self.lib.mkIfElse config.services.flameshot.enable
-              ''exec --no-startup-id "flameshot gui"'' ''
-                exec --no-startup-id "${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'"'');
-          "--release ${mod}+Print" =
-            (self.lib.mkIfElse config.services.flameshot.enable
-              ''exec --no-startup-id "flameshot full"'' ''
-                exec --no-startup-id "${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'"'');
+          "--release ${mod}+Shift+s" = (
+            self.lib.mkIfElse config.services.flameshot.enable
+              ''exec --no-startup-id "flameshot gui"''
+              ''exec --no-startup-id "${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -s -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'"''
+          );
+          "--release ${mod}+Print" = (
+            self.lib.mkIfElse config.services.flameshot.enable
+              ''exec --no-startup-id "flameshot full"''
+              ''exec --no-startup-id "${pkgs.scrot}/bin/scrot '/tmp/scrot-$a$Y%m%d%h%m%s.png' -e '${pkgs.xclip}/bin/xclip -selection clipboard -t image/png -i $f; rm $f'"''
+          );
         };
 
         modes = {
@@ -582,15 +618,16 @@ let
     systemd.user.services = {
       setup-betterlockscreen = lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
         Install = {
-          WantedBy =
-            (self.lib.mkIfElse (config.systemd.user.targets ? x11-session)
-              [ "x11-session.target" ] [ "graphical-session.target" ]);
+          WantedBy = (
+            self.lib.mkIfElse (config.systemd.user.targets ? x11-session)
+              [ "x11-session.target" ]
+              [ "graphical-session.target" ]
+          );
         };
 
         Service = {
           Type = "oneshot";
-          ExecStart =
-            "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
+          ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -u ${config.tsrk.i3.lockerBackground}";
         };
       };
     };
@@ -609,19 +646,23 @@ let
       };
     }
     (lib.mkIf config.tsrk.i3.epitaRestrictions {
-      services.screen-locker.lockCmd =
-        "${pkgs.i3lock}/bin/i3lock -i ${config.tsrk.i3.lockerBackground} -p win";
+      services.screen-locker.lockCmd = "${pkgs.i3lock}/bin/i3lock -i ${config.tsrk.i3.lockerBackground} -p win";
       services.screen-locker.inactiveInterval = 5;
     })
     (lib.mkIf (!config.tsrk.i3.epitaRestrictions) {
       services.betterlockscreen = {
         enable = lib.mkDefault true;
-        arguments = [ "--" "-p" "win" ];
+        arguments = [
+          "--"
+          "-p"
+          "win"
+        ];
         inactiveInterval = 5;
       };
     })
   ];
-in {
+in
+{
   options = {
     tsrk.i3 = {
       enable = lib.options.mkEnableOption "tsrk's i3 configuration";
@@ -641,9 +682,9 @@ in {
       exitPromptCommand = lib.options.mkOption {
         description = "Command to execute when pressing the exit keybind.";
         type = lib.types.functionTo lib.types.str;
-        default = teardown:
-          ''
-            exec " i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'"'';
+        default =
+          teardown:
+          ''exec " i3-nagbar -t warning -m 'Disconnect?' -b 'Yes' 'sh ${teardown}'"'';
       };
     };
   };

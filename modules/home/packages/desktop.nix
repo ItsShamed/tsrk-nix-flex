@@ -6,10 +6,17 @@
 
 { self, ... }:
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
-let tsrkPkgs = self.packages.${pkgs.system};
-in {
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   options = {
     tsrk.packages.desktop = {
       enable = lib.options.mkEnableOption "tsrk's desktop package bundle";
@@ -34,8 +41,6 @@ in {
       xfce.thunar
       ranger
 
-      # The best password manager (real)
-      bitwarden
       tsrkPkgs.spotify-adblock
 
       # PDF Readers

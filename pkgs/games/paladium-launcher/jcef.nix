@@ -4,14 +4,51 @@
 
 # SPDX-License-Identifier: MIT
 
-{ fetchFromBitbucket, fetchurl, fetchzip, stdenv, cmake, python3, jdk8, git
-, rsync, lib, ant, ninja, strip-nondeterminism, stripJavaArchivesHook
+{
+  fetchFromBitbucket,
+  fetchurl,
+  fetchzip,
+  stdenv,
+  cmake,
+  python3,
+  jdk8,
+  git,
+  rsync,
+  lib,
+  ant,
+  ninja,
+  strip-nondeterminism,
+  stripJavaArchivesHook,
 
-, debugBuild ? false
+  debugBuild ? false,
 
-, glib, nss, nspr, atk, at-spi2-atk, libdrm, expat, libxcb, libxkbcommon, libX11
-, libXt, libXcomposite, libXdamage, libXext, libXfixes, libXrandr, mesa, gtk3
-, pango, cairo, alsa-lib, dbus, at-spi2-core, cups, libxshmfence, udev }:
+  glib,
+  nss,
+  nspr,
+  atk,
+  at-spi2-atk,
+  libdrm,
+  expat,
+  libxcb,
+  libxkbcommon,
+  libX11,
+  libXt,
+  libXcomposite,
+  libXdamage,
+  libXext,
+  libXfixes,
+  libXrandr,
+  mesa,
+  gtk3,
+  pango,
+  cairo,
+  alsa-lib,
+  dbus,
+  at-spi2-core,
+  cups,
+  libxshmfence,
+  udev,
+}:
 
 assert !stdenv.isDarwin;
 # I can't test darwin
@@ -47,27 +84,32 @@ let
   ];
 
   buildType = if debugBuild then "Debug" else "Release";
-  platform = {
-    "aarch64-linux" = "linuxarm64";
-    "x86_64-linux" = "linux64";
-  }.${stdenv.hostPlatform.system} or (throw
-    "Unsupported system: ${stdenv.hostPlatform.system}");
-  arches = {
-    "linuxarm64" = {
-      depsArch = "arm64";
-      projectArch = "arm64";
-      targetArch = "arm64";
-    };
-    "linux64" = {
-      depsArch = "amd64";
-      projectArch = "x86_64";
-      targetArch = "x86_64";
-    };
-  }.${platform};
+  platform =
+    {
+      "aarch64-linux" = "linuxarm64";
+      "x86_64-linux" = "linux64";
+    }
+    .${stdenv.hostPlatform.system}
+      or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+  arches =
+    {
+      "linuxarm64" = {
+        depsArch = "arm64";
+        projectArch = "arm64";
+        targetArch = "arm64";
+      };
+      "linux64" = {
+        depsArch = "amd64";
+        projectArch = "x86_64";
+        targetArch = "x86_64";
+      };
+    }
+    .${platform};
   inherit (arches) depsArch projectArch targetArch;
 
   buildMeta = builtins.fromJSON (builtins.readFile ./jcef_info.json);
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "jcef";
   inherit (buildMeta.nix) rev;
   # This is the commit number
@@ -85,28 +127,37 @@ in stdenv.mkDerivation rec {
     strip-nondeterminism
     stripJavaArchivesHook
   ];
-  buildInputs = [ libX11 libXt libXdamage nss nspr ];
+  buildInputs = [
+    libX11
+    libXt
+    libXdamage
+    nss
+    nspr
+  ];
 
   src = fetchFromBitbucket {
     inherit (buildMeta.nix) owner repo;
     inherit rev;
     hash = "sha256-OATgaV1ZTQ4sQ9E3qBz1JH9uCwZSxkF0Ns2EIDkW9nM=";
   };
-  cef-bin = let
-    # `cef_binary_${CEF_VERSION}_linux64_minimal`, where CEF_VERSION is from $src/CMakeLists.txt
-    name = "cef_binary_${buildMeta.nix.cefBuild}_${platform}";
-    hash = {
-      "linuxarm64" = "sha256-gCDIfWsysXE8lHn7H+YM3Jag+mdbWwTQpJf0GKdXEVs=";
-      "linux64" = "sha256-DhkqtNun16DUuoK+aCX7x4msAb+AvpKm6UCvHAErPjM=";
-    }.${platform};
-    urlName = builtins.replaceStrings [ "+" ] [ "%2B" ] name;
-  in fetchzip {
-    url = "https://cef-builds.spotifycdn.com/${urlName}.tar.bz2";
-    inherit name hash;
-  };
+  cef-bin =
+    let
+      # `cef_binary_${CEF_VERSION}_linux64_minimal`, where CEF_VERSION is from $src/CMakeLists.txt
+      name = "cef_binary_${buildMeta.nix.cefBuild}_${platform}";
+      hash =
+        {
+          "linuxarm64" = "sha256-gCDIfWsysXE8lHn7H+YM3Jag+mdbWwTQpJf0GKdXEVs=";
+          "linux64" = "sha256-DhkqtNun16DUuoK+aCX7x4msAb+AvpKm6UCvHAErPjM=";
+        }
+        .${platform};
+      urlName = builtins.replaceStrings [ "+" ] [ "%2B" ] name;
+    in
+    fetchzip {
+      url = "https://cef-builds.spotifycdn.com/${urlName}.tar.bz2";
+      inherit name hash;
+    };
   clang-fmt = fetchurl {
-    url =
-      "https://storage.googleapis.com/chromium-clang-format/dd736afb28430c9782750fc0fd5f0ed497399263";
+    url = "https://storage.googleapis.com/chromium-clang-format/dd736afb28430c9782750fc0fd5f0ed497399263";
     hash = "sha256-4H6FVO9jdZtxH40CSfS+4VESAHgYgYxfCBFSMHdT0hE=";
   };
 

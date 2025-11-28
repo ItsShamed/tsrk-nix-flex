@@ -4,15 +4,18 @@
 
 # SPDX-License-Identifier: MIT
 
-{ stdenvNoCC, fetchzip, lib }:
+{
+  stdenvNoCC,
+  fetchzip,
+  lib,
+}:
 
 stdenvNoCC.mkDerivation {
   pname = "dsfr-marianne";
   version = "1.007";
 
   src = fetchzip {
-    url =
-      "https://www.systeme-de-design.gouv.fr/uploads/Marianne_fd0ba9c190.zip";
+    url = "https://www.systeme-de-design.gouv.fr/uploads/Marianne_fd0ba9c190.zip";
     hash = "sha256-hbe60MVd0Nu+hiY27y8q58zyJny4I5jqyINpZep/opc=";
     stripRoot = false; # They left MacOS metadata files smh
   };
@@ -30,8 +33,7 @@ stdenvNoCC.mkDerivation {
       branding guidelines. Its usage creates a coherence between the various
       fronts and gives the user a positive experience.
     '';
-    homepage =
-      "https://www.systeme-de-design.gouv.fr/fondamentaux/typographie/";
+    homepage = "https://www.systeme-de-design.gouv.fr/fondamentaux/typographie/";
     license = licenses.unfree;
   };
 }

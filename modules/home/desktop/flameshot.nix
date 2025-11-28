@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
-  options = { tsrk.flameshot.enable = lib.options.mkEnableOption "flameshot"; };
+  options = {
+    tsrk.flameshot.enable = lib.options.mkEnableOption "flameshot";
+  };
 
   config = lib.mkIf config.tsrk.flameshot.enable {
     services.flameshot = {

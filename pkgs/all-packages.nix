@@ -12,7 +12,6 @@
   chatterino7 = ./applications/networking/instant-messengers/chatterino7;
 
   ### DEVELOPMENT
-  ltex-ls-plus = ./development/languages-servers/ltext-ls-plus;
   realm-studio = ./development/misc/realm-studio;
   vunit-hdl = ./development/testing-frameworks/vunit-hdl;
 
@@ -37,12 +36,9 @@
   ### THEMES
   sddm-slice-theme = {
     path = ./data/themes/sddm-slice-theme;
-    callPackage = self: super: super.libsForQt5.callPackage;
+    callPackage = _self: super: super.libsForQt5.callPackage;
   };
   hyperfluent-grub-theme = ./data/themes/hyperfluent-grub-theme;
 
   rofi-themes-collection = ./data/themes/rofi-themes-collection;
-
-  ### SYSTEM
-  sddm-babysitter = ./applications/system/sddm-babysitter;
 }

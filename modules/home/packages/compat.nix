@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = {
@@ -14,6 +19,10 @@
   };
 
   config = lib.mkIf config.tsrk.packages.compat.enable {
-    home.packages = with pkgs; [ distrobox distrobox-tui boxbuddy ];
+    home.packages = with pkgs; [
+      distrobox
+      distrobox-tui
+      boxbuddy
+    ];
   };
 }

@@ -4,11 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-self: super:
+_self: super:
 
 {
-  rofi-power-menu = super.rofi-power-menu.overrideAttrs
-    (selfAttrs: superAttrs: {
+  rofi-power-menu = super.rofi-power-menu.overrideAttrs (
+    _selfAttrs: _superAttrs: {
       patches = [ ./patches/0001-refactor-allow-passing-logout-command.patch ];
-    });
+    }
+  );
 }

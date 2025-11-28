@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, options, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.screenkey;
-in {
+let
+  cfg = config.tsrk.screenkey;
+in
+{
   options = {
     tsrk.screenkey = {
       enable = lib.options.mkEnableOption "Screenkey";
@@ -35,7 +42,12 @@ in {
           "multiline" = false;
           "vis_shift" = false;
           "vis_space" = true;
-          "geometry" = [ 1493 1046 427 34 ];
+          "geometry" = [
+            1493
+            1046
+            427
+            34
+          ];
           "screen" = 0;
           "start_disabled" = false;
           "mouse" = false;

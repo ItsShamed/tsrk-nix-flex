@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   cfg = config.tsrk.darkman;
@@ -52,33 +57,31 @@ let
       };
     };
 
-    home.activation.copy-activation =
-      lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
-        echo "Copying activation scripts"
-        activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
-        activation_dir="$(cd -- "$activation_dir" && pwd)"
-        base_dir="$(basename "$activation_dir")"
-        if [ -z "$base_dir" ] || [ "$base_dir" = "light" ] || [ "$base_dir" = "dark" ]; then
-          warnEcho "Running in improper directory for linking activation scripts."
-          noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
-        else
-          local_bin_path="${config.home.homeDirectory}/.local/bin"
-          mkdir -p "$local_bin_path"
-          $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
-          $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
-        fi
+    home.activation.copy-activation = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
+      echo "Copying activation scripts"
+      activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
+      activation_dir="$(cd -- "$activation_dir" && pwd)"
+      base_dir="$(basename "$activation_dir")"
+      if [ -z "$base_dir" ] || [ "$base_dir" = "light" ] || [ "$base_dir" = "dark" ]; then
+        warnEcho "Running in improper directory for linking activation scripts."
+        noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
+      else
+        local_bin_path="${config.home.homeDirectory}/.local/bin"
+        mkdir -p "$local_bin_path"
+        $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
+        $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
+      fi
 
-        unset activation_dir base_dir
-      '';
+      unset activation_dir base_dir
+    '';
 
-    home.packages = with pkgs;
-      [
-        (writeShellScriptBin "hm-switch" ''
-          cd $HOME/.config/home-manager
-          home-manager build $@
-          . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
-        '')
-      ];
+    home.packages = with pkgs; [
+      (writeShellScriptBin "hm-switch" ''
+        cd $HOME/.config/home-manager
+        home-manager build $@
+        . result/specialisation/$(${pkgs.darkman}/bin/darkman get)/activate
+      '')
+    ];
 
     home.sessionPath = [ "$HOME/.local/bin" ];
   };
@@ -114,7 +117,8 @@ let
       '';
     };
   };
-in {
+in
+{
   options = {
     tsrk.darkman = {
       enable = lib.options.mkEnableOption "darkman";
@@ -135,9 +139,11 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable (lib.mkMerge [
-    baseConfig
-    (lib.mkIf nvimLoaded nvimConfig)
-    (lib.mkIf fehLoaded fehConfig)
-  ]);
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      baseConfig
+      (lib.mkIf nvimLoaded nvimConfig)
+      (lib.mkIf fehLoaded fehConfig)
+    ]
+  );
 }

@@ -6,22 +6,35 @@
 
 { self, ... }:
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
-let tsrkPkgs = self.packages.${pkgs.system};
-in {
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
+{
   options = {
-    tsrk.rofi = { enable = lib.options.mkEnableOption "Rofi configuration"; };
+    tsrk.rofi = {
+      enable = lib.options.mkEnableOption "Rofi configuration";
+    };
   };
 
   config = lib.mkIf config.tsrk.rofi.enable {
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
-      plugins = with pkgs; [ rofi-emoji-wayland rofi-calc ];
+      plugins = with pkgs; [
+        rofi-emoji
+        rofi-calc
+      ];
       theme = "${tsrkPkgs.rofi-themes-collection}/simple-tokyonight.rasi";
-      terminal = (self.lib.mkIfElse (config.programs.kitty.enable) "kitty"
-        "${pkgs.alacritty}/bin/alacritty");
+      terminal = (
+        self.lib.mkIfElse (config.programs.kitty.enable
+        ) "kitty" "${pkgs.alacritty}/bin/alacritty"
+      );
       location = "center";
       extraConfig = {
         modi = "drun,run";

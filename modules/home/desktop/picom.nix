@@ -43,17 +43,28 @@ let
   picomCfg = config.services.picom;
 
   compatConfig = {
-    systemd.user.services.picom.Service.ExecStart = lib.mkForce
-      (self.lib.mkGL config (lib.strings.concatStringsSep " " ([
-        "${lib.meta.getExe picomCfg.package}"
-        "--config ${config.xdg.configFile."picom/picom.conf".source}"
-      ] ++ picomCfg.extraArgs)));
+    systemd.user.services.picom.Service.ExecStart = lib.mkForce (
+      self.lib.mkGL config (
+        lib.strings.concatStringsSep " " (
+          [
+            "${lib.meta.getExe picomCfg.package}"
+            "--config ${config.xdg.configFile."picom/picom.conf".source}"
+          ]
+          ++ picomCfg.extraArgs
+        )
+      )
+    );
   };
-in {
+in
+{
   options = {
     tsrk.picom.enable = lib.options.mkEnableOption "tsrk's Picom configuration";
   };
 
-  config =
-    lib.mkIf config.tsrk.picom.enable (lib.mkMerge [ baseConfig compatConfig ]);
+  config = lib.mkIf config.tsrk.picom.enable (
+    lib.mkMerge [
+      baseConfig
+      compatConfig
+    ]
+  );
 }

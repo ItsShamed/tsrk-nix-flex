@@ -4,16 +4,21 @@
 
 # SPDX-License-Identifier: MIT
 
-{ lib, fetchurl, appimageTools, symlinkJoin, makeDesktopItem }:
+{
+  lib,
+  fetchurl,
+  appimageTools,
+  symlinkJoin,
+  makeDesktopItem,
+}:
 
 let
   pname = "rewind";
-  version = "0.2.0";
+  version = "0.2.2";
 
   appimageBin = fetchurl {
-    url =
-      "https://github.com/abstrakt8/rewind/releases/download/v0.2.0/Rewind-0.2.0.AppImage";
-    hash = "sha256-E6VqjMHWKROpQYS3yJ3Fe+wfw2DRlQPmLBD47UXrYpg=";
+    url = "https://github.com/abstrakt8/rewind/releases/download/v${version}/Rewind-${version}.AppImage";
+    hash = "sha256-2SfrmP/Y3JrQeYn06vvjKRUrHb2p0SqSB7w18/ybbeg=";
   };
 
   extracted = appimageTools.extract {
@@ -22,11 +27,15 @@ let
     src = appimageBin;
   };
 
-  package = appimageTools.wrapType2 rec {
+  package = appimageTools.wrapType2 {
     inherit pname version;
 
     src = appimageBin;
-    extraPkgs = pkgs: with pkgs; [ mesa libGLU ];
+    extraPkgs =
+      pkgs: with pkgs; [
+        mesa
+        libGLU
+      ];
   };
 
   desktopItem = makeDesktopItem {
@@ -38,9 +47,13 @@ let
     terminal = false;
     categories = [ "Utility" ];
   };
-in symlinkJoin {
+in
+symlinkJoin {
   name = "${pname}-bin-${version}";
-  paths = [ package desktopItem ];
+  paths = [
+    package
+    desktopItem
+  ];
 
   meta = with lib; {
     description = "A beatmap/replay analyzer for the rhythm game called osu!";

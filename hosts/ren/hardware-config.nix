@@ -4,7 +4,13 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, inputs, modulesPath, ... }:
+{
+  config,
+  lib,
+  inputs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
@@ -14,14 +20,21 @@
     inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
   ];
 
-  boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ahci"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.blacklistedKernelModules = [ "elan_i2c" ];
 
-  boot.kernelParams =
-    lib.mkIf config.boot.plymouth.enable [ "plymouth.use-simpledrm" ];
+  boot.kernelParams = lib.mkIf config.boot.plymouth.enable [
+    "plymouth.use-simpledrm"
+  ];
 
   networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 

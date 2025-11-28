@@ -7,13 +7,20 @@
 { config, lib, ... }:
 
 {
-  imports = [ ./docker.nix ./podman.nix ./services ];
+  imports = [
+    ./docker.nix
+    ./podman.nix
+    ./services
+  ];
 
   options = {
     tsrk.containers.enable = lib.options.mkEnableOption "containers";
   };
 
   config = lib.mkIf config.tsrk.containers.enable {
-    virtualisation.containers.registries.search = [ "docker.io" "ghcr.io" ];
+    virtualisation.containers.registries.search = [
+      "docker.io"
+      "ghcr.io"
+    ];
   };
 }

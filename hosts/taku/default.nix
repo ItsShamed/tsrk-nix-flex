@@ -4,10 +4,18 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, inputs, pkgs, lib, ... }:
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 
-let winappsPkgs = inputs.winapps.packages."${pkgs.system}";
-in {
+let
+  winappsPkgs = inputs.winapps.packages."${pkgs.stdenv.hostPlatform.system}";
+in
+{
   imports = [
     self.nixosModules.profile-tsrk-common
     self.nixosModules.gamescope
@@ -17,7 +25,12 @@ in {
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       initialPassword = "changeme";
-      moreGroups = [ "adbusers" "libvirtd" "libvirt" "kvm" ];
+      moreGroups = [
+        "adbusers"
+        "libvirtd"
+        "libvirt"
+        "kvm"
+      ];
       modules = [ ./user.nix ];
     })
     ./disk.nix
@@ -84,9 +97,7 @@ in {
   # TODO: Remove this when it will be wired (hopefully one day)
   services.udev.packages = [
     (pkgs.writeText "/etc/udev.d/rules/81-wowlan.rules" ''
-      ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${
-        lib.getExe pkgs.iw
-      } phy0 wowlan enable magic-packet"
+      ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${lib.getExe pkgs.iw} phy0 wowlan enable magic-packet"
     '')
   ];
 

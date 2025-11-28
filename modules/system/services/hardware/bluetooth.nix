@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  options = { tsrk.bluetooth.enable = lib.options.mkEnableOption "Bluetooth"; };
+  options = {
+    tsrk.bluetooth.enable = lib.options.mkEnableOption "Bluetooth";
+  };
 
   config = lib.mkIf config.tsrk.bluetooth.enable {
     hardware.bluetooth = {
@@ -30,8 +37,12 @@
           "bluez5.enable-sbc-xq" = true;
           "bluez5.enable-msbc" = true;
           "bluez5.enable-hw-volume" = true;
-          "bluez5.roles" =
-            [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" ];
+          "bluez5.roles" = [
+            "a2dp_sink"
+            "a2dp_source"
+            "bap_sink"
+            "bap_source"
+          ];
         };
       };
       "11-bluetooth-policy" = {

@@ -4,4 +4,9 @@
 
 # SPDX-License-Identifier: MIT
 
-[ ./test ./genesis ./ren ./taku ]
+[
+  ./test
+  ./genesis
+  ./ren
+  ./taku
+]

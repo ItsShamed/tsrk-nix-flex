@@ -4,11 +4,23 @@
 
 # SPDX-License-Identifier: MIT
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
-  binDeps =
-    lib.makeBinPath (with pkgs; [ imagemagick playerctl util-linux gawk ]);
+  binDeps = lib.makeBinPath (
+    with pkgs;
+    [
+      imagemagick
+      playerctl
+      util-linux
+      gawk
+    ]
+  );
   packagedDir = pkgs.stdenv.mkDerivation {
     pname = "tsrk-eww-config";
     version = "0.0.1";
@@ -48,7 +60,8 @@ let
 
     ${config.programs.eww.package}/bin/eww --no-daemonize open bottom-dock
   '';
-in {
+in
+{
   options = {
     tsrk.eww = {
       enable = lib.options.mkEnableOption "tsrk's eww configuration bundle";
@@ -78,8 +91,7 @@ in {
 
         Service = {
           Type = "exec";
-          ExecStart =
-            "${config.programs.eww.package}/bin/eww --no-daemonize daemon";
+          ExecStart = "${config.programs.eww.package}/bin/eww --no-daemonize daemon";
           Restart = "on-failure";
         };
       };

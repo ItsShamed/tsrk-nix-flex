@@ -4,10 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let cfg = config.tsrk.packages.security;
-in {
+let
+  cfg = config.tsrk.packages.security;
+in
+{
   options = {
     tsrk.packages.security = {
       enable = lib.options.mkEnableOption "tsrk's security package bundle";
@@ -19,12 +26,11 @@ in {
       # YubiKey management
       yubikey-manager
       yubikey-personalization
-      yubikey-personalization-gui
       yubico-piv-tool
       yubioath-flutter
 
       # Bitwarden
-      bitwarden
+      bitwarden-desktop
       bitwarden-cli
 
       # 2FA
@@ -39,4 +45,3 @@ in {
     };
   };
 }
-

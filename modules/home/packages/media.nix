@@ -4,13 +4,17 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = {
     tsrk.packages.media = {
-      enable =
-        lib.options.mkEnableOption "tsrk's multimedia user package bundle";
+      enable = lib.options.mkEnableOption "tsrk's multimedia user package bundle";
     };
   };
 
@@ -22,7 +26,6 @@
         wlrobs
         droidcam-obs
         obs-websocket
-        obs-webkitgtk
         obs-vkcapture
         obs-3d-effect
         obs-multi-rtmp
@@ -42,7 +45,6 @@
       strawberry
       lollypop
       qbittorrent
-      miru
       ffmpeg-full
       imagemagick
       lrcget

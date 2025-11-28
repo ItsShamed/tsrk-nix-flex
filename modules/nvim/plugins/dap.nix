@@ -18,7 +18,8 @@ let
       return (path and path ~= "") and path or require("dap").ABORT
     end
   '';
-in {
+in
+{
   plugins = {
     dap = {
       enable = true;
@@ -26,7 +27,10 @@ in {
         gdb = {
           id = "gdb";
           command = "${pkgs.gdb}/bin/gdb";
-          args = [ "--quiet" "--interpreter=dap" ];
+          args = [
+            "--quiet"
+            "--interpreter=dap"
+          ];
         };
       };
       configurations = rec {

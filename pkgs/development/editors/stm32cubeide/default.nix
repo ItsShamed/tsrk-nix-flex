@@ -4,11 +4,45 @@
 
 # SPDX-License-Identifier: MIT
 
-{ autoPatchelfHook, qt6, makeWrapper, cairo, dbus, libglvnd, libGL, fontconfig
-, freetype, libgcc, glib, gtk4, gtk3, gtk3-x11, gtk2, gtk2-x11, pcsclite, pango
-, ncurses5, alsa-lib, ffmpeg_4-headless, ffmpeg_6-headless, imagemagick
-, libxkbcommon, stlink, stlink-gui, stm32cubemx, swt, unzip, xorg, libz, xercesc
-, makeDesktopItem, requireFile, stdenv, symlinkJoin, lib }:
+{
+  autoPatchelfHook,
+  qt6,
+  makeWrapper,
+  cairo,
+  dbus,
+  libglvnd,
+  libGL,
+  fontconfig,
+  freetype,
+  libgcc,
+  glib,
+  gtk4,
+  gtk3,
+  gtk3-x11,
+  gtk2,
+  gtk2-x11,
+  pcsclite,
+  pango,
+  ncurses5,
+  alsa-lib,
+  ffmpeg_4-headless,
+  ffmpeg_6-headless,
+  imagemagick,
+  libxkbcommon,
+  stlink,
+  stlink-gui,
+  stm32cubemx,
+  swt,
+  unzip,
+  xorg,
+  libz,
+  xercesc,
+  makeDesktopItem,
+  requireFile,
+  stdenv,
+  symlinkJoin,
+  lib,
+}:
 
 let
   package = stdenv.mkDerivation rec {
@@ -37,8 +71,13 @@ let
       sha256 = "15l97abbihc4wkvg0l04w19yjckgf6w9752nn49hk6c2zdyanmd4";
     };
 
-    nativeBuildInputs =
-      [ autoPatchelfHook qt6.wrapQtAppsHook makeWrapper unzip imagemagick ];
+    nativeBuildInputs = [
+      autoPatchelfHook
+      qt6.wrapQtAppsHook
+      makeWrapper
+      unzip
+      imagemagick
+    ];
 
     buildInputs = [
       cairo
@@ -109,7 +148,11 @@ let
     desktopName = "STM32CubeIDE";
     startupWMClass = "STM32CubeIDE";
     terminal = false;
-    categories = [ "Development" "IDE" "Electronics" ];
+    categories = [
+      "Development"
+      "IDE"
+      "Electronics"
+    ];
   };
 
   waylandDesktopItem = makeDesktopItem {
@@ -119,17 +162,25 @@ let
     desktopName = "STM32CubeIDE (Wayland)";
     startupWMClass = "STM32CubeIDE";
     terminal = false;
-    categories = [ "Development" "IDE" "Electronics" ];
+    categories = [
+      "Development"
+      "IDE"
+      "Electronics"
+    ];
   };
-in symlinkJoin {
+in
+symlinkJoin {
   name = "stm32cubeide";
-  paths = [ package x11DesktopItem waylandDesktopItem ];
+  paths = [
+    package
+    x11DesktopItem
+    waylandDesktopItem
+  ];
 
   meta = with lib; {
     license = licenses.unfree;
     homepage = "https://www.st.com/en/development-tools/stm32cubeide.html";
-    description =
-      "STM32CubeIDE is an all-in-one development tool, which is part of the STM32Cube software ecosystem.";
+    description = "STM32CubeIDE is an all-in-one development tool, which is part of the STM32Cube software ecosystem.";
     platform = platforms.linux;
     mainProgram = "stm32cubeide";
   };

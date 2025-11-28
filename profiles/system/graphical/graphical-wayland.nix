@@ -11,8 +11,10 @@
 {
   key = ./graphical-wayland.nix;
 
-  imports =
-    [ self.nixosModules.profile-graphical-base self.nixosModules.hyprland ];
+  imports = [
+    self.nixosModules.profile-graphical-base
+    self.nixosModules.hyprland
+  ];
 
   tsrk.hyprland.enable = lib.mkDefault true;
 

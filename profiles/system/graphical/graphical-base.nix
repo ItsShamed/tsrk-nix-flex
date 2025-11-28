@@ -29,16 +29,20 @@
     qwerty-fr.enable = lib.mkDefault true;
   };
 
-  environment.variables = { TERMINAL = "${pkgs.kitty}/bin/kitty"; };
+  environment.variables = {
+    TERMINAL = "${pkgs.kitty}/bin/kitty";
+  };
 
-  programs.dconf.enable =
-    lib.mkDefault true; # To allow GTK customisation in home-manager
+  programs.dconf.enable = lib.mkDefault true; # To allow GTK customisation in home-manager
 
   services.gvfs.enable = lib.mkDefault true;
 
   fonts = {
     enableDefaultPackages = true;
-    packages = with pkgs; [ dejavu_fonts noto-fonts-cjk-sans ];
+    packages = with pkgs; [
+      dejavu_fonts
+      noto-fonts-cjk-sans
+    ];
     fontconfig = {
       enable = true;
       hinting.enable = true;

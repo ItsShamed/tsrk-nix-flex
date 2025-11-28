@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-self: super:
+_self: super:
 
 {
   sshfs = super.sshfs.override {
