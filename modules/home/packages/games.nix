@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, pkgSet, ... }:
+{ inputs, ... }:
 
 {
   pkgs,
@@ -14,7 +14,6 @@
 }:
 
 let
-  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
   gaming = inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
@@ -37,8 +36,7 @@ in
       typespeed
       tetrio-desktop
       gaming.wine-ge
-      # TODO: nixpkgs-unstable package: switch to upstream nixpkgs when 25.11
-      pkgsUnstable.unofficial-homestuck-collection
+      unofficial-homestuck-collection
     ];
   };
 }
