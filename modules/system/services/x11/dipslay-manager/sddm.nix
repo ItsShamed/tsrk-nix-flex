@@ -16,6 +16,12 @@
 let
   cfg = config.tsrk.sddm;
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  theme = tsrkPkgs.sddm-slice-theme.withConfig {
+    color_bg = "#24283b";
+    color_contrast = "#1f2335";
+    color_dimmed = "#a9b1d6";
+    color_main = "#c0caf5";
+  };
 in
 {
   options = {
@@ -28,16 +34,16 @@ in
     services.displayManager.sddm = {
       enable = true;
       autoNumlock = true;
-      theme = "slice";
+      theme = "${theme}/share/sddm/themes/slice";
+      settings.Theme = {
+        CursorTheme = "macOS";
+        CursorSize = 48;
+      };
     };
 
     environment.systemPackages = [
-      (tsrkPkgs.sddm-slice-theme.withConfig {
-        color_bg = "#24283b";
-        color_contrast = "#1f2335";
-        color_dimmed = "#a9b1d6";
-        color_main = "#c0caf5";
-      })
+      theme
+      pkgs.apple-cursor
     ];
   };
 }
