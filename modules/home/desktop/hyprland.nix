@@ -588,20 +588,20 @@ in
 
         # TODO: Add animation rule for satty
         windowrule = [
-          "tag +coms, match:class ^(vesktop)$"
-          "tag +coms, match:class ^(thunderbird)$"
-          "tag +browser, match:class ^(librewolf)$"
-          "tag +browser, match:class ^(firefox)$"
-          "tag +browser, match:class ^(Chromium-browser)$"
-          "tag +pip, match:initial_title ^(Picture-in-Picture)$"
-          "tag +pip, match:initial_title ^(Picture in Picture)$"
+          "tag +coms, class:^(vesktop)$"
+          "tag +coms, class:^(thunderbird)$"
+          "tag +browser, class:^(librewolf)$"
+          "tag +browser, class:^(firefox)$"
+          "tag +browser, class:^(Chromium-browser)$"
+          "tag +pip, initialTitle:^(Picture-in-Picture)$"
+          "tag +pip, initialTitle:^(Picture in pIcture)$"
 
-          "float, match:class org\\.pulseaudio\\.pavucontrol"
-          "float, match:tag pip"
-          "float, match:tag browser, match:title ^(Extension: )"
-          "pin, match:tag pip"
-          "workspace 3 silent, match:tag browser"
-          "workspace 4 silent, match:tag coms"
+          "float, class:org\\.pulseaudio\\.pavucontrol"
+          "float, tag:pip"
+          "float, tag:browser, title:^(Extension: )"
+          "pin, tag:pip"
+          "workspace 3 silent, tag:browser"
+          "workspace 4 silent, tag:coms"
         ];
       };
 
