@@ -27,17 +27,6 @@ let
     in
     targets ? lock && targets ? sleep && targets ? unlock;
 
-  mkSubMap = name: attrs: ''
-    submap = ${name}
-    ${lib.hm.generators.toHyprconf {
-      inherit attrs;
-      indentLevel = 1;
-    }}
-    submap = reset
-  '';
-
-  submapsToHyprConf = lib.concatMapAttrsStringSep "\n" mkSubMap;
-
   volumeControl = pkgs.writeShellScript "volume-control" ''
     notifyVolume_() {
       # Cancel launching notification if syshud is launched
@@ -253,13 +242,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = !builtins.hasAttr "reset" cfg.submaps;
-        message = "Submaps can't be named 'reset'.";
-      }
-    ];
-
     tsrk.sessionTargets.enable = lib.mkDefault true;
     wayland.systemd.target = lib.mkDefault "hyprland-session.target";
 
@@ -616,23 +598,31 @@ in
 
           "float, match:class org\\.pulseaudio\\.pavucontrol"
           "float, match:tag pip"
-          {
-            name = "firefox-extension-float";
-            "match:tag" = "browser";
-            "match:title" = "^Extension: ";
-            float = true;
-          }
+          "float, match:tag browser, match:title ^(Extension: )"
           "pin, match:tag pip"
           "workspace 3 silent, match:tag browser"
           "workspace 4 silent, match:tag coms"
         ];
       };
 
-      extraConfig = ''
-        ${lib.strings.optionalString (cfg.submaps != { }) (
-          submapsToHyprConf cfg.submaps
-        )}
-      '';
+      submaps = {
+        resize.settings = {
+
+          binded = [
+            ", right, Grow width of active window,    resizeactive, 10 0"
+            ", left,  Shrink width of active window,  resizeactive, -10 0"
+            ", up,    Grow height of active window,   resizeactive, 0 10"
+            ", down,  Shrink height of active window, resizeactive, 0 -10"
+
+            # Vim-like keybindings
+            ", L, Grow width of active window,    resizeactive, 10 0"
+            ", H, Shrink width of active window,  resizeactive, -10 0"
+            ", K, Grow height of active window,   resizeactive, 0 10"
+            ", J, Shrink height of active window, resizeactive, 0 -10"
+            ", catchall, Exit resize submap, submap, reset"
+          ];
+        };
+      };
     };
 
     specialisation = {
@@ -664,25 +654,6 @@ in
             "col.border_inactive" = "rgb(24283b)";
             "col.border_active" = "rgb(c0caf5)";
           };
-        };
-      };
-
-      submaps = {
-        resize.settings = {
-
-          binded = [
-            ", right, Grow width of active window,    resizeactive, 10 0"
-            ", left,  Shrink width of active window,  resizeactive, -10 0"
-            ", up,    Grow height of active window,   resizeactive, 0 10"
-            ", down,  Shrink height of active window, resizeactive, 0 -10"
-
-            # Vim-like keybindings
-            ", L, Grow width of active window,    resizeactive, 10 0"
-            ", H, Shrink width of active window,  resizeactive, -10 0"
-            ", K, Grow height of active window,   resizeactive, 0 10"
-            ", J, Shrink height of active window, resizeactive, 0 -10"
-            ", catchall, Exit resize submap, submap, reset"
-          ];
         };
       };
     };
