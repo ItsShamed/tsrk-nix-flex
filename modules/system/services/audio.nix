@@ -56,6 +56,8 @@ in
           alsa.support32Bit = true;
           pulse.enable = true;
 
+          wireplumber.extraConfig."99-alsa-lowlatency" = lib.mkForce { };
+
           extraConfig =
             let
               inherit (builtins) toString;
