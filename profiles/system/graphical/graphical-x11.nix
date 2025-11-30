@@ -17,6 +17,4 @@
   ];
 
   tsrk.i3.enable = lib.mkDefault true;
-
-  security.soteria.enable = lib.mkDefault true;
 }

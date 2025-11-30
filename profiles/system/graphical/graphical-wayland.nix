@@ -17,6 +17,4 @@
   ];
 
   tsrk.hyprland.enable = lib.mkDefault true;
-
-  security.soteria.enable = false;
 }

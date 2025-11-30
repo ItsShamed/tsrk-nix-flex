@@ -53,4 +53,5 @@
   tsrk.boot.plymouth.enable = lib.mkDefault true;
 
   hardware.opentabletdriver.enable = lib.mkDefault true;
+  security.soteria.enable = lib.mkDefault true;
 }
