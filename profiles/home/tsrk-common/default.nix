@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, inputs, ... }:
+{ self, ... }:
 
 { pkgs, lib, ... }:
 
@@ -14,7 +14,7 @@
   imports = with self.homeManagerModules; [
     fcitx5
     profile-x11
-    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    # inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   tsrk = {
@@ -40,17 +40,20 @@
     shell.kubeswitch.enable = true;
   };
 
-  services.flatpak = {
-    enable = true;
-    packages = [ "com.fightcade.Fightcade" ];
-    update = {
-      onActivation = true;
-      auto = {
-        enable = true;
-        onCalendar = "weekly";
-      };
-    };
-  };
+  # Fucking flatpak-managed-install that takes 1000000000000000000000 years to
+  # install fucking flatpaks because fucking devs cannot package their fucking
+  # software correctly
+  # services.flatpak = {
+  #   enable = true;
+  #   packages = [ "com.fightcade.Fightcade" ];
+  #   update = {
+  #     onActivation = true;
+  #     auto = {
+  #       enable = true;
+  #       onCalendar = "weekly";
+  #     };
+  #   };
+  # };
 
   accounts.email.accounts = {
     tsrk = rec {
