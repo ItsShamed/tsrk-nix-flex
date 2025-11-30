@@ -98,6 +98,23 @@ in
             cursor-theme = "macOS-BigSur";
           };
         };
+        home.activation.dconf-settings-fix =
+          let
+            gtkTheme =
+              config.dconf.settings."org/gnome/desktop/interface".gtk-theme or "Adwaita-Dark";
+          in
+          lib.hm.dag.entryAfter [ "xsettingsd-reload" ] ''
+            if [[ -v DBUS_SESSION_BUS_ADDRESS ]]; then
+              export DCONF_DBUS_RUN_SESSION=""
+            else
+              export DCONF_DBUS_RUN_SESSION="${pkgs.dbus}/bin/dbus-run-session --dbus-daemon=${pkgs.dbus}/bin/dbus-daemon"
+            fi
+
+            run $DCONF_DBUS_RUN_SESSION ${lib.meta.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme "'bogus'"
+            run $DCONF_DBUS_RUN_SESSION ${lib.meta.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme "'${gtkTheme}'"
+
+            unset DCONF_DBUS_RUN_SESSION
+          '';
 
         specialisation = {
           light.configuration = {
@@ -107,20 +124,6 @@ in
               icon-theme = "Tokyonight-Light";
             };
 
-            home.activation.dconfSettings-lightfix =
-              lib.hm.dag.entryAfter [ "xsettingsd-reload" ]
-                ''
-                  if [[ -v DBUS_SESSION_BUS_ADDRESS ]]; then
-                    export DCONF_DBUS_RUN_SESSION=""
-                  else
-                    export DCONF_DBUS_RUN_SESSION="${pkgs.dbus}/bin/dbus-run-session --dbus-daemon=${pkgs.dbus}/bin/dbus-daemon"
-                  fi
-
-                  run $DCONF_DBUS_RUN_SESSION ${lib.meta.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme "'bogus'"
-                  run $DCONF_DBUS_RUN_SESSION ${lib.meta.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme "'Tokyonight-Light-Storm'"
-
-                  unset DCONF_DBUS_RUN_SESSION
-                '';
           };
           dark.configuration = {
             dconf.settings."org/gnome/desktop/interface" = {
