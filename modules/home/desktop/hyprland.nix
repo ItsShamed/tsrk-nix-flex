@@ -203,24 +203,18 @@ in
 {
   key = ./hyprland.nix;
 
-  imports = with self.homeManagerModules; [ session-targets ];
+  imports = with self.homeManagerModules; [
+    session-targets
+    (lib.modules.mkRemovedOptionModule [
+      "tsrk"
+      "hyprland"
+      "submaps"
+    ] "Use Home-Manager's wayland.windowManager.hyprland.submaps instead")
+  ];
 
   options = {
     tsrk.hyprland = {
       enable = lib.options.mkEnableOption "tsrk's Hyprland configuration";
-      # TODO: Deprecate when https://github.com/nix-community/home-manager/pull/7277
-      # is merged
-      submaps = lib.options.mkOption {
-        description = ''
-          Attribute set of Hyprland submaps
-
-          See <https://wiki.hypr.land/Configuring/Binds#submaps> to learn about submaps
-        '';
-        default = { };
-        type =
-          with lib.types;
-          attrsOf ((attrsOf (listOf str)) // { description = "Hyprland binds"; });
-      };
       uwsm = {
         extraEnv = lib.options.mkOption {
           description = "Extra options to pass to UWSM";
@@ -612,19 +606,25 @@ in
 
         # TODO: Add animation rule for satty
         windowrule = [
-          "tag +coms, class:^(vesktop)$"
-          "tag +coms, class:^(thunderbird)$"
-          "tag +browser, class:^(librewolf)$"
-          "tag +browser, class:^(firefox)$"
-          "tag +browser, class:^(Chromium-browser)$"
-          "tag +pip, initialtitle:^(Picture-in-Picture)$"
-          "tag +pip, initialtitle:^(Picture in pIcture)$"
+          "tag +coms, match:class ^(vesktop)$"
+          "tag +coms, match:class ^(thunderbird)$"
+          "tag +browser, match:class ^(librewolf)$"
+          "tag +browser, match:class ^(firefox)$"
+          "tag +browser, match:class ^(Chromium-browser)$"
+          "tag +pip, match:initial_title ^(Picture-in-Picture)$"
+          "tag +pip, match:initial_title ^(Picture in Picture)$"
 
-          "float, class:org\\.pulseaudio\\.pavucontrol"
-          "float, tag:pip"
-          "pin, tag:pip"
-          "workspace 3 silent, tag:browser"
-          "workspace 4 silent, tag:coms"
+          "float, match:class org\\.pulseaudio\\.pavucontrol"
+          "float, match:tag pip"
+          {
+            name = "firefox-extension-float";
+            "match:tag" = "browser";
+            "match:title" = "^Extension: ";
+            float = true;
+          }
+          "pin, match:tag pip"
+          "workspace 3 silent, match:tag browser"
+          "workspace 4 silent, match:tag coms"
         ];
       };
 
@@ -666,23 +666,24 @@ in
           };
         };
       };
-    };
 
-    tsrk.hyprland.submaps = {
-      resize = {
-        binded = [
-          ", right, Grow width of active window,    resizeactive, 10 0"
-          ", left,  Shrink width of active window,  resizeactive, -10 0"
-          ", up,    Grow height of active window,   resizeactive, 0 10"
-          ", down,  Shrink height of active window, resizeactive, 0 -10"
+      submaps = {
+        resize.settings = {
 
-          # Vim-like keybindings
-          ", L, Grow width of active window,    resizeactive, 10 0"
-          ", H, Shrink width of active window,  resizeactive, -10 0"
-          ", K, Grow height of active window,   resizeactive, 0 10"
-          ", J, Shrink height of active window, resizeactive, 0 -10"
-          ", catchall, Exit resize submap, submap, reset"
-        ];
+          binded = [
+            ", right, Grow width of active window,    resizeactive, 10 0"
+            ", left,  Shrink width of active window,  resizeactive, -10 0"
+            ", up,    Grow height of active window,   resizeactive, 0 10"
+            ", down,  Shrink height of active window, resizeactive, 0 -10"
+
+            # Vim-like keybindings
+            ", L, Grow width of active window,    resizeactive, 10 0"
+            ", H, Shrink width of active window,  resizeactive, -10 0"
+            ", K, Grow height of active window,   resizeactive, 0 10"
+            ", J, Shrink height of active window, resizeactive, 0 -10"
+            ", catchall, Exit resize submap, submap, reset"
+          ];
+        };
       };
     };
   };
