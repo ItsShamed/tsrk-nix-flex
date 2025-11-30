@@ -28,6 +28,8 @@ in
       furnace
       reaper
       reaper-reapack-extension
+      yabridge
+      yabridgectl
     ];
   };
 }
