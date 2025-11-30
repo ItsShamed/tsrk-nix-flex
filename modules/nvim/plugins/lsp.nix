@@ -73,7 +73,10 @@
         nixd = {
           enable = true;
           settings = {
-            formatting.command = [ "nixfmt" ];
+            formatting.command = [
+              "nixfmt"
+              "--width=80"
+            ];
             options = {
               nixos.expr = ''(builtins.getFlake "${self.outPath}").lspHints.nixos or {}'';
               homeManager.expr = ''(builtins.getFlake "${self.outPath}").lspHints.homeManager or {}'';
