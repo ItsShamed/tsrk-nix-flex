@@ -47,7 +47,10 @@ in
 
   tsrk.hyprland.enable = true;
 
-  tsrk.sound.focusriteSupport = true;
+  tsrk.sound = {
+    focusriteSupport = true;
+    useRTScheduling = true;
+  };
 
   services.pipewire.extraConfig.pipewire."10-tsrk-issues" = {
     "context.properties"."default.clock.max-quantum" = 128;

@@ -37,6 +37,8 @@ in
       };
 
       focusriteSupport = lib.options.mkEnableOption "Focusrite audio interfaces support";
+      useRTScheduling = lib.options.mkEnableOption "Realtime Scheduling for the 'audio' group";
+      enableFFADO = lib.options.mkEnableOption "Free Firewire Audio Drivers";
     };
   };
 
@@ -105,6 +107,41 @@ in
           pulsemeeter
         ];
       }
+      (lib.mkIf cfg.useRTScheduling {
+        security.pam.loginLimits = [
+          {
+            domain = "@audio";
+            item = "memlock";
+            type = "-";
+            value = "unlimited";
+          }
+          {
+            domain = "@audio";
+            item = "rtprio";
+            type = "-";
+            value = "99";
+          }
+          {
+            domain = "@audio";
+            item = "nofile";
+            type = "soft";
+            value = "99999";
+          }
+          {
+            domain = "@audio";
+            item = "nofile";
+            type = "hard";
+            value = "99999";
+          }
+        ];
+      })
+      (lib.mkIf cfg.enableFFADO {
+        environment.systemPackages = [
+          pkgs.ffado
+        ];
+
+        services.udev.packages = [ pkgs.ffado ];
+      })
       (lib.mkIf config.tsrk.sound.focusriteSupport (
         lib.mkMerge [
           { environment.systemPackages = with pkgs; [ alsa-scarlett-gui ]; }
