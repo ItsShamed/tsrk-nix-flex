@@ -108,7 +108,7 @@ in
       (lib.mkIf config.tsrk.sound.focusriteSupport (
         lib.mkMerge [
           { environment.systemPackages = with pkgs; [ alsa-scarlett-gui ]; }
-          (lib.mkIf (lib.versionAtLeast kernelVersion "6.7") {
+          (lib.mkIf (lib.versionOlder kernelVersion "6.7") {
             boot.extraModprobeConfig = ''
               ### FOCUSRITE SUPPORT
 
