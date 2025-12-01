@@ -7,6 +7,7 @@
 {
   ### AUDIO
   spotify-adblock = ./applications/audio/spotify-adblock;
+  apricot = ./applications/audio/apricot;
 
   ### INSTANT MESSAGING
   chatterino7 = ./applications/networking/instant-messengers/chatterino7;
