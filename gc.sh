@@ -25,13 +25,9 @@ sudo_() {
 
 echo "==> Running NH clean"
 
-nh clean all -K 5d
+nh clean all -K 5d --optimise --no-gcroots
 
 echo "==> Cleaning up boot entries"
 
 sudo_ true
 sudo_ /run/current-system/bin/switch-to-configuration boot
-
-echo "==> Running Nix store optimisation with hard-links"
-
-nix store optimise -vv -L
