@@ -22,7 +22,7 @@
       "pkgs"
       "gaming"
       "amdSupport"
-    ])
+    ] "")
   ];
 
   options = {
