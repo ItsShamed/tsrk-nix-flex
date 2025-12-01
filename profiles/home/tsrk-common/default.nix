@@ -9,7 +9,7 @@
 { pkgs, lib, ... }:
 
 let
-  tsrkPkgs = self.${pkgs.stdenv.hostPlatform.system}.packages;
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   key = ./.;
