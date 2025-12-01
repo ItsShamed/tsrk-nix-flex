@@ -56,12 +56,6 @@
 
         services.joycond.enable = lib.mkDefault true;
       }
-      (lib.mkIf (config.tsrk.packages.pkgs.gaming.amdSupport) {
-        hardware.opengl = {
-          extraPackages = [ pkgs.amdvlk ];
-          extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
-        };
-      })
     ]
   );
 }
