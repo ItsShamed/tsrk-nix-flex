@@ -13,18 +13,22 @@
   ...
 }:
 
-let
-  inherit (pkgs.stdenv.hostPlatform) system;
-  proton-osu-bin = inputs.nix-gaming.packages.${system}.proton-osu-bin;
-in
 {
-  imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
+  imports = [
+    inputs.nix-gaming.nixosModules.platformOptimizations
+    (lib.modules.mkRemovedOptionModule [
+      "tsrk"
+      "packages"
+      "pkgs"
+      "gaming"
+      "amdSupport"
+    ])
+  ];
 
   options = {
     tsrk.packages.pkgs = {
       gaming = {
         enable = lib.options.mkEnableOption "tsrk's gaming package bundle";
-        amdSupport = lib.options.mkEnableOption "AMD support";
       };
     };
   };
@@ -35,6 +39,7 @@ in
         environment.systemPackages = with pkgs; [
           gamemode
           protontricks
+          winetricks
           umu-launcher
         ];
 
@@ -43,7 +48,6 @@ in
           enable = lib.mkDefault true;
           extraCompatPackages = with pkgs; [
             proton-ge-bin
-            proton-osu-bin
           ];
           remotePlay.openFirewall = lib.mkDefault true;
           localNetworkGameTransfers.openFirewall = lib.mkDefault true;
