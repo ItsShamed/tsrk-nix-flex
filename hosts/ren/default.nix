@@ -4,12 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{
-  self,
-  pkgs,
-  config,
-  ...
-}:
+{ self, pkgs, ... }:
 
 {
   imports = [
@@ -17,13 +12,7 @@
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
       initialPassword = "changeme";
-      moreGroups = [
-        "adbusers"
-        "libvirtd"
-        "dialout"
-        "uucp"
-        "plugdev"
-      ];
+      moreGroups = [ "adbusers" "libvirtd" "dialout" "uucp" "plugdev" ];
       modules = [ ./user.nix ];
     })
     self.nixosModules.gamescope
@@ -53,7 +42,7 @@
     insecure-registries = [ "reg.ren.libvirt.local" ];
   };
 
-  services.logind.lidSwitchExternalPower = config.services.logind.lidSwitchDocked;
+  services.logind.settings.Login.HandleLidSwitchDocked = "ignore";
 
   services.printing.enable = true;
 
