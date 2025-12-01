@@ -8,6 +8,9 @@
   ### AUDIO
   spotify-adblock = ./applications/audio/spotify-adblock;
   apricot = ./applications/audio/apricot;
+  extrabold = ./applications/audio/extrabold;
+  fluctus = ./applications/audio/fluctus;
+  regency = ./applications/audio/regency;
 
   ### INSTANT MESSAGING
   chatterino7 = ./applications/networking/instant-messengers/chatterino7;

@@ -19,6 +19,7 @@
     packages = {
       games.enable = true;
       more-gaming.enable = true;
+      music-production.plugins.enable = true;
       media.enable = true;
     };
     nvim.wakatime.enable = true;

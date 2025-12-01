@@ -8,9 +8,6 @@
 
 { pkgs, lib, ... }:
 
-let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   key = ./.;
 
@@ -162,10 +159,6 @@ in
     # ventoy-full
     tor
     tor-browser
-
-    # I LOVE MUSIC
-    vital
-    tsrkPkgs.apricot
   ];
 
   programs.cava = {
