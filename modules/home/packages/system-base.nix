@@ -42,7 +42,6 @@
         inetutils
         iw
         util-linux
-        (lib.meta.hiPrio coreutils-full)
         ethtool
 
         killall
