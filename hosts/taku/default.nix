@@ -99,7 +99,7 @@ in
 
   # TODO: Remove this when it will be wired (hopefully one day)
   services.udev.packages = [
-    (pkgs.writeText "/etc/udev.d/rules/81-wowlan.rules" ''
+    (pkgs.writeText "/etc/udev/rules.d/81-wowlan.rules" ''
       ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${lib.getExe pkgs.iw} phy0 wowlan enable magic-packet"
     '')
   ];
