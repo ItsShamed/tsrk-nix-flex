@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = {
@@ -124,6 +129,10 @@
         };
       };
     };
+
+    xdg.configFile."dunst/dunstrc".onChange = lib.mkAfter ''
+      ${pkgs.dunst}/bin/dunstctl reload || true
+    '';
 
     specialisation = {
       light.configuration = {
