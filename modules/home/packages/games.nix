@@ -35,6 +35,8 @@ in
       gaming.osu-lazer-bin
       typespeed
       tetrio-desktop
+      (lib.meta.hiPrio wine)
+      (lib.meta.hiPrio wine64)
       gaming.wine-ge
       unofficial-homestuck-collection
     ];
