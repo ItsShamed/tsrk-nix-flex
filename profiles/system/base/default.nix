@@ -63,6 +63,7 @@ in
     package = pkgs.nixVersions.stable;
 
     settings = {
+      auto-optimise-store = lib.mkDefault true;
       trusted-users = [
         "root"
         "@wheel"
