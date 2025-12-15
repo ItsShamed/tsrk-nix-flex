@@ -6,7 +6,7 @@
 
 args:
 
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -17,9 +17,10 @@ args:
 
   clipboard.register = "unnamedplus";
   clipboard.providers = {
-    wl-copy.enable = true;
-    xclip.enable = true;
-    xsel.enable = true;
+    wl-copy.enable = pkgs.stdenv.hostPlatform.isLinux;
+    xclip.enable = pkgs.stdenv.hostPlatform.isLinux;
+    xsel.enable = pkgs.stdenv.hostPlatform.isLinux;
+    pbcopy.enable = pkgs.stdenv.hostPlatform.isDarwin;
   };
 
   colorschemes.tokyonight.enable = true;
