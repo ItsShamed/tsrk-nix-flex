@@ -133,6 +133,10 @@
         {
           nixosModules =
             (import ./modules/system commonArgs)
+            // (import ./modules/overlays-as-modules.nix {
+              inherit lib;
+              inherit (self) overlays;
+            })
             // (import ./profiles/system commonArgs)
             // {
               all = lib.modules.importApply ./modules/system/all.nix commonArgs;
@@ -141,6 +145,10 @@
 
           homeManagerModules =
             (import ./modules/home commonArgs)
+            // (import ./modules/overlays-as-modules.nix {
+              inherit lib;
+              inherit (self) overlays;
+            })
             // (import ./profiles/home commonArgs)
             // {
               all = lib.modules.importApply ./modules/home/all.nix commonArgs;
@@ -152,9 +160,12 @@
           lspHints = import ./lsp-hints.nix commonArgs;
 
           lib = import ./lib {
-            inherit lib self;
-            pkgSet = pkgSet system;
-            inherit inputs;
+            inherit
+              lib
+              self
+              pkgSet
+              inputs
+              ;
           };
 
           homeConfigurations = import ./homes { inherit lib self; };

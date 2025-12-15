@@ -300,7 +300,8 @@ let
       config = {
         modifier = "Mod4";
         terminal = (
-          self.lib.mkIfElse (config.programs.kitty.enable) (self.lib.mkGL config "kitty")
+          self.lib.mkIfElse (config.programs.kitty.enable)
+            (self.lib.mkGL pkgs config "kitty")
             # This is for the EPITA die-hards that never bothered to change their
             # default terminal emulator for their session lol
             (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")

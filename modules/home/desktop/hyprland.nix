@@ -412,10 +412,11 @@ in
 
         "$mainMod" = "SUPER";
         "$terminal" = (
-          self.lib.mkIfElse (config.programs.kitty.enable) (self.lib.mkGL config "kitty")
+          self.lib.mkIfElse (config.programs.kitty.enable)
+            (self.lib.mkGL pkgs config "kitty")
             # This is for the EPITA die-hards that never bothered to change their
             # default terminal emulator for their session lol
-            (self.lib.mkGL config "${pkgs.alacritty}/bin/alacritty")
+            (self.lib.mkGL pkgs config "${pkgs.alacritty}/bin/alacritty")
         );
         "$menu" = (
           self.lib.mkIfElse (config.programs.rofi.enable

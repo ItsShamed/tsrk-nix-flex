@@ -4,17 +4,25 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgSet, ... }:
 
 {
   pkgs,
   lib,
   config,
+  options,
   ...
 }:
 
 let
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  overlaidPkgs = (pkgSet pkgs.stdenv.hostPlatform.system).pkgs;
+  canUseOverlays = options.nixpkgs.overlays.visible;
+  # Circumvent the fact that people with `home-manager.useGlobalPkgs` cannot use
+  # overlays, so we have to provide our own overlaid pkgs (which will definitely
+  # increase evaluation smhh)
+  rofi-power-menu-fix =
+    (if canUseOverlays then pkgs else overlaidPkgs).rofi-power-menu;
 in
 {
   options = {
@@ -24,6 +32,9 @@ in
   };
 
   config = lib.mkIf config.tsrk.rofi.enable {
+    nixpkgs.overlays = lib.mkIf canUseOverlays [
+      self.overlays.rofi-power-menu
+    ];
     programs.rofi = {
       enable = true;
       plugins = with pkgs; [
@@ -43,6 +54,6 @@ in
       };
     };
 
-    home.packages = with pkgs; [ rofi-power-menu ];
+    home.packages = [ rofi-power-menu-fix ];
   };
 }

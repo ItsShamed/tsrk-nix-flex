@@ -26,6 +26,7 @@ in
     self.nixosModules.yubikey
     self.nixosModules.networkmanager
     self.nixosModules.earlyoom
+    self.nixosModules.overlay-sshfs
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
@@ -88,6 +89,8 @@ in
       experimental-features = nix-command flakes
     '';
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   networking.useDHCP = lib.mkDefault true;
 

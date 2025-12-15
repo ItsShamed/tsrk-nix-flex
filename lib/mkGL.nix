@@ -6,12 +6,12 @@
 
 { pkgSet, ... }:
 
-let
-  inherit (pkgSet) pkgs;
-in
-config: command:
+pkgs: config: command:
 
+let
+  overlaidPkgs = (pkgSet pkgs.stdenv.hostPlatform.system).pkgs;
+in
 if (config.targets.genericLinux.enable) then
-  "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL ${command}"
+  "${overlaidPkgs.nixgl.auto.nixGLDefault}/bin/nixGL ${command}"
 else
   command

@@ -89,6 +89,10 @@ in
     package = pkgs.openrgb-with-all-plugins;
   };
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "mbedtls-2.28.10"
+  ];
+
   tsrk.x11.amdgpu = {
     enable = true;
     freeSync = true;

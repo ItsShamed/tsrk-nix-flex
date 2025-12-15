@@ -6,7 +6,12 @@
 
 { self, ... }:
 
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   baseConfig = {
@@ -44,7 +49,7 @@ let
 
   compatConfig = {
     systemd.user.services.picom.Service.ExecStart = lib.mkForce (
-      self.lib.mkGL config (
+      self.lib.mkGL pkgs config (
         lib.strings.concatStringsSep " " (
           [
             "${lib.meta.getExe picomCfg.package}"

@@ -68,6 +68,7 @@ in
   config = lib.mkIf cfg.enable {
     tsrk.packages.pkgs.java.enable = lib.mkDefault true;
     programs.adb.enable = true;
+    nixpkgs.config.android_sdk.accept_license = true;
 
     environment.variables = {
       ANDROID_SDK_ROOT = "${cfg.androidComposition.androidsdk}/libexec/android-sdk";

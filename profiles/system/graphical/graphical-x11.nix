@@ -14,6 +14,7 @@
   imports = [
     self.nixosModules.profile-graphical-base
     self.nixosModules.i3
+    self.nixosModules.overlay-rofi-power-menu
   ];
 
   tsrk.i3.enable = lib.mkDefault true;

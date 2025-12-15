@@ -18,6 +18,7 @@
     self.nixosModules.audio
     self.nixosModules.plymouth
     self.nixosModules.qwerty-fr
+    self.nixosModules.overlay-sound-theme-freedesktop
   ];
 
   services.xserver.enable = lib.mkForce true;

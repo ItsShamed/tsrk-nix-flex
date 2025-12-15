@@ -15,8 +15,7 @@
 
 let
   cfg = config.tsrk.sddm;
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-  theme = tsrkPkgs.sddm-slice-theme.withConfig {
+  theme = pkgs.sddm-slice-theme.withConfig {
     color_bg = "#24283b";
     color_contrast = "#1f2335";
     color_dimmed = "#a9b1d6";
@@ -31,6 +30,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    nixpkgs.overlays = with self.overlays; [
+      sddm
+      sddm-slice-theme
+    ];
     services.displayManager.sddm = {
       enable = true;
       autoNumlock = true;

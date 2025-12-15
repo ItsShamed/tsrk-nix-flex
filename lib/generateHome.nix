@@ -31,7 +31,8 @@ let
     };
 
   configuration = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = pkgSet.pkgs;
+    # TODO: Make this system-agnostic
+    inherit (pkgSet "x86_64-linux") pkgs;
 
     modules = modules ++ [ homeManagerBase ];
 

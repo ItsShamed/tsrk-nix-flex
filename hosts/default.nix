@@ -9,7 +9,6 @@
   nixpkgs,
   nixpkgsUnstable,
   # , nixpkgsMaster
-  pkgSet,
   self,
   system,
   ...
@@ -40,7 +39,7 @@ let
               # nixpkgsMaster.flake = nixpkgsMaster;
             };
 
-            nixpkgs = { inherit (pkgSet) pkgs; };
+            # nixpkgs = { inherit (pkgSet) pkgs; };
           };
         in
         [

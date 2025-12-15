@@ -67,11 +67,12 @@ Generates the NixOS module to generate a Linux user
 ### Signature
 
 ```haskell
-mkGL :: AttrSet -> String -> String
+mkGL :: AttrSet -> AttrSet -> String -> String
 ```
 
 ### Inputs
 
+`pkgs`: The Home-Manager provided pkgs
 `config`: Home-Manager config
 `command`: the command to run
 
