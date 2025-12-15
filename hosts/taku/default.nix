@@ -63,9 +63,19 @@ in
     openFirewall = true;
   };
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   services.printing = {
     enable = true;
-    drivers = with pkgs; [ hplipWithPlugin ];
+    drivers = with pkgs; [
+      hplipWithPlugin
+      cups-filters
+      cups-browsed
+    ];
   };
 
   tsrk.gns3.enable = true;
