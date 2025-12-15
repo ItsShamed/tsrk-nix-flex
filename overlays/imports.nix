@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 [
+  ./lix-compat
   ./retroarch
   ./rofi-power-menu
   ./sound-theme-freedesktop

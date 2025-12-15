@@ -25,4 +25,5 @@
   ./services/x11/sessions/i3.nix
   ./system/boot/plymouth
   ./system/kernel/v4l2loopback.nix
+  { path = ./system/nix/lix.nix; }
 ]

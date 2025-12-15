@@ -17,6 +17,7 @@
     containers
     libvirt
     v4l2loopback
+    lix
     # Little silly experiment
     (self.lib.generateSystemHome "root" {
       homeDir = "/root";
@@ -63,6 +64,8 @@
     ops.enable = true;
     web.enable = true;
   };
+
+  tsrk.lix.enable = true;
 
   tsrk.networking.networkmanager.enable = true;
 

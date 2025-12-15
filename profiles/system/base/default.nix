@@ -61,7 +61,7 @@ in
     # been removed in 24.11
     # And funny enough pkgs.nixStable was also removed circa 25.11
     # So we are just left with the unaliased version now lmao
-    package = pkgs.nixVersions.stable;
+    package = lib.mkDefault pkgs.nixVersions.stable;
 
     settings = {
       auto-optimise-store = lib.mkDefault true;
