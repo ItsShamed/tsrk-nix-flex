@@ -127,7 +127,7 @@ let
 
   snipTool =
     with lib.meta;
-    pkgs.writeShellScript "snip-tool" ''${getExe pkgs.grim} -g "$(${getExe pkgs.slurp} -o -r -c '#ff0000ff')" -t ppm - | ${getExe pkgs.satty} --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png --copy-command ${getExe pkgs.wl-clipboard}'';
+    pkgs.writeShellScript "snip-tool" ''${getExe pkgs.grim} -g "$(${getExe pkgs.slurp} -o -r -c '#ff0000ff')" -t ppm - | ${getExe pkgs.satty} --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png --copy-command ${pkgs.wl-clipboard}/bin/wl-copy'';
 
   scTool = "${lib.meta.getExe pkgs.grim} $(date '+%Y%m%d-%H:%M:%S').png";
 
