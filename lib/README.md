@@ -62,29 +62,6 @@ Generates the NixOS module for an Home-Manager configuration
 
 Generates the NixOS module to generate a Linux user
 
-## `mkGL`: make OpenGL context
-
-### Signature
-
-```haskell
-mkGL :: AttrSet -> AttrSet -> String -> String
-```
-
-### Inputs
-
-`pkgs`: The Home-Manager provided pkgs
-`config`: Home-Manager config
-`command`: the command to run
-
-### Description
-
-From the given `config` (Home-Manager) prepends `nixGL` to the given command if
-needed.
-This checks if `config.targets.genericLinux.enable` is `true`.
-
-This is generally used for non-NixOS systems where OpenGL doesn't work as
-expected due to paths shenanigans.
-
 ## `mkIfElse`: module-based if else
 
 ### Inputs

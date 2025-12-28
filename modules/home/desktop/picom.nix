@@ -4,8 +4,6 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
-
 {
   config,
   lib,
@@ -48,16 +46,16 @@ let
   picomCfg = config.services.picom;
 
   compatConfig = {
+    services.picom.package = config.lib.nixGL.wrap pkgs.picom;
     systemd.user.services.picom.Service.ExecStart = lib.mkForce (
-      self.lib.mkGL pkgs config (
-        lib.strings.concatStringsSep " " (
-          [
-            "${lib.meta.getExe picomCfg.package}"
-            "--config ${config.xdg.configFile."picom/picom.conf".source}"
-          ]
-          ++ picomCfg.extraArgs
-        )
+      lib.strings.concatStringsSep " " (
+        [
+          "${lib.meta.getExe picomCfg.package}"
+          "--config ${config.xdg.configFile."picom/picom.conf".source}"
+        ]
+        ++ picomCfg.extraArgs
       )
+
     );
   };
 in

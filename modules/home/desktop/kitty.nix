@@ -22,6 +22,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
+      package = config.lib.nixGL.wrap pkgs.kitty;
       font = lib.mkDefault {
         package = pkgs.nerd-fonts.iosevka-term;
         name = "IosevkaTerm Nerd Font";

@@ -15,7 +15,7 @@
   { path = ./desktop/i3.nix; }
   ./desktop/kitty.nix
   ./desktop/mopidy.nix
-  { path = ./desktop/picom.nix; }
+  ./desktop/picom.nix
   { path = ./desktop/polybar.nix; }
   ./desktop/premid.nix
   { path = ./desktop/rofi.nix; }

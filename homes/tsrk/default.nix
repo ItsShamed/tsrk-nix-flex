@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, inputs, ... }:
 
 {
   imports = with self.homeManagerModules; [
@@ -28,4 +28,11 @@
     nvim.wakatime.enable = true;
   };
   targets.genericLinux.enable = true;
+  targets.genericLinux.nixGL = {
+    packages = inputs.nixgl;
+    installScripts = [
+      "mesa"
+      "mesaPrime"
+    ];
+  };
 }

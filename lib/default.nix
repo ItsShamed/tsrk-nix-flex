@@ -21,7 +21,6 @@ rec {
     args // { inherit generateUser generateSystemHome; }
   );
   fromYAML = import ./fromYAML.nix;
-  mkGL = import ./mkGL.nix args;
 
   profileNeedsPkg = name: config: {
     assertion = config ? tsrk && config.tsrk ? packages;
