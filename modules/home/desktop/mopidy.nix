@@ -22,9 +22,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      rmpc
+    assertions = [
+      {
+        assertion =
+          (builtins.elem pkgs.mopidy-mpd config.services.mopidy.extensionPackages)
+          -> !config.services.mpd.enable;
+        message = "Mopidy-MPD cannot run concurrently with the original MPD";
+      }
     ];
+
+    programs.ncmpcpp.enable = lib.mkDefault true;
 
     services.mopidy = {
       enable = lib.mkDefault true;

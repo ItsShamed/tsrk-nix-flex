@@ -13,14 +13,14 @@
 
   imports = with self.homeManagerModules; [
     fcitx5
-    mopidy
+    mpd
     profile-x11
     # inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   tsrk = {
     premid.enable = true;
-    mopidy.enable = true;
+    mpd.enable = true;
     fcitx5 = {
       enable = true;
       groups = {

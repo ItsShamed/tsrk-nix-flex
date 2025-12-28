@@ -14,6 +14,7 @@
   { path = ./desktop/hyprland.nix; }
   { path = ./desktop/i3.nix; }
   ./desktop/kitty.nix
+  ./desktop/mpd.nix
   ./desktop/mopidy.nix
   ./desktop/picom.nix
   { path = ./desktop/polybar.nix; }
