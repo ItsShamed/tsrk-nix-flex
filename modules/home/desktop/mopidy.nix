@@ -22,6 +22,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      rmpc
+    ];
+
     services.mopidy = {
       enable = lib.mkDefault true;
       extensionPackages = with pkgs; [
@@ -29,6 +33,10 @@ in
         mopidy-mpris
         mopidy-local
         mopidy-youtube
+        mopidy-scrobbler
+      ];
+      extraConfigFiles = [
+        "${config.home.homeDirectory}/.config/mopidy/lastfm.conf"
       ];
       settings = rec {
         file = {
