@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgSet, ... }:
 
 {
   config,
@@ -16,6 +16,7 @@
 let
   cfg = config.tsrk.packages.music-production;
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
 in
 {
   options = {
@@ -32,7 +33,7 @@ in
       {
         home.packages = with pkgs; [
           furnace
-          reaper
+          pkgsUnstable.reaper # TODO: Remove when 7.55 is released
           reaper-reapack-extension
           yabridge
           yabridgectl
