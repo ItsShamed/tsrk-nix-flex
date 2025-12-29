@@ -6,6 +6,19 @@
 
 { config, lib, ... }:
 
+let
+  hyprlandPortalConfig = lib.genAttrs [
+    "org.freedesktop.impl.portal.Screenshot"
+    "org.freedesktop.impl.portal.ScreenCast"
+    "org.freedesktop.impl.portal.GlobalShortcuts"
+  ] (_: [ "hyprland" ]);
+
+  genericPortalConfig = {
+    default = [ "gtk" ];
+  };
+
+  portalConfig = hyprlandPortalConfig // genericPortalConfig;
+in
 {
   options = {
     tsrk.hyprland.enable = lib.options.mkEnableOption "Hyprland as a window manager";
@@ -19,5 +32,7 @@
     # Do not run Autostarts because if used alongside i3, picom will be deadge
     services.xserver.desktopManager.runXdgAutostartIfNone = lib.mkForce false;
     security.pam.services.hyprlock.enable = lib.mkDefault true;
+
+    xdg.portal.config.hyprland = portalConfig;
   };
 }
