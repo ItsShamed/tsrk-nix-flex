@@ -57,6 +57,13 @@ let
       };
     };
 
+    xdg.portal = {
+      extraPortals = [ config.services.darkman.package ];
+      config.common = {
+        "org.freedesktop.impl.portal.Settings" = "darkman";
+      };
+    };
+
     home.activation.copy-activation = lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
       echo "Copying activation scripts"
       activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"

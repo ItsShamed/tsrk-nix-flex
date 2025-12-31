@@ -31,4 +31,9 @@ name:
     inherit self;
     inherit inputs;
   };
+
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
 }
