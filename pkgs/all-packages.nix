@@ -7,6 +7,7 @@
 {
   ### AUDIO
   spotify-adblock = ./applications/audio/spotify-adblock;
+  pano-scrobbler-bin = ./applications/audio/pano-scrobbler-bin;
   apricot = ./applications/audio/apricot;
   extrabold = ./applications/audio/extrabold;
   fluctus = ./applications/audio/fluctus;
