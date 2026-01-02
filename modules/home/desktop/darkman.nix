@@ -57,7 +57,7 @@ let
       };
     };
 
-    xdg.portal = {
+    xdg.portal = lib.mkIf cfg.installPortal {
       extraPortals = [ config.services.darkman.package ];
       config.common = {
         "org.freedesktop.impl.portal.Settings" = "darkman";
@@ -129,6 +129,11 @@ in
   options = {
     tsrk.darkman = {
       enable = lib.options.mkEnableOption "darkman";
+      installPortal = lib.options.mkOption {
+        type = lib.types.bool;
+        description = "Whether to install darkman as a Settings portal";
+        default = false;
+      };
       nvim.enable = lib.options.mkEnableOption "theme switching for NeoVim";
       feh = {
         enable = lib.options.mkEnableOption "background switching with feh";
