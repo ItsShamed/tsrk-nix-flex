@@ -154,6 +154,7 @@
     deadnix
     teams-for-linux
     magic-wormhole
+    protonplus
 
     # TODO: Bring back when they finish being silly
     # https://github.com/ventoy/Ventoy/issues/3224
