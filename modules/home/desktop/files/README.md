@@ -6,7 +6,7 @@ This directory contains file assets for desktop-related Home-Manager modules.
 
 ### bg-no-logo.png
 
-Copyright (c) 2025 tsrk. <tsrk@tsrk.me>
+Copyright (c) 2026 tsrk. <tsrk@tsrk.me>
 
 Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
