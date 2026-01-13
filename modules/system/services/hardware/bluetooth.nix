@@ -23,12 +23,10 @@
       settings.General.FastConnectable = true;
     };
 
-    services.blueman.enable = true;
-
     environment.systemPackages = with pkgs; [
       bluez-tools
       blueberry
-      overskride
+      bluetui
     ];
 
     services.pipewire.wireplumber.extraConfig = {
