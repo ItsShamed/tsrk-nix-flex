@@ -81,4 +81,5 @@
   };
 
   services.upower.enable = true;
+  tsrk.sound.enableFFADO = true;
 }
