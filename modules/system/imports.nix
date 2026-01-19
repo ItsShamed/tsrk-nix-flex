@@ -7,6 +7,7 @@
 [
   { path = ./network/hostname.nix; }
   ./network/networkmanager.nix
+  ./network/upnp.nix
   { path = ./packages; }
   ./programs/gamescope.nix
   ./programs/yubikey.nix

@@ -18,6 +18,7 @@
     libvirt
     v4l2loopback
     lix
+    upnp
     # Little silly experiment
     (self.lib.generateSystemHome "root" {
       homeDir = "/root";
@@ -67,7 +68,10 @@
 
   tsrk.lix.enable = true;
 
-  tsrk.networking.networkmanager.enable = true;
+  tsrk.networking = {
+    networkmanager.enable = true;
+    upnp.enable = true;
+  };
 
   tsrk.containers = {
     enable = true;
