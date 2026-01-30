@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, ... }:
+{ inputs, pkgSet, ... }:
 
 {
   pkgs,
@@ -15,6 +15,7 @@
 
 let
   gaming = inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
+  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
 in
 {
   options = {
@@ -34,7 +35,7 @@ in
     home.packages = with pkgs; [
       gaming.osu-lazer-bin
       typespeed
-      tetrio-desktop
+      pkgsUnstable.tetrio-desktop # TODO: Use stable package when 26.04
       gaming.wine-ge
       unofficial-homestuck-collection
     ];
