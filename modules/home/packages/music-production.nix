@@ -33,6 +33,7 @@ in
       {
         home.packages = with pkgs; [
           furnace
+          zenity # Needed for furnace apparently
           pkgsUnstable.reaper # TODO: Remove when 7.55 is released
           reaper-reapack-extension
           yabridge
