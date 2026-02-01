@@ -238,6 +238,8 @@
                 nh
                 playerctl
                 nixfmt
+                nix-init
+                nurl
                 inputs.agenix.packages.${system}.default
               ];
 
