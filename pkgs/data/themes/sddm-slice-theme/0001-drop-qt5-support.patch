@@ -1,0 +1,124 @@
+From d464f030cc5385c830d45c4a50810ae8aa55065d Mon Sep 17 00:00:00 2001
+From: "tsrk." <tsrk@tsrk.me>
+Date: Mon, 2 Feb 2026 00:25:22 +0100
+Subject: [PATCH] drop qt5 support
+
+Signed-off-by: tsrk. <tsrk@tsrk.me>
+---
+ Main.qml                      |  1 -
+ metadata.desktop              |  1 +
+ slice/LoopListPowerItem.qml   | 12 ++++++------
+ slice/LoopListSessionItem.qml |  3 +--
+ slice/LoopListUserItem.qml    |  3 +--
+ slice/PagePower.qml           |  3 +--
+ 6 files changed, 10 insertions(+), 13 deletions(-)
+
+diff --git a/Main.qml b/Main.qml
+index 1271dcd..9da0e6b 100644
+--- a/Main.qml
++++ b/Main.qml
+@@ -1,5 +1,4 @@
+ import QtQuick 2.7
+-import Qt5Compat.GraphicalEffects
+ import SddmComponents 2.0
+ 
+ import "slice"
+diff --git a/metadata.desktop b/metadata.desktop
+index 593886e..f6a2832 100644
+--- a/metadata.desktop
++++ b/metadata.desktop
+@@ -11,3 +11,4 @@ Version=1.5.1
+ MainScript=Main.qml
+ TranslationsDirectory=translations
+ ConfigFile=theme.conf
++QtVersion=6
+diff --git a/slice/LoopListPowerItem.qml b/slice/LoopListPowerItem.qml
+index da48679..10e13a0 100644
+--- a/slice/LoopListPowerItem.qml
++++ b/slice/LoopListPowerItem.qml
+@@ -1,5 +1,5 @@
+ import QtQuick 2.7
+-import Qt5Compat.GraphicalEffects
++import QtQuick.Effects
+ 
+ Item
+ {
+@@ -47,13 +47,13 @@ Item
+         opacity: 0
+     }
+ 
+-    ColorOverlay
++    MultiEffect
+     {
+-        id: powerItemIconOverlay
++        id: powerItemIconMultiEffect
+         anchors.fill: powerItemIcon
+         source: powerItemIcon
+-        color: ( hover ? colors.iconHover : colors.icon )
+-        opacity: parent.opacity
++        colorizationColor: ( hover ? colors.iconHover : colors.icon )
++        colorization: parent.opacity
+     }
+ 
+     Rectangle
+@@ -87,4 +87,4 @@ Item
+         onClicked: itemRoot.clicked()
+         onEntered: itemRoot.entered()
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/slice/LoopListSessionItem.qml b/slice/LoopListSessionItem.qml
+index 590e341..fc8c3a7 100644
+--- a/slice/LoopListSessionItem.qml
++++ b/slice/LoopListSessionItem.qml
+@@ -1,5 +1,4 @@
+ import QtQuick 2.7
+-import Qt5Compat.GraphicalEffects
+ import SddmComponents 2.0
+ 
+ Item
+@@ -34,4 +33,4 @@ Item
+         x: parent.x + 10
+         y: 5
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/slice/LoopListUserItem.qml b/slice/LoopListUserItem.qml
+index fa66e84..49e23b9 100644
+--- a/slice/LoopListUserItem.qml
++++ b/slice/LoopListUserItem.qml
+@@ -1,5 +1,4 @@
+ import QtQuick 2.7
+-import Qt5Compat.GraphicalEffects
+ import SddmComponents 2.0
+ 
+ Item
+@@ -80,4 +79,4 @@ Item
+ 
+         width: itemRoot.width - itemRoot.height - 26
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/slice/PagePower.qml b/slice/PagePower.qml
+index 4d4bfb8..c0b167d 100644
+--- a/slice/PagePower.qml
++++ b/slice/PagePower.qml
+@@ -1,5 +1,4 @@
+ import QtQuick 2.7
+-import Qt5Compat.GraphicalEffects
+ import SddmComponents 2.0
+ import QtQuick.Layouts 1.3
+ 
+@@ -240,4 +239,4 @@ Item
+     Keys.onDownPressed: scroll_up()
+     Keys.onEnterPressed: execute()
+     Keys.onReturnPressed: execute()
+-}
+\ No newline at end of file
++}
+-- 
+2.51.2
+

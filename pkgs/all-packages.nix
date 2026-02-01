@@ -41,7 +41,7 @@
   ### THEMES
   sddm-slice-theme = {
     path = ./data/themes/sddm-slice-theme;
-    callPackage = _self: super: super.libsForQt5.callPackage;
+    callPackage = _self: super: super.qt6Packages.callPackage;
   };
   hyperfluent-grub-theme = ./data/themes/hyperfluent-grub-theme;
 

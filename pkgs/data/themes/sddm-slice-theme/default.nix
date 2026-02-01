@@ -8,7 +8,6 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  qtgraphicaleffects,
   callPackage,
   themeConfig ? { },
 }:
@@ -21,16 +20,18 @@ let
 in
 stdenv.mkDerivation {
   pname = "sddm-slice-theme";
-  version = "1.5.1";
+  version = "1.5.1+4";
 
   src = fetchFromGitHub {
     owner = "EricKotato";
     repo = "sddm-slice";
-    rev = "1ddbc490a500bdd938a797e72a480f535191b45e";
-    hash = "sha256-1AxRM2kHOzqjogYjFXqM2Zm8G3aUiRsdPDCYTxxQTyw=";
+    rev = "98996b49e0d5657f94cc0cfb71480da76c83b008";
+    hash = "sha256-+SgHhOXl/HpW3xsvfPVYH4uEQ8/J7G23ThCCaIw/29Y=";
   };
 
-  propagatedBuildInputs = [ qtgraphicaleffects ];
+  patches = [
+    ./0001-drop-qt5-support.patch
+  ];
 
   dontWrapQtApps = true;
 
@@ -40,12 +41,6 @@ stdenv.mkDerivation {
     mkdir -p $out/share/sddm/themes/slice
 
     cp -r . $out/share/sddm/themes/slice
-  '';
-
-  postFixup = ''
-    mkdir -p $out/nix-support
-
-    echo "${qtgraphicaleffects}" >> $out/nix-support/propagated-user-env-packages
   '';
 
   meta = with lib; {
