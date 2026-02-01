@@ -243,28 +243,29 @@
                 inputs.agenix.packages.${system}.default
               ];
 
-              forwardScript =
-                path:
-                pkgs.writeShellApplication {
-                  name = lib.strings.removeSuffix ".sh" (builtins.baseNameOf "${path}");
-                  runtimeInputs = packages;
-                  text = ''
-                    exec ${path} "$@"
+              scripts = pkgs.stdenvNoCC.mkDerivation {
+                pname = "tsrk-scripts";
+                version = self.shortRev or self.dirtyShortRev;
+                src = self;
+
+                installPhase =
+                  let
+                    names = [
+                      "bump-copyright-years"
+                      "gc"
+                      "get_option"
+                      "rebuild-os"
+                      "rotate_bootstrap_keys"
+                      "run-vm"
+                    ];
+                    mkCopy = x: ''
+                      cp ${x}.sh $out/bin/${x}
+                    '';
+                  in
+                  ''
+                    mkdir -p $out/bin
+                    ${lib.concatMapStringsSep "\n" mkCopy names}
                   '';
-                };
-
-              scriptPackages = builtins.map forwardScript [
-                "${self}/bump-copyright-years.sh"
-                "${self}/gc.sh"
-                "${self}/get_option.sh"
-                "${self}/rebuild-os.sh"
-                "${self}/rotate_bootstrap_keys.sh"
-                "${self}/run-vm.sh"
-              ];
-
-              scripts = pkgs.symlinkJoin {
-                name = "tsrk-scripts";
-                paths = scriptPackages;
               };
               inherit (self.checks.${system}.pre-commit-check)
                 shellHook
