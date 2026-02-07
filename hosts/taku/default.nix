@@ -30,6 +30,8 @@ in
         "libvirtd"
         "libvirt"
         "kvm"
+        "scanner"
+        "lp"
       ];
       modules = [ ./user.nix ];
     })
@@ -78,6 +80,14 @@ in
     ];
   };
 
+  hardware.sane = {
+    enable = true;
+    extraBackends = with pkgs; [
+      hplipWithPlugin
+      sane-airscan
+    ];
+  };
+
   tsrk.gns3.enable = true;
 
   tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
@@ -112,10 +122,11 @@ in
   };
 
   # TODO: Remove this when it will be wired (hopefully one day)
-  services.udev.packages = [
-    (pkgs.writeText "/etc/udev/rules.d/81-wowlan.rules" ''
+  services.udev.packages = with pkgs; [
+    (writeTextDir "etc/udev/rules.d/81-wowlan.rules" ''
       ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="${lib.getExe pkgs.iw} phy0 wowlan enable magic-packet"
     '')
+    sane-airscan
   ];
 
   boot.initrd.network = {
