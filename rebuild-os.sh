@@ -55,10 +55,11 @@ if [ "$rebuild_command" != "switch" ] && [ "$rebuild_command" != "test" ]; then
   exit 0
 fi
 
+# we use --driver-version 1 to avoid creating profile links on theme changes
 if [ "$(darkman_ get)" = "light" ]; then
-    exec hm-light-activate
+    hm-light-activate --driver-version 1
 else
-    exec hm-dark-activate
+    hm-dark-activate --driver-version 1
 fi
 
 systemctl --user restart nm-applet

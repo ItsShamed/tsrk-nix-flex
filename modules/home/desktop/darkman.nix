@@ -43,7 +43,8 @@ let
         '';
         activate-home-manager = ''
           export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-          . ${config.home.homeDirectory}/.local/bin/hm-light-activate
+          # Avoid creating profile links for each theme change
+          . ${config.home.homeDirectory}/.local/bin/hm-light-activate --driver-version 1
         '';
       };
       darkModeScripts = {
@@ -52,7 +53,8 @@ let
         '';
         activate-home-manager = ''
           export PATH="/nix/var/nix/profiles/default/bin:$PATH"
-          . ${config.home.homeDirectory}/.local/bin/hm-dark-activate
+          # Avoid creating profile links for each theme change
+          . ${config.home.homeDirectory}/.local/bin/hm-dark-activate --driver-version 1
         '';
       };
     };
