@@ -6,7 +6,12 @@
 
 { self, ... }:
 
-{ lib, options, ... }:
+{
+  lib,
+  options,
+  pkgs,
+  ...
+}:
 
 {
   key = ./.;
@@ -14,6 +19,7 @@
   imports = with self.homeManagerModules; [
     profile-base
 
+    gtk
     darkman
     eww
     flameshot
@@ -34,6 +40,7 @@
         nvim.enable = lib.mkDefault true;
       };
       gammastep.enable = lib.mkDefault true;
+      gtk.enable = lib.mkDefault true;
       kitty.enable = lib.mkDefault true;
       screenkey = {
         enable = lib.mkDefault true;
@@ -58,8 +65,18 @@
       GDK_BACKEND = "wayland,x11,*";
       QT_AUTO_SCREEN_SCALE_FACTOR = 1;
       QT_QPA_PLATFORM = "wayland;xcb";
-      QT_QPA_PLATFORMTHEME = "gtk3";
-      XCURSOR_SIZE = 48;
+    };
+
+    qt = {
+      enable = true;
+      platformTheme = {
+        name = "gtk3";
+        package = with pkgs; [
+          libsForQt5.qtstyleplugins
+          qt6Packages.qt6gtk2
+        ];
+      };
+      style.name = "gtk2";
     };
   };
 }

@@ -11,6 +11,7 @@
   ./desktop/eww
   ./desktop/flameshot.nix
   ./desktop/gammastep.nix
+  ./desktop/gtk.nix
   { path = ./desktop/hyprland.nix; }
   { path = ./desktop/i3.nix; }
   ./desktop/kitty.nix

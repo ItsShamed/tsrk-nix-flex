@@ -30,6 +30,7 @@ in
           gtk.enable = lib.mkDefault true;
           x11.enable = lib.mkDefault true;
           package = pkgs.apple-cursor;
+          size = 48;
           name = "macOS";
         };
 
@@ -92,12 +93,6 @@ in
         '';
       }
       (lib.mkIf cfg.withDConf {
-        dconf.settings = {
-          "org/gnome/desktop/interface" = {
-            cursor-size = 48;
-            cursor-theme = "macOS-BigSur";
-          };
-        };
         home.activation.dconf-settings-fix =
           let
             gtkTheme =
@@ -115,24 +110,6 @@ in
 
             unset DCONF_DBUS_RUN_SESSION
           '';
-
-        specialisation = {
-          light.configuration = {
-            dconf.settings."org/gnome/desktop/interface" = {
-              color-scheme = "prefer-light";
-              gtk-theme = "Tokyonight-Light-Storm";
-              icon-theme = "Tokyonight-Light";
-            };
-
-          };
-          dark.configuration = {
-            dconf.settings."org/gnome/desktop/interface" = {
-              color-scheme = "prefer-dark";
-              gtk-theme = "Tokyonight-Dark-Storm";
-              icon-theme = "Tokyonight-Dark";
-            };
-          };
-        };
       })
     ]
   );
