@@ -9,7 +9,6 @@
 {
   lib,
   options,
-  pkgs,
   ...
 }:
 
@@ -69,13 +68,7 @@
 
     qt = {
       enable = true;
-      platformTheme = {
-        name = "gtk3";
-        package = with pkgs; [
-          libsForQt5.qtstyleplugins
-          qt6Packages.qt6gtk2
-        ];
-      };
+      platformTheme.name = "gtk";
       style.name = "gtk2";
     };
   };
