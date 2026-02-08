@@ -69,14 +69,14 @@ let
       activation_dir="$(dirname -- "''${BASH_SOURCE[0]}")"
       activation_dir="$(cd -- "$activation_dir" && pwd)"
       base_dir="$(basename "$activation_dir")"
-      if [ -z "$base_dir" ] || [ "$base_dir" = "light" ] || [ "$base_dir" = "dark" ]; then
+      if [ -z "$base_dir" ] || ! [ -e "$activation_dir/specialisation/light/activate" ] || ! [ -e "$activation_dir/specialisation/dark/activate" ]; then
         warnEcho "Running in improper directory for linking activation scripts."
         noteEcho "If you are running the theme switching activation script (e.g. via darkman) you can ignore this."
       else
         local_bin_path="${config.home.homeDirectory}/.local/bin"
-        mkdir -p "$local_bin_path"
-        $DRY_RUN_CMD cp -f $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
-        $DRY_RUN_CMD cp -f $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
+        run mkdir -p "$local_bin_path"
+        run ln -sf $activation_dir/specialisation/light/activate "$local_bin_path"/hm-light-activate 2>/dev/null || true
+        run ln -sf $activation_dir/specialisation/dark/activate "$local_bin_path"/hm-dark-activate 2>/dev/null || true
       fi
 
       unset activation_dir base_dir
