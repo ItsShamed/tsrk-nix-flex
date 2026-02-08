@@ -1,0 +1,22 @@
+From 012542d173f7eec5feb528086b715c138bc0c5cc Mon Sep 17 00:00:00 2001
+From: "tsrk." <tsrk@tsrk.me>
+Date: Sun, 8 Feb 2026 17:44:57 +0100
+Subject: [PATCH] fix screen-capture symlink
+
+Signed-off-by: tsrk. <tsrk@tsrk.me>
+---
+ stereo/screen-capture.ogg | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/stereo/screen-capture.ogg b/stereo/screen-capture.ogg
+index 4d50984..b97bf3b 120000
+--- a/stereo/screen-capture.ogg
++++ b/stereo/screen-capture.ogg
+@@ -1 +1 @@
+-/home/cadmium/.local/share/sounds/modern-minimal-ui-sounds/stereo/camera-shutter.ogg
+\ No newline at end of file
++camera-shutter.ogg
+\ No newline at end of file
+-- 
+2.51.2
+

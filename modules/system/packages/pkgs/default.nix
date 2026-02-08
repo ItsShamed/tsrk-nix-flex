@@ -16,7 +16,7 @@ args:
     (lib.modules.importApply ./cp.nix args)
     ./cpp.nix
     ./csharp.nix
-    ./desktop.nix
+    (lib.modules.importApply ./desktop.nix args)
     ./fs.nix
     (lib.modules.importApply ./gaming.nix args)
     ./go.nix

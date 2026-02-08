@@ -4,6 +4,8 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 {
   config,
   lib,
@@ -12,6 +14,7 @@
 }:
 
 {
+  imports = [ self.nixosModules.overlay-modern-minimal-ui-sounds ];
   options = {
     tsrk.packages.pkgs.desktop.enable =
       lib.options.mkEnableOption "tsrk's desktop bundle";
@@ -47,6 +50,13 @@
 
       # Wayland
       wl-clipboard
+
+      libcanberra-gtk3
+      modern-minimal-ui-sounds
+    ];
+
+    systemd.packages = with pkgs; [
+      libcanberra-gtk3
     ];
 
     xdg.mime.defaultApplications = {

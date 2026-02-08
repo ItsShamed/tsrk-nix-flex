@@ -4,6 +4,8 @@
 
 # SPDX-License-Identifier: MIT
 
+{ self, ... }:
+
 {
   config,
   lib,
@@ -12,6 +14,7 @@
 }:
 
 let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.tsrk.gtk;
   tokyonight =
     (pkgs.tokyonight-gtk-theme.override {
@@ -35,7 +38,32 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    gtk.enable = lib.mkDefault true;
+    home.packages = with pkgs; [
+      tsrkPkgs.modern-minimal-ui-sounds
+      libcanberra-gtk3
+    ];
+    dconf.settings."org/gnome/desktop/sound" = {
+      event-sounds = true;
+      input-feedback-soudns = true;
+    };
+    gtk = {
+      enable = true;
+      gtk2.extraConfig = ''
+        gtk-enable-event-sounds = 1
+        gtk-enable-input-feedback-sounds = 1
+        gtk-sound-theme-name = modern-minimal-ui
+      '';
+      gtk3.extraConfig = {
+        gtk-enable-event-sounds = true;
+        gtk-enable-input-feedback-sounds = true;
+        gtk-sound-theme-name = "modern-minimal-ui";
+      };
+      gtk4.extraConfig = {
+        gtk-enable-event-sounds = true;
+        gtk-enable-input-feedback-sounds = true;
+        gtk-sound-theme-name = "modern-minimal-ui";
+      };
+    };
     specialisation = {
       light.configuration = {
         gtk = {
