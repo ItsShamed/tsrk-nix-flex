@@ -80,6 +80,8 @@
     USB_ALLOWLIST = "";
   };
 
+  boot.tmp.tmpfsSize = "100%";
+
   services.upower.enable = true;
   tsrk.sound.enableFFADO = true;
 }

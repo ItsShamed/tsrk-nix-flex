@@ -129,6 +129,8 @@ in
     sane-airscan
   ];
 
+  boot.tmp.tmpfsSize = "75%";
+
   boot.initrd.network = {
     enable = true;
     ssh = {

@@ -34,6 +34,11 @@
     "/etc/ssh/ssh_host_rsa_key"
   ];
 
+  boot.tmp = {
+    cleanOnBoot = true;
+    useTmpfs = true;
+  };
+
   # Make /etc/hosts writable by root
   # This is so that it's easy to temporarily set hostnames
   environment.etc.hosts.mode = "0644";
