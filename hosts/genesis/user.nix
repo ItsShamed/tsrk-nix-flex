@@ -8,12 +8,6 @@
 
 {
   imports = with self.homeManagerModules; [
-    profile-shell
-    packages
-    ssh
-    gpg
+    profile-base
   ];
-
-  tsrk.ssh.enable = true;
-  tsrk.gpg.enable = true;
 }
