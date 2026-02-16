@@ -8,5 +8,6 @@
   ./test
   ./genesis
   ./ren
+  ./shigoto-eos
   ./taku
 ]

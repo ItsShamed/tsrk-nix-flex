@@ -11,7 +11,9 @@
     profile-shell
     packages
     ssh
+    gpg
   ];
 
   tsrk.ssh.enable = true;
+  tsrk.gpg.enable = true;
 }

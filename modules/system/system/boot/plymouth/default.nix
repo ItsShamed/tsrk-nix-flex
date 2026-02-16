@@ -17,7 +17,7 @@
     boot.plymouth = {
       enable = lib.mkDefault true;
       theme = "breeze";
-      logo = ./fumo.png;
+      logo = lib.mkDefault ./fumo.png;
     };
   };
 }
