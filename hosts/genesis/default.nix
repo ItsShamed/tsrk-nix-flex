@@ -16,7 +16,7 @@
   imports = [
     self.nixosModules.sshd
     self.nixosModules.hostname
-    "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-plasma5.nix"
+    "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     (self.lib.generateSystemHome "nixos" { modules = [ ./user.nix ]; })
     self.nixosModules.profile-iso
     self.nixosModules.packages
