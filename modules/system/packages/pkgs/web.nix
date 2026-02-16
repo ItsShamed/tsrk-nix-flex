@@ -19,9 +19,7 @@ in
             "webstorm"
           ];
         };
-        enable = (lib.options.mkEnableOption "a Web IDE") // {
-          default = false;
-        };
+        enable = lib.options.mkEnableOption "a Web IDE";
       };
     };
   };

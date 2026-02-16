@@ -58,14 +58,8 @@
         jdk8
       ];
     };
-    csharp = {
-      enable = true;
-      ide.enable = true;
-    };
     rust.enable = true;
-    android.enable = true;
     python.enable = true;
-    gaming.enable = true;
     qmk.enable = true;
     ops.enable = true;
     web.enable = true;

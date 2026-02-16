@@ -46,6 +46,11 @@ in
   ];
 
   tsrk.programs.gamescope.enable = true;
+  tsrk.packages.pkgs = {
+    gaming.enable = true;
+    android.enable = true;
+    java.ide.enable = true;
+  };
 
   tsrk.hyprland.enable = true;
 

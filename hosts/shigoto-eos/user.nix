@@ -18,5 +18,8 @@
 
   home.packages = with pkgs; [
     slack
+    teleport
+    pritunl-ssh
+    pritunl-client
   ];
 }

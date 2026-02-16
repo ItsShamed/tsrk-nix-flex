@@ -45,6 +45,7 @@ in
       kubent
       kubespy
       stern
+      rancher
     ];
   };
 }

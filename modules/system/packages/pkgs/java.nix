@@ -62,9 +62,7 @@ in
       enable = lib.options.mkEnableOption "tsrk's Java development bundle";
 
       ide = {
-        enable = (lib.options.mkEnableOption "the Java IDE.") // {
-          default = true;
-        };
+        enable = lib.options.mkEnableOption "the Java IDE.";
         package = lib.options.mkPackageOption pkgs.jetbrains "Java IDE" {
           default = [ "idea-ultimate" ];
           example = "pkgs.jetbrains.idea-community"; # hint: you also have pkgs.eclipses.eclipse-java for those insane enough to use that
