@@ -14,13 +14,10 @@
 
 {
   imports = [
-    self.nixosModules.sshd
     self.nixosModules.hostname
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
     (self.lib.generateSystemHome "nixos" { modules = [ ./user.nix ]; })
     self.nixosModules.profile-iso
-    self.nixosModules.packages
-    self.nixosModules.yubikey
   ];
 
   tsrk.yubikey.enable = true;
