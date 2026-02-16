@@ -38,10 +38,5 @@ in
 
       keepassxc
     ];
-
-    programs.rbw = {
-      enable = lib.mkDefault true;
-      settings.pinentry = lib.mkDefault pkgs.pinentry-gnome3;
-    };
   };
 }

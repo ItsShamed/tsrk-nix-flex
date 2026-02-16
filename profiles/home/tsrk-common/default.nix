@@ -186,6 +186,10 @@
       smoothing.noise_reduction = 65;
     };
   };
+  programs.rbw = {
+    enable = lib.mkDefault true;
+    settings.pinentry = lib.mkDefault pkgs.pinentry-gnome3;
+  };
 
   home.sessionPath = [
     "$HOME/.cargo/bin"
