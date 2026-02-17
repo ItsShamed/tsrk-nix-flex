@@ -27,5 +27,6 @@
     monitor = [
       "eDP-1, 1920x1200, 0x0, 1"
     ];
+    input.kb_layout = "us_qwerty-fr";
   };
 }
