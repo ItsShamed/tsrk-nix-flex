@@ -4,7 +4,35 @@
 
 # SPDX-License-Identifier: MIT
 
+{ pkgs, ... }:
+
 {
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = false;
+      grub.enable = false;
+      limine = {
+        enable = true;
+        additionalFiles = {
+          "efi/memtest86plus/memtest86plus.efi" = "${pkgs.memtest86plus}/mt86plus.efi";
+          "efi/netboot-xyz/netboot.efi" = "${pkgs.netbootxyz-efi}";
+        };
+        extraEntries = ''
+          /Tools
+          //Netboot.xyz
+            comment: ${pkgs.netbootxyz-efi.meta.description}
+            protocol: efi
+            path: boot():/limine/efi/netboot-xyz/netboot.efi
+          //Memtest86+
+            comment: ${pkgs.memtest86plus.meta.description}
+            protocol: efi
+            path: boot():/limine/efi/memtest86plus/memtest86plus.efi
+        '';
+        panicOnChecksumMismatch = true;
+      };
+    };
+  };
   zramSwap.enable = true;
   disko.devices = {
     disk = {
