@@ -21,6 +21,7 @@
     teleport
     pritunl-ssh
     pritunl-client
+    azure-cli
   ];
 
   wayland.windowManager.hyprland.settings = {
