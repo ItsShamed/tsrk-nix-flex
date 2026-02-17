@@ -13,12 +13,24 @@
 
 let
   cfg = config.tsrk.packages.ops;
+
+  externalK9sFiles = lib.mapAttrs' (n: v: {
+    name = "k9s/plugins/${n}.yaml";
+    value.source = v;
+  }) cfg.k9s.externalPlugins;
 in
 {
   options = {
     tsrk.packages = {
       ops = {
         enable = lib.options.mkEnableOption "tsrk's ops bundle";
+        k9s = {
+          externalPlugins = lib.options.mkOption {
+            description = "List of external plugins to add to the k9s runtime";
+            type = with lib.types; attrsOf path;
+            default = { };
+          };
+        };
       };
     };
   };
@@ -28,7 +40,6 @@ in
       dig
       ldns
       lazydocker
-      k9s
       openstackclient-full
       manilaclient
       kubeswitch
@@ -47,5 +58,19 @@ in
       stern
       rancher
     ];
+
+    programs.k9s = {
+      enable = true;
+
+      aliases = {
+        # Use pp as an alias for Pod
+        pp = "v1/pods";
+        dep = "deployments";
+        sec = "v1/secrets";
+        jo = "jobs";
+      };
+    };
+
+    xdg.configFile = externalK9sFiles;
   };
 }

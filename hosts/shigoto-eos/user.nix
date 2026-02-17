@@ -29,4 +29,11 @@
     ];
     input.kb_layout = "us_qwerty-fr";
   };
+
+  tsrk.packages.ops.k9s.externalPlugins = {
+    argocd = "${pkgs.k9s.src}/plugins/argocd.yaml";
+    argo-workflows = "${pkgs.k9s.src}/plugins/argo-workflows.yaml";
+    remove-finalizers = "${pkgs.k9s.src}/plugins/remove-finalizers.yaml";
+    pvc-debug-container = "${pkgs.k9s.src}/plugins/pvc-debug-container.yaml";
+  };
 }
