@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -60,4 +65,12 @@
     USB_ALLOWLIST = "";
   };
   boot.tmp.tmpfsSize = "75%";
+
+  systemd.services = {
+    pritunl-client-service = {
+      description = "Pritunl Client Daemon";
+      script = "${pkgs.pritunl-client}/bin/pritunl-client-service";
+      wantedBy = [ "network-online.target" ];
+    };
+  };
 }
