@@ -50,6 +50,7 @@ in
       sqlfluff
       vault-bin
       kubernetes-helm
+      kubectx
       kubectl-doctor
       kubectl-tree
       kubectl-view-secret
@@ -76,6 +77,8 @@ in
     xdg.configFile = externalK9sFiles;
     home.shellAliases = {
       k = "kubectl";
+      kns = "kubens";
+      kctx = "kubectx";
       os = "openstack";
     };
   };
