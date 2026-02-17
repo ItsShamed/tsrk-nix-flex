@@ -1,6 +1,6 @@
 # shigoto EOS
 
-*Status: work in progress 👷*
+*Status: installed! 🎉*
 
 ## Description
 
