@@ -29,6 +29,8 @@
 
   tsrk.hyprland.enable = true;
 
+  services.libinput.touchpad.naturalScrolling = true;
+
   boot.plymouth.logo = ./splash.png;
   services.tlp.settings = {
     CPU_BOOST_ON_AC = 1;
