@@ -59,7 +59,6 @@
                 name = "cryptbtrfs";
                 extraOpenArgs = [ ];
                 settings = {
-                  keyFile = "/tmp/secret.key";
                   allowDiscards = true;
                 };
                 content = {
