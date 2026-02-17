@@ -33,6 +33,7 @@
   ];
 
   tsrk.hyprland.enable = true;
+  tsrk.sshd.enable = false;
 
   services.libinput.touchpad.naturalScrolling = true;
 
