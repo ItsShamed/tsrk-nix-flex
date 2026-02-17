@@ -4,8 +4,16 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, ... }:
+{
+  self,
+  pkgs,
+  pkgSet,
+  ...
+}:
 
+let
+  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsTeleport;
+in
 {
   imports = with self.homeManagerModules; [ profile-wayland ];
 
@@ -18,7 +26,7 @@
 
   home.packages = with pkgs; [
     slack
-    teleport
+    pkgsTeleport.teleport_15
     pritunl-ssh
     pritunl-client
     azure-cli

@@ -12,6 +12,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs_teleport_15.url = "github:nixos/nixpkgs?rev=8125d74e21449e7ba702af890297a8bb9dc5f273";
     # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
     nixgl = {
@@ -71,6 +72,7 @@
       self,
       nixpkgs,
       nixpkgsUnstable,
+      nixpkgs_teleport_15,
       # , nixpkgsMaster
       nixgl,
 
@@ -118,6 +120,7 @@
       pkgSet = system: {
         pkgs = importPkgs nixpkgs system true;
         pkgsUnstable = importPkgs nixpkgsUnstable system false;
+        pkgsTeleport = importPkgs nixpkgs_teleport_15 system false;
         # pkgsMaster = importPkgs nixpkgsMaster system false;
       };
 

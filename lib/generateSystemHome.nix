@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  pkgSet,
+  ...
+}:
 
 name:
 
@@ -30,6 +35,7 @@ name:
   home-manager.extraSpecialArgs = {
     inherit self;
     inherit inputs;
+    inherit pkgSet;
   };
 
   environment.pathsToLink = [
