@@ -586,6 +586,10 @@ in
           "4, defaultName:coms"
         ];
 
+        gesture = [
+          "4, horizontal, workspace"
+        ];
+
         # TODO: Add animation rule for satty
         windowrule = [
           "tag +coms, class:^(vesktop)$"
