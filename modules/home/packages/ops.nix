@@ -52,6 +52,8 @@ in
       kubernetes-helm
       kubectl-doctor
       kubectl-tree
+      kubectl-view-secret
+      pgo-client
       krew
       kubent
       kubespy
@@ -72,5 +74,9 @@ in
     };
 
     xdg.configFile = externalK9sFiles;
+    home.shellAliases = {
+      k = "kubectl";
+      os = "openstack";
+    };
   };
 }
