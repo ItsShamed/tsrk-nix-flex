@@ -34,7 +34,13 @@ in
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
-      "eDP-1, 1920x1200, 0x0, 1"
+      "eDP-1, 1920x1200, 960x1080, 1"
+      "desc:Iiyama North America PL2770H 0x31303331, 1920x1080@165, 0x0, 1"
+      "desc:Iiyama North America PL2770H 0x30333736, 1920x1080@144, 1920x0, 1"
+    ];
+    workspace = [
+      "name:workdir, monitor:desc:Iiyama North America PL2770H 0x31303331, default:true"
+      "name:coms, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
     ];
     input.kb_layout = "us_qwerty-fr";
   };
