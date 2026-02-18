@@ -30,6 +30,8 @@ in
     pritunl-ssh
     pritunl-client
     azure-cli
+    _1password-gui
+    _1password-cli
   ];
 
   wayland.windowManager.hyprland.settings = {
