@@ -42,7 +42,10 @@ in
     ];
     workspace = [
       "name:workdir, monitor:desc:Iiyama North America PL2770H 0x31303331, default:true"
-      "name:coms, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
+      "4, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
+    ];
+    windowrule = [
+      "tag +coms, class:^(Slack)$"
     ];
     input.kb_layout = "us_qwerty-fr";
   };
