@@ -87,6 +87,7 @@
           };
         };
         jsonls.enable = true;
+        terraformls.enable = true;
         texlab.enable = true;
         tinymist = {
           enable = true;
