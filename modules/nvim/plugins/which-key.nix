@@ -147,6 +147,10 @@ let
       "<cmd>NvimTreeToggle<CR>"
       "Explorer"
     ];
+    "p" = [
+      "<cmd>Telescope projects<CR>"
+      "Switch project"
+    ];
 
     b = {
       name = "Buffers";
