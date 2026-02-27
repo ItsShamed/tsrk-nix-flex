@@ -56,4 +56,6 @@ in
     remove-finalizers = "${pkgs.k9s.src}/plugins/remove-finalizers.yaml";
     pvc-debug-container = "${pkgs.k9s.src}/plugins/pvc-debug-container.yaml";
   };
+
+  services.poweralertd.enable = true;
 }
