@@ -35,6 +35,7 @@ args:
     hardtime.enable = true;
     image.enable = true;
     lualine.enable = true;
+    lazygit.enable = true;
     nvim-surround.enable = true;
     notify.enable = true;
     nui.enable = true;

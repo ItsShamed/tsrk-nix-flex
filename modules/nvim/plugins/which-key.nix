@@ -373,7 +373,7 @@ let
     g = {
       name = "Git";
       g = [
-        "<cmd>lua require 'lvim.core.terminal'.lazygit_toggle()<cr>"
+        "<cmd>LazyGit<cr>"
         "Lazygit"
       ];
       j = [
