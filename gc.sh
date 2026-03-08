@@ -25,7 +25,7 @@ sudo_() {
 
 echo "==> Running NH clean"
 
-nh clean all -K 5d --optimise --no-gcroots
+nh clean all -K 5d --optimise -k 5
 
 echo "==> Cleaning up boot entries"
 
