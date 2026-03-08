@@ -44,7 +44,7 @@
     cursorline = true;
     number = true;
     laststatus = 3;
-    showcmd = false;
+    showcmd = true;
     ruler = false;
     numberwidth = 4;
     signcolumn = "yes";
