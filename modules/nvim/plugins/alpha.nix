@@ -4,7 +4,7 @@
 
 # SPDX-License-Identifier: MIT
 
-{ ... }:
+{ lib, ... }:
 
 let
   mkButton =
@@ -12,7 +12,18 @@ let
       shortcut,
       desc,
       command,
+      keybind_opts ? {
+        noremap = true;
+        silent = true;
+        nowait = true;
+      },
     }:
+    let
+      trimmedShortcut = lib.pipe shortcut [
+        (lib.strings.trim)
+        (builtins.replaceStrings [ "SPC" " " ] [ "<leader>" "" ])
+      ];
+    in
     {
       type = "button";
       on_press.__raw = ''
@@ -30,6 +41,12 @@ let
         width = 50;
         align_shortcut = "right";
         hl_shortcut = "Keyword";
+        keymap = [
+          "n"
+          trimmedShortcut
+          command
+          keybind_opts
+        ];
       };
     };
 in
@@ -106,7 +123,7 @@ in
                 shortcut = "r";
               }
               {
-                command = "<CMD>Telescope livegrep<CR>";
+                command = "<CMD>Telescope live_grep<CR>";
                 desc = "󰊄  Find Text";
                 shortcut = "t";
               }
