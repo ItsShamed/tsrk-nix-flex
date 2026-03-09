@@ -75,4 +75,5 @@
       wantedBy = [ "network-online.target" ];
     };
   };
+  services.upower.enable = true;
 }
