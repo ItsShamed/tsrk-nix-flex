@@ -30,6 +30,7 @@ in
     pritunl-ssh
     pritunl-client
     azure-cli
+    argocd
     _1password-gui
     _1password-cli
   ];
