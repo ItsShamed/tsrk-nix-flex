@@ -4,8 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgs, ... }:
 
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
 
   imports = with self.homeManagerModules; [ profile-wayland ];
@@ -32,4 +35,8 @@
     };
     xsettingsd.withDConf = true;
   };
+
+  home.packages = [
+    tsrkPkgs.doukutsu-rs
+  ];
 }

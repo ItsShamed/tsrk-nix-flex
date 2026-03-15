@@ -4,8 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ pkgs, ... }:
+{ pkgs, self, ... }:
 
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   tsrk = {
     packages = {
@@ -34,7 +37,10 @@
 
   services.poweralertd.enable = true;
 
-  home.packages = with pkgs; [ moonlight-qt ];
+  home.packages = with pkgs; [
+    moonlight-qt
+    tsrkPkgs.doukutsu-rs
+  ];
 
   programs.autorandr = {
     enable = true;
