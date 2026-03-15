@@ -19,8 +19,23 @@
     inherit vanilla-extractor useNXEngineAssets;
   },
   makeBinaryWrapper,
+  writeShellScript,
 }:
 
+let
+  launcher = writeShellScript "doukutsu-rs" ''
+    export CAVESTORY_DATA_DIR=''${CAVESTORY_DATA_DIR:-@out@/share/doukutsu-rs/data}
+
+    if [ -d "$XDG_DATA_HOME/share/doukutsu-rs/data" ]; then
+      echo "Found user data files at $XDG_DATA_HOME/share/doukutsu-rs/data"
+      export CAVESTORY_DATA_DIR=''${CAVESTORY_DATA_DIR:-$XDG_DATA_HOME/share/doukutsu-rs/data}
+    fi
+
+    echo "Using data files at $CAVESTORY_DATA_DIR"
+
+    exec @out@/libexec/doukutsu-rs "$@"
+  '';
+in
 rustPlatform.buildRustPackage {
   pname = "doukutsu-rs";
   version = "0.102.0-beta7+968d969";
@@ -52,17 +67,18 @@ rustPlatform.buildRustPackage {
   ];
 
   postInstall = ''
-    mkdir -p $out/share/{applications,metainfo,doukutsu,icons/hicolor/512x512/apps}
+    mkdir -vp $out/{share/{applications,metainfo,doukutsu-rs,icons/hicolor/512x512/apps},libexec}
     APP_ID=io.github.doukutsu_rs.doukutsu-rs
 
     cp -v res/flatpak/$APP_ID.desktop $out/share/applications
     cp -v res/flatpak/$APP_ID.png $out/share/icons/hicolor/512x512/apps
     cp -v res/flatpak/$APP_ID.metainfo.xml $out/share/metainfo
 
-    ln -vst $out/share/doukutsu ${assets}/share/cavestory/data
+    ln -vst $out/share/doukutsu-rs ${assets}/share/cavestory/data
 
-    wrapProgram $out/bin/doukutsu-rs \
-      --set CAVESTORY_DATA_DIR "$out/share/doukutsu/data"
+    mv -v $out/bin/doukutsu-rs $out/libexec/doukutsu-rs
+    cp -v ${launcher} $out/bin/doukutsu-rs
+    substituteAllInPlace $out/bin/doukutsu-rs
   '';
 
   passthru = {
