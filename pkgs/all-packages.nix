@@ -27,6 +27,7 @@
   aarch64-none-elf-gnu = ./development/compilers/aarch64-none-elf-gnu;
 
   ### GAMES
+  doukutsu-rs = ./games/doukutsu-rs;
   paladium-launcher = ./games/paladium-launcher;
   rewind = ./games/rewind;
 
