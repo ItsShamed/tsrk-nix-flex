@@ -47,6 +47,7 @@
         killall
 
         jq
+        yq
 
         man-pages
         man-pages-posix
@@ -62,6 +63,9 @@
 
         # Basic editor
         vim
+
+        # Prehistorical editor
+        ed
 
         # i18n lib
         icu
