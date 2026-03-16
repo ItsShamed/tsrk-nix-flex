@@ -53,6 +53,8 @@ in
     input.kb_layout = "us_qwerty-fr";
   };
 
+  programs.thunderbird.package = pkgs.thunderbird-esr;
+
   tsrk.packages.ops.k9s.externalPlugins = {
     argocd = "${pkgs.k9s.src}/plugins/argocd.yaml";
     argo-workflows = "${pkgs.k9s.src}/plugins/argo-workflows.yaml";
