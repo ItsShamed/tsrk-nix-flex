@@ -32,6 +32,7 @@ in
     azure-cli
     argocd
     argo-workflows
+    act
     _1password-gui
     _1password-cli
   ];
