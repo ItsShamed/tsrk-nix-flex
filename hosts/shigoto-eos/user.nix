@@ -31,6 +31,7 @@ in
     pritunl-client
     azure-cli
     argocd
+    argo-workflows
     _1password-gui
     _1password-cli
   ];
