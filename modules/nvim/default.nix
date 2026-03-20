@@ -12,7 +12,8 @@ args:
   imports = [
     ./keymaps.nix
     ./options.nix
-    (lib.modules.importApply ./plugins args)
+    ./plugins
+    (lib.modules.importApply ./lsp.nix args)
   ];
 
   clipboard.register = "unnamedplus";

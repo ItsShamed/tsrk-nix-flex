@@ -4,17 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-args:
-
-{ lib, ... }:
-
 {
   imports = [
     ./nvim-tree.nix
     ./treesitter.nix
     ./gitsigns.nix
     ./indentline.nix
-    (lib.modules.importApply ./lsp.nix args)
     ./luasnip.nix
     ./markdown-preview.nix
     ./markview.nix
@@ -35,9 +30,11 @@ args:
     hardtime.enable = true;
     image.enable = true;
     lualine.enable = true;
+    lsp-format.enable = true;
     lazygit.enable = true;
     nvim-surround.enable = true;
     notify.enable = true;
+    none-ls.enable = true;
     nui.enable = true;
     nvim-autopairs.enable = true;
     todo-comments.enable = true;
