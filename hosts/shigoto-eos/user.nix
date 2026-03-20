@@ -42,10 +42,10 @@ in
       "desc:Iiyama North America PL2770H 0x30333736, 1920x1080@144, 1920x0, 1"
     ];
     workspace = [
-      "name:workdir, monitor:desc:Iiyama North America PL2770H 0x31303331, default:true"
+      "1, monitor:desc:Iiyama North America PL2770H 0x31303331, default:true"
       "4, monitor:eDP-1, default:true"
       "2, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
-      "name:web, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
+      "3, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
     ];
     windowrule = [
       "tag +coms, class:^(Slack)$"
