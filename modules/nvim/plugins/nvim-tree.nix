@@ -12,6 +12,12 @@
     settings = {
       actions.open_file.quit_on_open = true;
       renderer.indent_markers.enable = true;
+      sync_root_with_cwd = true;
+      respect_buf_cwd = true;
+      update_focused_file = {
+        enable = true;
+        update_root.enable = true;
+      };
       on_attach.__raw = ''
         function(bufnr)
           local api = require "nvim-tree.api"
