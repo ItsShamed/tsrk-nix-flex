@@ -18,6 +18,7 @@ let
   };
   lspconfig_compat = lib.mapAttrsToList (key: lspBufAction: {
     inherit key lspBufAction;
+    mode = "n";
   }) lspconfig_keymaps;
 in
 {
