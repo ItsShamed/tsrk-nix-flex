@@ -14,6 +14,7 @@
     ./markdown-preview.nix
     ./markview.nix
     ./noice.nix
+    ./none-ls.nix
     ./no-neck-pain.nix
     ./cmp.nix
     ./comment.nix
@@ -34,7 +35,6 @@
     lazygit.enable = true;
     nvim-surround.enable = true;
     notify.enable = true;
-    none-ls.enable = true;
     nui.enable = true;
     nvim-autopairs.enable = true;
     todo-comments.enable = true;
