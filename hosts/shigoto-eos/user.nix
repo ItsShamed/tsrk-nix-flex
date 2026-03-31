@@ -8,6 +8,7 @@
   self,
   pkgs,
   pkgSet,
+  lib,
   ...
 }:
 
@@ -63,4 +64,8 @@ in
   };
 
   services.poweralertd.enable = true;
+
+  # Somhow cava mutes the Jabra, it's quite annoying
+  programs.cava.enable = false;
+  programs.waybar.settings.main.modules-center = lib.mkImageMediaOverride [ ];
 }
