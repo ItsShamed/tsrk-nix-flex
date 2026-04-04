@@ -36,7 +36,8 @@ in
     xsettingsd.withDConf = true;
   };
 
-  home.packages = [
+  home.packages = with pkgs; [
     tsrkPkgs.doukutsu-rs
+    r2modman
   ];
 }
