@@ -11,7 +11,6 @@
       timeout = 1;
       maxkeys = 5;
       show_count = true;
-      excluded_modes = [ "i" ];
       winopts.border = "rounded";
     };
   };
