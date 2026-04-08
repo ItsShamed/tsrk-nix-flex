@@ -9,8 +9,6 @@
     enable = true;
     sources = {
       diagnostics = {
-        deadnix.enable = true;
-        kube_linter.enable = true;
         markdownlint.enable = true;
         opentofu_validate = {
           enable = true;
