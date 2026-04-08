@@ -19,6 +19,7 @@
     ./cmp.nix
     ./comment.nix
     ./project.nix
+    ./showkeys.nix
     ./telescope.nix
     ./which-key.nix
     ./alpha.nix
