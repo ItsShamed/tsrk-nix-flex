@@ -76,4 +76,11 @@
     };
   };
   services.upower.enable = true;
+
+  # Fingerprint
+  services.fprintd = {
+    enable = true;
+  };
+  security.pam.services.login.fprintAuth = false;
+
 }
