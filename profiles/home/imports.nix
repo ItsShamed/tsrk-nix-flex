@@ -11,6 +11,7 @@
   { path = ./wayland; }
   { path = ./wayland/wayland-base.nix; }
   { path = ./x11; }
+  { path = ./work; }
   { path = ./x11/x11-base.nix; }
   { path = ./tsrk-common; }
 ]

@@ -18,6 +18,7 @@ in
 {
   imports = [
     self.nixosModules.profile-tsrk-common
+    self.nixosModules.profile-work
     self.nixosModules.gamescope
     self.nixosModules.hyprland
     self.nixosModules.gns3

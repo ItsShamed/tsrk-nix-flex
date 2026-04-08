@@ -6,17 +6,15 @@
 
 {
   self,
-  pkgs,
-  pkgSet,
   lib,
   ...
 }:
 
-let
-  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsTeleport pkgsUnstable;
-in
 {
-  imports = with self.homeManagerModules; [ profile-wayland ];
+  imports = with self.homeManagerModules; [
+    profile-wayland
+    profile-work
+  ];
 
   tsrk = {
     packages = {
@@ -24,19 +22,6 @@ in
     };
     nvim.wakatime.enable = true;
   };
-
-  home.packages = with pkgs; [
-    slack
-    pkgsTeleport.teleport_15
-    pritunl-ssh
-    pritunl-client
-    azure-cli
-    argocd
-    argo-workflows
-    act
-    _1password-gui
-    _1password-cli
-  ];
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
@@ -50,18 +35,7 @@ in
       "2, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
       "3, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
     ];
-    windowrule = [
-      "tag +coms, class:^(Slack)$"
-    ];
     input.kb_layout = "us_qwerty-fr";
-  };
-
-  tsrk.packages.ops.k9s.externalPlugins = {
-    argocd = "${pkgs.k9s.src}/plugins/argocd.yaml";
-    # TODO: Re-pin this to stable when 26.05
-    argo-workflows = "${pkgsUnstable.k9s.src}/plugins/argo-workflows.yaml";
-    remove-finalizers = "${pkgs.k9s.src}/plugins/remove-finalizers.yaml";
-    pvc-debug-container = "${pkgs.k9s.src}/plugins/pvc-debug-container.yaml";
   };
 
   services.poweralertd.enable = true;

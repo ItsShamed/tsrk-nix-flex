@@ -9,6 +9,8 @@ args:
 { lib, ... }:
 
 {
+  key = ./.;
+
   imports = [
     ./compat.nix
     ./core.nix

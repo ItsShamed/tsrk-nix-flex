@@ -5,4 +5,5 @@
   { path = ./graphical/graphical-x11.nix; }
   { path = ./iso; }
   { path = ./tsrk-common; }
+  ./work
 ]

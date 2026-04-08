@@ -17,6 +17,8 @@ let
   ];
 in
 {
+  key = ./.;
+
   options = {
     tsrk.shell = {
       initExtra = lib.options.mkOption {

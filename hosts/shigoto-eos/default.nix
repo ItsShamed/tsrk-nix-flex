@@ -7,13 +7,13 @@
 {
   self,
   inputs,
-  pkgs,
   ...
 }:
 
 {
   imports = [
     self.nixosModules.profile-tsrk-common
+    self.nixosModules.profile-work
     self.nixosModules.hyprland
     (self.lib.generateFullUser "tsrk" {
       canSudo = true;
@@ -67,14 +67,6 @@
     USB_ALLOWLIST = "";
   };
   boot.tmp.tmpfsSize = "75%";
-
-  systemd.services = {
-    pritunl-client-service = {
-      description = "Pritunl Client Daemon";
-      script = "${pkgs.pritunl-client}/bin/pritunl-client-service";
-      wantedBy = [ "network-online.target" ];
-    };
-  };
   services.upower.enable = true;
 
   # Fingerprint
