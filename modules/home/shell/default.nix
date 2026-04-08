@@ -35,6 +35,7 @@ in
     ./fastfetch.nix
     ./kubeswitch.nix
     ./lsd.nix
+    ./pay-respects.nix
     ./starship.nix
     ./zoxide.nix
     ./zsh.nix
