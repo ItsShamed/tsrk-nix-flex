@@ -37,6 +37,7 @@ in
               pager = "${pkgs.delta}/bin/delta --dark --paging=never";
             }
           ];
+          overrideGpg = true;
           showIcons = true;
           commit.signOff = true;
         };
