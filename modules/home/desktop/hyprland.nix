@@ -602,7 +602,7 @@ in
 
           "float, class:org\\.pulseaudio\\.pavucontrol"
           "float, tag:pip"
-          "float, tag:browser, title:^(Extension: )"
+          "float, tag:browser, title:^Extension:.*"
           "pin, tag:pip"
           "workspace 3 silent, tag:browser"
           "workspace 4 silent, tag:coms"
