@@ -601,6 +601,7 @@ in
           "tag +pip, initialTitle:^(Picture in pIcture)$"
 
           "float, class:org\\.pulseaudio\\.pavucontrol"
+          "float, class:com\\.saivert\\.pwvucontrol"
           "float, tag:pip"
           "float, tag:browser, title:^Extension:.*"
           "pin, tag:pip"
