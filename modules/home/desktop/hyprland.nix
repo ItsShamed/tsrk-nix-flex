@@ -602,6 +602,7 @@ in
 
           "float, class:org\\.pulseaudio\\.pavucontrol"
           "float, class:com\\.saivert\\.pwvucontrol"
+          "float, class:steam, title:^(Friends List)$"
           "float, tag:pip"
           "float, tag:browser, title:^Extension:.*"
           "pin, tag:pip"
