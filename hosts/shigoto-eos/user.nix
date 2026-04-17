@@ -26,6 +26,7 @@
   wayland.windowManager.hyprland.settings = {
     monitor = [
       "eDP-1, 1920x1200, 960x1080, 1"
+      "desc:Samsung Electric Company LS24AG30x H4PR902603, 1920x1080@144, 960x0, 1"
       "desc:Iiyama North America PL2770H 0x31303331, 1920x1080@165, 0x0, 1"
       "desc:Iiyama North America PL2770H 0x30333736, 1920x1080@144, 1920x0, 1"
     ];
@@ -34,6 +35,9 @@
       "4, monitor:eDP-1, default:true"
       "2, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
       "3, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
+      "1, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
+      "2, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
+      "3, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
     ];
     input.kb_layout = "us_qwerty-fr";
   };
