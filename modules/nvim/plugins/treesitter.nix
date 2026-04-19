@@ -10,7 +10,7 @@
   plugins.treesitter = {
     enable = true;
     settings = {
-      syntax.enable = true;
+      highlight.enable = true;
       indent.enable = true;
       ensure_installed = [
         "bash"
