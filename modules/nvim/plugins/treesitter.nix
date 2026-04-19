@@ -25,6 +25,7 @@
         "java"
         "yaml"
         "vala"
+        "helm"
       ];
     };
   };
