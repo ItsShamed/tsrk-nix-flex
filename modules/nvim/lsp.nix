@@ -6,7 +6,12 @@
 
 { self, ... }:
 
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   lspconfig_keymaps = {
@@ -44,7 +49,11 @@ in
       eslint.enable = true;
       helm_ls = {
         enable = true;
-        config.cmd = [ "${pkgs.helm-ls}/bin/helm_ls" ];
+        config = {
+          settings.helm-ls = {
+            yamlls.path = "${lib.getExe config.lsp.servers.helm_ls.package}";
+          };
+        };
       };
       ltex = {
         enable = true;

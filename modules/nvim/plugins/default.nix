@@ -51,7 +51,7 @@
     neovim-remote
   ];
 
-  extraConfigLuaPost = ''
+  extraConfigLuaPre = ''
     require("helm-ls").setup({})
   '';
 }
