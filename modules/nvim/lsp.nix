@@ -9,7 +9,6 @@
 {
   pkgs,
   lib,
-  config,
   ...
 }:
 
@@ -52,7 +51,11 @@ in
         enable = true;
         config = {
           settings.helm-ls = {
-            yamlls.path = "${lib.getExe config.lsp.servers.helm_ls.package}";
+            yamlls = {
+              config = {
+                kubernetesCRDStore.enable = true;
+              };
+            };
           };
         };
       };
@@ -121,7 +124,20 @@ in
       qmlls.enable = true;
       vala_ls.enable = true;
       vhdl_ls.enable = true;
-      yamlls.enable = true;
+      yamlls = {
+        enable = true;
+        config.settings = {
+          yaml = {
+            schemas = {
+              kubernetes = "k8s/**";
+            };
+            completion = true;
+            hover = true;
+            schemaStore.enable = true;
+            kubernetesCRDStore.enable = true;
+          };
+        };
+      };
       rust_analyzer = {
         enable = true;
       };
