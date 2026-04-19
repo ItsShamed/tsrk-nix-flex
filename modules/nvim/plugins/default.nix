@@ -4,6 +4,8 @@
 
 # SPDX-License-Identifier: MIT
 
+{ pkgs, ... }:
+
 {
   imports = [
     ./nvim-tree.nix
@@ -39,14 +41,13 @@
     nui.enable = true;
     nvim-autopairs.enable = true;
     todo-comments.enable = true;
-    helm.enable = true;
   };
 
-  autoCmd = [
-    {
-      event = "FileType";
-      pattern = "helm";
-      command = "LspRestart";
-    }
+  extraPlugins = with pkgs.vimPlugins; [
+    helm-ls-nvim
   ];
+
+  extraConfigLuaPost = ''
+    require("helm-ls").setup({})
+  '';
 }
