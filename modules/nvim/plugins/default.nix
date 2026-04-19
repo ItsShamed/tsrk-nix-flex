@@ -47,6 +47,10 @@
     helm-ls-nvim
   ];
 
+  extraPackages = with pkgs; [
+    neovim-remote
+  ];
+
   extraConfigLuaPost = ''
     require("helm-ls").setup({})
   '';
