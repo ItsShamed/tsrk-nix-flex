@@ -60,6 +60,7 @@ in
         enable = true;
         package = pkgs.ltex-ls-plus;
         config = {
+          cmd = [ "ltex-ls-plus" ];
           filetypes = [
             "bib"
             "context"
