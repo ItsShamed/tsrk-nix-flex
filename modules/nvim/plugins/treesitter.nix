@@ -10,6 +10,7 @@
   plugins.treesitter = {
     enable = true;
     settings = {
+      syntax.enable = true;
       indent.enable = true;
       ensure_installed = [
         "bash"
@@ -28,5 +29,8 @@
         "helm"
       ];
     };
+  };
+  plugins.treesitter-context = {
+    enable = true;
   };
 }
