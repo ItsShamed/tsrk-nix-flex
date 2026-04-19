@@ -15,7 +15,7 @@
       "menuone"
       "noselect"
     ];
-    conceallevel = 0;
+    conceallevel = 2;
     fileencoding = "utf-8";
     foldmethod = "manual";
     hidden = true;
