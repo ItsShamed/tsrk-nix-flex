@@ -36,6 +36,7 @@ in
     keymaps = lspconfig_compat ++ [
 
     ];
+    inlayHints.enable = true;
     servers = {
       autotools_ls.enable = true;
       clangd.enable = true;
