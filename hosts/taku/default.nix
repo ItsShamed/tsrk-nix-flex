@@ -33,6 +33,7 @@ in
         "kvm"
         "scanner"
         "lp"
+        "wireshark"
       ];
       modules = [ ./user.nix ];
     })
@@ -44,6 +45,7 @@ in
     mouse_m908
     winappsPkgs.winapps
     winappsPkgs.winapps-launcher
+    wireshark
   ];
 
   tsrk.programs.gamescope.enable = true;
@@ -104,6 +106,8 @@ in
   tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
 
   time.hardwareClockInLocalTime = true;
+
+  programs.wireshark.enable = true;
 
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.xorg.xrandr}/bin/xrandr --rate 165
