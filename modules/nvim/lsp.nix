@@ -129,7 +129,7 @@ in
         config.settings = {
           yaml = {
             schemas = {
-              kubernetes = "k8s/**";
+              kubernetes = "templates/**";
             };
             completion = true;
             hover = true;
