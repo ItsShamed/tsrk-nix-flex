@@ -144,6 +144,8 @@ in
     sane-airscan
   ];
 
+  services.displayManager.sddm.wayland.enable = true;
+
   boot.tmp.tmpfsSize = "75%";
 
   boot.initrd.network = {
