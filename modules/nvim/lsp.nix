@@ -9,6 +9,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
 
@@ -84,9 +85,26 @@ in
             "typst"
             "xhtml"
           ];
-          settings = {
+          settings.ltex = {
             language = "auto";
-            additionalRules.motherTongue = lib.mkDefault "fr";
+            enabled = [
+              "bibtex"
+              "context"
+              "context.tex"
+              "html"
+              "latex"
+              "markdown"
+              "mdx"
+              "typst"
+              "asciidoc"
+              "neorg"
+              "org"
+              "quarto"
+              "restructuredtext"
+              "rsweave"
+            ];
+            additionalRules.motherTongue = lib.mkDefault "fr-FR";
+            ltex-ls.path = "${config.lsp.servers.ltex.package}";
           };
         };
       };
