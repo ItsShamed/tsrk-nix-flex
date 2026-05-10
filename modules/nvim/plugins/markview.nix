@@ -13,23 +13,27 @@
       local presets = require("markview.presets");
     '';
     settings = {
-      preview.hybrid_modes = [ "n" ];
-      checkboxes.__raw = "presets.checkboxes.nerd";
-      headings = {
-        setext_1 = {
-          style = "decorated";
-        };
-        setext_2 = {
-          style = "decorated";
-        };
+      preview = {
+        hybrid_modes = [ "n" ];
+        icon_provider = "devicons";
       };
       html = {
         enable = true;
         tags.enable = true;
       };
-      inline_codes.enable = true;
-      links = {
+      markdown = {
+        headings = {
+          setext_1.style = "decorated";
+          setext_2.style = "decorated";
+        };
+      };
+      typst = {
+        code_blocks.enable = false;
+      };
+      markdown_inline = {
         enable = true;
+        checkboxes.__raw = "presets.checkboxes.nerd";
+        inline_codes.enable = true;
         hyperlinks.enable = true;
         images.enable = true;
         emails.enable = true;
