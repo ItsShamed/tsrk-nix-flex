@@ -13,6 +13,9 @@
   fluctus = ./applications/audio/fluctus;
   regency = ./applications/audio/regency;
 
+  ### Productivity
+  notion-app = ./applications/productivity/notion-app;
+
   ### INSTANT MESSAGING
   chatterino7 = ./applications/networking/instant-messengers/chatterino7;
 
