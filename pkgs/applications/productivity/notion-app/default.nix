@@ -36,6 +36,7 @@ symlinkJoin {
   meta = {
     description = "Your connected workspace for wiki, docs & projects";
     homepage = "https://notion.so";
+    mainProgram = "notion-app";
     license = lib.licenses.unfreeRedistributable;
     platforms = lib.platforms.linux;
   };

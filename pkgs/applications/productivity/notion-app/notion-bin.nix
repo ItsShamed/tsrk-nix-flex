@@ -7,13 +7,12 @@
 {
   asar,
   p7zip,
-  electron_40,
   autoPatchelfHook,
+  electron,
   libcxx,
-  electron ? electron_40,
   callPackage,
   writeShellScript,
-  bettersqlite3 ? callPackage ./better-sqlite3 { },
+  bettersqlite3 ? callPackage ./better-sqlite3 { inherit electron; },
   bufferutil ? callPackage ./bufferutil { },
   fetchurl,
   stdenv,
@@ -39,11 +38,11 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "notion-bin";
-  version = "7.12.0";
+  version = "7.17.0";
 
   src = fetchurl {
     url = "https://desktop-release.notion-static.com/Notion%20Setup%20${finalAttrs.version}.exe";
-    hash = "sha256-FiSk0TEULv6QLhgv7bA5COQnvDorwwc7MYjtGhh8mLM=";
+    hash = "sha256-FbEELUu9lWXWCREOSN38i+JzgEv0nKt8fSD9Ibo8jMs=";
   };
 
   nativeBuildInputs = [
@@ -54,7 +53,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   buildInputs = [
-    electron
     libcxx
   ];
 
@@ -66,7 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
     7z x \$PLUGINSDIR/app-64.7z resources/app.asar{,.unpacked} -y
     asar e resources/app.asar asar_patched
 
-    rm -rfv \$PLUGINSDIR/app-64.7z "$notionexe"
+    rm -rfv \$PLUGINSDIR/app-64.7z "$src"
 
     runHook postUnpack
   '';
