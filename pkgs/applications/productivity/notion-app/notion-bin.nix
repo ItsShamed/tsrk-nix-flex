@@ -64,7 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
     7z x \$PLUGINSDIR/app-64.7z resources/app.asar{,.unpacked} -y
     asar e resources/app.asar asar_patched
 
-    rm -rfv \$PLUGINSDIR/app-64.7z "$src"
+    rm -rfv \$PLUGINSDIR/app-64.7z
 
     runHook postUnpack
   '';
