@@ -38,7 +38,6 @@ in
   ];
 
   postPatch = ''
-    command -v node-gyp
     cp -vf ${./package-lock.json} package-lock.json
   '';
 
