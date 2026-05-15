@@ -183,6 +183,40 @@ in
     theme = "${tsrkPkgs.hyperfluent-grub-theme}";
     splashImage = "${tsrkPkgs.hyperfluent-grub-theme}/background.png";
   };
+  boot.loader.limine = {
+    additionalFiles = {
+      "efi/memtest86plus/memtest86plus.efi" = "${pkgs.memtest86plus}/memtest.efi";
+      "efi/netboot-xyz/netboot.efi" = "${pkgs.netbootxyz-efi}";
+    };
+    extraEntries = ''
+      /Tools
+      //Netboot.xyz
+        comment: ${pkgs.netbootxyz-efi.meta.description}
+        protocol: efi
+        path: boot():/limine/efi/netboot-xyz/netboot.efi
+      //Memtest86+
+        comment: ${pkgs.memtest86plus.meta.description}
+        protocol: efi
+        path: boot():/limine/efi/memtest86plus/memtest86plus.efi
+    '';
+    style = {
+      backdrop = "24283B";
+      wallpapers = [ ./files/cirnix-bg-dark.png ];
+      wallpaperStyle = "centered";
+      interface.branding = "Current host: ${config.networking.hostName}";
+      graphicalTerminal = {
+        background = "A424283B";
+        foreground = "C0CAF5";
+        palette = "1D202F;F7768E;9ECE6A;E0AF68;7AA2F7;BB9AF7;7DCFFF;A9B1D6";
+        brightBackground = "2E3C64";
+        brightForeground = "C0CAF5";
+        brightPalette = "414868;FF899D;9FE044;FABA4A;8DB0FF;C7A9FF;A4DAFF;C0CAF5";
+        margin = 2;
+        marginGradient = 2;
+      };
+    };
+    panicOnChecksumMismatch = true;
+  };
 
   boot.initrd.postMountCommands = ''
     printf "\033[0;33m    /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               @@@@@@@@@@\n"

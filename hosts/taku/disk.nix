@@ -8,12 +8,9 @@
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-        useOSProber = true;
-      };
+      grub.enable = false;
+      systemd-boot.enable = false;
+      limine.enable = true;
     };
     initrd.luks.devices = {
       cryptlvm.device = "/dev/disk/by-label/cryptlvm";
