@@ -189,6 +189,10 @@ in
       "efi/netboot-xyz/netboot.efi" = "${pkgs.netbootxyz-efi}";
     };
     extraEntries = ''
+      /Fallback
+        comment: Default EFI Program
+        protocol: efi
+        path: boot():/EFI/Boot/bootx64.efi
       /Tools
       //Netboot.xyz
         comment: ${pkgs.netbootxyz-efi.meta.description}

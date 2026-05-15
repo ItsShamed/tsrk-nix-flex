@@ -4,13 +4,23 @@
 
 # SPDX-License-Identifier: MIT
 
+{ lib, ... }:
+
 {
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;
       grub.enable = false;
       systemd-boot.enable = false;
-      limine.enable = true;
+      limine = {
+        enable = true;
+        extraEntries = lib.mkBefore ''
+          /Windows
+            comment: Windows Boot Manager
+            protocol: efi
+            path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+        '';
+      };
     };
     initrd.luks.devices = {
       cryptlvm.device = "/dev/disk/by-label/cryptlvm";
