@@ -71,6 +71,8 @@
         # i18n lib
         icu
         icu.dev
+
+        sbctl
       ];
     })
   ];

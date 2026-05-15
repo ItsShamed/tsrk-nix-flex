@@ -14,6 +14,7 @@
       systemd-boot.enable = false;
       limine = {
         enable = true;
+        secureBoot.enable = true;
         extraEntries = lib.mkBefore ''
           /Windows
             comment: Windows Boot Manager
