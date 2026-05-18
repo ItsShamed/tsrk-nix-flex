@@ -12,7 +12,10 @@
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = false;
       grub.enable = false;
-      limine.enable = true;
+      limine = {
+        enable = true;
+        secureBoot.enable = true;
+      };
     };
   };
   zramSwap.enable = true;
