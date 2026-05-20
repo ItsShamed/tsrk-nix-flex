@@ -7,9 +7,13 @@
 {
   self,
   inputs,
+  pkgs,
   ...
 }:
 
+let
+  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   imports = [
     self.nixosModules.profile-tsrk-common
@@ -36,6 +40,18 @@
   tsrk.sshd.enable = false;
 
   services.libinput.touchpad.naturalScrolling = true;
+
+  environment.systemPackages = [
+    tsrkPkgs.workspaceone-intelligent-hub
+  ];
+
+  system.services.ws1-hub = {
+    imports = [ tsrkPkgs.workspaceone-intelligent-hub.services.default ];
+  };
+
+  security.pki.certificateFiles = [
+    "${tsrkPkgs.workspaceone-intelligent-hub}/etc/ssl/certs/omnissa-cert.pem"
+  ];
 
   boot.plymouth.logo = ./splash.png;
   services.tlp.enable = true;

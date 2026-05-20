@@ -37,6 +37,7 @@
   ### MISC
   polybar-mpris = ./applications/misc/polybar-mpris;
   tokyonight-extras = ./misc/tokyonight-extras;
+  workspaceone-intelligent-hub = ./misc/workspace-one-intelligent-hub;
 
   ### FONTS
   dsfr-marianne = ./data/fonts/dsfr-marianne;
