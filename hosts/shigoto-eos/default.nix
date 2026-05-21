@@ -103,6 +103,13 @@ in
     "/var/lib/ws1-hub".v = {
       group = "root";
       user = "root";
+      mode = "755";
+    };
+    "/var/lib/ws1-hub/agent"."L+".argument =
+      "${tsrkPkgs.workspaceone-intelligent-hub}/libexec/agent";
+    "/var/lib/ws1-hub/data".v = {
+      group = "root";
+      user = "root";
       mode = "600";
     };
     "/var/run/ws1-hub".v = {
@@ -114,6 +121,11 @@ in
       group = "root";
       user = "root";
       mode = "755";
+    };
+    "/var/opt/omnissa/ws1-hub".v = {
+      group = "root";
+      user = "root";
+      mode = "744";
     };
   };
 }

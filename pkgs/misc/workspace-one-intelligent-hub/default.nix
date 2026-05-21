@@ -71,7 +71,7 @@ stdenv.mkDerivation (finalAttrs: {
 
     cat <<EOF > $out/etc/ws1-hub.conf
     <airwatch>
-      <home>$out/libexec</home>
+      <home>/var/lib/ws1-hub</home>
       <bin>$out/bin</bin>
       <data>/var/lib/ws1-hub/data</data>
       <ipc>/var/run/ws1-hub</ipc>
