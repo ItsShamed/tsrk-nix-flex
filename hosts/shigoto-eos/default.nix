@@ -98,4 +98,22 @@ in
     target = "ws1-hub.conf";
     source = "${tsrkPkgs.workspaceone-intelligent-hub}/etc/ws1-hub.conf";
   };
+
+  systemd.tmpfiles.settings.ws1-hub = {
+    "/var/lib/ws1-hub".v = {
+      group = "root";
+      user = "root";
+      mode = "600";
+    };
+    "/var/run/ws1-hub".v = {
+      group = "root";
+      user = "root";
+      mode = "700";
+    };
+    "/var/log/ws1-hub".v = {
+      group = "root";
+      user = "root";
+      mode = "755";
+    };
+  };
 }
