@@ -92,4 +92,5 @@ in
   security.pam.services.login.fprintAuth = false;
 
   services.displayManager.sddm.wayland.enable = true;
+  services.envfs.enable = true;
 }
