@@ -93,4 +93,9 @@ in
 
   services.displayManager.sddm.wayland.enable = true;
   services.envfs.enable = true;
+
+  environment.etc.ws1-hub = {
+    target = "ws1-hub.conf";
+    source = "${tsrkPkgs.workspaceone-intelligent-hub}/etc/ws1-hub.conf";
+  };
 }
