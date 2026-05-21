@@ -1,0 +1,90 @@
+#!/bin/sh
+
+# Copyright (c) 2026 tsrk. <tsrk@tsrk.me>
+# This file is licensed under the MIT license
+# See the LICENSE file in the repository root for more info.
+
+# SPDX-License-Identifier: MIT
+
+set -o pipefail
+set -eu
+
+logfile=/var/log/ws1-hub/agent.log
+
+out="@out@"
+__progname=$(basename "$0")
+
+log() {
+	echo "$(date) :" "$@" | tee -a "$logfile"
+}
+
+stream_log() {
+	while read -r line; do
+		log "$line"
+	done
+}
+
+usage() {
+  echo "Usage: $0 [start | stop | status | unenroll | restart | help]"
+}
+
+die() {
+	log "$@" >&2
+	exit 1
+}
+
+start() {
+	echo "starting ws1Hub services"
+
+	systemctl stop ws1-hub.service || true
+
+	systemctl reset-failed ws1-hub.service
+	systemctl restart ws1-hub.service
+
+  echo "ws1HubAgent started"
+}
+
+stop() {
+  if systemctl status ws1-hub.service; then
+    systemctl stop ws1-hub.service
+  fi
+
+  echo "ws1HubAgent stopped"
+}
+
+status() {
+  systemctl status ws1-hub.service
+}
+
+unenroll() {
+  exec $out/bin/ws1HubUtil unenroll
+}
+
+restart() {
+  stop
+  start
+}
+
+if [ "$#" -ne 1 ]; then
+  usage
+  exit 2
+fi
+
+case "$1" in
+  start|stop|restart|status)
+    "$1" |& stream_log
+    ;;
+  cleanup|uninstall)
+    die "This action not supported on NixOS, please adjust your configuration instead"
+    ;;
+  unenroll)
+    "$1"
+    ;;
+  help)
+    usage
+    ;;
+  *)
+    usage
+    exit 2
+    ;;
+esac

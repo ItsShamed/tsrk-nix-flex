@@ -8,6 +8,8 @@
   nss,
   nssTools,
   xmlstarlet,
+  systemd,
+  coreutils,
   makeWrapper,
   dpkg,
   autoPatchelfHook,
@@ -31,6 +33,8 @@ stdenv.mkDerivation (finalAttrs: {
     autoPatchelfHook
     makeWrapper
     xmlstarlet
+    systemd
+    coreutils
   ];
 
   buildInputs = [
@@ -53,15 +57,21 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   installPhase = ''
-    mkdir -vp $out/{bin,share/{applications,ws1-hub},etc/{ssl/certs,ws1-hub/}}
+    mkdir -vp $out/{bin,share/{applications,ws1-hub},etc/{ssl/certs,ws1-hub/},libexec}
 
     cp -va bin $out/
     cp -va share/* $out/share/ws1-hub
     cp -va config/* $out/etc/ws1-hub/
 
+    substituteAll ${./agent} $out/libexec/agent
+    chmod +x $out/libexec/agent
+
+    wrapProgram $out/libexec/agent \
+      --prefix PATH : "${lib.makeBinPath finalAttrs.buildInputs}"
+
     cat <<EOF > $out/etc/ws1-hub.conf
     <airwatch>
-      <home>/run/ws1-hub</home>
+      <home>$out/libexec</home>
       <bin>$out/bin</bin>
       <ipc>/var/run/ws1-hub</ipc>
       <config>$out/etc/ws1-hub/</config>
