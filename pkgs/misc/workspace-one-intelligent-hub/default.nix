@@ -73,6 +73,7 @@ stdenv.mkDerivation (finalAttrs: {
     <airwatch>
       <home>$out/libexec</home>
       <bin>$out/bin</bin>
+      <data>/var/lib/ws1-hub/data</data>
       <ipc>/var/run/ws1-hub</ipc>
       <config>$out/etc/ws1-hub/</config>
       <share>$out/share/ws1-hub/</share>
