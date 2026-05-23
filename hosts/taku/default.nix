@@ -161,4 +161,23 @@ in
       ];
     };
   };
+
+  power.ups = {
+    enable = true;
+    ups.eaton-pro-1200 = {
+      driver = "usbhid-ups";
+      port = "auto";
+      directives = [
+        ''vendorId = "0463"''
+        ''productId = "ffff"''
+      ];
+      description = "Eaton Ellipse PRO 1200";
+    };
+    upsmon.monitor.eaton-pro-1200.user = "tsrk";
+    users.tsrk = {
+      actions = [ "SET" ];
+      instcmds = [ "ALL" ];
+      upsmon = "primary";
+    };
+  };
 }
