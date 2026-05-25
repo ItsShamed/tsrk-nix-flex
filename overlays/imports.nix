@@ -11,4 +11,5 @@
   ./sound-theme-freedesktop
   ./sddm
   ./sshfs
+  ./unofficial-homestuck-collection
 ]
