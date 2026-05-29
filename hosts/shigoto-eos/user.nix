@@ -25,18 +25,22 @@
 
   wayland.windowManager.hyprland.settings = {
     monitor = [
+      # Built-in
       "eDP-1, 1920x1200, 1920x1080, 1"
+      # Home
       "desc:Samsung Electric Company LS24AG30x H4PR902603, 1920x1080@144, 1920x0, 1"
+      # Left
       "desc:Iiyama North America PL2770H 0x31303331, 1920x1080@165, 0x0, 1"
+      # Center
       "desc:Iiyama North America PL2770H 0x30333736, 1920x1080@144, 1920x0, 1"
+      # Right (vertical)
       "desc:BNQ BenQ LCD R4L02809019, 2560x1440@60, 3840x0, 1, transform, 1"
     ];
     workspace = [
       "1, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
       "2, monitor:eDP-1, default:true"
       "3, monitor:desc:Iiyama North America PL2770H 0x31303331, default:true"
-      "4, monitor:desc:desc:BNQ BenQ LCD R4L02809019, default:true"
-      "3, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
+      "4, monitor:desc:BNQ BenQ LCD R4L02809019, default:true"
       "1, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
       "2, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
       "3, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
