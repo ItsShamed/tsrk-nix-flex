@@ -37,6 +37,7 @@ in
       tsrkPkgs.rewind
       pkgs.lunar-client
       pkgs.etterna
+      pkgs.bottles
     ];
   };
 }
