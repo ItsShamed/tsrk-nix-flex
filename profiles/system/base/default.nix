@@ -117,7 +117,10 @@ in
     info.enable = true;
     man = {
       enable = true;
-      generateCaches = true;
+      cache = {
+        enable = true;
+        generateAtRuntime = true;
+      };
     };
     nixos = {
       enable = true;
@@ -175,7 +178,7 @@ in
     lttng-ust
     numactl
     libglvnd
-    xorg.libXi
+    libxi
     udev
   ];
 
@@ -185,7 +188,7 @@ in
   };
   boot.loader.limine = {
     additionalFiles = {
-      "efi/memtest86plus/memtest86plus.efi" = "${pkgs.memtest86plus}/memtest.efi";
+      "efi/memtest86plus/memtest86plus.efi" = "${pkgs.memtest86plus}/mt86plus.efi";
       "efi/netboot-xyz/netboot.efi" = "${pkgs.netbootxyz-efi}";
     };
     extraEntries = ''
@@ -221,25 +224,6 @@ in
     };
     panicOnChecksumMismatch = true;
   };
-
-  boot.initrd.postMountCommands = ''
-    printf "\033[0;33m    /@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@               @@@@@@@@@@\n"
-    echo '  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@           @@@@@@@@@@'
-    echo ' @@@@@@@@@                  @@@@@@@       @@@@@@@@@@@'
-    echo '@@@@@@@                     @@@@@@@   @@@@@@@@@@@'
-    echo '@@@@@@@                     @@@@@@@@@@@@@@@@@'
-    echo '@@@@@@@@                    @@@@@@@@@@@@@%'
-    echo ' @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-    echo '   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-    echo '       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-    echo '     @@@@@@@@@@             @@@@@@@   @@@@@@@@@@@'
-    echo '    @@@@@@@@                @@@@@@@       @@@@@@@@@@'
-    echo '   @@@@@@@/                 @@@@@@@           @@@@@@@@@@'
-    echo '   @@@@@@@                  @@@@@@@               @@@@@@@@@@'
-    printf "\033[0;36mYou are currently booting on the \033[1;35m${
-      config.lib.tsrk.imageName or "unspecified"
-    } \033[0;36m image\033[0m\n"
-  '';
 
   boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.7") pkgs.linuxPackages_latest;
 

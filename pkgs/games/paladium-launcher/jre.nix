@@ -12,7 +12,14 @@
   makeWrapper,
   unzip,
   file,
-  xorg ? null,
+  libx11,
+  libxext,
+  libxtst,
+  libxi,
+  libxp,
+  libxt,
+  libxrender,
+  libxxf86vm,
   pluginSupport ? true,
   glib,
   libxml2,
@@ -29,8 +36,6 @@
   gdk-pixbuf,
   setJavaClassPath,
 }:
-
-assert swingSupport -> xorg != null;
 
 let
 
@@ -143,7 +148,7 @@ let
       ffmpeg
       libxslt
       libGL
-      xorg.libXxf86vm
+      libxxf86vm
       alsa-lib
       fontconfig
       freetype
@@ -154,13 +159,13 @@ let
       atk
     ]
     ++ lib.optionals swingSupport [
-      xorg.libX11
-      xorg.libXext
-      xorg.libXtst
-      xorg.libXi
-      xorg.libXp
-      xorg.libXt
-      xorg.libXrender
+      libx11
+      libxext
+      libxtst
+      libxi
+      libxp
+      libxt
+      libxrender
       stdenv.cc.cc
     ];
 

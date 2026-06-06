@@ -34,7 +34,14 @@
   stm32cubemx,
   swt,
   unzip,
-  xorg,
+  libx11,
+  libxcursor,
+  xcbutilxrm,
+  libxext,
+  libxfixes,
+  libxi,
+  libxtst,
+  libxxf86vm,
   libz,
   xercesc,
   makeDesktopItem,
@@ -102,14 +109,14 @@ let
       qt6.qtwayland
       alsa-lib
       libxkbcommon
-      xorg.libX11
-      xorg.libXcursor
-      xorg.xcbutil
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXi
-      xorg.libXtst
-      xorg.libXxf86vm
+      libx11
+      libxcursor
+      xcbutilxrm
+      libxext
+      libxfixes
+      libxi
+      libxtst
+      libxxf86vm
       libz
       xercesc
       stlink

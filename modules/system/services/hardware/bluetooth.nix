@@ -25,7 +25,6 @@
 
     environment.systemPackages = with pkgs; [
       bluez-tools
-      blueberry
       bluetui
     ];
 

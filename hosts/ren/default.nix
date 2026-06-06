@@ -33,7 +33,7 @@
   tsrk.programs.gamescope.enable = true;
 
   services.xserver.displayManager.setupCommands = ''
-    ${pkgs.xorg.xset}/bin/xset r rate 230 40
+    ${pkgs.xset}/bin/xset r rate 230 40
   '';
 
   services.avahi = {

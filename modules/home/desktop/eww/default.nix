@@ -71,8 +71,9 @@ in
   config = lib.mkIf config.tsrk.eww.enable {
     programs.eww = {
       enable = lib.mkDefault true;
-      configDir = lib.mkDefault packagedDir;
     };
+
+    xdg.configFile."eww".source = lib.mkDefault packagedDir;
 
     systemd.user.services = {
       eww = {

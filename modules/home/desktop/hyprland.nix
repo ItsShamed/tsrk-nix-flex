@@ -14,11 +14,14 @@
 }:
 
 let
+  inherit (lib.generators) mkLuaInline;
+  toLua = lib.generators.toLua { };
   cfg = config.tsrk.hyprland;
+  hyprlandCfg = config.wayland.windowManager.hyprland;
   mkNumberBinds =
     mod: keywordFn:
     (builtins.foldl' (c: e: c ++ [ "${mod}, ${e}, ${keywordFn e}" ]) [ ] (
-      builtins.genList (x: builtins.toString (x + 1)) 9
+      builtins.genList (x: toString (x + 1)) 9
     ))
     ++ [ "${mod}, 0, ${keywordFn "10"}" ];
   lockTargetsPresent =
@@ -151,11 +154,13 @@ let
   menu = pkgs.writeShellScript "menu-wrapper" ''
     echo "Supplied menu:" "$@"
 
+    menu="$(basename "$1")"
+
     if [ "$#" -lt 1 ]; then
       exit 1;
     fi
 
-    if [[ "$1" =~ (.*/)?rofi$ ]]; then
+    if [ "$menu" = "rofi" ]; then
       if command -v uwsm >/dev/null; then
         exec "$@" -run-command 'uwsm app -- {cmd}'
       else
@@ -164,7 +169,7 @@ let
       exit
     fi
 
-    if [[ "$1" =~ (.*/)?bemenu-run$ ]]; then
+    if [ "$menu" = "bemenu-run" ]; then
       if command -v uwsm >/dev/null; then
         exec uwsm app -- "$("$@" --no-exec)"
       else
@@ -172,7 +177,7 @@ let
       fi
     fi
 
-    if [[ "$1" =~ (.*/)?fuzzel$ ]]; then
+    if [ "$menu" = "fuzzel" ]; then
       if command -v uwsm >/dev/null; then
         exec "$@" --launch-prefix='uwsm app -- '
       else
@@ -180,7 +185,7 @@ let
       fi
     fi
 
-    if [[ "$1" =~ (.*/)?tofi-drun$ && "$#" -eq 1 ]]; then
+    if [ "$menu" = "tofi-drun" ] && [ "$#" -eq 1 ]; then
       if command -v uwsm >/dev/null; then
         exec uwsm app -- "$("$@")"
       else
@@ -308,13 +313,11 @@ in
     services.hyprpaper = {
       enable = lib.mkDefault true;
       settings = {
-        preload = [
-          "${cfg.backgrounds.light}"
-          "${cfg.backgrounds.dark}"
-          "${cfg.backgrounds.default}"
-        ];
-
-        wallpaper = [ ", ${cfg.backgrounds.default}" ];
+        splash = false;
+        wallpaper = {
+          monitor = "";
+          path = "${cfg.backgrounds.default}";
+        };
       };
     };
 
@@ -322,7 +325,7 @@ in
       lightModeScripts.hyprpaper = ''
         if [ "''${XDG_SESSION_TYPE:-}" = "wayland" ] && [ -n "''${WAYLAND_DISPLAY:-}" ]; then
           tries=0
-          while (! hyprctl hyprpaper reload ,"${cfg.backgrounds.light}") && [ "$tries" -lt 5 ]; do
+          while (! hyprctl hyprpaper wallpaper ", ${cfg.backgrounds.light}") && [ "$tries" -lt 5 ]; do
             echo "Failed to set wallpaper, retrying…"
             sleep 1
             tries=$(($tries + 1))
@@ -334,7 +337,7 @@ in
       darkModeScripts.hyprpaper = ''
         if [ "''${XDG_SESSION_TYPE:-}" = "wayland" ] && [ -n "''${WAYLAND_DISPLAY:-}" ]; then
           tries=0
-          while (! hyprctl hyprpaper reload ,"${cfg.backgrounds.dark}") && [ "$tries" -lt 5 ]; do
+          while (! hyprctl hyprpaper reload ", ${cfg.backgrounds.dark}") && [ "$tries" -lt 5 ]; do
             echo "Failed to set wallpaper, retrying…"
             sleep 1
             tries=$(($tries + 1))
@@ -363,6 +366,7 @@ in
           {
             timeout = 290;
             on-timeout = "${pkgs.libnotify}/bin/notify-send -a hypridle 'Auto-lock notice' 'Computer will lock in 10 seconds'";
+            on-resume = "${pkgs.libnotify}/bin/notify-send -a hypridle 'Auto-lock notice' 'Cancelled'";
           }
           {
             timeout = 300;
@@ -401,157 +405,474 @@ in
     wayland.windowManager.hyprland = {
       enable = lib.mkDefault true;
       systemd.enable = lib.mkDefault true;
+      configType = lib.mkDefault "lua";
       settings = {
-        general = {
-          border_size = 2;
-          gaps_in = 5;
-          gaps_out = 10;
-          gaps_workspaces = 10;
-          resize_on_border = true;
+        config = {
+          general = {
+            border_size = 2;
+            gaps_in = 5;
+            gaps_out = 10;
+            gaps_workspaces = 10;
+            resize_on_border = true;
+          };
+
+          decoration = {
+            rounding = 10;
+            inactive_opacity = 0.75;
+            shadow = {
+              render_power = 2;
+              color_inactive = "rgba(00000000)";
+            };
+          };
+          dwindle.force_split = 2;
+
+          input = {
+            repeat_rate = 45;
+            repeat_delay = 244;
+            touchpad.natural_scroll = true;
+          };
+          binds.drag_threshold = 5;
+
+          misc = {
+            font_family = "IosevkaTerm Nerd Font";
+            vrr = 2;
+          };
+
+          ecosystem = {
+            no_update_news = true;
+            no_donation_nag = true;
+          };
         };
 
-        "$mainMod" = "SUPER";
-        "$terminal" = (
+        "mainMod"._var = "SUPER";
+        "terminal"._var = (
           self.lib.mkIfElse (config.programs.kitty.enable) "kitty"
             # This is for the EPITA die-hards that never bothered to change their
             # default terminal emulator for their session lol
             "${config.lib.nixGL.wrap pkgs.alacritty}/bin/alacritty"
         );
-        "$menu" = (
+        "menu"._var = (
           self.lib.mkIfElse (config.programs.rofi.enable
           ) "rofi -show drun" "${pkgs.bemenu}/bin/bemenu-run"
         );
 
-        decoration = {
-          rounding = 10;
-          inactive_opacity = 0.75;
-          shadow = {
-            render_power = 2;
-            color_inactive = "rgba(00000000)";
-          };
-        };
-
-        dwindle.force_split = 2;
-
-        input = {
-          repeat_rate = 45;
-          repeat_delay = 244;
-          touchpad.natural_scroll = true;
-        };
-
-        binds.drag_threshold = 5;
-
         # Needed to propagate necessary envvars to darkman
-        execr-once = (
+        execr-once = lib.mkIf (hyprlandCfg.configType == "hyprlang") (
           lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman"
         );
 
-        bindmd = [
+        on._args =
+          let
+            exec = lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman";
+          in
+          lib.optionals (hyprlandCfg.configType == "lua") [
+            "hyprland.start"
+            (mkLuaInline ''
+              function ()
+                -- Exec
+                ${lib.concatMapStringsSep "  \n" (e: ''hl.exec_cmd("${e}")'') exec}
+              end
+            '')
+          ];
+
+        bind =
+          let
+            directionsTypes = {
+              Vim = {
+                left = "H";
+                right = "L";
+                up = "K";
+                down = "J";
+              };
+              arrows = {
+                left = "left";
+                right = "right";
+                up = "up";
+                down = "down";
+              };
+            };
+            mkMainModKey = key: mkLuaInline ''mainMod .. " + ${key}"'';
+            mkLuaNumberBinds =
+              keyFn: argsFn:
+              (builtins.foldl' (
+                c: e:
+                c
+                ++ [
+                  {
+                    _args = [
+                      (mkMainModKey (keyFn e))
+                    ]
+                    ++ (argsFn e);
+                  }
+                ]
+              ) [ ] (builtins.genList (x: toString (x + 1)) 9))
+              ++ [
+                {
+                  _args = [
+                    (mkMainModKey (keyFn "0"))
+                  ]
+                  ++ (argsFn "0");
+                }
+              ];
+            mkExec' = key: action: description: opts: {
+              _args = [
+                key
+                (mkLuaInline "hl.dsp.exec_cmd(${toLua action})")
+                (opts // { inherit description; })
+              ];
+            };
+            mkExec =
+              k: a: d:
+              mkExec' k a d { };
+            mkLocalDirectionBinds =
+              name: localDirections:
+              let
+                mkSingleDirection = direction: [
+                  {
+                    _args = [
+                      (mkMainModKey "${localDirections.${direction}}")
+                      (mkLuaInline "hl.dsp.focus(${toLua { inherit direction; }})")
+                      { description = "Move focus ${direction} (${name})"; }
+                    ];
+                  }
+                  {
+                    _args = [
+                      (mkMainModKey "SHIFT + ${localDirections.${direction}}")
+                      (mkLuaInline "hl.dsp.window.move(${toLua { inherit direction; }})")
+                      { description = "Move active window ${direction} (${name})"; }
+                    ];
+                  }
+                ];
+              in
+              map mkSingleDirection (builtins.attrNames localDirections);
+          in
+          lib.optionals (hyprlandCfg.configType == "lua") (
+            [
+              {
+                _args = [
+                  (mkMainModKey "mouse:272")
+                  (mkLuaInline "hl.dsp.window.drag()")
+                  {
+                    mouse = true;
+                    description = "Move active window by dragging";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "mouse:273")
+                  (mkLuaInline "hl.dsp.window.resize()")
+                  {
+                    mouse = true;
+                    description = "Resize active window by dragging";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "Return")
+                  (mkLuaInline ''hl.dsp.exec_cmd("${launch} " .. terminal)'')
+                  { description = "Open terminal emulator"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "SHIFT + Q")
+                  # TODO: Maybe close instead?
+                  (mkLuaInline "hl.dsp.window.kill()")
+                  { description = "Kill active window"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "D")
+                  (mkLuaInline ''hl.dsp.exec_cmd("${menu} " .. menu)'')
+                  { description = "Open Menu"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "F")
+                  (mkLuaInline "hl.dsp.window.fullscreen(${
+                    toLua {
+                      mode = "fullscreen";
+                      action = "toggle";
+                    }
+                  })")
+                  { description = "Toggle fullscreen on active window"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "SHIFT + F")
+                  (mkLuaInline "hl.dsp.window.fullscreen(${
+                    toLua {
+                      mode = "maximized";
+                      action = "toggle";
+                    }
+                  })")
+                  { description = "Toggle maximizing on active window"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "SPACE")
+                  (mkLuaInline ''hl.dsp.window.float({ action = "toggle" })'')
+                  { description = "Toggle floating for active window"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "MINUS")
+                  (mkLuaInline ''hl.dsp.workspace.toggle_special("scratchpad")'')
+                  { description = "Toggle scratchpad"; }
+                ];
+              }
+              {
+                _args = [
+                  (mkMainModKey "SHIFT + MINUS")
+                  (mkLuaInline "hl.dsp.window.move(${
+                    toLua {
+                      workspace = "special:scratchpad";
+                      follow = false;
+                    }
+                  })")
+                  { description = "Toggle scratchpad"; }
+                ];
+              }
+              (mkExec (mkMainModKey "I") "${
+                if lockTargetsPresent then
+                  "loginctl lock-session"
+                else
+                  "${lib.meta.getExe pkgs.hyprlock}"
+              }" "Lock screen")
+              {
+                _args = [
+                  (mkMainModKey "R")
+                  (mkLuaInline ''hl.dsp.submap("resize")'')
+                  { description = "Enter 'Resize' submap"; }
+                ];
+              }
+              (mkExec "XF86AudioMute" "${volumeControl} tmute" "Toggle Mute")
+              (mkExec "XF86AudioPlay" "${lib.getExe pkgs.playerctl} play-pause"
+                "Toggle play/pause of currently playing media"
+              )
+              (mkExec "XF86AudioPause" "${lib.getExe pkgs.playerctl} play-pause"
+                "Toggle play/pause of currently playing media"
+              )
+              (mkExec "XF86AudioPrev" "${lib.getExe pkgs.playerctl} previous"
+                "Go to previous track"
+              )
+              (mkExec "XF86AudioNext" "${lib.getExe pkgs.playerctl} next" "Go to next track")
+              (mkExec (mkMainModKey "SHIFT + E") "${
+                if config.programs.rofi.enable then
+                  "${config.programs.rofi.finalPackage}/bin/rofi -show p -modi p:'rofi-power-menu --logout ${logout}'"
+                else
+                  "${logout}"
+              }" "Show Power Menu")
+              (mkExec' (mkMainModKey "SHIFT + S") "${launch} ${snipTool}"
+                "Snip screen (partial screenshot)"
+                {
+                  release = true;
+                }
+              )
+              (mkExec' (mkMainModKey "Print") "${launch} ${scTool}" "Screenshot everything" {
+                release = true;
+              })
+              (mkExec' "XF86AudioRaiseVolume" "${launch} ${volumeControl} increase 5"
+                "Increase volume"
+                {
+                  repeating = true;
+                  locked = true;
+                }
+              )
+              (mkExec' "XF86AudioLowerVolume" "${launch} ${volumeControl} decrease 5"
+                "Decrease volume"
+                {
+                  repeating = true;
+                  locked = true;
+                }
+              )
+              (mkExec' "XF86MonBrightnessUp" "${launch} ${brightnessControl} increase 2"
+                "Increase screen brightness"
+                {
+                  repeating = true;
+                  locked = true;
+                }
+              )
+              (mkExec' "XF86MonBrightnessDown" "${launch} ${brightnessControl} decrease 2"
+                "Decrease screen brightness"
+                {
+                  repeating = true;
+                  locked = true;
+                }
+              )
+            ]
+            ++ (mkLuaNumberBinds lib.id (i: [
+              (mkLuaInline "hl.dsp.focus(${
+                toLua {
+                  workspace = i;
+                }
+              })")
+              { description = "Go to workspace ${i}"; }
+            ]))
+            ++ (mkLuaNumberBinds (i: "SHIFT + ${i}") (i: [
+              (mkLuaInline "hl.dsp.window.move(${
+                toLua {
+                  workspace = i;
+                  focus = false;
+                }
+              })")
+              { description = "Move active window to workspace ${i}"; }
+            ]))
+            ++ (mkLuaNumberBinds (i: "CTRL + ${i}") (i: [
+              (mkLuaInline "hl.dsp.window.move(${
+                toLua {
+                  workspace = i;
+                  focus = true;
+                }
+              })")
+              { description = "Move active window and go to workspace ${i}"; }
+            ]))
+            ++ (lib.flatten (lib.mapAttrsToList mkLocalDirectionBinds directionsTypes))
+            ++ (lib.lists.optionals
+              (
+                config.programs.rofi.enable
+                && lib.lists.any (pkg: pkg == pkgs.rofi-calc) config.programs.rofi.plugins
+              )
+              [
+                (mkExec (mkMainModKey "equal")
+                  ''${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy''
+                  "Show quick calculator"
+                )
+                (mkExec "XF86Calculator"
+                  ''${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy''
+                  "Show quick calculator (media key)"
+                )
+              ]
+            )
+            ++ (lib.lists.optional
+              (
+                config.programs.rofi.enable
+                && lib.lists.any (pkg: pkg == pkgs.rofi-emoji) config.programs.rofi.plugins
+              )
+              (
+                mkExec (mkMainModKey "semicolon")
+                  "${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji"
+                  "Show emoji picker"
+              )
+            )
+
+          );
+
+        bindmd = lib.optionals (hyprlandCfg.configType == "hyprlang") [
           "$mainMod, mouse:272, Move active window by dragging, movewindow"
           "$mainMod, mouse:273, Resize active window by dragging, resizewindow"
         ];
 
-        bindd = [
-          "$mainMod, Return, Open terminal emulator, exec, ${launch} $terminal"
-          "$mainMod SHIFT, Q, Kill active window, killactive"
-          "$mainMod, D, Open Menu, exec, ${menu} $menu"
-
-          "$mainMod, F, Toggle fullscreen on active window, fullscreen, 0"
-          "$mainMod SHIFT, F, Toggle maximizing active window, fullscreen, 1"
-
-          # Vim-like keybindings
-          # focus
-          "$mainMod, H, Move focus left (Vim),  movefocus, l"
-          "$mainMod, L, Move focus right (Vim), movefocus, r"
-          "$mainMod, K, Move focus up (Vim),    movefocus, u"
-          "$mainMod, J, Move focus down (Vim),  movefocus, d"
-          # move
-          "$mainMod SHIFT, H, Move active window left (Vim),  movewindow, l"
-          "$mainMod SHIFT, L, Move active window right (Vim), movewindow, r"
-          "$mainMod SHIFT, K, Move active window up (Vim),    movewindow, u"
-          "$mainMod SHIFT, J, Move active window down (Vim),  movewindow, d"
-
-          # Children keybindings
-          # focus
-          "$mainMod, left,  Move focus left (arrows),  movefocus, l"
-          "$mainMod, right, Move focus right (arrows), movefocus, r"
-          "$mainMod, up,    Move focus up (arrows),    movefocus, u"
-          "$mainMod, down,  Move focus down (arrows),  movefocus, d"
-          # move
-          "$mainMod SHIFT, left,  Move active window left (arrows),  movewindow, l"
-          "$mainMod SHIFT, right, Move active window right (arrows), movewindow, r"
-          "$mainMod SHIFT, up,    Move active window up (arrows),    movewindow, u"
-          "$mainMod SHIFT, down,  Move active window down (arrows),  movewindow, d"
-
-          "$mainMod SHIFT, space, Toggle floating for active window, togglefloating"
-
-          # Scratchpad
-          "$mainMod, minus, Toggle scratchpad, togglespecialworkspace, scratchpad"
-          "$mainMod SHIFT, minus, Move active window to scratchpad, movetoworkspacesilent, special:scratchpad"
-
-          # lock
-          "$mainMod, i, Lock screen, exec, ${
-            if lockTargetsPresent then
-              "loginctl lock-session"
-            else
-              "${lib.meta.getExe pkgs.hyprlock}"
-          }"
-
-          "$mainMod, R, Enter 'Resize' submap, submap, resize"
-
-          # Media keys
-          ", XF86AudioMute,  Toggle mute,     exec, ${volumeControl} tmute"
-          ", XF86AudioPlay,  Toggle play/pause of currently playing media, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-          ", XF86AudioPause, Toggle play/pause of currently playing media, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-          ", XF86AudioPrev, Go to previous track, exec, ${pkgs.playerctl}/bin/playerctl previous"
-          ", XF86AudioNext, Go to previous track, exec, ${pkgs.playerctl}/bin/playerctl next"
-
-          # Power Menu
-          "$mainMod SHIFT, E, Show Power Menu, exec, ${
-            if config.programs.rofi.enable then
-              "${config.programs.rofi.finalPackage}/bin/rofi -show p -modi p:'rofi-power-menu --logout ${logout}'"
-            else
-              "${logout}"
-          }"
-        ]
-        ++ (lib.lists.optionals
-          (
-            config.programs.rofi.enable
-            && lib.lists.any (pkg: pkg == pkgs.rofi-calc) config.programs.rofi.plugins
-          )
+        bindd = lib.optionals (hyprlandCfg.configType == "hyprlang") (
           [
-            ''
-              $mainMod, equal, Show quick calculator, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"
-            ''
-            ''
-              , XF86Calculator, Show quick calculator (media key), exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"
-            ''
-          ]
-        )
-        ++ (lib.lists.optional
-          (
-            config.programs.rofi.enable
-            && lib.lists.any (pkg: pkg == pkgs.rofi-emoji) config.programs.rofi.plugins
-          )
-          ''
-            $mainMod, semicolon, Show emoji picker, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji
-          ''
-        )
-        ++ (mkNumberBinds "$mainMod" (i: "Go to workspace ${i}, workspace, ${i}"))
-        ++ (mkNumberBinds "$mainMod SHIFT" (
-          i: "Move active window to workspace ${i}, movetoworkspacesilent, ${i}"
-        ))
-        ++ (mkNumberBinds "$mainMod CTRL" (
-          i: "Move active window and go to workspace ${i}, movetoworkspace, ${i}"
-        ));
+            "$mainMod, Return, Open terminal emulator, exec, ${launch} $terminal"
+            "$mainMod SHIFT, Q, Kill active window, killactive"
+            "$mainMod, D, Open Menu, exec, ${menu} $menu"
 
-        bindrd = [
-          # Secreenshots
+            "$mainMod, F, Toggle fullscreen on active window, fullscreen, 0"
+            "$mainMod SHIFT, F, Toggle maximizing active window, fullscreen, 1"
+
+            # Vim-like keybindings
+            # focus
+            "$mainMod, H, Move focus left (Vim),  movefocus, l"
+            "$mainMod, L, Move focus right (Vim), movefocus, r"
+            "$mainMod, K, Move focus up (Vim),    movefocus, u"
+            "$mainMod, J, Move focus down (Vim),  movefocus, d"
+            # move
+            "$mainMod SHIFT, H, Move active window left (Vim),  movewindow, l"
+            "$mainMod SHIFT, L, Move active window right (Vim), movewindow, r"
+            "$mainMod SHIFT, K, Move active window up (Vim),    movewindow, u"
+            "$mainMod SHIFT, J, Move active window down (Vim),  movewindow, d"
+
+            # Children keybindings
+            # focus
+            "$mainMod, left,  Move focus left (arrows),  movefocus, l"
+            "$mainMod, right, Move focus right (arrows), movefocus, r"
+            "$mainMod, up,    Move focus up (arrows),    movefocus, u"
+            "$mainMod, down,  Move focus down (arrows),  movefocus, d"
+            # move
+            "$mainMod SHIFT, left,  Move active window left (arrows),  movewindow, l"
+            "$mainMod SHIFT, right, Move active window right (arrows), movewindow, r"
+            "$mainMod SHIFT, up,    Move active window up (arrows),    movewindow, u"
+            "$mainMod SHIFT, down,  Move active window down (arrows),  movewindow, d"
+
+            "$mainMod SHIFT, space, Toggle floating for active window, togglefloating"
+
+            # Scratchpad
+            "$mainMod, minus, Toggle scratchpad, togglespecialworkspace, scratchpad"
+            "$mainMod SHIFT, minus, Move active window to scratchpad, movetoworkspacesilent, special:scratchpad"
+
+            # lock
+            "$mainMod, i, Lock screen, exec, ${
+              if lockTargetsPresent then
+                "loginctl lock-session"
+              else
+                "${lib.meta.getExe pkgs.hyprlock}"
+            }"
+
+            "$mainMod, R, Enter 'Resize' submap, submap, resize"
+
+            # Media keys
+            ", XF86AudioMute,  Toggle mute,     exec, ${volumeControl} tmute"
+            ", XF86AudioPlay,  Toggle play/pause of currently playing media, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
+            ", XF86AudioPause, Toggle play/pause of currently playing media, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
+            ", XF86AudioPrev, Go to previous track, exec, ${pkgs.playerctl}/bin/playerctl previous"
+            ", XF86AudioNext, Go to previous track, exec, ${pkgs.playerctl}/bin/playerctl next"
+
+            # Power Menu
+            "$mainMod SHIFT, E, Show Power Menu, exec, ${
+              if config.programs.rofi.enable then
+                "${config.programs.rofi.finalPackage}/bin/rofi -show p -modi p:'rofi-power-menu --logout ${logout}'"
+              else
+                "${logout}"
+            }"
+          ]
+          ++ (lib.lists.optionals
+            (
+              config.programs.rofi.enable
+              && lib.lists.any (pkg: pkg == pkgs.rofi-calc) config.programs.rofi.plugins
+            )
+            [
+              ''
+                $mainMod, equal, Show quick calculator, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"
+              ''
+              ''
+                , XF86Calculator, Show quick calculator (media key), exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"
+              ''
+            ]
+          )
+          ++ (lib.lists.optional
+            (
+              config.programs.rofi.enable
+              && lib.lists.any (pkg: pkg == pkgs.rofi-emoji) config.programs.rofi.plugins
+            )
+            ''
+              $mainMod, semicolon, Show emoji picker, exec, ${config.programs.rofi.finalPackage}/bin/rofi -modi emoji -show emoji
+            ''
+          )
+          ++ (mkNumberBinds "$mainMod" (i: "Go to workspace ${i}, workspace, ${i}"))
+          ++ (mkNumberBinds "$mainMod SHIFT" (
+            i: "Move active window to workspace ${i}, movetoworkspacesilent, ${i}"
+          ))
+          ++ (mkNumberBinds "$mainMod CTRL" (
+            i: "Move active window and go to workspace ${i}, movetoworkspace, ${i}"
+          ))
+        );
+
+        bindrd = lib.optionals (hyprlandCfg.configType == "hyprlang") [
+          # Screenshots
           "$mainMod SHIFT, S, Snip screen (partial screenshot), exec, ${launch} ${snipTool}"
           "$mainMod, Print, Screenshot everything, exec, ${launch} ${scTool}"
         ];
 
-        bindedl = [
+        bindedl = lib.optionals (hyprlandCfg.configType == "hyprlang") [
           # Media keys
           ", XF86AudioRaiseVolume, Incrase volume,  exec, ${launch} ${volumeControl} increase 5"
           ", XF86AudioLowerVolume, Decrease volume, exec, ${launch} ${volumeControl} decrease 5"
@@ -561,37 +882,78 @@ in
           ", XF86MonBrightnessDown, Decrease screen brightness, exec, ${launch} ${brightnessControl} decrease 2"
         ];
 
-        misc = {
-          font_family = "IosevkaTerm Nerd Font";
-          vrr = 2;
-        };
+        animation =
+          let
+            syntaxes = {
+              hyprlang = [ "global, 1, 3, default" ];
+              lua = [
+                {
+                  leaf = "global";
+                  enabled = true;
+                  speed = 3.0;
+                  bezier = "default";
+                }
+              ];
+            };
+          in
+          syntaxes.${hyprlandCfg.configType};
 
-        ecosystem = {
-          no_update_news = true;
-          no_donation_nag = true;
-        };
-
-        animation = [ "global, 1, 3, default" ];
-
-        layerrule = [
-          "animation slide right, notifications"
-          "animation slide up, waybar"
-          "animation slide down, eww-bottom-dock"
+        layer_rule = lib.optionals (hyprlandCfg.configType == "lua") [
+          {
+            match.namespace = "notifications";
+            animation = "slide right";
+          }
+          {
+            match.namespace = "waybar";
+            animation = "slide up";
+          }
+          {
+            match.namespace = "eww-bottom-dock";
+            animation = "slide down";
+          }
         ];
 
-        workspace = [
+        workspace = lib.optionals (hyprlandCfg.configType == "hyprlang") [
           "1, defaultName:workdir"
           "2, defaultName:tooling"
           "3, defaultName:web"
           "4, defaultName:coms"
         ];
 
-        gesture = [
-          "4, horizontal, workspace"
-        ];
+        workspace_rule =
+          let
+            mkWorkspaceRule =
+              workspace: rules:
+              {
+                workspace = toString workspace;
+              }
+              // rules;
+          in
+          lib.optionals (hyprlandCfg.configType == "lua") [
+            (mkWorkspaceRule 1 { default_name = "workdir"; })
+            (mkWorkspaceRule 2 { default_name = "tooling"; })
+            (mkWorkspaceRule 3 { default_name = "web"; })
+            (mkWorkspaceRule 4 { default_name = "coms"; })
+          ];
 
-        # TODO: Add animation rule for satty
-        windowrule = [
+        gesture =
+          let
+            syntaxes = {
+              hyprlang = [
+                "4, horizontal, workspace"
+              ];
+              lua = [
+                {
+                  fingers = 4;
+                  direction = "horizontal";
+                  action = "workspace";
+                }
+              ];
+            };
+          in
+          syntaxes.${hyprlandCfg.configType};
+
+        windowrule = lib.optionals (hyprlandCfg.configType == "hyprlang") [
           "tag +coms, class:^(vesktop)$"
           "tag +coms, class:^(thunderbird)$"
           "tag +browser, class:^(librewolf)$"
@@ -602,6 +964,7 @@ in
 
           "float, class:org\\.pulseaudio\\.pavucontrol"
           "float, class:com\\.saivert\\.pwvucontrol"
+          "float, class:com\\.gabm\\.satty"
           "float, class:steam, title:^(Friends List)$"
           "float, tag:pip"
           "float, tag:browser, title:^Extension:.*"
@@ -609,11 +972,80 @@ in
           "workspace 3 silent, tag:browser"
           "workspace 4 silent, tag:coms"
         ];
+
+        window_rule =
+          let
+            rulesAttrs = {
+              vesktop-to-coms = {
+                match.class = "^(vesktop)$";
+                tag = "+coms";
+              };
+              thunderbird-to-coms = {
+                match.class = "^(thunderbird)$";
+                tag = "+coms";
+              };
+              firefox-as-browser = {
+                match.class = "^(firefox)$";
+                tag = "+browser";
+              };
+              librewolf-as-browser = {
+                match.class = "^(librewolf)$";
+                tag = "+browser";
+              };
+              chromium-as-browser = {
+                match.class = "^(Chromium-browser)$";
+                tag = "+browser";
+              };
+              match-pip = {
+                match.initial_title = "^Picture(-| )in(-| )Picture$";
+                tag = "+pip";
+              };
+              pavucontrol-float = {
+                match.class = "org\\.pulseaudio\\.pavucontrol";
+                float = true;
+              };
+              pwvucontrol-float = {
+                match.class = "com\\.saivert\\.pwvucontrol";
+                float = true;
+              };
+              steam-non-main-float = {
+                match = {
+                  class = "steam";
+                  initial_title = "negative:^(Steam)$";
+                };
+                float = true;
+              };
+              pip-effect = {
+                match.tag = "pip";
+                float = true;
+                pin = true;
+              };
+              browser-effect = {
+                match.tag = "browser";
+                workspace = "3 silent";
+              };
+              coms-effect = {
+                match.tag = "coms";
+                workspace = "3 silent";
+              };
+              satty = {
+                match.class = "com\\.gabm\\.satty";
+                float = true;
+                fullscreen = true;
+                no_anim = true;
+                no_dim = true;
+                no_blur = true;
+                opaque = true;
+              };
+            };
+          in
+          lib.optionals (hyprlandCfg.configType == "lua") (
+            lib.mapAttrsToList (name: value: value // { inherit name; }) rulesAttrs
+          );
       };
 
       submaps = {
         resize.settings = {
-
           binded = [
             ", right, Grow width of active window,    resizeactive, 10 0"
             ", left,  Shrink width of active window,  resizeactive, -10 0"
@@ -627,13 +1059,49 @@ in
             ", J, Shrink height of active window, resizeactive, 0 -10"
             ", catchall, Exit resize submap, submap, reset"
           ];
+          bind =
+            let
+              mkResizeBind = keybind: x: y: description: {
+                _args = [
+                  keybind
+                  (mkLuaInline "hl.dsp.window.resize(${
+                    toLua {
+                      inherit x y;
+                      relative = true;
+                    }
+                  })")
+                  {
+                    repeating = true;
+                    inherit description;
+                  }
+                ];
+              };
+            in
+            [
+              (mkResizeBind "right" 10 0 "Grow width of active window")
+              (mkResizeBind "left" (-10) 0 "Shrink width of active window")
+              (mkResizeBind "up" 0 10 "Grow height of active window")
+              (mkResizeBind "down" 0 (-10) "Shrink height of active window")
+
+              # Vim-like keybindings
+              (mkResizeBind "L" 10 0 "Grow width of active window")
+              (mkResizeBind "H" (-10) 0 "Shrink width of active window")
+              (mkResizeBind "K" 0 10 "Grow height of active window")
+              (mkResizeBind "J" 0 (-10) "Shrink height of active window")
+              {
+                _args = [
+                  "catchall"
+                  (mkLuaInline ''hl.dsp.submap("reset")'')
+                ];
+              }
+            ];
         };
       };
     };
 
     specialisation = {
       light.configuration = {
-        wayland.windowManager.hyprland.settings = {
+        wayland.windowManager.hyprland.settings.config = {
           general = {
             "col.inactive_border" = "rgb(e1e2e7)";
             "col.active_border" = "rgb(3760bf)";
@@ -648,7 +1116,7 @@ in
         };
       };
       dark.configuration = {
-        wayland.windowManager.hyprland.settings = {
+        wayland.windowManager.hyprland.settings.config = {
           general = {
             "col.inactive_border" = "rgb(24283b)";
             "col.active_border" = "rgb(c0caf5)";

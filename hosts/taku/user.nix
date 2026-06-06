@@ -17,8 +17,13 @@ in
   ];
 
   wayland.windowManager.hyprland.settings = {
-    monitor = [ "DP-2, 1920x1080@165, 0x0, 1" ];
-    input.kb_layout = "us_qwerty-fr";
+    monitor = {
+      output = "DP-2";
+      mode = "1920x1080@165";
+      position = "0x0";
+      scale = 1;
+    };
+    config.input.kb_layout = "us_qwerty-fr";
   };
 
   tsrk = {

@@ -110,8 +110,8 @@ in
   programs.wireshark.enable = true;
 
   services.xserver.displayManager.setupCommands = ''
-    ${pkgs.xorg.xrandr}/bin/xrandr --rate 165
-    ${pkgs.xorg.xset}/bin/xset r rate 230 40
+    ${pkgs.xrandr}/bin/xrandr --rate 165
+    ${pkgs.xset}/bin/xset r rate 230 40
   '';
 
   # This is horrible for Minecraft PvP lmao
@@ -124,9 +124,7 @@ in
     package = pkgs.openrgb-with-all-plugins;
   };
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "mbedtls-2.28.10"
-  ];
+  nixpkgs.config.permittedInsecurePackages = import ../../hall-of-shame.nix;
 
   tsrk.x11.amdgpu = {
     enable = true;

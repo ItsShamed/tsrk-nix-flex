@@ -24,7 +24,6 @@
     flameshot
     gammastep
     kitty
-    premid
     rofi
     screenkey
     session-targets

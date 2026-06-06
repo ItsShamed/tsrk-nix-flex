@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 [
+  ./bitwarden
   ./lix-compat
   ./retroarch
   ./rofi-power-menu

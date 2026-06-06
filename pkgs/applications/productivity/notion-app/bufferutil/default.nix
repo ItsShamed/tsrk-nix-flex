@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: MIT
 {
   lib,
-  nodePackages,
+  node-gyp-build,
   fetchFromGitHub,
   buildNpmPackage,
 }:
@@ -22,7 +22,7 @@ buildNpmPackage (finalAttrs: {
   };
 
   nativeBuildInputs = [
-    nodePackages.node-gyp-build
+    node-gyp-build
   ];
 
   dontNpmPrune = true;

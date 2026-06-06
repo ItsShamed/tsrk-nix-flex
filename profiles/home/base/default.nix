@@ -49,6 +49,9 @@
 
     # This is very annoying with 'setup-betterlockscreen.service'
     systemd.user.startServices = false;
-    xdg.userDirs.enable = lib.mkDefault true;
+    xdg.userDirs = {
+      enable = lib.mkDefault true;
+      setSessionVariables = true;
+    };
   };
 }

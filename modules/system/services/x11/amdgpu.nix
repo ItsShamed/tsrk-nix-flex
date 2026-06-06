@@ -88,8 +88,7 @@ in
           ];
         description = "The maximum DRI Level to enable.";
         defaultText = "3 if Xorg Server version is >= 18.3, else 2";
-        default =
-          if (lib.versionAtLeast pkgs.xorg.xorgserver.version "18.3") then 3 else 2;
+        default = if (lib.versionAtLeast pkgs.xorg-server.version "18.3") then 3 else 2;
       };
       pageFlip = lib.options.mkEnableOption "DRI2 page flipping" // {
         default = true;

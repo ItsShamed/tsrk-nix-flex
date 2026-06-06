@@ -23,7 +23,6 @@
   ];
 
   tsrk = {
-    premid.enable = true;
     mpd.enable = true;
     fcitx5 = {
       enable = true;

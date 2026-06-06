@@ -6,7 +6,7 @@
 
 { self, pkgSet, ... }:
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsTeleport pkgsUnstable;
@@ -34,8 +34,12 @@ in
     tsrkPkgs.notion-app
   ];
 
-  wayland.windowManager.hyprland.settings.windowrule = [
-    "tag +coms, class:^(Slack)$"
+  wayland.windowManager.hyprland.settings.window_rule = lib.mkBefore [
+    {
+      name = "slack-to-coms";
+      match.class = "^(Slack)$";
+      tag = "+coms";
+    }
   ];
 
   tsrk.packages.ops.k9s.externalPlugins = {

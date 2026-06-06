@@ -7,7 +7,7 @@
 {
   pulseaudio,
   which,
-  xorg,
+  libx11,
   zenity,
   autoPatchelfHook,
   lib,
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     zenity
-    xorg.libX11
+    libx11
     pulseaudio
   ];
 

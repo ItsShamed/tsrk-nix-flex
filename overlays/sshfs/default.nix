@@ -4,10 +4,10 @@
 
 # SPDX-License-Identifier: MIT
 
-_self: super:
+self: super:
 
 {
   sshfs = super.sshfs.override {
-    callPackage = super.newScope { openssh = super.openssh_gssapi; };
+    openssh = self.openssh_gssapi;
   };
 }

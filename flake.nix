@@ -10,7 +10,7 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs_teleport_15.url = "github:nixos/nixpkgs?rev=8125d74e21449e7ba702af890297a8bb9dc5f273";
     # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
@@ -44,11 +44,11 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
+    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
 
     agenix.url = "github:ryantm/agenix";
     git-hooks.url = "github:cachix/git-hooks.nix";
@@ -100,8 +100,7 @@
           config = {
             allowUnfree = true;
             android_sdk.accept_license = true;
-            # TODO: OpenRGB wake the fuck up
-            permittedInsecurePackages = [ "mbedtls-2.28.10" ];
+            permittedInsecurePackages = import ./hall-of-shame.nix;
           };
           overlays = [
             nixgl.overlay

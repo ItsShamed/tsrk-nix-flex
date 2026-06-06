@@ -33,6 +33,9 @@
     "/" = {
       label = "ttakuroot";
       fsType = "ext4";
+      options = [
+        "x-systemd.device-timeout=infinity"
+      ];
     };
     "/boot" = {
       label = "EFI";

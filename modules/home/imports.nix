@@ -19,7 +19,6 @@
   ./desktop/mopidy.nix
   ./desktop/picom.nix
   { path = ./desktop/polybar.nix; }
-  ./desktop/premid.nix
   { path = ./desktop/rofi.nix; }
   ./desktop/screenkey.nix
   ./desktop/syshud.nix

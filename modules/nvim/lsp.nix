@@ -113,7 +113,7 @@ in
         enable = true;
         config.settings = {
           formatting.command = [
-            "nixfmt"
+            "${lib.getExe pkgs.nixfmt}"
             "--width=80"
           ];
           options = {

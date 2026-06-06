@@ -36,22 +36,22 @@ let
     exec @out@/libexec/doukutsu-rs "$@"
   '';
 in
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "doukutsu-rs";
-  version = "0.102.0-beta7+968d969";
+  version = "1.0.0";
 
   src = fetchFromGitHub {
     owner = "doukutsu-rs";
     repo = "doukutsu-rs";
-    rev = "968d969264bcbd32fb9fff5a1ff979d6170d9cc0";
-    hash = "sha256-sDTy0+luMbn86a2rW1QvRFTYT8tHcxmvrKxqo9u+Wgg=";
+    rev = finalAttrs.version;
+    hash = "sha256-iVW7IvUhz+3wXmRsC75Jlo2g4fvoIlAoGavPMQ78f3Q=";
   };
 
   cargoPatches = [
     ./patches/0001-build-unix-use-pkg-config-instead-of-bundling.patch
   ];
 
-  cargoHash = "sha256-JT5Exn1aK1HU0zvwA0rTQgL1r/UMU/c7W3fkxBdOcUA=";
+  cargoHash = "sha256-+cdqBGgb0XH7g06XUoRgzMjbEE3WE28XH9JorPbDUkI=";
 
   nativeBuildInputs = [
     pkg-config
@@ -93,4 +93,4 @@ rustPlatform.buildRustPackage {
     mainProgram = "doukutsu-rs";
     platfomrms = with lib.platforms; linux;
   };
-}
+})

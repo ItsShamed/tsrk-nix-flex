@@ -39,9 +39,10 @@ args:
   };
 
   extraConfigVim = ''
-      augroup highlight_yank
+    augroup highlight_yank
       autocmd!
-      au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+      au TextYankPost * silent! lua vim.hl.on_yank { higroup='IncSearch', timeout=200 }
     augroup END
   '';
+  nixpkgs.config.allowUnfree = true;
 }

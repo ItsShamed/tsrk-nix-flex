@@ -11,7 +11,7 @@ super.lib.genAttrs [ "libsForQt5" "kdePackages" ] (
   super.${p}.overrideScope (
     _pself: psuper: {
       sddm = psuper.sddm.override {
-        unwrapped = (
+        sddm-unwrapped = (
           psuper.sddm.unwrapped.overrideAttrs (old: {
             patches = (old.patches or [ ]) ++ [
               (super.fetchpatch {
