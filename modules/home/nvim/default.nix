@@ -36,7 +36,7 @@
       };
 
     specialisation.light.configuration = {
-      programs.nixvim.colorscheme = "tokyonight-day";
+      programs.nixvim.colorscheme = lib.mkForce "tokyonight-day";
     };
 
     home.file.".ideavimrc".source = ./ideavimrc;
