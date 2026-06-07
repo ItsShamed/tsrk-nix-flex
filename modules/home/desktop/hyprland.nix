@@ -979,6 +979,13 @@ in
                 match.class = "^(vesktop)$";
                 tag = "+coms";
               };
+              vesktop-popout-pip = {
+                match = {
+                  class = "^(vesktop)$";
+                  initial_title = "Discord Popout";
+                };
+                tag = "+pip";
+              };
               thunderbird-to-coms = {
                 match.class = "^(thunderbird)$";
                 tag = "+coms";
@@ -1018,6 +1025,9 @@ in
                 match.tag = "pip";
                 float = true;
                 pin = true;
+                no_dim = true;
+                no_blur = true;
+                opaque = true;
               };
               browser-effect = {
                 match.tag = "browser";
