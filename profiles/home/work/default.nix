@@ -37,7 +37,7 @@ in
   wayland.windowManager.hyprland.settings.window_rule = lib.mkBefore [
     {
       name = "slack-to-coms";
-      match.class = "^(Slack)$";
+      match.class = "^(slack)$";
       tag = "+coms";
     }
     {
