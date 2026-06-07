@@ -30,7 +30,10 @@ in
     packages = {
       games.enable = true;
       more-gaming.enable = true;
-      music-production.plugins.enable = true;
+      music-production = {
+        enable = true;
+        plugins.enable = true;
+      };
       media.enable = true;
     };
     nvim.wakatime.enable = true;
