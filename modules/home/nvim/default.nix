@@ -35,6 +35,10 @@
         plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
       };
 
+    specialisation.light.configuration = {
+      programs.nixvim.colorscheme = "tokyonight-day";
+    };
+
     home.file.".ideavimrc".source = ./ideavimrc;
     home.packages = with pkgs; [ fzf ];
   };
