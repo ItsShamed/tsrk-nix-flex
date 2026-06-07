@@ -337,7 +337,7 @@ in
       darkModeScripts.hyprpaper = ''
         if [ "''${XDG_SESSION_TYPE:-}" = "wayland" ] && [ -n "''${WAYLAND_DISPLAY:-}" ]; then
           tries=0
-          while (! hyprctl hyprpaper reload ", ${cfg.backgrounds.dark}") && [ "$tries" -lt 5 ]; do
+          while (! hyprctl hyprpaper wallpaper ", ${cfg.backgrounds.dark}") && [ "$tries" -lt 5 ]; do
             echo "Failed to set wallpaper, retrying…"
             sleep 1
             tries=$(($tries + 1))
