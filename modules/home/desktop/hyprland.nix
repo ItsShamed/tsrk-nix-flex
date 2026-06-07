@@ -931,8 +931,14 @@ in
           lib.optionals (hyprlandCfg.configType == "lua") [
             (mkWorkspaceRule 1 { default_name = "workdir"; })
             (mkWorkspaceRule 2 { default_name = "tooling"; })
-            (mkWorkspaceRule 3 { default_name = "web"; })
-            (mkWorkspaceRule 4 { default_name = "coms"; })
+            (mkWorkspaceRule 3 {
+              default_name = "web";
+              layout = "scrolling";
+            })
+            (mkWorkspaceRule 4 {
+              default_name = "coms";
+              layout = "scrolling";
+            })
           ];
 
         gesture =
