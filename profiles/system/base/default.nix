@@ -88,7 +88,10 @@ in
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = import ../../../hall-of-shame.nix;
+  };
 
   networking.useDHCP = lib.mkDefault true;
 

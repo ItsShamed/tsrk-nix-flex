@@ -124,8 +124,6 @@ in
     package = pkgs.openrgb-with-all-plugins;
   };
 
-  nixpkgs.config.permittedInsecurePackages = import ../../hall-of-shame.nix;
-
   tsrk.x11.amdgpu = {
     enable = true;
     freeSync = true;
