@@ -26,9 +26,9 @@
   wayland.windowManager.hyprland.settings = {
     monitor =
       let
-        mkMonitor = name: mode: position: scale: {
+        mkMonitor = output: mode: position: scale: {
           inherit
-            name
+            output
             mode
             position
             scale
@@ -77,15 +77,6 @@
         (mkMonitorMap 2 "desc:Samsung Electric Company LS24AG30x H4PR90260")
         (mkMonitorMap 3 "desc:Samsung Electric Company LS24AG30x H4PR90260")
       ];
-    workspace = [
-      "1, monitor:desc:Iiyama North America PL2770H 0x30333736, default:true"
-      "2, monitor:eDP-1, default:true"
-      "3, monitor:desc:Iiyama North America PL2770H 0x31303331, default:true"
-      "4, monitor:desc:BNQ BenQ LCD R4L02809019, default:true"
-      "1, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
-      "2, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
-      "3, monitor:desc:Samsung Electric Company LS24AG30x H4PR90260, default:true"
-    ];
     config.input.kb_layout = "us_qwerty-fr";
   };
 
