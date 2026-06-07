@@ -1038,6 +1038,7 @@ in
               browser-effect = {
                 match.tag = "browser";
                 workspace = "3 silent";
+                scrolling_width = 1;
               };
               coms-effect = {
                 match.tag = "coms";

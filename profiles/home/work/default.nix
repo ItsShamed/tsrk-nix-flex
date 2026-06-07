@@ -40,6 +40,16 @@ in
       match.class = "^(Slack)$";
       tag = "+coms";
     }
+    {
+      name = "teams-to-coms";
+      match.class = "^(teams-for-linux)$";
+      tag = "+coms";
+    }
+    {
+      name = "notion";
+      match.class = "^(notion)$";
+      tag = "+web";
+    }
   ];
 
   tsrk.packages.ops.k9s.externalPlugins = {
