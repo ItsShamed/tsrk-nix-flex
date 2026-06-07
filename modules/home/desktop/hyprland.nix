@@ -578,9 +578,8 @@ in
               {
                 _args = [
                   (mkMainModKey "SHIFT + Q")
-                  # TODO: Maybe close instead?
-                  (mkLuaInline "hl.dsp.window.kill()")
-                  { description = "Kill active window"; }
+                  (mkLuaInline "hl.dsp.window.close()")
+                  { description = "Close active window"; }
                 ];
               }
               {
