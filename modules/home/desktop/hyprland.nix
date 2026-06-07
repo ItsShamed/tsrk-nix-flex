@@ -1025,7 +1025,7 @@ in
               };
               coms-effect = {
                 match.tag = "coms";
-                workspace = "3 silent";
+                workspace = "4 silent";
               };
               satty = {
                 match.class = "com\\.gabm\\.satty";
