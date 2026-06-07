@@ -53,9 +53,11 @@
           1
         )
         # Right (vertical)
-        (mkMonitor "desc:BNQ BenQ LCD R4L02809019" "2560x1440@60" "3840x0" "1"
-          "transform"
-          1
+        (
+          (mkMonitor "desc:BNQ BenQ LCD R4L02809019" "2560x1440@60" "3840x0" 1)
+          // {
+            transform = 1;
+          }
         )
       ];
     workspace_rule =
