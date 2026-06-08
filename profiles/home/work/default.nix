@@ -51,6 +51,19 @@ in
       tag = "+web";
       scrolling_width = 0.667;
     }
+    {
+      name = "notion-meeting-notification";
+      match = {
+        class = "^(notion)$";
+        initial_title = "^Meeting Notification \\[app:ready\\]$";
+      };
+      float = true;
+      pin = true;
+      border_size = 0;
+      decorate = false;
+      no_blur = true;
+      no_dim = true;
+    }
   ];
 
   tsrk.packages.ops.k9s.externalPlugins = {
