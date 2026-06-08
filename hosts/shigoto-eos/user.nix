@@ -10,6 +10,10 @@
   ...
 }:
 
+let
+  inherit (lib.generators) mkLuaInline;
+  toLua = lib.generators.toLua { };
+in
 {
   imports = with self.homeManagerModules; [
     profile-wayland
@@ -72,16 +76,55 @@
         (mkMonitorMap 1 "desc:Iiyama North America PL2770H 0x30333736")
         (mkMonitorMap 2 "eDP-1")
         (mkMonitorMap 3 "desc:Iiyama North America PL2770H 0x31303331")
-        (
-          (mkMonitorMap 4 "desc:BNQ BenQ LCD R4L02809019")
-          // {
-            layout_opts.direction = "down";
-          }
-        )
+        (mkMonitorMap 4 "desc:BNQ BenQ LCD R4L02809019")
         (mkMonitorMap 1 "desc:Samsung Electric Company LS24AG30x H4PR90260")
         (mkMonitorMap 2 "desc:Samsung Electric Company LS24AG30x H4PR90260")
         (mkMonitorMap 3 "desc:Samsung Electric Company LS24AG30x H4PR90260")
       ];
+
+    comsVerticalScrollingRule._var = mkLuaInline "hl.workspace_rule(${
+      toLua {
+        workspace = "4";
+        layout_opts.direction = "down";
+      }
+    })";
+
+    on = [
+      {
+        _args = [
+          "hyprland.start"
+          (mkLuaInline ''
+            function()
+              comsVerticalScrollingRule:set_enabled(false)
+            end
+          '')
+        ];
+      }
+      {
+        _args = [
+          "monitor.added"
+          (mkLuaInline ''
+            function(m)
+              if m.description == "BNQ BenQ LCD R4L02809019" then
+                comsVerticalScrollingRule:set_enabled(true)
+              end
+            end
+          '')
+        ];
+      }
+      {
+        _args = [
+          "monitor.removed"
+          (mkLuaInline ''
+            function(m)
+              if m.description == "BNQ BenQ LCD R4L02809019" then
+                comsVerticalScrollingRule:set_enabled(false)
+              end
+            end
+          '')
+        ];
+      }
+    ];
     config.input.kb_layout = "us_qwerty-fr";
   };
 

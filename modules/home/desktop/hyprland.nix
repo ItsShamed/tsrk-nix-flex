@@ -461,19 +461,23 @@ in
           lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman"
         );
 
-        on._args =
-          let
-            exec = lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman";
-          in
-          lib.optionals (hyprlandCfg.configType == "lua") [
-            "hyprland.start"
-            (mkLuaInline ''
-              function ()
-                -- Exec
-                ${lib.concatMapStringsSep "  \n" (e: ''hl.exec_cmd("${e}")'') exec}
-              end
-            '')
-          ];
+        on = lib.optionals (hyprlandCfg.configType == "lua") [
+          {
+            _args =
+              let
+                exec = lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman";
+              in
+              [
+                "hyprland.start"
+                (mkLuaInline ''
+                  function ()
+                    -- Exec
+                    ${lib.concatMapStringsSep "  \n" (e: ''hl.exec_cmd("${e}")'') exec}
+                  end
+                '')
+              ];
+          }
+        ];
 
         bind =
           let
