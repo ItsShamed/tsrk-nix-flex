@@ -946,12 +946,18 @@ in
             syntaxes = {
               hyprlang = [
                 "4, horizontal, workspace"
+                "3, swipe, scroll_move"
               ];
               lua = [
                 {
                   fingers = 4;
                   direction = "horizontal";
                   action = "workspace";
+                }
+                {
+                  fingers = 3;
+                  direction = "swipe";
+                  action = "scroll_move";
                 }
               ];
             };
@@ -999,14 +1005,17 @@ in
               firefox-as-browser = {
                 match.class = "^(firefox)$";
                 tag = "+browser";
+                scrolling_width = 0.667;
               };
               librewolf-as-browser = {
                 match.class = "^(librewolf)$";
                 tag = "+browser";
+                scrolling_width = 0.667;
               };
               chromium-as-browser = {
                 match.class = "^(Chromium-browser)$";
                 tag = "+browser";
+                scrolling_width = 0.667;
               };
               match-pip = {
                 match.initial_title = "^Picture(-| )in(-| )Picture$";
@@ -1038,7 +1047,7 @@ in
               browser-effect = {
                 match.tag = "browser";
                 workspace = "3 silent";
-                scrolling_width = 1;
+                scrolling_width = 0.667;
               };
               coms-effect = {
                 match.tag = "coms";

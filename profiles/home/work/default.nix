@@ -49,6 +49,7 @@ in
       name = "notion";
       match.class = "^(notion)$";
       tag = "+web";
+      scrolling_width = 0.667;
     }
   ];
 

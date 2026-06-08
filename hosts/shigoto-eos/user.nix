@@ -72,7 +72,12 @@
         (mkMonitorMap 1 "desc:Iiyama North America PL2770H 0x30333736")
         (mkMonitorMap 2 "eDP-1")
         (mkMonitorMap 3 "desc:Iiyama North America PL2770H 0x31303331")
-        (mkMonitorMap 4 "desc:BNQ BenQ LCD R4L02809019")
+        (
+          (mkMonitorMap 4 "desc:BNQ BenQ LCD R4L02809019")
+          // {
+            layout_opts.direction = "down";
+          }
+        )
         (mkMonitorMap 1 "desc:Samsung Electric Company LS24AG30x H4PR90260")
         (mkMonitorMap 2 "desc:Samsung Electric Company LS24AG30x H4PR90260")
         (mkMonitorMap 3 "desc:Samsung Electric Company LS24AG30x H4PR90260")
