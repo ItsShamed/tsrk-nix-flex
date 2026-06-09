@@ -35,24 +35,23 @@ in
   ];
 
   wayland.windowManager.hyprland.settings.window_rule = lib.mkBefore [
-    {
-      name = "slack-to-coms";
+  ];
+
+  tsrk.hyprland.windowRules = {
+    slack-to-coms = {
       match.class = "^(slack)$";
       tag = "+coms";
-    }
-    {
-      name = "teams-to-coms";
+    };
+    teams-to-coms = {
       match.class = "^(teams-for-linux)$";
       tag = "+coms";
-    }
-    {
-      name = "notion";
+    };
+    notion = {
       match.class = "^(notion)$";
       tag = "+web";
       scrolling_width = 0.667;
-    }
-    {
-      name = "notion-meeting-notification";
+    };
+    notion-meeting-notification = {
       match = {
         class = "^(notion)$";
         initial_title = "^Meeting Notification \\[app:ready\\]$";
@@ -63,8 +62,8 @@ in
       decorate = false;
       no_blur = true;
       no_dim = true;
-    }
-  ];
+    };
+  };
 
   tsrk.packages.ops.k9s.externalPlugins = {
     argocd = "${pkgs.k9s.src}/plugins/argocd.yaml";

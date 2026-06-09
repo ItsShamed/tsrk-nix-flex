@@ -193,6 +193,38 @@ let
       fi
     fi
   '';
+
+  workspaceRule = lib.types.submodule (
+    { name, ... }:
+    {
+      freeformType = lib.types.attrs;
+      options = {
+        workspace = lib.mkOption {
+          description = "The name of this workspace";
+          type = lib.types.str;
+          default = name;
+        };
+      };
+    }
+  );
+  windowRule = lib.types.submodule (
+    { name, ... }:
+    {
+      freeformType = lib.types.attrs;
+      options = {
+        name = lib.mkOption {
+          description = "The name of this window rule";
+          type = lib.types.str;
+          default = name;
+        };
+        match = lib.mkOption {
+          description = "The method to match windows";
+          type = lib.types.attrs;
+          default = { };
+        };
+      };
+    }
+  );
 in
 {
   key = ./hyprland.nix;
@@ -242,6 +274,16 @@ in
         enable = lib.options.mkEnableOption "Darkman intergration" // {
           default = config.services.darkman.enable;
         };
+      };
+      workspaceRules = lib.mkOption {
+        type = lib.types.attrsOf workspaceRule;
+        description = "Workspaces rules for Hyprland";
+        default = { };
+      };
+      windowRules = lib.mkOption {
+        type = lib.types.attrsOf windowRule;
+        description = "Workspaces rules for Hyprland";
+        default = { };
       };
     };
   };
@@ -400,6 +442,98 @@ in
         # Extra environment variables
         ${cfg.uwsm.extraEnv}
       '';
+    };
+
+    tsrk.hyprland = {
+      windowRules = {
+        vesktop-to-coms = {
+          match.class = "^(vesktop)$";
+          tag = "+coms";
+        };
+        vesktop-popout-pip = {
+          match = {
+            class = "^(vesktop)$";
+            initial_title = "Discord Popout";
+          };
+          tag = "+pip";
+        };
+        thunderbird-to-coms = {
+          match.class = "^(thunderbird)$";
+          tag = "+coms";
+        };
+        firefox-as-browser = {
+          match.class = "^(firefox)$";
+          tag = "+browser";
+          scrolling_width = 0.667;
+        };
+        librewolf-as-browser = {
+          match.class = "^(librewolf)$";
+          tag = "+browser";
+          scrolling_width = 0.667;
+        };
+        chromium-as-browser = {
+          match.class = "^(Chromium-browser)$";
+          tag = "+browser";
+          scrolling_width = 0.667;
+        };
+        match-pip = {
+          match.initial_title = "^Picture(-| )in(-| )Picture$";
+          tag = "+pip";
+        };
+        pavucontrol-float = {
+          match.class = "org\\.pulseaudio\\.pavucontrol";
+          float = true;
+        };
+        pwvucontrol-float = {
+          match.class = "com\\.saivert\\.pwvucontrol";
+          float = true;
+        };
+        steam-non-main-float = {
+          match = {
+            class = "steam";
+            initial_title = "negative:^(Steam)$";
+          };
+          float = true;
+        };
+        pip-effect = {
+          match.tag = "pip";
+          float = true;
+          pin = true;
+          no_dim = true;
+          no_blur = true;
+          opaque = true;
+        };
+        browser-effect = {
+          match.tag = "browser";
+          workspace = "3 silent";
+          scrolling_width = 0.667;
+        };
+        coms-effect = {
+          match.tag = "coms";
+          workspace = "4 silent";
+        };
+        satty = {
+          match.class = "com\\.gabm\\.satty";
+          float = true;
+          fullscreen = true;
+          no_anim = true;
+          no_dim = true;
+          no_blur = true;
+          opaque = true;
+        };
+      };
+      workspaceRules = {
+        "1".default_name = "workdir";
+        "2".default_name = "tooling";
+        "3" = {
+          default_name = "web";
+          layout = "scrolling";
+        };
+        "4" = {
+          default_name = "coms";
+          layout = "scrolling";
+        };
+      };
     };
 
     wayland.windowManager.hyprland = {
@@ -923,27 +1057,9 @@ in
           "4, defaultName:coms"
         ];
 
-        workspace_rule =
-          let
-            mkWorkspaceRule =
-              workspace: rules:
-              {
-                workspace = toString workspace;
-              }
-              // rules;
-          in
-          lib.optionals (hyprlandCfg.configType == "lua") [
-            (mkWorkspaceRule 1 { default_name = "workdir"; })
-            (mkWorkspaceRule 2 { default_name = "tooling"; })
-            (mkWorkspaceRule 3 {
-              default_name = "web";
-              layout = "scrolling";
-            })
-            (mkWorkspaceRule 4 {
-              default_name = "coms";
-              layout = "scrolling";
-            })
-          ];
+        workspace_rule = lib.optionals (hyprlandCfg.configType == "lua") (
+          builtins.attrValues cfg.workspaceRules
+        );
 
         gesture =
           let
@@ -988,89 +1104,9 @@ in
           "workspace 4 silent, tag:coms"
         ];
 
-        window_rule =
-          let
-            rulesAttrs = {
-              vesktop-to-coms = {
-                match.class = "^(vesktop)$";
-                tag = "+coms";
-              };
-              vesktop-popout-pip = {
-                match = {
-                  class = "^(vesktop)$";
-                  initial_title = "Discord Popout";
-                };
-                tag = "+pip";
-              };
-              thunderbird-to-coms = {
-                match.class = "^(thunderbird)$";
-                tag = "+coms";
-              };
-              firefox-as-browser = {
-                match.class = "^(firefox)$";
-                tag = "+browser";
-                scrolling_width = 0.667;
-              };
-              librewolf-as-browser = {
-                match.class = "^(librewolf)$";
-                tag = "+browser";
-                scrolling_width = 0.667;
-              };
-              chromium-as-browser = {
-                match.class = "^(Chromium-browser)$";
-                tag = "+browser";
-                scrolling_width = 0.667;
-              };
-              match-pip = {
-                match.initial_title = "^Picture(-| )in(-| )Picture$";
-                tag = "+pip";
-              };
-              pavucontrol-float = {
-                match.class = "org\\.pulseaudio\\.pavucontrol";
-                float = true;
-              };
-              pwvucontrol-float = {
-                match.class = "com\\.saivert\\.pwvucontrol";
-                float = true;
-              };
-              steam-non-main-float = {
-                match = {
-                  class = "steam";
-                  initial_title = "negative:^(Steam)$";
-                };
-                float = true;
-              };
-              pip-effect = {
-                match.tag = "pip";
-                float = true;
-                pin = true;
-                no_dim = true;
-                no_blur = true;
-                opaque = true;
-              };
-              browser-effect = {
-                match.tag = "browser";
-                workspace = "3 silent";
-                scrolling_width = 0.667;
-              };
-              coms-effect = {
-                match.tag = "coms";
-                workspace = "4 silent";
-              };
-              satty = {
-                match.class = "com\\.gabm\\.satty";
-                float = true;
-                fullscreen = true;
-                no_anim = true;
-                no_dim = true;
-                no_blur = true;
-                opaque = true;
-              };
-            };
-          in
-          lib.optionals (hyprlandCfg.configType == "lua") (
-            lib.mapAttrsToList (name: value: value // { inherit name; }) rulesAttrs
-          );
+        window_rule = lib.optionals (hyprlandCfg.configType == "lua") (
+          builtins.attrValues cfg.windowRules
+        );
       };
 
       submaps = {

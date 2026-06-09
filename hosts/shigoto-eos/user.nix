@@ -64,23 +64,6 @@ in
           }
         )
       ];
-    workspace_rule =
-      let
-        mkMonitorMap = id: monitor: {
-          workspace = toString id;
-          inherit monitor;
-          default = true;
-        };
-      in
-      [
-        (mkMonitorMap 1 "desc:Iiyama North America PL2770H 0x30333736")
-        (mkMonitorMap 2 "eDP-1")
-        (mkMonitorMap 3 "desc:Iiyama North America PL2770H 0x31303331")
-        (mkMonitorMap 4 "desc:BNQ BenQ LCD R4L02809019")
-        (mkMonitorMap 1 "desc:Samsung Electric Company LS24AG30x H4PR90260")
-        (mkMonitorMap 2 "desc:Samsung Electric Company LS24AG30x H4PR90260")
-        (mkMonitorMap 3 "desc:Samsung Electric Company LS24AG30x H4PR90260")
-      ];
 
     comsVerticalScrollingRule._var = mkLuaInline "hl.workspace_rule(${
       toLua {
@@ -107,6 +90,19 @@ in
             function(m)
               if m.description == "BNQ BenQ LCD R4L02809019" then
                 comsVerticalScrollingRule:set_enabled(true)
+              else if m.description == "Samsung Electric Company LS24AG30x H4PR90260" then
+                hl.dispatch(hl.dsp.workspace.move({
+                  workspace = "1",
+                  monitor = "desc:" .. m.description
+                }))
+                hl.dispatch(hl.dsp.workspace.move({
+                  workspace = "2",
+                  monitor = "desc:" .. m.description
+                }))
+                hl.dispatch(hl.dsp.workspace.move({
+                  workspace = "3",
+                  monitor = "desc:" .. m.description
+                }))
               end
             end
           '')
@@ -126,6 +122,26 @@ in
       }
     ];
     config.input.kb_layout = "us_qwerty-fr";
+  };
+  tsrk.hyprland = {
+    workspaceRules = {
+      "1" = {
+        monitor = "desc:Iiyama North America PL2770H 0x30333736";
+        default = true;
+      };
+      "2" = {
+        monitor = "eDP-1";
+        default = true;
+      };
+      "3" = {
+        monitor = "desc:Iiyama North America PL2770H 0x31303331";
+        default = true;
+      };
+      "4" = {
+        monitor = "desc:BNQ BenQ LCD R4L02809019";
+        default = true;
+      };
+    };
   };
 
   services.poweralertd.enable = true;
