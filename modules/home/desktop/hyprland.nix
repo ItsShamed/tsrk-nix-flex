@@ -476,6 +476,13 @@ in
           tag = "+browser";
           scrolling_width = 0.667;
         };
+        float-empty-title-browser = {
+          match = {
+            tag = "browser";
+            initial_title = "";
+          };
+          float = true;
+        };
         match-pip = {
           match.initial_title = "^Picture(-| )in(-| )Picture$";
           tag = "+pip";
@@ -610,6 +617,30 @@ in
                   end
                 '')
               ];
+          }
+          {
+            _args = [
+              "window.title"
+              (mkLuaInline ''
+                function (w)
+                  local contains = function (a, x)
+                    for _, el in ipairs(a) do
+                      if el == x then
+                        return true
+                      end
+                    end
+                    return false
+                  end
+                  if not (w.tags == "browser" or contains(w.tags, "browser")) then
+                    return
+                  end
+
+                  if w.title:find("Extension: ", 1, true) == 1 then
+                    hl.dispatch(hl.dsp.window.float({ action = "set", window = w }))
+                  end
+                end
+              '')
+            ];
           }
         ];
 
