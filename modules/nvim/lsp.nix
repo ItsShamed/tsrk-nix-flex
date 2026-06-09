@@ -111,7 +111,7 @@ in
       lua_ls.enable = true;
       nixd = {
         enable = true;
-        config.settings = {
+        config.settings.nixd = {
           formatting.command = [
             "${lib.getExe pkgs.nixfmt}"
             "--width=80"
