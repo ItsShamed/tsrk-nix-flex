@@ -247,30 +247,30 @@
                 inputs.agenix.packages.${system}.default
               ];
 
-              scripts = pkgs.stdenvNoCC.mkDerivation {
-                pname = "tsrk-scripts";
-                version = self.shortRev or self.dirtyShortRev;
-                src = self;
-
-                installPhase =
-                  let
-                    names = [
-                      "bump-copyright-years"
-                      "gc"
-                      "get_option"
-                      "rebuild-os"
-                      "rotate_bootstrap_keys"
-                      "run-vm"
-                    ];
-                    mkCopy = x: ''
-                      cp ${x}.sh $out/bin/${x}
+              scripts =
+                let
+                  names = [
+                    ./bump-copyright-years.sh
+                    ./gc.sh
+                    ./get_option.sh
+                    ./rebuild-os.sh
+                    ./rotate_bootstrap_keys.sh
+                    ./run-vm.sh
+                  ];
+                  mkCopy =
+                    x:
+                    let
+                      binPath = lib.removeSuffix ".sh" "${baseNameOf x}";
+                    in
+                    ''
+                      cp ${x} $out/bin/${binPath}
                     '';
-                  in
-                  ''
-                    mkdir -p $out/bin
-                    ${lib.concatMapStringsSep "\n" mkCopy names}
-                  '';
-              };
+                in
+                pkgs.runCommand "tsrk-scripts" { } ''
+                  mkdir -p $out/bin
+                  ${lib.concatMapStringsSep "\n" mkCopy names}
+                '';
+
               inherit (self.checks.${system}.pre-commit-check)
                 shellHook
                 enabledPackages
