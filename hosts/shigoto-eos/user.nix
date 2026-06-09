@@ -90,7 +90,7 @@ in
             function(m)
               if m.description == "BNQ BenQ LCD R4L02809019" then
                 comsVerticalScrollingRule:set_enabled(true)
-              else if m.description == "Samsung Electric Company LS24AG30x H4PR90260" then
+              elseif m.description == "Samsung Electric Company LS24AG30x H4PR90260" then
                 hl.dispatch(hl.dsp.workspace.move({
                   workspace = "1",
                   monitor = "desc:" .. m.description
