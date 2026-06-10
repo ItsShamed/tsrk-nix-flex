@@ -38,7 +38,7 @@ in
       iosevka
       meslo-lgs-nf
       libreoffice
-      xfce.thunar
+      thunar
       ranger
 
       tsrkPkgs.spotify-adblock
