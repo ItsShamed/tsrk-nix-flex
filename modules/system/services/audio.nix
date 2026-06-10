@@ -45,13 +45,6 @@ in
   config = lib.mkIf config.tsrk.sound.enable (
     lib.mkMerge [
       {
-        warnings = [
-          ''
-            This module (audio.nix) enables a module from fufexan/nix-gaming, which is
-            known to cause issues with nixos-install.
-          ''
-        ];
-
         services.pipewire = {
           enable = true;
           alsa.enable = true;
