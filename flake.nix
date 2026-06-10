@@ -229,7 +229,6 @@
 
           packages = (import ./pkgs { inherit lib pkgs; }) // {
             nvim-cirno = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-              inherit pkgs;
               module = self.nixvimModules.default;
             };
           };
