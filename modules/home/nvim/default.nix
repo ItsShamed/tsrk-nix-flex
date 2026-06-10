@@ -24,16 +24,14 @@
   };
 
   config = lib.mkIf config.tsrk.nvim.enable {
-    programs.nixvim =
-      { ... }:
-      {
-        enable = true;
-        defaultEditor = true;
+    programs.nixvim = {
+      enable = true;
+      defaultEditor = true;
 
-        imports = [ self.nixvimModules.default ];
+      imports = [ self.nixvimModules.default ];
 
-        plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
-      };
+      plugins.wakatime.enable = config.tsrk.nvim.wakatime.enable;
+    };
 
     specialisation.light.configuration = {
       programs.nixvim.colorscheme = lib.mkForce "tokyonight-day";

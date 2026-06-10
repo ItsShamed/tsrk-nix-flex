@@ -57,6 +57,7 @@
       thunderbird.enable = lib.mkDefault true;
       xdg.enable = lib.mkDefault true;
     };
+    programs.nixvim.plugins.markdown-preview.settings.browser = "librewolf";
 
     # Set GTK as QT platform theme to unify theming
     home.sessionVariables = {
