@@ -79,15 +79,9 @@ in
         gitSwitchNormal
         gitSwitchSchool
       ];
-      programs.ssh = {
-        matchBlocks = {
-          "ssh.cri.epita.fr" = {
-            extraOptions = {
-              "GSSAPIAuthentication" = "yes";
-              "GSSAPIDelegateCredentials" = "yes";
-            };
-          };
-        };
+      programs.ssh.settings."ssh.cri.epita.fr" = {
+        "GSSAPIAuthentication" = "yes";
+        "GSSAPIDelegateCredentials" = "yes";
       };
 
       warnings =

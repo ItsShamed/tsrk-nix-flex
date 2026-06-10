@@ -99,21 +99,21 @@
     };
   };
 
-  programs.ssh.matchBlocks =
+  programs.ssh.settings =
     let
       forgeHost =
         extraConfig:
         {
-          user = "root";
-          identityFile = "~/.ssh/id_ed25519_forge";
+          User = "root";
+          IdentityFile = "~/.ssh/id_ed25519_forge";
         }
         // extraConfig;
       forgeBastion =
-        hostname: extraConfig: forgeHost ({ inherit hostname; } // extraConfig);
+        hostname: extraConfig: forgeHost ({ HostName = hostname; } // extraConfig);
       proxiedForgeHost =
         proxyJump: extraConfig:
         lib.hm.dag.entryAfter [ proxyJump ] (
-          forgeHost ({ inherit proxyJump; } // extraConfig)
+          forgeHost ({ ProxyJump = proxyJump; } // extraConfig)
         );
     in
     {

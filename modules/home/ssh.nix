@@ -17,17 +17,17 @@ in
   config = lib.mkIf cfg.enable {
     programs.ssh = {
       enable = true;
-      matchBlocks."*" = {
-        forwardAgent = false;
-        addKeysToAgent = "no";
-        compression = false;
-        serverAliveInterval = 0;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
-        controlMaster = "yes";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "10m";
+      settings."*" = {
+        ForwardAgent = false;
+        AddKeysToAgent = false;
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "yes";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "10m";
       };
     };
   };
