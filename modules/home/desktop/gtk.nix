@@ -58,10 +58,15 @@ in
         gtk-enable-input-feedback-sounds = true;
         gtk-sound-theme-name = "modern-minimal-ui";
       };
-      gtk4.extraConfig = {
-        gtk-enable-event-sounds = true;
-        gtk-enable-input-feedback-sounds = true;
-        gtk-sound-theme-name = "modern-minimal-ui";
+      gtk4 = {
+        # GNOME doesn't know jack shit
+        # Fuck GNOME, let me use my themes if I want to
+        theme = config.gtk.theme;
+        extraConfig = {
+          gtk-enable-event-sounds = true;
+          gtk-enable-input-feedback-sounds = true;
+          gtk-sound-theme-name = "modern-minimal-ui";
+        };
       };
     };
     specialisation = {
