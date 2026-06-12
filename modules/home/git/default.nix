@@ -35,6 +35,11 @@ args:
       settings = {
         user.name = lib.mkDefault "${config.home.username}";
         init.defaultBranch = "main";
+        submodule = {
+          recurse = true;
+          fetchJobs = 0;
+        };
+        fetch.parallel = 0;
       };
     };
   };
