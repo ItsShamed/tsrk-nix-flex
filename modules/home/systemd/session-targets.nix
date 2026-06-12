@@ -31,8 +31,8 @@ in
         Unit = {
           Description = "Current X11 Graphical Session";
           ConditionEnvironment = [
+            "!WAYLAND_DISPLAY"
             "|XDG_SESSION_TYPE=x11"
-            "|!WAYLAND_DISPLAY="
           ];
           Conflicts = "wayland-session.target";
           After = [ "graphical-session-pre.target" ];
@@ -45,7 +45,7 @@ in
           Description = "Current Wayland Graphical Session";
           ConditionEnvironment = [
             "|XDG_SESSION_TYPE=wayland"
-            "|WAYLAND_DISPLAY="
+            "|WAYLAND_DISPLAY"
           ];
           Conflicts = "x11-session.target";
           After = [ "graphical-session-pre.target" ];
