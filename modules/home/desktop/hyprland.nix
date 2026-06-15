@@ -910,11 +910,11 @@ in
               )
               [
                 (mkExec (mkMainModKey "equal")
-                  ''${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy''
+                  ''${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"''
                   "Show quick calculator"
                 )
                 (mkExec "XF86Calculator"
-                  ''${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy''
+                  ''${config.programs.rofi.finalPackage}/bin/rofi -modi calc -show calc -no-show-match -no-sort -calc-command "echo -n '{result}' | ${pkgs.wl-clipboard}/bin/wl-copy"''
                   "Show quick calculator (media key)"
                 )
               ]
