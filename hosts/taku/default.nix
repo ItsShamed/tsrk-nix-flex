@@ -103,7 +103,10 @@ in
 
   tsrk.gns3.enable = true;
 
-  tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [ temurin-jre-bin-17 ];
+  tsrk.packages.pkgs.java.jdk.extraPackages = with pkgs; [
+    temurin-jre-bin-17
+    jdk25
+  ];
 
   time.hardwareClockInLocalTime = true;
 
