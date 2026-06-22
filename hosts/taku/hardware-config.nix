@@ -34,11 +34,11 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  boot.kernelParams =
-    (lib.optionals config.boot.plymouth.enable [
+  boot.kernelParams = (
+    lib.optionals config.boot.plymouth.enable [
       "plymouth.use-simpledrm"
-    ])
-    ++ [ "no_console_suspend" ];
+    ]
+  );
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode =
