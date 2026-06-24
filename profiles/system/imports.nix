@@ -4,6 +4,7 @@
   { path = ./graphical/graphical-wayland.nix; }
   { path = ./graphical/graphical-x11.nix; }
   { path = ./iso; }
+  { path = ./tsrk-common/tsrk-common-base.nix; }
   { path = ./tsrk-common; }
   ./work
 ]

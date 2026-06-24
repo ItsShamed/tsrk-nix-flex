@@ -16,7 +16,7 @@ let
 in
 {
   imports = [
-    self.nixosModules.profile-tsrk-common
+    self.nixosModules.profile-tsrk-common-base
     self.nixosModules.profile-work
     self.nixosModules.hyprland
     (self.lib.generateFullUser "tsrk" {

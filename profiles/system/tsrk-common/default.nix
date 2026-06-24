@@ -6,50 +6,22 @@
 
 { self, ... }:
 
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   key = ./.;
 
   imports = with self.nixosModules; [
-    profile-graphical-x11
-    hostname
-    containers
+    profile-tsrk-common-base
     libvirt
     v4l2loopback
-    lix
     upnp
-    # Little silly experiment
-    (self.lib.generateSystemHome "root" {
-      homeDir = "/root";
-      modules = [ ./root.nix ];
-    })
   ];
-
-  users.users.tsrk.shell = pkgs.zsh;
-  programs.zsh.enable = true;
-
-  age.identityPaths = lib.mkOptionDefault [
-    "/etc/ssh/ssh_host_ed25519_key"
-    "/etc/ssh/ssh_host_rsa_key"
-  ];
-
-  boot.tmp = {
-    cleanOnBoot = true;
-    useTmpfs = true;
-  };
-
-  # Make /etc/hosts writable by root
-  # This is so that it's easy to temporarily set hostnames
-  environment.etc.hosts.mode = "0644";
-
-  tsrk.containers.docker.enable = true;
 
   tsrk.libvirt.enable = true;
   tsrk.libvirt.spice.enable = true;
 
   tsrk.packages.pkgs = {
-    cDev.enable = true;
     java = {
       enable = true;
       jdk.extraPackages = with pkgs; [
@@ -58,17 +30,13 @@
         jdk8
       ];
     };
-    rust.enable = true;
-    python.enable = true;
     qmk.enable = true;
-    ops.enable = true;
     web.enable = true;
   };
 
   tsrk.lix.enable = true;
 
   tsrk.networking = {
-    networkmanager.enable = true;
     upnp.enable = true;
   };
 
@@ -106,12 +74,6 @@
       2413 # Soulseek P2P
     ];
   };
-
-  services.fwupd.enable = lib.mkDefault true;
-
-  xdg.portal.enable = lib.mkDefault true;
-  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal ];
-  services.flatpak.enable = lib.mkDefault true;
 
   # EPITA Kerberos config
   security.krb5 = {
