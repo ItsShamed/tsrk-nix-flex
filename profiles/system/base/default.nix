@@ -72,6 +72,7 @@ in
       system-features = [
         "kvm"
         "big-parrallel"
+        "ca-derivations"
       ];
       substituters = [
         "https://nix-community.cachix.org"
