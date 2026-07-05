@@ -165,6 +165,8 @@ in
     };
   };
 
+  hardware.amdgpu.zluda.enable = true;
+
   power.ups = {
     enable = true;
     ups.eaton-pro-1200 = {
