@@ -9,7 +9,7 @@
 { pkgs, lib, ... }:
 
 let
-  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsTeleport pkgsUnstable;
+  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsTeleport pkgsUnstable;
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {

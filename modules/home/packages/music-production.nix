@@ -16,7 +16,7 @@
 let
   cfg = config.tsrk.packages.music-production;
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
+  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
 in
 {
   options = {

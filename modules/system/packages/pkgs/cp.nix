@@ -15,7 +15,7 @@
 
 let
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
+  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
   gapgdbserver = pkgs.writeShellApplication {
     name = "gapgdbserver";
     runtimeInputs = with pkgs; [ openocd ];

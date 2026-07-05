@@ -16,7 +16,7 @@
 
 let
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-  overlaidPkgs = (pkgSet pkgs.stdenv.hostPlatform.system).pkgs;
+  overlaidPkgs = (pkgSet.${pkgs.stdenv.hostPlatform.system}).pkgs;
   canUseOverlays = options.nixpkgs.overlays.visible;
   # Circumvent the fact that people with `home-manager.useGlobalPkgs` cannot use
   # overlays, so we have to provide our own overlaid pkgs (which will definitely

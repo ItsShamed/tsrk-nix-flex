@@ -32,7 +32,7 @@ let
 
   configuration = inputs.home-manager.lib.homeManagerConfiguration {
     # TODO: Make this system-agnostic
-    inherit (pkgSet "x86_64-linux") pkgs;
+    inherit (pkgSet."x86_64-linux") pkgs;
 
     modules = modules ++ [ homeManagerBase ];
 

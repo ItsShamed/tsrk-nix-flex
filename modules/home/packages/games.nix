@@ -15,7 +15,7 @@
 
 let
   gaming = inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
-  inherit (pkgSet pkgs.stdenv.hostPlatform.system) pkgsUnstable;
+  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
 in
 {
   options = {

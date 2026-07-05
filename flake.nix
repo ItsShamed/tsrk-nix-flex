@@ -94,7 +94,7 @@
       };
 
       importPkgs =
-        pkgs: system: withOverlays:
+        pkgs: system: withOverlays: extraAttrs:
         import pkgs {
           inherit system;
           config = {
@@ -106,7 +106,7 @@
             nixgl.overlay
           ]
           ++ (builtins.attrValues (
-            builtins.removeAttrs (import ./pkgs/as-overlays.nix) [
+            removeAttrs (import ./pkgs/as-overlays.nix) [
               "all"
               "default"
             ]
@@ -114,14 +114,33 @@
           ++ (lib.lists.optionals withOverlays (
             builtins.attrValues (import ./overlays commonArgs)
           ));
-        };
+        }
+        // extraAttrs;
 
-      pkgSet = system: {
-        pkgs = importPkgs nixpkgs system true;
-        pkgsUnstable = importPkgs nixpkgsUnstable system false;
-        pkgsTeleport = importPkgs nixpkgs_teleport_15 system false;
+      defaultPkgSet = system: {
+        pkgs = importPkgs nixpkgs system true { };
+        pkgsUnstable = importPkgs nixpkgsUnstable system false { };
+        pkgsTeleport = importPkgs nixpkgs_teleport_15 system false { };
         # pkgsMaster = importPkgs nixpkgsMaster system false;
       };
+
+      systemPkgSet = {
+        "x86_64-linux" = {
+          pkgsZen4 = importPkgs nixpkgs "x86_64-linux" false {
+            localSystem = {
+              gcc = rec {
+                arch = "znver4";
+                tune = arch;
+              };
+              system = "x86_64-linux";
+            };
+          };
+        };
+      };
+
+      pkgSet = lib.genAttrs futils.lib.defaultSystems (
+        system: (defaultPkgSet system) // (systemPkgSet.${system} or { })
+      );
 
       linuxOutputs =
         let
@@ -178,14 +197,14 @@
             lib.recursiveUpdate inputs {
               inherit lib inputs;
               system = "aarch64-linux";
-              pkgSet = pkgSet "aarch64-linux";
+              pkgSet = pkgSet."aarch64-linux";
             }
           );
 
           nixosConfigurations = import ./hosts (
             lib.recursiveUpdate inputs {
               inherit lib system;
-              pkgSet = pkgSet system;
+              pkgSet = pkgSet.${system};
             }
           );
 
@@ -198,7 +217,7 @@
       allOutputs = eachDefaultSystem (
         system:
         let
-          inherit (pkgSet system) pkgs;
+          inherit (pkgSet.${system}) pkgs;
         in
         {
           formatter =
