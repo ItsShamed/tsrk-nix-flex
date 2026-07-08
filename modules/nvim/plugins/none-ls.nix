@@ -17,7 +17,18 @@
       };
       formatting = {
         markdownlint.enable = true;
-        shfmt.enable = true;
+        shfmt = {
+          enable = true;
+          settings = {
+            extra_args = [
+              "-i"
+              "4"
+              "-ci"
+              "-p"
+              "-s"
+            ];
+          };
+        };
       };
     };
   };
