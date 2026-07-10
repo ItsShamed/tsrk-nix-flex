@@ -29,6 +29,7 @@
   ./epita
   { path = ./git; }
   ./gpg.nix
+  ./meta/external-packages.nix
   { path = ./nvim; }
   { path = ./packages; }
   { path = ./shell; }

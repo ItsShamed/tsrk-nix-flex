@@ -13,9 +13,6 @@
   ...
 }:
 
-let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   key = ./.;
 
@@ -27,6 +24,7 @@ in
     self.nixosModules.networkmanager
     self.nixosModules.earlyoom
     self.nixosModules.overlay-sshfs
+    self.nixosModules.overlay-hyperfluent-grub-theme
     inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
 
@@ -186,8 +184,8 @@ in
   ];
 
   boot.loader.grub = lib.mkImageMediaOverride {
-    theme = "${tsrkPkgs.hyperfluent-grub-theme}";
-    splashImage = "${tsrkPkgs.hyperfluent-grub-theme}/background.png";
+    theme = "${pkgs.hyperfluent-grub-theme}";
+    splashImage = "${pkgs.hyperfluent-grub-theme}/background.png";
   };
   boot.loader.limine = {
     additionalFiles = {

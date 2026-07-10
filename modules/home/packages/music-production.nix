@@ -15,10 +15,15 @@
 
 let
   cfg = config.tsrk.packages.music-production;
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
 in
 {
+  imports = with self.homeManagerModules; [
+    overlay-apricot
+    overlay-regency
+    overlay-extrabold
+    overlay-fluctus
+  ];
   options = {
     tsrk.packages = {
       music-production = {
@@ -45,11 +50,13 @@ in
         home.packages = with pkgs; [
           vital
           lsp-plugins
-          tsrkPkgs.apricot
-          tsrkPkgs.regency
-          tsrkPkgs.extrabold
-          tsrkPkgs.fluctus
         ];
+        tsrk.extPkgs = {
+          apricot.install = true;
+          regency.install = true;
+          extrabold.install = true;
+          fluctus.install = true;
+        };
       })
     ]
   );

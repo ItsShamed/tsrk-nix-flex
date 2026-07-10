@@ -4,27 +4,21 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgSet, ... }:
+{ self, ... }:
 
 {
   pkgs,
   lib,
   config,
-  options,
   ...
 }:
 
-let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-  overlaidPkgs = (pkgSet.${pkgs.stdenv.hostPlatform.system}).pkgs;
-  canUseOverlays = options.nixpkgs.overlays.visible;
-  # Circumvent the fact that people with `home-manager.useGlobalPkgs` cannot use
-  # overlays, so we have to provide our own overlaid pkgs (which will definitely
-  # increase evaluation smhh)
-  rofi-power-menu-fix =
-    (if canUseOverlays then pkgs else overlaidPkgs).rofi-power-menu;
-in
 {
+  imports = [
+    self.homeManagerModules.overlay-rofi-power-menu
+    self.homeManagerModules.overlay-rofi-themes-collection
+  ];
+
   options = {
     tsrk.rofi = {
       enable = lib.options.mkEnableOption "Rofi configuration";
@@ -32,16 +26,14 @@ in
   };
 
   config = lib.mkIf config.tsrk.rofi.enable {
-    nixpkgs.overlays = lib.mkIf canUseOverlays [
-      self.overlays.rofi-power-menu
-    ];
+    tsrk.extPkgs.rofi-power-menu.install = true;
     programs.rofi = {
       enable = true;
       plugins = with pkgs; [
         rofi-emoji
         rofi-calc
       ];
-      theme = "${tsrkPkgs.rofi-themes-collection}/simple-tokyonight.rasi";
+      theme = "${config.tsrk.extPkgs.rofi-themes-collection.firstPackage}/simple-tokyonight.rasi";
       terminal = (
         self.lib.mkIfElse (config.programs.kitty.enable
         ) "kitty" "${pkgs.alacritty}/bin/alacritty"
@@ -53,7 +45,5 @@ in
         show-icons = true;
       };
     };
-
-    home.packages = [ rofi-power-menu-fix ];
   };
 }

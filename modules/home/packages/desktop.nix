@@ -13,10 +13,9 @@
   ...
 }:
 
-let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
+  imports = with self.homeManagerModules; [ overlay-spotify-adblock ];
+
   options = {
     tsrk.packages.desktop = {
       enable = lib.options.mkEnableOption "tsrk's desktop package bundle";
@@ -24,6 +23,8 @@ in
   };
 
   config = lib.mkIf config.tsrk.packages.desktop.enable {
+    tsrk.extPkgs.spotify-adblock.install = true;
+
     home.packages = with pkgs; [
       # Discord replacement
       vesktop
@@ -40,8 +41,6 @@ in
       libreoffice
       thunar
       ranger
-
-      tsrkPkgs.spotify-adblock
 
       # PDF Readers
       zathura # TODO: Make HM Module

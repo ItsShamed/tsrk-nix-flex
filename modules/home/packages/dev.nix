@@ -14,10 +14,11 @@
 }:
 
 let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.tsrk.packages.dev;
 in
 {
+  imports = with self.homeManagerModules; [ overlay-realm-studio ];
+
   options = {
     tsrk.packages.dev = {
       enable = lib.options.mkEnableOption "tsrk's development bundle";
@@ -25,8 +26,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    tsrk.extPkgs.realm-studio.install = true;
+
     home.packages = with pkgs; [
-      tsrkPkgs.realm-studio
       devenv
     ];
   };

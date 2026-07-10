@@ -14,7 +14,6 @@
 }:
 
 let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
   gapgdbserver = pkgs.writeShellApplication {
     name = "gapgdbserver";
@@ -83,6 +82,12 @@ let
   };
 in
 {
+  imports = with self.nixosModules; [
+    overlay-stm32cubeide
+    overlay-aarch64-none-elf-gnu
+    overlay-vunit-hdl
+  ];
+
   options = {
     tsrk.packages.pkgs.cp = {
       # WARN: IT'S ABSOLUTELY NOT WHAT YOU THINK IT MEANS
@@ -114,11 +119,11 @@ in
 
       # STM32
       stm32cubemx
-      tsrkPkgs.stm32cubeide
+      stm32cubeide
 
       # CSTR
       heptagon
-      tsrkPkgs.aarch64-none-elf-gnu
+      aarch64-none-elf-gnu
       rpi-imager
 
       # ELEC
@@ -127,7 +132,7 @@ in
       pkgsUnstable.kicad
 
       # VHDL
-      tsrkPkgs.vunit-hdl
+      vunit-hdl
       vhdlMake
       ghdl-llvm
       zlib

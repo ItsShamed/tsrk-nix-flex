@@ -14,7 +14,6 @@
 }:
 
 let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.tsrk.gtk;
   tokyonight =
     (pkgs.tokyonight-gtk-theme.override {
@@ -31,6 +30,7 @@ let
       { dontFixup = true; };
 in
 {
+  imports = with self.homeManagerModules; [ overlay-modern-minimal-ui-sounds ];
   options = {
     tsrk.gtk = {
       enable = lib.options.mkEnableOption "tsrk's GTK theming configuration";
@@ -38,13 +38,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    tsrk.extPkgs.modern-minimal-ui-sounds.install = true;
+
     home.packages = with pkgs; [
-      tsrkPkgs.modern-minimal-ui-sounds
       libcanberra-gtk3
     ];
+
     dconf.settings."org/gnome/desktop/sound" = {
       event-sounds = true;
-      input-feedback-soudns = true;
+      input-feedback-sounds = true;
     };
     gtk = {
       enable = true;

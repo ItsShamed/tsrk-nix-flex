@@ -7,17 +7,17 @@
 { self, ... }:
 
 {
-  pkgs,
   lib,
   config,
   ...
 }:
 
 let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  tokyonight-extras = config.tsrk.extPkgs.tokyonight-extras.firstPackage;
   cfg = config.tsrk.git.delta;
 in
 {
+  imports = with self.homeManagerModules; [ overlay-tokyonight-extras ];
   options = {
     tsrk.git.delta = {
       enable = lib.options.mkEnableOption "delta";
@@ -47,7 +47,7 @@ in
     programs.bat = {
       enable = lib.mkDefault true;
       themes."TokyoNight" = lib.mkDefault {
-        src = tsrkPkgs.tokyonight-extras;
+        src = tokyonight-extras;
         file = "sublime/tokyonight_night.tmTheme";
       };
     };
@@ -56,7 +56,7 @@ in
       light.configuration = {
         programs.git.includes = [
           {
-            path = "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_day.gitconfig";
+            path = "${tokyonight-extras}/delta/tokyonight_day.gitconfig";
           }
         ];
         programs.git.delta.options.syntax-theme = cfg.themes.light;
@@ -64,7 +64,7 @@ in
       dark.configuration = {
         programs.git.includes = [
           {
-            path = "${tsrkPkgs.tokyonight-extras}/delta/tokyonight_storm.gitconfig";
+            path = "${tokyonight-extras}/delta/tokyonight_storm.gitconfig";
           }
         ];
         programs.git.delta.options.syntax-theme = cfg.themes.dark;

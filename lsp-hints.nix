@@ -19,7 +19,10 @@ in
   nixos =
     (lib.nixosSystem {
       inherit system;
-      modules = [ self.nixosModules.all ];
+      modules = [
+        self.nixosModules.all
+        self.nixosModules.overlay-all
+      ];
       specialArgs = {
         inherit inputs self pkgSet;
         inherit (inputs) home-manager;

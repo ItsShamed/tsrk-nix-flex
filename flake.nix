@@ -157,9 +157,9 @@
           nixosModules =
             (import ./modules/system commonArgs)
             // (import ./modules/overlays-as-modules.nix {
-              inherit lib;
-              inherit (self) overlays;
-            })
+              inherit lib pkgSet;
+              inherit (self) overlays homeManagerModules;
+            }).nixos
             // (import ./profiles/system commonArgs)
             // {
               all = lib.modules.importApply ./modules/system/all.nix commonArgs;
@@ -169,9 +169,9 @@
           homeManagerModules =
             (import ./modules/home commonArgs)
             // (import ./modules/overlays-as-modules.nix {
-              inherit lib;
-              inherit (self) overlays;
-            })
+              inherit lib pkgSet;
+              inherit (self) overlays homeManagerModules;
+            }).homeManager
             // (import ./profiles/home commonArgs)
             // {
               all = lib.modules.importApply ./modules/home/all.nix commonArgs;

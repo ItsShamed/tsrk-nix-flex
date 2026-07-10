@@ -4,8 +4,6 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
-
 {
   config,
   lib,
@@ -13,9 +11,6 @@
   ...
 }:
 
-let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   options = {
     tsrk.git.lazygit.enable = lib.options.mkEnableOption "tsrk's Lazygit configuration";
@@ -70,19 +65,52 @@ in
             ];
           }
         ];
+        gui = {
+          nerdFontsVersion = "3";
+        };
       };
     };
 
     specialisation = {
       light.configuration = {
-        programs.lazygit.settings = self.lib.fromYAML pkgs (
-          builtins.readFile "${tsrkPkgs.tokyonight-extras}/lazygit/tokyonight_day.yml"
-        );
+        # Taken from
+        # https://github.com/folke/tokyonight.nvim/blob/main/extras/lazygit/tokyonight_day.yml
+        programs.lazygit.settings.gui.theme = rec {
+          activeBorderColour = [
+            "#b15c00"
+            "bold"
+          ];
+          inactiveBorderColour = [ "#4094a3" ];
+          searchingActiveBorderColor = activeBorderColour;
+          optionsTextColor = [ "#2e7de9" ];
+          selectedLineBgColor = [ "#b7c1e3" ];
+          cherryPickedCommitFgColor = optionsTextColor;
+          cherryPickedCommitBgColor = [ "#9854f1" ];
+          markedBaseCommitFgColor = optionsTextColor;
+          markedBaseCommitBgColor = [ "#8c6c3e" ];
+          unstagedChangesColor = [ "#c64343" ];
+          defaultFgColor = [ "#3760bf" ];
+        };
       };
       dark.configuration = {
-        programs.lazygit.settings = self.lib.fromYAML pkgs (
-          builtins.readFile "${tsrkPkgs.tokyonight-extras}/lazygit/tokyonight_storm.yml"
-        );
+        # Taken from
+        # https://github.com/folke/tokyonight.nvim/blob/main/extras/lazygit/tokyonight_storm.yml
+        programs.lazygit.settings.gui.theme = rec {
+          activeBorderColour = [
+            "#ff9e64"
+            "bold"
+          ];
+          inactiveBorderColour = [ "#29a4bd" ];
+          searchingActiveBorderColor = activeBorderColour;
+          optionsTextColor = [ "#7aa2f7" ];
+          selectedLineBgColor = [ "#2e3c64" ];
+          cherryPickedCommitFgColor = optionsTextColor;
+          cherryPickedCommitBgColor = [ "#bb9af7" ];
+          markedBaseCommitFgColor = optionsTextColor;
+          markedBaseCommitBgColor = [ "#e0af68" ];
+          unstagedChangesColor = [ "#db4b4b" ];
+          defaultFgColor = [ "#c0caf5" ];
+        };
       };
     };
   };

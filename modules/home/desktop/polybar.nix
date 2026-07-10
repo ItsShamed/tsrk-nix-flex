@@ -16,9 +16,11 @@
 let
   cfg = config.tsrk.polybar;
   polybarModules = modulesNames: lib.strings.concatStringsSep " " modulesNames;
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+  polybar-mpris = config.tsrk.extPkgs.polybar-mpris.firstPackage;
 in
 {
+  imports = with self.homeManagerModules; [ overlay-polybar-mpris ];
+
   options = {
     tsrk.polybar = {
       enable = lib.options.mkEnableOption "polybar";
@@ -405,7 +407,7 @@ in
         "module/mpris" = {
           type = "custom/script";
           tail = true;
-          exec = "${tsrkPkgs.polybar-mpris}/bin/polybar-mpris bar";
+          exec = "${polybar-mpris}/bin/polybar-mpris bar";
         };
       };
     };

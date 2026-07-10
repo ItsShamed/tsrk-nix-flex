@@ -14,10 +14,11 @@
 }:
 
 let
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
   gaming = inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
+  imports = with self.homeManagerModules; [ overlay-rewind ];
+
   options = {
     tsrk.packages.more-gaming = {
       enable = lib.options.mkEnableOption ''tsrk's "More Gaming" pacakge bundle'';
@@ -31,10 +32,12 @@ in
         known to cause issues with nixos-install.
       ''
     ];
+
+    tsrk.extPkgs.rewind.install = true;
+
     home.packages = [
       gaming.osu-lazer-bin
       pkgs.prismlauncher
-      tsrkPkgs.rewind
       pkgs.lunar-client
       pkgs.etterna
       pkgs.bottles

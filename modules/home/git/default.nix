@@ -12,7 +12,7 @@ args:
   imports = [
     ./cli.nix
     (lib.modules.importApply ./delta.nix args)
-    (lib.modules.importApply ./lazygit.nix args)
+    ./lazygit.nix
   ];
 
   options = {
