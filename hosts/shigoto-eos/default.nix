@@ -82,7 +82,6 @@ in
     USB_AUTOSUSPEND = 0;
     USB_ALLOWLIST = "";
   };
-  boot.tmp.tmpfsSize = "75%";
   services.upower.enable = true;
 
   # Fingerprint

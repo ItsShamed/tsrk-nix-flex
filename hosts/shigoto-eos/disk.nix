@@ -18,7 +18,6 @@
       };
     };
   };
-  zramSwap.enable = true;
   disko.devices = {
     disk = {
       skhynix = {
