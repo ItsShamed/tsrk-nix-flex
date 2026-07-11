@@ -19,11 +19,12 @@
     fcitx5
     mpd
     profile-x11
-    # inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    pano-scrobbler
   ];
 
   tsrk = {
     mpd.enable = true;
+    pano-scrobbler.enable = true;
     fcitx5 = {
       enable = true;
       groups = {

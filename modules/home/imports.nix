@@ -17,6 +17,7 @@
   ./desktop/kitty.nix
   ./desktop/mpd.nix
   ./desktop/mopidy.nix
+  { path = ./desktop/pano-scrobbler.nix; }
   ./desktop/picom.nix
   { path = ./desktop/polybar.nix; }
   { path = ./desktop/rofi.nix; }

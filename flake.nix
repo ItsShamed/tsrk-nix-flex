@@ -58,6 +58,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    pano-scrobbler.url = "github:kawaiiDango/pano-scrobbler-flake";
+
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
