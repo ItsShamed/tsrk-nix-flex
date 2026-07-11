@@ -6,7 +6,6 @@
 
 {
   inputs,
-  pkgSet,
   self,
   ...
 }:
@@ -20,7 +19,6 @@
 
 let
   gaming = inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system};
-  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
 in
 {
   imports = with self.homeManagerModules; [
@@ -47,7 +45,7 @@ in
     home.packages = with pkgs; [
       gaming.osu-lazer-bin
       typespeed
-      pkgsUnstable.tetrio-desktop # TODO: Use stable package when 26.04
+      tetrio-desktop
       gaming.wine-ge
       # unofficial-homestuck-collection
     ];
