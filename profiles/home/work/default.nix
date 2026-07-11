@@ -4,11 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
+{ self, pkgSet, ... }:
 
 { pkgs, lib, ... }:
 
 let
+  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsTeleport;
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
