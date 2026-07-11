@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ inputs, pkgSet, ... }:
+{
+  inputs,
+  pkgSet,
+  self,
+  ...
+}:
 
 {
   pkgs,
@@ -18,6 +23,10 @@ let
   inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsUnstable;
 in
 {
+  imports = with self.homeManagerModules; [
+    overlay-unofficial-homestuck-collection
+  ];
+
   options = {
     tsrk.packages.games = {
       enable = lib.options.mkEnableOption "tsrk's gaming bundle";
@@ -32,12 +41,15 @@ in
       ''
     ];
 
+    # TODO: Figure out why Ruffle is breaking on Electron 41
+    tsrk.extPkgs.unofficial-homestuck-collection.install = true;
+
     home.packages = with pkgs; [
       gaming.osu-lazer-bin
       typespeed
       pkgsUnstable.tetrio-desktop # TODO: Use stable package when 26.04
       gaming.wine-ge
-      unofficial-homestuck-collection
+      # unofficial-homestuck-collection
     ];
   };
 }
