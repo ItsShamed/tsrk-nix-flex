@@ -4,12 +4,11 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgSet, ... }:
+{ self, ... }:
 
 { pkgs, lib, ... }:
 
 let
-  inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsTeleport pkgsUnstable;
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
@@ -67,8 +66,7 @@ in
 
   tsrk.packages.ops.k9s.externalPlugins = {
     argocd = "${pkgs.k9s.src}/plugins/argocd.yaml";
-    # TODO: Re-pin this to stable when 26.05
-    argo-workflows = "${pkgsUnstable.k9s.src}/plugins/argo-workflows.yaml";
+    argo-workflows = "${pkgs.k9s.src}/plugins/argo-workflows.yaml";
     remove-finalizers = "${pkgs.k9s.src}/plugins/remove-finalizers.yaml";
     pvc-debug-container = "${pkgs.k9s.src}/plugins/pvc-debug-container.yaml";
   };
