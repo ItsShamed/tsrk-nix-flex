@@ -222,6 +222,8 @@
           inherit (pkgSet.${system}) pkgs;
         in
         {
+          pkgSet = pkgSet.${system};
+
           formatter =
             let
               config = self.checks.${system}.pre-commit-check.config;
