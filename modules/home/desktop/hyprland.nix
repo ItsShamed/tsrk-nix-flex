@@ -476,6 +476,10 @@ in
           tag = "+browser";
           scrolling_width = 0.667;
         };
+        steamapps-as-games = {
+          match.class = "^(steam_app_\\d+)$";
+          tag = "+game";
+        };
         float-empty-title-browser = {
           match = {
             tag = "browser";
@@ -518,6 +522,12 @@ in
         coms-effect = {
           match.tag = "coms";
           workspace = "4 silent";
+        };
+        games = {
+          match.tag = "game";
+          content = "game";
+          fullscreen = true;
+          center = true;
         };
         satty = {
           match.class = "com\\.gabm\\.satty";
