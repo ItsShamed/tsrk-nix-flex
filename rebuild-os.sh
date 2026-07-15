@@ -48,7 +48,8 @@ shift 1
 NIX_SSHOPTS="-i $HOME/.ssh/id_ed25519"
 export NIX_SSHOPTS
 
-nh_ os "$rebuild_command" -H "$nix_host" --diff always -- "$@"
+nh_ os "$rebuild_command" -H "$nix_host" --diff always \
+    -k --show-activation-logs -- "$@"
 
 if [ "$rebuild_command" != "switch" ] && [ "$rebuild_command" != "test" ]; then
   # Return early if not switching nor testing
