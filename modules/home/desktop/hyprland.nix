@@ -635,32 +635,29 @@ in
                 function (w)
                   local contains = function (a, x)
                     for _, el in ipairs(a) do
-                      if el == x then
+                      if string.find(el, x) ~= nil then
                         return true
                       end
                     end
                     return false
                   end
-                  hl.notification.create({
-                    text = "Title changed",
-                    timeout = 2,
-                  })
 
-                  if not (w.tags == "browser" or contains(w.tags, "browser")) then
+                  local is_browser = function (win)
+                    return (type(win.tags) == "string" and win.tags:find("browser") ~= nil) or contains(w.tags, "browser")
+                  end
+
+                  if not is_browser(w) then
                     return
                   end
 
-                  hl.notification.create({
-                    text = "Title changed for browser",
-                    timeout = 2,
-                  })
-
                   if string.find(w.title, "Extension: ") ~= nil then
-                    hl.notification.create({
-                      text = "Found extension window",
-                      timeout = 2,
-                    })
-                    hl.dispatch(hl.dsp.window.float({ action = "set" }))
+                    if not w.floating then
+                      hl.dispatch(hl.dsp.window.float({ action = "set", window = w }))
+                    end
+                    if not w.active then
+                      hl.dispatch(hl.dsp.focus({ window = w }))
+                    end
+                    hl.dispatch(hl.dsp.window.center({ window = w }))
                   end
                 end
               '')
