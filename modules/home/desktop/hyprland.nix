@@ -555,7 +555,14 @@ in
 
     wayland.windowManager.hyprland = {
       enable = lib.mkDefault true;
-      systemd.enable = lib.mkDefault true;
+      systemd = {
+        enable = lib.mkDefault true;
+        extraCommands = lib.mkAfter (
+          lib.optionals cfg.darkman.enable [
+            "systemctl --user restart darkman"
+          ]
+        );
+      };
       configType = lib.mkDefault "lua";
       settings = {
         config = {
@@ -607,27 +614,7 @@ in
           ) "rofi -show drun" "${pkgs.bemenu}/bin/bemenu-run"
         );
 
-        # Needed to propagate necessary envvars to darkman
-        execr-once = lib.mkIf (hyprlandCfg.configType == "hyprlang") (
-          lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman"
-        );
-
         on = lib.optionals (hyprlandCfg.configType == "lua") [
-          {
-            _args =
-              let
-                exec = lib.lists.optional cfg.darkman.enable "systemctl --user restart darkman";
-              in
-              [
-                "hyprland.start"
-                (mkLuaInline ''
-                  function ()
-                    -- Exec
-                    ${lib.concatMapStringsSep "  \n" (e: ''hl.exec_cmd("${e}")'') exec}
-                  end
-                '')
-              ];
-          }
           {
             _args = [
               "window.title"
