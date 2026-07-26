@@ -10,6 +10,7 @@
   config,
   lib,
   pkgs,
+  options,
   ...
 }:
 
@@ -17,6 +18,7 @@ let
   inherit (lib.generators) mkLuaInline;
   toLua = lib.generators.toLua { };
   cfg = config.tsrk.hyprland;
+  hyprlandOpts = options.wayland.windowManager.hyprland;
   hyprlandCfg = config.wayland.windowManager.hyprland;
   mkNumberBinds =
     mod: keywordFn:
@@ -557,11 +559,11 @@ in
       enable = lib.mkDefault true;
       systemd = {
         enable = lib.mkDefault true;
-        extraCommands = lib.mkAfter (
-          lib.optionals cfg.darkman.enable [
+        extraCommands =
+          hyprlandOpts.systemd.extraCommands.default
+          ++ lib.optionals cfg.darkman.enable [
             "systemctl --user restart darkman"
-          ]
-        );
+          ];
       };
       configType = lib.mkDefault "lua";
       settings = {
