@@ -9,4 +9,6 @@
   # fucking private equity. But oh well, this is the only sane alternative other
   # than fucking Keepass.
   "electron-39.8.10"
+  # TODO: Erm, well it's the death of UHC isn't it?
+  "electron-40.10.5"
 ]
