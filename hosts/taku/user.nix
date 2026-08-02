@@ -40,6 +40,15 @@ in
     hyprland.uwsm.extraEnv = ''
       export AQ_DRM_DEVICES='/dev/dri/card0:/dev/dri/card1'
     '';
+
+    hyprland.windowRules = {
+      umineko-questions-arcs = {
+        match.class = "^(Umineko1to4)$";
+        float = true;
+        content = "game";
+      };
+    };
+
     polybar = {
       ethInterfaceName = "enp16s0";
       wlanInterfaceName = "wlp15s0";
