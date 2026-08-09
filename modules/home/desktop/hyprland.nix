@@ -561,6 +561,13 @@ in
         enable = lib.mkDefault true;
         extraCommands =
           hyprlandOpts.systemd.extraCommands.default
+          ++ [
+            "systemctl --user stop xdg-desktop-portal"
+            # Because for some reason it doesn't start
+            "systemctl --user restart xdg-desktop-portal-hyprland"
+            "sleep 1"
+            "systemctl --user start xdg-desktop-portal"
+          ]
           ++ lib.optionals cfg.darkman.enable [
             "systemctl --user restart darkman"
           ];
