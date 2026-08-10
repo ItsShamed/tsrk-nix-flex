@@ -51,7 +51,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     ./patches/0001-build-unix-use-pkg-config-instead-of-bundling.patch
   ];
 
-  cargoHash = "sha256-+cdqBGgb0XH7g06XUoRgzMjbEE3WE28XH9JorPbDUkI=";
+  cargoHash = "sha256-gxjgwwauaM3Uoat8i6CHvICBJ05Enei/hCp0hX8pSHk=";
 
   nativeBuildInputs = [
     pkg-config
