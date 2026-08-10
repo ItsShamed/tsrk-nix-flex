@@ -153,7 +153,7 @@ in
     "tsrk-taku" = {
       HostName = "192.168.0.200";
       StreamLocalBindUnlink = "yes";
-      RemoteForwards = [
+      RemoteForward = [
         {
           host.address = "/run/user/1000/gnupg/S.gpg-agent.extra";
           bind.address = "/run/user/1000/gnupg/S.gpg-agent";
