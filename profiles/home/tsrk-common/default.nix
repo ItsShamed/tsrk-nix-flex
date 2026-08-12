@@ -45,6 +45,24 @@
     shell.kubeswitch.enable = true;
   };
 
+  tsrk.shell.initExtra = lib.mkBefore ''
+    asobu() {
+      echo "Let's play!"
+      export TSRK_PLAYGROUND_DIR="$(mktemp -dt playground.XXXXXX)"
+      cd "$TSRK_PLAYGROUND_DIR"
+      echo "Use 'modoru' to come back anytime"
+    }
+
+    modoru() {
+      if [ -z "''${TSRK_PLAYGROUND_DIR+x}" ]; then
+        echo "There is no playground to come back to…"
+        return 1
+      fi
+      cd "$TSRK_PLAYGROUND_DIR"
+      echo "You came back!"
+    }
+  '';
+
   # Fucking flatpak-managed-install that takes 1000000000000000000000 years to
   # install fucking flatpaks because fucking devs cannot package their fucking
   # software correctly
