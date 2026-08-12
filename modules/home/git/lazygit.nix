@@ -11,6 +11,18 @@
   ...
 }:
 
+let
+  hmCfg = config.programs.lazygit;
+  hasShellIntegration = builtins.any lib.id (
+    with hmCfg;
+    [
+      enableBashIntegration
+      enableZshIntegration
+      enableFishIntegration
+      enableNushellIntegration
+    ]
+  );
+in
 {
   options = {
     tsrk.git.lazygit.enable = lib.options.mkEnableOption "tsrk's Lazygit configuration";
@@ -18,7 +30,7 @@
 
   config = lib.mkIf config.tsrk.git.lazygit.enable {
 
-    home.shellAliases = {
+    home.shellAliases = lib.mkIf (!hasShellIntegration) {
       lg = "lazygit";
     };
 
