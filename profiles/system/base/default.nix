@@ -37,7 +37,9 @@
     LC_MEASUREMENT = "fr_FR.UTF-8";
   };
 
-  time.timeZone = "Europe/Paris";
+  time.timeZone = lib.mkDefault "Europe/Paris";
+
+  services.automatic-timezoned.enable = lib.mkDefault true;
 
   programs.ssh.package = pkgs.openssh_gssapi;
 
