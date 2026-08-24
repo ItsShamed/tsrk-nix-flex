@@ -542,7 +542,10 @@ in
         };
       };
       workspaceRules = {
-        "1".default_name = "workdir";
+        "1" = {
+          default_name = "workdir";
+          layout = "scrolling";
+        };
         "2".default_name = "tooling";
         "3" = {
           default_name = "web";
