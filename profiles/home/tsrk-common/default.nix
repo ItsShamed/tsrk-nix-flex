@@ -182,6 +182,7 @@
     # ventoy-full
     tor
     tor-browser
+    godotPackages_4_7.godot-mono
   ];
 
   programs.cava = {
