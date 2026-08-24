@@ -52,7 +52,6 @@ in
   tsrk.packages.pkgs = {
     gaming.enable = true;
     android.enable = true;
-    java.ide.enable = true;
   };
 
   tsrk.hyprland.enable = true;
@@ -107,6 +106,11 @@ in
     temurin-jre-bin-17
     jdk25
   ];
+
+  tsrk.packages.pkgs.csharp = {
+    enable = true;
+    ide.enable = true;
+  };
 
   time.hardwareClockInLocalTime = true;
 
