@@ -51,31 +51,17 @@ in
           alsa.support32Bit = true;
           pulse.enable = true;
 
-          wireplumber.extraConfig."99-alsa-lowlatency" = lib.mkForce { };
-
-          extraConfig =
-            let
-              inherit (builtins) toString;
-              streamLatencyConfig = lib.attrsets.genAttrs [ "pipewire-pulse" "client" ] (_n: {
-                "10-stream-latency" = {
-                  "stream.properties" = {
-                    "node.latency" = "${toString cfg.bufferSize}/${toString cfg.sampleRate}";
-                  };
-                };
-              });
-            in
-            {
-              pipewire."10-clock-rate" = {
-                "context.properties" = {
-                  "default.clock.rate" = config.tsrk.sound.sampleRate;
-                };
+          extraConfig = {
+            pipewire."10-clock-rate" = {
+              "context.properties" = {
+                "default.clock.rate" = config.tsrk.sound.sampleRate;
               };
+            };
 
-              client."11-alsa-rate" = {
-                "alsa.properties"."alsa.rate" = cfg.sampleRate;
-              };
-            }
-            // streamLatencyConfig;
+            client."11-alsa-rate" = {
+              "alsa.properties"."alsa.rate" = cfg.sampleRate;
+            };
+          };
 
           lowLatency = {
             enable = true;
