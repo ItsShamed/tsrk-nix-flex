@@ -43,7 +43,7 @@ in
           reaper-reapack-extension
           yabridge
           yabridgectl
-          (lib.hiPrio wineWowPackages.yabridge)
+          (lib.hiPrio wineWow64Packages.yabridge)
         ];
       }
       (lib.mkIf cfg.plugins.enable {
