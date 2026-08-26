@@ -59,6 +59,7 @@ in
   tsrk.sound = {
     focusriteSupport = true;
     useRTScheduling = true;
+    bufferSize = 64;
   };
 
   services.pipewire.extraConfig.pipewire."10-tsrk-issues" = {
@@ -137,6 +138,11 @@ in
     # https://wiki.archlinux.org/title/AMDGPU#Reduce_output_latency
     pageFlip = false;
     tearFree = false;
+  };
+
+  services.pipewire.lowLatency.alsa = {
+    enable = true;
+    devicePattern = "~alsa_output.usb-Focusrite_Scarlett_18i8.*";
   };
 
   # TODO: Remove this when it will be wired (hopefully one day)
