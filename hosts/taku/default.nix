@@ -114,6 +114,7 @@ in
   };
 
   time.hardwareClockInLocalTime = true;
+  services.automatic-timezoned.enable = lib.mkDefault true;
 
   programs.wireshark.enable = true;
 
