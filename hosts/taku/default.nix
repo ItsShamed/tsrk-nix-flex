@@ -153,7 +153,7 @@ in
     '')
     # This prevent locking up when suspending
     (writeTextDir "etc/udev/rules.d/14-fix-broken-xhci" ''
-      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1022", ATTR{device}=="0x15b6", ATTR{power/wakeup}="disabled"
+      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1022", ATTR{device}=="0x14e3", ATTR{power/wakeup}="disabled"
     '')
     sane-airscan
   ];
