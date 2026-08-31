@@ -14,6 +14,7 @@ in
   imports = with self.homeManagerModules; [
     profile-wayland
     profile-work
+    overlay-xivlauncher-rb
   ];
 
   wayland.windowManager.hyprland.settings = {
@@ -54,6 +55,9 @@ in
       wlanInterfaceName = "wlp15s0";
     };
     xsettingsd.withDConf = true;
+    extPkgs = {
+      xivlauncher-rb.install = true;
+    };
   };
 
   home.packages = with pkgs; [

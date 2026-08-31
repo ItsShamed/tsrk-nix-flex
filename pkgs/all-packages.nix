@@ -33,6 +33,7 @@
   doukutsu-rs = ./games/doukutsu-rs;
   paladium-launcher = ./games/paladium-launcher;
   rewind = ./games/rewind;
+  xivlauncher-rb = ./games/xivlauncher-rb;
 
   ### MISC
   polybar-mpris = ./applications/misc/polybar-mpris;
