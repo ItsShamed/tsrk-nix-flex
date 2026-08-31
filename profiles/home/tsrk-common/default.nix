@@ -84,16 +84,13 @@
       userName = address;
       realName = "tsrk.";
       imap = {
-        host = "zimbra002.pulseheberg.com";
+        host = "imap.mail.ovh.net";
         port = 993;
       };
       smtp = {
-        host = "zimbra002.pulseheberg.com";
-        port = 587;
-        tls = {
-          enable = true;
-          useStartTls = true;
-        };
+        host = "smtp.mail.ovh.net";
+        port = 465;
+        tls.enable = true;
       };
       signature = {
         showSignature = "append";
