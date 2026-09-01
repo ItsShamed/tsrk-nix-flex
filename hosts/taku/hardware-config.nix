@@ -32,7 +32,10 @@
     "r8169"
   ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm-amd"
+    "ntsync"
+  ];
 
   boot.kernelParams =
     (lib.optionals config.boot.plymouth.enable [
