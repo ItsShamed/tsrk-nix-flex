@@ -39,6 +39,7 @@
       inkscape-with-extensions
       gimp-with-plugins
       kid3
+      picard
       kdePackages.kdenlive
       tenacity
       vlc
