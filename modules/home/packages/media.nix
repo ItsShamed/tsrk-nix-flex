@@ -51,6 +51,7 @@
       lrcget
       nicotine-plus
       yt-dlp
+      rsgain
     ];
   };
 }
