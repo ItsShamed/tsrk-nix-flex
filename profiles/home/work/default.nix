@@ -10,7 +10,6 @@
 
 let
   inherit (pkgSet.${pkgs.stdenv.hostPlatform.system}) pkgsTeleport;
-  tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   key = ./.;
@@ -31,7 +30,6 @@ in
     act
     _1password-gui
     _1password-cli
-    tsrkPkgs.notion-app
   ];
 
   wayland.windowManager.hyprland.settings.window_rule = lib.mkBefore [
