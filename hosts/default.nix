@@ -18,7 +18,7 @@ let
   generateSystem =
     module:
     let
-      imageName = lib.strings.removeSuffix ".nix" (builtins.baseNameOf module);
+      imageName = lib.strings.removeSuffix ".nix" (baseNameOf module);
       modules =
         let
           global = {
@@ -34,7 +34,10 @@ let
             ];
 
             nix.registry = {
-              nixpkgsUnstable.flake = nixpkgsUnstable;
+              nixpkgsUnstable.to = {
+                type = "tarball";
+                url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+              };
               # nixpkgsMaster.flake = nixpkgsMaster;
             };
 

@@ -17,6 +17,7 @@
   key = ./.;
 
   imports = [
+    ./flake-registry.nix
     self.nixosModules.packages
     self.nixosModules.disks
     self.nixosModules.sshd
