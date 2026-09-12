@@ -557,11 +557,10 @@
     "nixpkgs_6": {
       "locked": {
         "lastModified": 1789114715,
-        "narHash": "sha256-ugpsyk3NM2s87vXfUiIIiibbJ4Pp0JPS5p/3mfs+q+c=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
+        "narHash": "sha256-eeH+/1GxEjw8NCObjaHVIy3YvCQ4Qckrx4LZj5xBaU4=",
         "rev": "21a67dc470149f337cecafbe965d8d252a390518",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.9592.21a67dc47014/nixexprs.tar.zst?lastModified=1789114715&rev=21a67dc470149f337cecafbe965d8d252a390518"
       },
       "original": {
         "id": "nixpkgs",
