@@ -34,7 +34,6 @@ let
             ];
 
             nix.registry = {
-              nixpkgs.flake = nixpkgs;
               nixpkgsUnstable.flake = nixpkgsUnstable;
               # nixpkgsMaster.flake = nixpkgsMaster;
             };

@@ -10,8 +10,8 @@
   '';
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-26.05";
+    nixpkgsUnstable.url = "nixpkgs/nixos-unstable";
     nixpkgs_teleport_15.url = "github:nixos/nixpkgs?rev=8125d74e21449e7ba702af890297a8bb9dc5f273";
     # nixpkgsMaster.url = "github:NixOS/nixpkgs/master";
 
@@ -20,14 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    futils.url = "github:numtide/flake-utils";
+    futils.url = "flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
-    };
-    flake-programs-sqlite = {
-      url = "github:wamserma/flake-programs-sqlite";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -37,14 +33,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-
-    nixos-hardware = {
-      url = "github:nixos/nixos-hardware";
-    };
+    nixos-hardware.url = "nixos-hardware";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
+      url = "home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -52,11 +44,6 @@
 
     agenix.url = "github:ryantm/agenix";
     git-hooks.url = "github:cachix/git-hooks.nix";
-
-    winapps = {
-      url = "github:winapps-org/winapps";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     pano-scrobbler.url = "github:kawaiiDango/pano-scrobbler-flake";
 
@@ -66,7 +53,7 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    disko.url = "github:nix-community/disko";
+    disko.url = "disko";
   };
 
   outputs =

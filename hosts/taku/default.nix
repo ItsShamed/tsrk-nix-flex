@@ -6,15 +6,11 @@
 
 {
   self,
-  inputs,
   pkgs,
   lib,
   ...
 }:
 
-let
-  winappsPkgs = inputs.winapps.packages."${pkgs.stdenv.hostPlatform.system}";
-in
 {
   imports = [
     self.nixosModules.profile-tsrk-common
@@ -43,8 +39,6 @@ in
 
   environment.systemPackages = with pkgs; [
     mouse_m908
-    winappsPkgs.winapps
-    winappsPkgs.winapps-launcher
     wireshark
   ];
 

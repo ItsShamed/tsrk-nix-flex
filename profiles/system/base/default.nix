@@ -25,10 +25,7 @@
     self.nixosModules.earlyoom
     self.nixosModules.overlay-sshfs
     self.nixosModules.overlay-hyperfluent-grub-theme
-    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
   ];
-
-  programs.command-not-found.enable = lib.mkDefault true;
 
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
