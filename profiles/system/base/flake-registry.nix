@@ -10,19 +10,21 @@
 
   nix.registry =
     let
+      channelIndirection = ref: {
+        from = {
+          type = "indirect";
+          id = "nixpkgs";
+          inherit ref;
+        };
+        to = {
+          type = "tarball";
+          url = "https://channels.nixos.org/${ref}/nixexprs.tar.zst";
+        };
+      };
+
       indirectionPair = ref: {
         name = "nixpkgs-${ref}";
-        value = lib.mkDefault {
-          from = {
-            type = "indirect";
-            id = "nixpkgs";
-            inherit ref;
-          };
-          to = {
-            type = "tarball";
-            url = "https://channels.nixos.org/${ref}/nixexprs.tar.zst";
-          };
-        };
+        value = lib.mkDefault (channelIndirection ref);
       };
 
       nixpkgsIndirections' =
@@ -58,5 +60,9 @@
           rollingVersions version
         );
     in
-    nixpkgsIndirections "26.05";
+    nixpkgsIndirections "26.05"
+    // {
+      "nixpkgs-unstable" = channelIndirection "nixpkgs-unstable";
+      "nixos-unstable" = channelIndirection "nixos-unstable";
+    };
 }
