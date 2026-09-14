@@ -4,7 +4,12 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, pkgs, ... }:
+{
+  self,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   tsrkPkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
@@ -64,4 +69,29 @@ in
     tsrkPkgs.doukutsu-rs
     r2modman
   ];
+
+  services.syncthing = {
+    enable = true;
+    guiCredentials.username = config.home.username;
+    settings = {
+      devices = {
+        gos = {
+          id = "OGLQTMX-KHP3GQI-SWN6MHX-ZEE4TXN-PEO5DOW-4JHRWLS-OOWAJ2H-FS5TJA7";
+          addresses = [
+            "tcp://192.168.0.55"
+            "dynamic"
+          ];
+        };
+      };
+      folders = {
+        "${config.home.homeDirectory}/Music" = {
+          id = "tsrk-music";
+          devices = [
+            "gos"
+          ];
+          type = "sendonly";
+        };
+      };
+    };
+  };
 }
