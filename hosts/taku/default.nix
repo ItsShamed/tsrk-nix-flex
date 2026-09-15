@@ -149,6 +149,10 @@
     (writeTextDir "etc/udev/rules.d/14-fix-broken-xhci" ''
       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1022", ATTR{device}=="0x14e3", ATTR{power/wakeup}="disabled"
     '')
+    (writeTextDir "etc/udev/rules.d/70-lc87.rules" ''
+      KERNEL=="hidraw*", ATTRS{idVendor}=="056a", TAG+="uaccess"
+      SUBSYSTEM=="usb", ATTR{idVendor}=="0ac3", TAG+="uaccess"
+    '')
     sane-airscan
   ];
 
