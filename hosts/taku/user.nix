@@ -68,6 +68,8 @@ in
   home.packages = with pkgs; [
     tsrkPkgs.doukutsu-rs
     r2modman
+    veloren
+    airshipper
   ];
 
   services.syncthing = {
