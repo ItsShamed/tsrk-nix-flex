@@ -59,6 +59,21 @@
     };
     programs.nixvim.plugins.markdown-preview.settings.browser = "librewolf";
 
+    services.gnome-keyring = {
+      enable = lib.mkDefault true;
+      components = [
+        "pkcs11"
+        "secrets"
+      ];
+    };
+
+    xdg.portal = {
+      enable = lib.mkDefault true;
+      config.common = {
+        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+      };
+    };
+
     # Set GTK as QT platform theme to unify theming
     home.sessionVariables = {
       GDK_BACKEND = "wayland,x11,*";
