@@ -50,6 +50,7 @@ in
           alsa.enable = true;
           alsa.support32Bit = true;
           pulse.enable = true;
+          jack.enable = true;
 
           extraConfig = {
             pipewire."10-clock-rate" = {
