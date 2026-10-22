@@ -31,7 +31,6 @@
       ];
     };
     qmk.enable = true;
-    web.enable = true;
   };
 
   tsrk.lix.enable = true;
@@ -66,11 +65,9 @@
   networking.firewall = {
     allowedTCPPorts = [
       4455 # OBS WebSocket
-      57621 # Spotify P2P
       2413 # Soulseek P2P
     ];
     allowedUDPPorts = [
-      57621 # Spotify P2P
       2413 # Soulseek P2P
     ];
   };

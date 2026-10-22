@@ -4,8 +4,6 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
-
 {
   config,
   lib,
@@ -17,7 +15,6 @@ let
   cfg = config.tsrk.packages.dev;
 in
 {
-  imports = with self.homeManagerModules; [ overlay-realm-studio ];
 
   options = {
     tsrk.packages.dev = {
@@ -26,8 +23,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    tsrk.extPkgs.realm-studio.install = true;
-
     home.packages = with pkgs; [
       devenv
     ];

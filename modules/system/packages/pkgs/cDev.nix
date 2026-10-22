@@ -53,5 +53,14 @@
       perlPackages.PerlIOgzip
       linuxHeaders
     ];
+
+    environment.variables = {
+      NIX_CFLAGS_COMPILE_x86_64_unknown_linux_gnu = "-isystem /run/current-system/sw/include";
+      NIX_CFLAGS_LINK_x86_64_unknown_linux_gnu = "-L/run/current-system/sw/lib";
+
+      CMAKE_INCLUDE_PATH = "/run/current-system/sw/include";
+      CMAKE_LIBRARY_PATH = "/run/current-system/sw/lib";
+      PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
+    };
   };
 }

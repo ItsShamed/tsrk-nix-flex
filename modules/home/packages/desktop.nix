@@ -4,8 +4,6 @@
 
 # SPDX-License-Identifier: MIT
 
-{ self, ... }:
-
 {
   pkgs,
   lib,
@@ -14,7 +12,6 @@
 }:
 
 {
-  imports = with self.homeManagerModules; [ overlay-spotify-adblock ];
 
   options = {
     tsrk.packages.desktop = {
@@ -23,7 +20,6 @@
   };
 
   config = lib.mkIf config.tsrk.packages.desktop.enable {
-    tsrk.extPkgs.spotify-adblock.install = true;
 
     home.packages = with pkgs; [
       # Discord replacement

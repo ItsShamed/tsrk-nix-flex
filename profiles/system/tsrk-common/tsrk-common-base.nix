@@ -46,8 +46,6 @@
   tsrk.containers.docker.enable = true;
 
   tsrk.packages.pkgs = {
-    cDev.enable = true;
-    rust.enable = true;
     python.enable = true;
     ops.enable = true;
   };
