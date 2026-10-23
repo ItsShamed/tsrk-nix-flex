@@ -96,4 +96,138 @@ in
       };
     };
   };
+
+  services.pipewire = {
+    enable = true;
+    configs = {
+      "10-18i8-mappings" =
+        let
+          mkOutMapping =
+            name: outs:
+            let
+              logicalName = builtins.replaceStrings [ " " "/" ] [ "_" "" ] name;
+            in
+            {
+              name = "libpipewire-module-loopback";
+              args = {
+                "node.description" = "Scarlett 18i8 2nd Gen (${name})";
+                "capture.props" = {
+                  "node.name" = "Scarlett_18i8_2_${logicalName}";
+                  "media.class" = "Audio/Sink";
+                  "audio.position" = [
+                    "FL"
+                    "FR"
+                  ];
+                };
+                "playback.props" = {
+                  "node.name" = "playback.Scarlett_18i8_2_${logicalName}";
+                  "audio.position" = outs;
+                  "target.object" =
+                    "alsa_output.usb-Focusrite_Scarlett_18i8_USB_00054103-00.pro-output-0";
+                  "stream.dont-remix" = true;
+                  "node.passive" = true;
+                };
+              };
+            };
+          mkInMapping =
+            {
+              name,
+              logicalName,
+              from,
+              to,
+            }:
+            {
+              name = "libpipewire-module-loopback";
+              args = {
+                "node.description" = "${name}";
+                "capture.props" = {
+                  "node.name" = "capture.${logicalName}";
+                  "audio.position" = from;
+                  "target.object" =
+                    "alsa_input.usb-Focusrite_Scarlett_18i8_USB_00054103-00.pro-input-0";
+                  "stream.dont-remix" = true;
+                  "node.passive" = true;
+                };
+                "playback.props" = {
+                  "node.name" = "${logicalName}";
+                  "audio.position" = to;
+                  "media.class" = "Audio/Source";
+                };
+              };
+            };
+        in
+        {
+          "context.modules" = [
+            # Outputs
+            (mkOutMapping "Monitor Output" [
+              "AUX0"
+              "AUX1"
+            ])
+            (mkOutMapping "Headphone 1" [
+              "AUX2"
+              "AUX3"
+            ])
+            (mkOutMapping "Headphone 2" [
+              "AUX4"
+              "AUX5"
+            ])
+            (mkOutMapping "S/PDIF Output" [
+              "AUX6"
+              "AUX7"
+            ])
+            # Inputs
+            (mkInMapping {
+              name = "Shure SM7B";
+              logicalName = "Scarlett_18i8_2_Analogue_2";
+              from = [ "AUX1" ];
+              to = [ "MONO" ];
+            })
+          ];
+        };
+    };
+    wireplumber = {
+      enable = true;
+      configs = {
+        # Hides the virtual nodes that link to the actual i/o nodes bc it's
+        # kinda stupid to let other Pipewire clients to get access to those
+        # excpet for qpwgraph which is useful to debug this kind of stuff
+        "10-hide-18i8-mapping-internal-virtual" = {
+          "access.permission-managers" = [
+            {
+              name = "18i8_internal_virtual_hider";
+              rules = [
+                {
+                  matches = [
+                    {
+                      "media.class" = "Stream/Output/Audio";
+                      "node.virtual" = "true";
+                      "target.object" = "~alsa_output\.usb-Focusrite_Scarlett_18i8.*";
+                    }
+                    {
+                      "media.class" = "Stream/Input/Audio";
+                      "node.virtual" = "true";
+                      "target.object" = "~alsa_input\.usb-Focusrite_Scarlett_18i8.*";
+                    }
+                  ];
+                  actions.set-permissions = "-";
+                }
+              ];
+            }
+          ];
+          "access.rules" = [
+            {
+              matches = [
+                { "application.name" = "!~\.?qpwgraph(-wrapped)?"; }
+              ];
+              actions = {
+                update-props = {
+                  permission_manager_name = "18i8_internal_virtual_hider";
+                };
+              };
+            }
+          ];
+        };
+      };
+    };
+  };
 }
